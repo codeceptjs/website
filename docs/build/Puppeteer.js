@@ -612,8 +612,8 @@ class Puppeteer extends Helper {
         return this.switchTo(null)
           .then(() => frame.reduce((p, frameLocator) => p.then(() => this.switchTo(frameLocator)), Promise.resolve()));
       }
-      await this.switchTo(locator);
-      this.withinLocator = new Locator(locator);
+      await this.switchTo(frame);
+      this.withinLocator = new Locator(frame);
       return;
     }
 
@@ -2314,6 +2314,8 @@ class Puppeteer extends Helper {
    * 
    * @param {string|function} fn function to be executed in browser context.
    * @param {...any} args to be passed to function.
+   * @returns {Promise<any>} script return value
+   * 
    * ⚠️ returns a _promise_ which is synchronized internally by recorder
    * 
    *
@@ -2351,6 +2353,8 @@ class Puppeteer extends Helper {
    * 
    * @param {string|function} fn function to be executed in browser context.
    * @param {...any} args to be passed to function.
+   * @returns {Promise<any>} script return value
+   * 
    * ⚠️ returns a _promise_ which is synchronized internally by recorder
    * 
    *
@@ -2942,7 +2946,7 @@ class Puppeteer extends Helper {
     assertElementExists(els, locator);
 
     return this.waitForFunction(isElementClickable, [els[0]], waitTimeout).catch(async (e) => {
-      if (/failed: timeout/i.test(e.message)) {
+      if (/Waiting failed/i.test(e.message) || /failed: timeout/i.test(e.message)) {
         throw new Error(`element ${new Locator(locator).toString()} still not clickable after ${waitTimeout || this.options.waitForTimeout / 1000} sec`);
       } else {
         throw e;
@@ -3096,7 +3100,7 @@ class Puppeteer extends Helper {
       return currUrl.indexOf(urlPart) > -1;
     }, { timeout: waitTimeout }, urlPart).catch(async (e) => {
       const currUrl = await this._getPageUrl(); // Required because the waitForFunction can't return data.
-      if (/failed: timeout/i.test(e.message)) {
+      if (/Waiting failed:/i.test(e.message) || /failed: timeout/i.test(e.message)) {
         throw new Error(`expected url to include ${urlPart}, but found ${currUrl}`);
       } else {
         throw e;
@@ -3130,7 +3134,7 @@ class Puppeteer extends Helper {
       return currUrl.indexOf(urlPart) > -1;
     }, { timeout: waitTimeout }, urlPart).catch(async (e) => {
       const currUrl = await this._getPageUrl(); // Required because the waitForFunction can't return data.
-      if (/failed: timeout/i.test(e.message)) {
+      if (/Waiting failed/i.test(e.message) || /failed: timeout/i.test(e.message)) {
         throw new Error(`expected url to be ${urlPart}, but found ${currUrl}`);
       } else {
         throw e;
@@ -3427,6 +3431,10 @@ async function findElements(matcher, locator) {
   if (locator.react) return findReact(matcher.executionContext(), locator);
   locator = new Locator(locator, 'css');
   if (!locator.isXPath()) return matcher.$$(locator.simplify());
+  // puppeteer version < 19.4.0 is no longer supported. This one is backward support.
+  if (puppeteer.default?.defaultBrowserRevision) {
+    return matcher.$$(`xpath/${locator.value}`);
+  }
   return matcher.$x(locator.value);
 }
 
@@ -3681,7 +3689,10 @@ async function elementSelected(element) {
 
 function isFrameLocator(locator) {
   locator = new Locator(locator);
-  if (locator.isFrame()) return locator.value;
+  if (locator.isFrame()) {
+    const _locator = new Locator(locator);
+    return _locator.value;
+  }
   return false;
 }
 

@@ -2173,6 +2173,8 @@ class WebDriver extends Helper {
    * 
    * @param {string|function} fn function to be executed in browser context.
    * @param {...any} args to be passed to function.
+   * @returns {Promise<any>} script return value
+   * 
    * ⚠️ returns a _promise_ which is synchronized internally by recorder
    * 
    *
@@ -2207,6 +2209,8 @@ class WebDriver extends Helper {
    * 
    * @param {string|function} fn function to be executed in browser context.
    * @param {...any} args to be passed to function.
+   * @returns {Promise<any>} script return value
+   * 
    * ⚠️ returns a _promise_ which is synchronized internally by recorder
    * 
    *
