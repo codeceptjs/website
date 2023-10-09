@@ -47,7 +47,6 @@ const {
   setRestartStrategy, restartsSession, restartsContext, restartsBrowser,
 } = require('./extras/PlaywrightRestartOpts');
 const { createValueEngine, createDisabledEngine } = require('./extras/PlaywrightPropEngine');
-const { highlightElement } = require('./scripts/highlightElement');
 
 const pathSeparator = path.sep;
 
@@ -94,7 +93,7 @@ const pathSeparator = path.sep;
  * @prop {string[]} [ignoreLog] - An array with console message types that are not logged to debug log. Default value is `['warning', 'log']`. E.g. you can set `[]` to log all messages. See all possible [values](https://playwright.dev/docs/api/class-consolemessage#console-message-type).
  * @prop {boolean} [ignoreHTTPSErrors] - Allows access to untrustworthy pages, e.g. to a page with an expired certificate. Default value is `false`
  * @prop {boolean} [bypassCSP] - bypass Content Security Policy or CSP
- * @prop {boolean} [highlightElement] - highlight the interacting elements. Default: false
+ * @prop {boolean} [highlightElement] - highlight the interacting elements. Default: false. Note: only activate under verbose mode (--verbose).
  */
 const config = {};
 
@@ -835,8 +834,9 @@ class Playwright extends Helper {
 
   async _stopBrowser() {
     this.withinLocator = null;
-    this._setPage(null);
+    await this._setPage(null);
     this.context = null;
+    this.frame = null;
     popupStore.clear();
     await this.browser.close();
   }
@@ -875,6 +875,7 @@ class Playwright extends Helper {
     this.withinLocator = null;
     this.context = await this.page;
     this.contextLocator = null;
+    this.frame = null;
   }
 
   _extractDataFromPerformanceTiming(timing, ...dataNames) {
@@ -1299,6 +1300,9 @@ class Playwright extends Helper {
    */
   async _locate(locator) {
     const context = await this.context || await this._getContext();
+
+    if (this.frame) return findElements(this.frame, locator);
+
     return findElements(context, locator);
   }
 
@@ -2009,7 +2013,7 @@ class Playwright extends Helper {
 
     await el.clear();
 
-    highlightActiveElement.call(this, el, await this._getContext());
+    await highlightActiveElement.call(this, el);
 
     await el.type(value.toString(), { delay: this.options.pressKeyDelay });
 
@@ -2039,7 +2043,7 @@ class Playwright extends Helper {
 
     const el = els[0];
 
-    highlightActiveElement.call(this, el, this.page);
+    await highlightActiveElement.call(this, el);
 
     await el.clear();
 
@@ -2065,7 +2069,7 @@ class Playwright extends Helper {
   async appendField(field, value) {
     const els = await findFields.call(this, field);
     assertElementExists(els, field, 'Field');
-    highlightActiveElement.call(this, els[0], await this._getContext());
+    await highlightActiveElement.call(this, els[0]);
     await els[0].press('End');
     await els[0].type(value.toString(), { delay: this.options.pressKeyDelay });
     return this._waitForAction();
@@ -2167,7 +2171,7 @@ class Playwright extends Helper {
     assertElementExists(els, select, 'Selectable field');
     const el = els[0];
 
-    highlightActiveElement.call(this, el, await this._getContext());
+    await highlightActiveElement.call(this, el);
 
     if (!Array.isArray(option)) option = [option];
 
@@ -2555,11 +2559,11 @@ class Playwright extends Helper {
    * @returns {Promise<any>}
    */
   async executeScript(fn, arg) {
-    let context = this.page;
-    if (this.context && this.context.constructor.name === 'Frame') {
-      context = this.context; // switching to iframe context
+    if (this.context && this.context.constructor.name === 'FrameLocator') {
+      // switching to iframe context
+      return this.context.locator(':root').evaluate(fn, arg);
     }
-    return context.evaluate.apply(context, [fn, arg]);
+    return this.page.evaluate.apply(this.page, [fn, arg]);
   }
 
   /**
@@ -3313,7 +3317,7 @@ class Playwright extends Helper {
   }
 
   async _getContext() {
-    if (this.context && this.context.constructor.name === 'Frame') {
+    if (this.context && this.context.constructor.name === 'FrameLocator') {
       return this.context;
     }
     return this.page;
@@ -3418,6 +3422,14 @@ class Playwright extends Helper {
         }, [locator.value, text, $XPath.toString()], { timeout: waitTimeout });
       }
     } else {
+      // we have this as https://github.com/microsoft/playwright/issues/26829 is not yet implemented
+      if (this.frame) {
+        const { setTimeout } = require('timers/promises');
+        await setTimeout(waitTimeout);
+        waiter = await this.frame.locator(`:has-text('${text}')`).first().isVisible();
+        if (!waiter) throw new Error(`Text "${text}" was not found on page after ${waitTimeout / 1000} sec`);
+        return;
+      }
       waiter = contextObject.waitForFunction(text => document.body && document.body.innerText.indexOf(text) > -1, text, { timeout: waitTimeout });
     }
     return waiter.catch((err) => {
@@ -3481,36 +3493,36 @@ class Playwright extends Helper {
       }
 
       if (locator >= 0 && locator < childFrames.length) {
-        this.context = childFrames[locator];
+        this.context = await this.page.frameLocator('iframe').nth(locator);
         this.contextLocator = locator;
       } else {
         throw new Error('Element #invalidIframeSelector was not found by text|CSS|XPath');
       }
       return;
     }
-    let contentFrame;
 
     if (!locator) {
-      this.context = await this.page.frames()[0];
+      this.context = this.page;
       this.contextLocator = null;
+      this.frame = null;
       return;
     }
 
     // iframe by selector
-    const els = await this._locate(locator);
-    if (!els[0]) {
-      throw new Error(`Element ${JSON.stringify(locator)} was not found by text|CSS|XPath`);
+    locator = buildLocatorString(new Locator(locator, 'css'));
+    const frame = await this._locateElement(locator);
+
+    if (!frame) {
+      throw new Error(`Frame ${JSON.stringify(locator)} was not found by text|CSS|XPath`);
     }
 
-    // get content of the first iframe
-    locator = new Locator(locator, 'css');
-    if ((locator.frame && locator.frame === 'iframe') || locator.value.toLowerCase() === 'iframe') {
-      contentFrame = await this.page.frames()[1];
-      // get content of the iframe using its name
-    } else if (locator.value.toLowerCase().includes('name=')) {
-      const frameName = locator.value.split('=')[1].replace(/"/g, '').replaceAll(/]/g, '');
-      contentFrame = await this.page.frame(frameName);
+    if (this.frame) {
+      this.frame = await this.frame.frameLocator(locator);
+    } else {
+      this.frame = await this.page.frameLocator(locator);
     }
+
+    const contentFrame = this.frame;
 
     if (contentFrame) {
       this.context = contentFrame;
@@ -4272,7 +4284,7 @@ async function findElement(matcher, locator) {
   if (locator.react) return findReact(matcher, locator);
   locator = new Locator(locator, 'css');
 
-  return matcher.locator(buildLocatorString(locator));
+  return matcher.locator(buildLocatorString(locator)).first();
 }
 
 async function getVisibleElements(elements) {
@@ -4302,7 +4314,7 @@ async function proceedClick(locator, context = null, options = {}) {
     assertElementExists(els, locator, 'Clickable element');
   }
 
-  highlightActiveElement.call(this, els[0], await this._getContext());
+  await highlightActiveElement.call(this, els[0]);
 
   /*
     using the force true options itself but instead dispatching a click
@@ -4352,13 +4364,9 @@ async function proceedSee(assertType, text, context, strict = false) {
   let allText;
 
   if (!context) {
-    let el = await this.context;
-    if (el && !el.getProperty) {
-      // Fallback to body
-      el = await this.page.$('body');
-    }
+    const el = await this.context;
 
-    allText = [await el.innerText()];
+    allText = [await el.locator('body').innerText()];
     description = 'web application';
   } else {
     const locator = new Locator(context, 'css');
@@ -4531,8 +4539,7 @@ async function elementSelected(element) {
 function isFrameLocator(locator) {
   locator = new Locator(locator);
   if (locator.isFrame()) {
-    const _locator = new Locator(locator.value);
-    return _locator.value;
+    return locator.value;
   }
   return false;
 }
@@ -4728,10 +4735,14 @@ async function saveTraceForContext(context, name) {
   return fileName;
 }
 
-function highlightActiveElement(element, context) {
-  if (!this.options.highlightElement && !store.debugMode) return;
-
-  highlightElement(element, context);
+async function highlightActiveElement(element) {
+  if (this.options.highlightElement && global.debugMode) {
+    await element.evaluate(el => {
+      const prevStyle = el.style.boxShadow;
+      el.style.boxShadow = '0px 0px 4px 3px rgba(255, 0, 0, 0.7)';
+      setTimeout(() => el.style.boxShadow = prevStyle, 2000);
+    });
+  }
 }
 
 const createAdvancedTestResults = (url, dataToCheck, requests) => {
