@@ -11,21 +11,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "autoprefixer": "^10.4.14",
+    "autoprefixer": "^10.4.15",
     "npm": "^9.8.1",
-    "postcss": "^8.4.27",
-    "sass": "^1.64.1",
+    "postcss": "^8.4.29",
+    "sass": "^1.66.1",
     "sass-loader": "^10.3.1",
     "tailwindcss": "^1.9.6",
     "vue": "^2.7.14",
     "vue-carousel": "^0.18.0",
     "vue-slider-component": "^3.2.24",
     "vueperslides": "^2.16.0",
-    "vuepress": "^1.9.9",
+    "vuepress": "^1.9.10",
     "vuepress-plugin-sitemap": "^2.3.1"
   },
   "devDependencies": {
-    "@vuepress/plugin-google-analytics": "^1.9.9",
+    "@vuepress/plugin-google-analytics": "^1.9.10",
     "runok": "^0.9.3"
   }
 }
