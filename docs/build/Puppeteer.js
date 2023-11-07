@@ -455,7 +455,7 @@ class Puppeteer extends Helper {
    * I.seeInPopup('Popup text');
    * ```
    * @param {string} text value to check.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async seeInPopup(text) {
@@ -651,7 +651,8 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {string} url url path or global url.
-   * @return {void} automatically synchronized promise with recorder #! 
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * 
    */
   async amOnPage(url) {
     if (!(/^\w+\:\/\//.test(url))) {
@@ -686,7 +687,7 @@ class Puppeteer extends Helper {
    * 
    * @param {number} width width in pixels or `maximize`.
    * @param {number} height height in pixels.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    *
    * Unlike other drivers Puppeteer changes the size of a viewport, not the window!
@@ -706,14 +707,14 @@ class Puppeteer extends Helper {
    * Set headers for all next requests
    *
    * ```js
-   * I.haveRequestHeaders({
+   * I.setPuppeteerRequestHeaders({
    *    'X-Sent-By': 'CodeceptJS',
    * });
    * ```
    *
    * @param {object} customHeaders headers to set
    */
-  async haveRequestHeaders(customHeaders) {
+  async setPuppeteerRequestHeaders(customHeaders) {
     if (!customHeaders) {
       throw new Error('Cannot send empty headers.');
     }
@@ -732,7 +733,7 @@ class Puppeteer extends Helper {
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
    * @param {number} [offsetX=0] (optional, `0` by default) X-axis offset.
    * @param {number} [offsetY=0] (optional, `0` by default) Y-axis offset.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    * {{ react }}
    */
@@ -759,6 +760,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} locator field located by label|name|CSS|XPath|strict locator.
    * @param {any} [options] Playwright only: [Additional options](https://playwright.dev/docs/api/class-locator#locator-focus) for available options object as 2nd argument.
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    *
    */
@@ -789,6 +791,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} locator field located by label|name|CSS|XPath|strict locator.
    * @param {any} [options] Playwright only: [Additional options](https://playwright.dev/docs/api/class-locator#locator-blur) for available options object as 2nd argument.
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    *
    */
@@ -809,7 +812,7 @@ class Puppeteer extends Helper {
    * 
    * @param {LocatorOrString} srcElement located by CSS|XPath|strict locator.
    * @param {LocatorOrString} destElement located by CSS|XPath|strict locator.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async dragAndDrop(srcElement, destElement) {
@@ -822,7 +825,7 @@ class Puppeteer extends Helper {
    * ```js
    * I.refreshPage();
    * ```
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async refreshPage() {
@@ -835,7 +838,7 @@ class Puppeteer extends Helper {
    * ```js
    * I.scrollPageToTop();
    * ```
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   scrollPageToTop() {
@@ -850,7 +853,7 @@ class Puppeteer extends Helper {
    * ```js
    * I.scrollPageToBottom();
    * ```
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   scrollPageToBottom() {
@@ -879,7 +882,7 @@ class Puppeteer extends Helper {
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
    * @param {number} [offsetX=0] (optional, `0` by default) X-axis offset.
    * @param {number} [offsetY=0] (optional, `0` by default) Y-axis offset.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async scrollTo(locator, offsetX = 0, offsetY = 0) {
@@ -910,7 +913,7 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {string} text text value to check.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async seeInTitle(text) {
@@ -949,7 +952,7 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {string} text value to check.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async seeTitleEquals(text) {
@@ -965,7 +968,7 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {string} text value to check.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async dontSeeInTitle(text) {
@@ -1155,7 +1158,7 @@ class Puppeteer extends Helper {
    * I.seeElement('#modal');
    * ```
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    * {{ react }}
    */
@@ -1176,7 +1179,7 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|Strict locator.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    * {{ react }}
    */
@@ -1197,7 +1200,7 @@ class Puppeteer extends Helper {
    * I.seeElementInDOM('#modal');
    * ```
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async seeElementInDOM(locator) {
@@ -1213,7 +1216,7 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|Strict locator.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async dontSeeElementInDOM(locator) {
@@ -1246,7 +1249,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} locator clickable link or button located by text, or any element located by CSS|XPath|strict locator.
    * @param {?CodeceptJS.LocatorOrString | null} [context=null] (optional, `null` by default) element to search in CSS|XPath|Strict locator.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    *
    * {{ react }}
@@ -1283,7 +1286,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} locator clickable link or button located by text, or any element located by CSS|XPath|strict locator.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element to search in CSS|XPath|Strict locator.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    *
    * {{ react }}
@@ -1321,7 +1324,7 @@ class Puppeteer extends Helper {
    * ```
    * @param {CodeceptJS.LocatorOrString} locator clickable link or button located by text, or any element located by CSS|XPath|strict locator
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element to search in CSS|XPath|Strict locator
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    *
    * {{ react }}
@@ -1440,7 +1443,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} locator clickable link or button located by text, or any element located by CSS|XPath|strict locator.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element to search in CSS|XPath|Strict locator.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    *
    * {{ react }}
@@ -1463,7 +1466,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} locator clickable element located by CSS|XPath|strict locator.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS|XPath|strict locator.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    *
    * {{ react }}
@@ -1485,7 +1488,7 @@ class Puppeteer extends Helper {
    * ```
    * @param {CodeceptJS.LocatorOrString} field checkbox located by label | name | CSS | XPath | strict locator.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS | XPath | strict locator.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async checkOption(field, context = null) {
@@ -1512,7 +1515,7 @@ class Puppeteer extends Helper {
    * ```
    * @param {CodeceptJS.LocatorOrString} field checkbox located by label | name | CSS | XPath | strict locator.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS | XPath | strict locator.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async uncheckOption(field, context = null) {
@@ -1536,7 +1539,7 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async seeCheckboxIsChecked(field) {
@@ -1553,7 +1556,7 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async dontSeeCheckboxIsChecked(field) {
@@ -1572,7 +1575,7 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {string} key name of key to press down.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async pressKeyDown(key) {
@@ -1593,7 +1596,7 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {string} key name of key to release.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async pressKeyUp(key) {
@@ -1662,7 +1665,7 @@ class Puppeteer extends Helper {
    * - `'Tab'`
    * 
    * @param {string|string[]} key key or array of keys to press.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    *
    * _Note:_ Shortcuts like `'Meta'` + `'A'` do not work on macOS ([GoogleChrome/puppeteer#1313](https://github.com/GoogleChrome/puppeteer/issues/1313)).
@@ -1713,7 +1716,7 @@ class Puppeteer extends Helper {
    * 
    * @param {string|string[]} key or array of keys to type.
    * @param {?number} [delay=null] (optional) delay in ms between key presses
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async type(keys, delay = null) {
@@ -1744,7 +1747,7 @@ class Puppeteer extends Helper {
    * ```
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
    * @param {CodeceptJS.StringOrSecret} value text value to fill.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    * {{ react }}
    */
@@ -1775,7 +1778,7 @@ class Puppeteer extends Helper {
    * I.clearField('#email');
    * ```
    * @param {LocatorOrString} editable field located by label|name|CSS|XPath|strict locator.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder.
+   * @returns {Promise<void>} automatically synchronized promise through #recorder.
    * 
    */
   async clearField(field) {
@@ -1793,7 +1796,7 @@ class Puppeteer extends Helper {
    * ```
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator
    * @param {string} value text value to append.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    *
    * {{ react }}
@@ -1819,7 +1822,7 @@ class Puppeteer extends Helper {
    * ```
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
    * @param {CodeceptJS.StringOrSecret} value value to check.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async seeInField(field, value) {
@@ -1838,7 +1841,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
    * @param {CodeceptJS.StringOrSecret} value value to check.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async dontSeeInField(field, value) {
@@ -1858,7 +1861,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} locator field located by label|name|CSS|XPath|strict locator.
    * @param {string} pathToFile local file path relative to codecept.conf.ts or codecept.conf.js config file.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    *
    * > ⚠ There is an [issue with file upload in Puppeteer 2.1.0 & 2.1.1](https://github.com/puppeteer/puppeteer/issues/5420), downgrade to 2.0.0 if you face it.
@@ -1896,7 +1899,7 @@ class Puppeteer extends Helper {
    * ```
    * @param {LocatorOrString} select field located by label|name|CSS|XPath|strict locator.
    * @param {string|Array<*>} option visible text or value of option.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async selectOption(select, option) {
@@ -1958,7 +1961,7 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {string} url a fragment to check
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async seeInCurrentUrl(url) {
@@ -1969,7 +1972,7 @@ class Puppeteer extends Helper {
    * Checks that current url does not contain a provided fragment.
    * 
    * @param {string} url value to check.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async dontSeeInCurrentUrl(url) {
@@ -1987,7 +1990,7 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {string} url value to check.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async seeCurrentUrlEquals(url) {
@@ -2004,7 +2007,7 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {string} url value to check.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async dontSeeCurrentUrlEquals(url) {
@@ -2022,7 +2025,7 @@ class Puppeteer extends Helper {
    * ```
    * @param {string} text expected on page.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS|Xpath|strict locator in which to search for text.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    *
    * {{ react }}
@@ -2040,7 +2043,7 @@ class Puppeteer extends Helper {
    * 
    * @param {string} text element value to check.
    * @param {CodeceptJS.LocatorOrString?} [context=null]  element located by CSS|XPath|strict locator.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async seeTextEquals(text, context = null) {
@@ -2058,7 +2061,7 @@ class Puppeteer extends Helper {
    * 
    * @param {string} text which is not present.
    * @param {CodeceptJS.LocatorOrString} [context] (optional) element located by CSS|XPath|strict locator in which to perfrom search.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    *
    * {{ react }}
@@ -2118,7 +2121,7 @@ class Puppeteer extends Helper {
    * I.seeInSource('<h1>Green eggs &amp; ham</h1>');
    * ```
    * @param {string} text value to check.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async seeInSource(text) {
@@ -2134,7 +2137,7 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {string} value to check.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async dontSeeInSource(text) {
@@ -2153,7 +2156,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} num number of elements.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    *
    * {{ react }}
@@ -2173,7 +2176,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} num number of elements.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    *
    * {{ react }}
@@ -2199,7 +2202,7 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {Cookie|Array<Cookie>} cookie a cookie object or array of cookie objects.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async setCookie(cookie) {
@@ -2217,7 +2220,7 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {string} name cookie name.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    *
    */
@@ -2234,7 +2237,7 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {string} name cookie name.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async dontSeeCookie(name) {
@@ -2253,7 +2256,7 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {?string} [name=null] cookie name.
-   * @returns {Promise<string>|Promise<string[]>} attribute value
+   * @returns {any} attribute value
    * 
    *
    * Returns cookie in JSON format. If name not passed returns all cookies for this domain.
@@ -2275,7 +2278,7 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {?string} [cookie=null] (optional, `null` by default) cookie name
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async clearCookie(name) {
@@ -2316,8 +2319,6 @@ class Puppeteer extends Helper {
    * @param {...any} args to be passed to function.
    * @returns {Promise<any>} script return value
    * 
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
-   * 
    *
    * If a function returns a Promise It will wait for it resolution.
    */
@@ -2354,8 +2355,6 @@ class Puppeteer extends Helper {
    * @param {string|function} fn function to be executed in browser context.
    * @param {...any} args to be passed to function.
    * @returns {Promise<any>} script return value
-   * 
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
    * 
    *
    * Asynchronous scripts can also be executed with `executeScript` if a function returns a Promise.
@@ -2560,7 +2559,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
    * @param {object} cssProperties object with CSS properties and their values to check.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    * {{ react }}
    */
@@ -2608,7 +2607,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
    * @param {object} attributes attributes and their values to check.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    * {{ react }}
    */
@@ -2650,7 +2649,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} locator located by label|name|CSS|XPath|strict locator.
    * @param {number} offsetX position to drag.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    * {{ react }}
    */
@@ -2729,7 +2728,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {string} fileName file name to save.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async saveElementScreenshot(locator, fileName) {
@@ -2755,7 +2754,7 @@ class Puppeteer extends Helper {
    * 
    * @param {string} fileName file name to save.
    * @param {boolean} [fullPage=false] (optional, `false` by default) flag to enable fullscreen screenshot mode.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async saveScreenshot(fileName, fullPage) {
@@ -2800,7 +2799,7 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {number} sec number of second to wait.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async wait(sec) {
@@ -2815,7 +2814,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional) time in seconds to wait, 1 by default.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async waitForEnabled(locator, sec) {
@@ -2855,7 +2854,7 @@ class Puppeteer extends Helper {
    * @param {LocatorOrString} field input field.
    * @param {string }value expected value.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async waitForValue(field, value, sec) {
@@ -2896,7 +2895,7 @@ class Puppeteer extends Helper {
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} num number of elements.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    * {{ react }}
    */
@@ -2938,7 +2937,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec] (optional, `1` by default) time in seconds to wait
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async waitForClickable(locator, waitTimeout) {
@@ -2965,7 +2964,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec] (optional, `1` by default) time in seconds to wait
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    * {{ react }}
    */
@@ -2995,7 +2994,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    *
    * This method accepts [React selectors](https://codecept.io/react).
@@ -3026,7 +3025,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async waitForInvisible(locator, sec) {
@@ -3055,7 +3054,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async waitToHide(locator, sec) {
@@ -3089,7 +3088,7 @@ class Puppeteer extends Helper {
    * 
    * @param {string} urlPart value to check.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async waitInUrl(urlPart, sec = null) {
@@ -3118,7 +3117,7 @@ class Puppeteer extends Helper {
    * 
    * @param {string} urlPart value to check.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async waitUrlEquals(urlPart, sec = null) {
@@ -3155,7 +3154,7 @@ class Puppeteer extends Helper {
    * @param {string }text to wait for.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @param {CodeceptJS.LocatorOrString} [context] (optional) element located by CSS|XPath|strict locator.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async waitForText(text, sec = null, context = null) {
@@ -3232,7 +3231,7 @@ class Puppeteer extends Helper {
    * ```
    * 
    * @param {?CodeceptJS.LocatorOrString} [locator=null] (optional, `null` by default) element located by CSS|XPath|strict locator.
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async switchTo(locator) {
@@ -3287,7 +3286,7 @@ class Puppeteer extends Helper {
    * @param {string|function} fn to be executed in browser context.
    * @param {any[]|number} [argsOrSec] (optional, `1` by default) arguments for function or seconds.
    * @param {number} [sec] (optional, `1` by default) time in seconds to wait
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async waitForFunction(fn, argsOrSec = null, sec = null) {
@@ -3337,7 +3336,7 @@ class Puppeteer extends Helper {
    * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
-   * ⚠️ returns a _promise_ which is synchronized internally by recorder
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async waitForDetached(locator, sec) {
@@ -3387,7 +3386,8 @@ class Puppeteer extends Helper {
    *   loadEventEnd: 241
    * }
    * ```
-   * @return {Promise<any>} automatically synchronized promise through #recorder 
+   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * 
    */
   async grabDataFromPerformanceTiming() {
     return perfTiming;
