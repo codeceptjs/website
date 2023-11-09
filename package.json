@@ -11,10 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "autoprefixer": "^10.4.15",
+    "autoprefixer": "^10.4.16",
     "npm": "^9.8.1",
     "postcss": "^8.4.31",
-    "sass": "^1.66.1",
+    "sass": "^1.69.5",
     "sass-loader": "^10.3.1",
     "tailwindcss": "^1.9.6",
     "vue": "^2.7.14",
