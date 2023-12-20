@@ -7,6 +7,172 @@ layout: Section
 
 # Releases
 
+## 3.5.10
+
+❤️ Thanks all to those who contributed to make this release! ❤️
+
+🛩️ *Features*
+* feat: expose WebElement ([#4043](https://github.com/codeceptjs/CodeceptJS/issues/4043)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+```
+Now we expose the WebElements that are returned by the WebHelper and you could make the subsequence actions on them.
+
+// Playwright helper would return the Locator
+
+I.amOnPage('/form/focus_blur_elements');
+const webElements = await I.grabWebElements('#button');
+webElements[0].click();
+```
+* feat(playwright): support HAR replaying ([#3990](https://github.com/codeceptjs/CodeceptJS/issues/3990)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+```
+Replaying from HAR
+
+ // Replay API requests from HAR.
+ // Either use a matching response from the HAR,
+ // or abort the request if nothing matches.
+   I.replayFromHar('./output/har/something.har', { url: "*/**/api/v1/fruits" });
+   I.amOnPage('https://demo.playwright.dev/api-mocking');
+   I.see('CodeceptJS'); **[Parameters]** harFilePath [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) Path to recorded HAR file
+opts [object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)? [Options for replaying from HAR](https://playwright.dev/docs/api/class-page#page-route-from-har)
+```
+* feat(playwright): support HAR recording ([#3986](https://github.com/codeceptjs/CodeceptJS/issues/3986)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+```
+A HAR file is an HTTP Archive file that contains a record of all the network requests that are made when a page is loaded. 
+It contains information about the request and response headers, cookies, content, timings, and more. 
+You can use HAR files to mock network requests in your tests. HAR will be saved to output/har. 
+More info could be found here https://playwright.dev/docs/api/class-browser#browser-new-context-option-record-har.
+
+...
+recordHar: {
+    mode: 'minimal', // possible values: 'minimal'|'full'.
+    content: 'embed' // possible values:  "omit"|"embed"|"attach".
+}
+...
+```
+* improvement(playwright): support partial string for option ([#4016](https://github.com/codeceptjs/CodeceptJS/issues/4016)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+```
+await I.amOnPage('/form/select');
+await I.selectOption('Select your age', '21-');
+```
+
+🐛 *Bug Fixes*
+* fix(playwright): proceedSee could not find the element ([#4006](https://github.com/codeceptjs/CodeceptJS/issues/4006)) - by **[hatufacci](https://github.com/hatufacci)**
+* fix(appium): remove the vendor prefix of 'bstack:options' ([#4053](https://github.com/codeceptjs/CodeceptJS/issues/4053)) - by **[mojtabaalavi](https://github.com/mojtabaalavi)**
+* fix(workers): event improvements ([#3953](https://github.com/codeceptjs/CodeceptJS/issues/3953)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+```
+Emit the new event: event.workers.result.
+
+CodeceptJS also exposes the env var `process.env.RUNS_WITH_WORKERS` when running tests with run-workers command so that you could handle the events better in your plugins/helpers.
+
+const { event } = require('codeceptjs');
+
+module.exports = function() {
+    // this event would trigger the  `_publishResultsToTestrail` when running `run-workers` command
+  event.dispatcher.on(event.workers.result, async () => {
+    await _publishResultsToTestrail();
+  });
+  
+  // this event would not trigger the  `_publishResultsToTestrail` multiple times when running `run-workers` command
+  event.dispatcher.on(event.all.result, async () => {
+      // when running `run` command, this env var is undefined
+    if (!process.env.RUNS_WITH_WORKERS) await _publishResultsToTestrail();
+  });
+}
+```
+* fix: ai html updates ([#3962](https://github.com/codeceptjs/CodeceptJS/issues/3962)) - by **[DavertMik](https://github.com/DavertMik)**
+```
+replaced minify library with a modern and more secure fork. Fixes html-minifier@4.0.0 Regular Expression Denial of Service vulnerability [#3829](https://github.com/codeceptjs/CodeceptJS/issues/3829)
+AI class is implemented as singleton
+refactored heal.js plugin to work on edge cases
+add configuration params on number of fixes performed by ay heal
+improved recorder class to add more verbose log
+improved recorder class to ignore some of errors
+```
+* fix(appium): closeApp supports both Android/iOS ([#4046](https://github.com/codeceptjs/CodeceptJS/issues/4046)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+* fix: some security vulnerability of some packages ([#4045](https://github.com/codeceptjs/CodeceptJS/issues/4045)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+* fix: seeAttributesOnElements check condition ([#4029](https://github.com/codeceptjs/CodeceptJS/issues/4029)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+* fix: waitForText locator issue ([#4039](https://github.com/codeceptjs/CodeceptJS/issues/4039)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+```
+Fixed this error:
+
+locator.isVisible: Unexpected token "s" while parsing selector ":has-text('Were you able to resolve the resident's issue?') >> nth=0"
+      at Playwright.waitForText (node_modules\codeceptjs\lib\helper\Playwright.js:2584:79)
+```
+* fix: move to sha256 ([#4038](https://github.com/codeceptjs/CodeceptJS/issues/4038)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)** 
+* fix: respect retries from retryfailedstep plugin in helpers ([#4028](https://github.com/codeceptjs/CodeceptJS/issues/4028)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+```
+Currently inside the _before() of helpers for example Playwright, the retries is set there, however, when retryFailedStep plugin is enabled, the retries of recorder is still using the value from _before() not the value from retryFailedStep plugin.
+
+Fix:
+
+- introduce the process.env.FAILED_STEP_RETIRES which could be access everywhere as the helper won't know anything about the plugin.
+- set default retries of Playwright to 3 to be on the same page with Puppeteer.
+```
+* fix: examples in test title ([#4030](https://github.com/codeceptjs/CodeceptJS/issues/4030)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+```
+When test title doesn't have the data in examples:
+
+Feature: Faker examples
+
+  Scenario Outline: Below are the users
+    Examples:
+      | user   | role |
+      | John  | admin |
+      | Tim   | client  |
+
+Faker examples --
+    **[1]**  Starting recording promises
+    Timeouts: 
+  Below are the users {"user":"John","role":"admin"}
+  ✔ OK in 4ms
+
+  Below are the users {"user":"Tim","role":"client"}
+  ✔ OK in 1ms
+
+When test title includes the data in examples:
+
+
+Feature: Faker examples
+
+  Scenario Outline: Below are the users - <user> - <role>
+    Examples:
+      | user   | role |
+      | John  | admin |
+      | Tim   | client  |
+
+
+Faker examples --
+    **[1]**  Starting recording promises
+    Timeouts: 
+  Below are the users - John - admin 
+  ✔ OK in 4ms
+
+  Below are the users - Tim - client 
+  ✔ OK in 1ms
+```
+* fix: disable retryFailedStep when using with tryTo ([#4022](https://github.com/codeceptjs/CodeceptJS/issues/4022)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+* fix: locator builder returns error when class name contains hyphen ([#4024](https://github.com/codeceptjs/CodeceptJS/issues/4024)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+* fix: seeCssPropertiesOnElements failed when font-weight is a number ([#4026](https://github.com/codeceptjs/CodeceptJS/issues/4026)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+* fix(appium): missing await on some steps of runOnIOS and runOnAndroid ([#4018](https://github.com/codeceptjs/CodeceptJS/issues/4018)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+* fix(cli): no error of failed tests when using retry with scenario only ([#4020](https://github.com/codeceptjs/CodeceptJS/issues/4020)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+* fix: set getPageTimeout to 30s ([#4031](https://github.com/codeceptjs/CodeceptJS/issues/4031)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+* fix(appium): expose switchToContext ([#4015](https://github.com/codeceptjs/CodeceptJS/issues/4015)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+* fix: promise issue ([#4013](https://github.com/codeceptjs/CodeceptJS/issues/4013)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+* fix: seeCssPropertiesOnElements issue with improper condition ([#4057](https://github.com/codeceptjs/CodeceptJS/issues/4057)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+
+📖 *Documentation*
+* docs: Update clearCookie documentation for Playwright helper ([#4005](https://github.com/codeceptjs/CodeceptJS/issues/4005)) - by **[Hellosager](https://github.com/Hellosager)**
+* docs: improve the example code for autoLogin ([#4019](https://github.com/codeceptjs/CodeceptJS/issues/4019)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+  ![Screenshot 2023-11-22 at 14 40 11](https://github.com/codeceptjs/CodeceptJS/assets/7845001/c05ac436-efd0-4bc0-a46c-386f915c0f17)
+
+## 3.5.8
+
+Thanks all to those who contributed to make this release!
+
+🐛 *Bug Fixes*
+fix(appium): type of setNetworkConnection() ([#3994](https://github.com/codeceptjs/CodeceptJS/issues/3994)) - by **[mirao](https://github.com/mirao)**
+fix: improve the way to show deprecated appium v1 message ([#3992](https://github.com/codeceptjs/CodeceptJS/issues/3992)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+fix: missing exit condition of some wait functions - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
+
 ## 3.5.7
 
 Thanks all to those who contributed to make this release!
