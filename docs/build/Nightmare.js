@@ -406,7 +406,7 @@ class Nightmare extends Helper {
    * ```
    * 
    * @param {string} url url path or global url.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    * @param {?object} headers list of request headers can be passed
    *
@@ -435,7 +435,7 @@ class Nightmare extends Helper {
    * ```
    * 
    * @param {string} text text value to check.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async seeInTitle(text) {
@@ -451,7 +451,7 @@ class Nightmare extends Helper {
    * ```
    * 
    * @param {string} text value to check.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async dontSeeInTitle(text) {
@@ -496,7 +496,7 @@ class Nightmare extends Helper {
    * ```
    * 
    * @param {string} url a fragment to check
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async seeInCurrentUrl(url) {
@@ -508,7 +508,7 @@ class Nightmare extends Helper {
    * Checks that current url does not contain a provided fragment.
    * 
    * @param {string} url value to check.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async dontSeeInCurrentUrl(url) {
@@ -527,7 +527,7 @@ class Nightmare extends Helper {
    * ```
    * 
    * @param {string} url value to check.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async seeCurrentUrlEquals(url) {
@@ -545,7 +545,7 @@ class Nightmare extends Helper {
    * ```
    * 
    * @param {string} url value to check.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async dontSeeCurrentUrlEquals(url) {
@@ -563,8 +563,8 @@ class Nightmare extends Helper {
    * I.see('Register', {css: 'form.register'}); // use strict locator
    * ```
    * @param {string} text expected on page.
-   * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS|Xpath|strict locator in which to search for text.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @param {?string | object} [context=null] (optional, `null` by default) element located by CSS|Xpath|strict locator in which to search for text.
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async see(text, context = null) {
@@ -581,8 +581,8 @@ class Nightmare extends Helper {
    * ```
    * 
    * @param {string} text which is not present.
-   * @param {CodeceptJS.LocatorOrString} [context] (optional) element located by CSS|XPath|strict locator in which to perfrom search.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @param {string | object} [context] (optional) element located by CSS|XPath|strict locator in which to perfrom search.
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   dontSee(text, context = null) {
@@ -596,8 +596,8 @@ class Nightmare extends Helper {
    * ```js
    * I.seeElement('#modal');
    * ```
-   * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @param {string | object} locator located by CSS|XPath|strict locator.
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async seeElement(locator) {
@@ -615,8 +615,8 @@ class Nightmare extends Helper {
    * I.dontSeeElement('.modal'); // modal is not shown
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|Strict locator.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @param {string | object} locator located by CSS|XPath|Strict locator.
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async dontSeeElement(locator) {
@@ -635,8 +635,8 @@ class Nightmare extends Helper {
    * ```js
    * I.seeElementInDOM('#modal');
    * ```
-   * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @param {string | object} locator element located by CSS|XPath|strict locator.
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async seeElementInDOM(locator) {
@@ -652,8 +652,8 @@ class Nightmare extends Helper {
    * I.dontSeeElementInDOM('.nav'); // checks that element is not on page visible or not
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|Strict locator.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @param {string | object} locator located by CSS|XPath|Strict locator.
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async dontSeeElementInDOM(locator) {
@@ -669,7 +669,7 @@ class Nightmare extends Helper {
    * I.seeInSource('<h1>Green eggs &amp; ham</h1>');
    * ```
    * @param {string} text value to check.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async seeInSource(text) {
@@ -685,7 +685,7 @@ class Nightmare extends Helper {
    * ```
    * 
    * @param {string} value to check.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async dontSeeInSource(text) {
@@ -702,9 +702,9 @@ class Nightmare extends Helper {
    * I.seeNumberOfElements('#submitBtn', 1);
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
+   * @param {string | object} locator element located by CSS|XPath|strict locator.
    * @param {number} num number of elements.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async seeNumberOfElements(locator, num) {
@@ -720,9 +720,9 @@ class Nightmare extends Helper {
    * I.seeNumberOfVisibleElements('.buttons', 3);
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
+   * @param {string | object} locator element located by CSS|XPath|strict locator.
    * @param {number} num number of elements.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async seeNumberOfVisibleElements(locator, num) {
@@ -738,7 +738,7 @@ class Nightmare extends Helper {
    * let numOfElements = await I.grabNumberOfVisibleElements('p');
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
+   * @param {string | object} locator located by CSS|XPath|strict locator.
    * @returns {Promise<number>} number of visible elements
    */
   async grabNumberOfVisibleElements(locator) {
@@ -775,9 +775,9 @@ class Nightmare extends Helper {
    * I.click({css: 'nav a.login'});
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} locator clickable link or button located by text, or any element located by CSS|XPath|strict locator.
-   * @param {?CodeceptJS.LocatorOrString | null} [context=null] (optional, `null` by default) element to search in CSS|XPath|Strict locator.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @param {string | object} locator clickable link or button located by text, or any element located by CSS|XPath|strict locator.
+   * @param {?string | object | null} [context=null] (optional, `null` by default) element to search in CSS|XPath|Strict locator.
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async click(locator, context = null) {
@@ -798,9 +798,9 @@ class Nightmare extends Helper {
    * I.doubleClick('.btn.edit');
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} locator clickable link or button located by text, or any element located by CSS|XPath|strict locator.
-   * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element to search in CSS|XPath|Strict locator.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @param {string | object} locator clickable link or button located by text, or any element located by CSS|XPath|strict locator.
+   * @param {?string | object} [context=null] (optional, `null` by default) element to search in CSS|XPath|Strict locator.
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async doubleClick(locator, context = null) {
@@ -822,9 +822,9 @@ class Nightmare extends Helper {
    * I.rightClick('Click me', '.context');
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} locator clickable element located by CSS|XPath|strict locator.
-   * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS|XPath|strict locator.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @param {string | object} locator clickable element located by CSS|XPath|strict locator.
+   * @param {?string | object} [context=null] (optional, `null` by default) element located by CSS|XPath|strict locator.
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async rightClick(locator, context = null) {
@@ -843,10 +843,10 @@ class Nightmare extends Helper {
    * I.moveCursorTo('#submit', 5,5);
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
+   * @param {string | object} locator located by CSS|XPath|strict locator.
    * @param {number} [offsetX=0] (optional, `0` by default) X-axis offset.
    * @param {number} [offsetY=0] (optional, `0` by default) Y-axis offset.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async moveCursorTo(locator, offsetX = 0, offsetY = 0) {
@@ -934,7 +934,7 @@ class Nightmare extends Helper {
    * 
    * @param {number} width width in pixels or `maximize`.
    * @param {number} height height in pixels.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async resizeWindow(width, height) {
@@ -955,9 +955,9 @@ class Nightmare extends Helper {
    * I.checkOption('I Agree to Terms and Conditions');
    * I.checkOption('agree', '//form');
    * ```
-   * @param {CodeceptJS.LocatorOrString} field checkbox located by label | name | CSS | XPath | strict locator.
-   * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS | XPath | strict locator.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @param {string | object} field checkbox located by label | name | CSS | XPath | strict locator.
+   * @param {?string | object} [context=null] (optional, `null` by default) element located by CSS | XPath | strict locator.
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async checkOption(field, context = null) {
@@ -978,9 +978,9 @@ class Nightmare extends Helper {
    * I.uncheckOption('I Agree to Terms and Conditions');
    * I.uncheckOption('agree', '//form');
    * ```
-   * @param {CodeceptJS.LocatorOrString} field checkbox located by label | name | CSS | XPath | strict locator.
-   * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS | XPath | strict locator.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @param {string | object} field checkbox located by label | name | CSS | XPath | strict locator.
+   * @param {?string | object} [context=null] (optional, `null` by default) element located by CSS | XPath | strict locator.
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async uncheckOption(field, context = null) {
@@ -1004,9 +1004,9 @@ class Nightmare extends Helper {
    * // or by strict locator
    * I.fillField({css: 'form#login input[name=username]'}, 'John');
    * ```
-   * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
-   * @param {CodeceptJS.StringOrSecret} value text value to fill.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @param {string | object} field located by label|name|CSS|XPath|strict locator.
+   * @param {string | object} value text value to fill.
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async fillField(field, value) {
@@ -1024,8 +1024,8 @@ class Nightmare extends Helper {
    * I.clearField('user[email]');
    * I.clearField('#email');
    * ```
-   * @param {LocatorOrString} editable field located by label|name|CSS|XPath|strict locator.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder.
+   * @param {string | object} editable field located by label|name|CSS|XPath|strict locator.
+   * @returns {void} automatically synchronized promise through #recorder.
    * 
    */
   async clearField(field) {
@@ -1041,9 +1041,9 @@ class Nightmare extends Helper {
    * // typing secret
    * I.appendField('password', secret('123456'));
    * ```
-   * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator
+   * @param {string | object} field located by label|name|CSS|XPath|strict locator
    * @param {string} value text value to append.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async appendField(field, value) {
@@ -1063,9 +1063,9 @@ class Nightmare extends Helper {
    * I.seeInField('form input[type=hidden]','hidden_value');
    * I.seeInField('#searchform input','Search');
    * ```
-   * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
-   * @param {CodeceptJS.StringOrSecret} value value to check.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @param {string | object} field located by label|name|CSS|XPath|strict locator.
+   * @param {string | object} value value to check.
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async seeInField(field, value) {
@@ -1082,9 +1082,9 @@ class Nightmare extends Helper {
    * I.dontSeeInField({ css: 'form input.email' }, 'user@user.com'); // field by CSS
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
-   * @param {CodeceptJS.StringOrSecret} value value to check.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @param {string | object} field located by label|name|CSS|XPath|strict locator.
+   * @param {string | object} value value to check.
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async dontSeeInField(field, value) {
@@ -1129,8 +1129,8 @@ class Nightmare extends Helper {
    * I.seeCheckboxIsChecked({css: '#signup_form input[type=checkbox]'});
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @param {string | object} field located by label|name|CSS|XPath|strict locator.
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async seeCheckboxIsChecked(field) {
@@ -1146,8 +1146,8 @@ class Nightmare extends Helper {
    * I.dontSeeCheckboxIsChecked('agree'); // located by name
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @param {string | object} field located by label|name|CSS|XPath|strict locator.
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async dontSeeCheckboxIsChecked(field) {
@@ -1164,9 +1164,9 @@ class Nightmare extends Helper {
    * I.attachFile('form input[name=avatar]', 'data/avatar.jpg');
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} locator field located by label|name|CSS|XPath|strict locator.
+   * @param {string | object} locator field located by label|name|CSS|XPath|strict locator.
    * @param {string} pathToFile local file path relative to codecept.conf.ts or codecept.conf.js config file.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    *
    * Doesn't work if the Chromium DevTools panel is open (as Chromium allows only one attachment to the debugger at a time. [See more](https://github.com/rosshinkley/nightmare-upload#important-note-about-setting-file-upload-inputs))
@@ -1193,7 +1193,7 @@ class Nightmare extends Helper {
    * let pins = await I.grabTextFromAll('#pin li');
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
+   * @param {string | object} locator element located by CSS|XPath|strict locator.
    * @returns {Promise<string[]>} attribute value
    * 
    */
@@ -1217,7 +1217,7 @@ class Nightmare extends Helper {
    * ```
    * If multiple elements found returns first element.
    * 
-   * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
+   * @param {string | object} locator element located by CSS|XPath|strict locator.
    * @returns {Promise<string>} attribute value
    * 
    */
@@ -1240,7 +1240,7 @@ class Nightmare extends Helper {
    * ```js
    * let inputs = await I.grabValueFromAll('//form/input');
    * ```
-   * @param {CodeceptJS.LocatorOrString} locator field located by label|name|CSS|XPath|strict locator.
+   * @param {string | object} locator field located by label|name|CSS|XPath|strict locator.
    * @returns {Promise<string[]>} attribute value
    * 
    */
@@ -1264,7 +1264,7 @@ class Nightmare extends Helper {
    * ```js
    * let email = await I.grabValueFrom('input[name=email]');
    * ```
-   * @param {CodeceptJS.LocatorOrString} locator field located by label|name|CSS|XPath|strict locator.
+   * @param {string | object} locator field located by label|name|CSS|XPath|strict locator.
    * @returns {Promise<string>} attribute value
    * 
    */
@@ -1286,7 +1286,7 @@ class Nightmare extends Helper {
    * ```js
    * let hints = await I.grabAttributeFromAll('.tooltip', 'title');
    * ```
-   * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
+   * @param {string | object} locator element located by CSS|XPath|strict locator.
    * @param {string} attr attribute name.
    * @returns {Promise<string[]>} attribute value
    * 
@@ -1312,7 +1312,7 @@ class Nightmare extends Helper {
    * ```js
    * let hint = await I.grabAttributeFrom('#tooltip', 'title');
    * ```
-   * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
+   * @param {string | object} locator element located by CSS|XPath|strict locator.
    * @param {string} attr attribute name.
    * @returns {Promise<string>} attribute value
    * 
@@ -1338,7 +1338,7 @@ class Nightmare extends Helper {
    * let postHTMLs = await I.grabHTMLFromAll('.post');
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} element located by CSS|XPath|strict locator.
+   * @param {string | object} element located by CSS|XPath|strict locator.
    * @returns {Promise<string[]>} HTML code for an element
    * 
    */
@@ -1365,7 +1365,7 @@ class Nightmare extends Helper {
    * let postHTML = await I.grabHTMLFrom('#post');
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} element located by CSS|XPath|strict locator.
+   * @param {string | object} element located by CSS|XPath|strict locator.
    * @returns {Promise<string>} HTML code for an element
    * 
    */
@@ -1390,7 +1390,7 @@ class Nightmare extends Helper {
    * const value = await I.grabCssPropertyFrom('h3', 'font-weight');
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
+   * @param {string | object} locator element located by CSS|XPath|strict locator.
    * @param {string} cssProperty CSS property name.
    * @returns {Promise<string>} CSS value
    * 
@@ -1439,9 +1439,9 @@ class Nightmare extends Helper {
    * ```js
    * I.selectOption('Which OS do you use?', ['Android', 'iOS']);
    * ```
-   * @param {LocatorOrString} select field located by label|name|CSS|XPath|strict locator.
+   * @param {string | object} select field located by label|name|CSS|XPath|strict locator.
    * @param {string|Array<*>} option visible text or value of option.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async selectOption(select, option) {
@@ -1499,7 +1499,7 @@ class Nightmare extends Helper {
    * ```
    * 
    * @param {Cookie|Array<Cookie>} cookie a cookie object or array of cookie objects.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    *
    * Wrapper for `.cookies.set(cookie)`.
@@ -1517,7 +1517,7 @@ class Nightmare extends Helper {
    * ```
    * 
    * @param {string} name cookie name.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    *
    */
@@ -1534,7 +1534,7 @@ class Nightmare extends Helper {
    * ```
    * 
    * @param {string} name cookie name.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async dontSeeCookie(name) {
@@ -1570,11 +1570,10 @@ class Nightmare extends Helper {
    * 
    * ```js
    * I.clearCookie();
-   * I.clearCookie('test');
+   * I.clearCookie('test'); // Playwright currently doesn't support clear a particular cookie name
    * ```
    * 
    * @param {?string} [cookie=null] (optional, `null` by default) cookie name
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
    * 
    */
   async clearCookie(cookie) {
@@ -1601,7 +1600,7 @@ class Nightmare extends Helper {
    * @param {string|function} fn to be executed in browser context.
    * @param {any[]|number} [argsOrSec] (optional, `1` by default) arguments for function or seconds.
    * @param {number} [sec] (optional, `1` by default) time in seconds to wait
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async waitForFunction(fn, argsOrSec = null, sec = null) {
@@ -1625,7 +1624,7 @@ class Nightmare extends Helper {
    * ```
    * 
    * @param {number} sec number of second to wait.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async wait(sec) {
@@ -1646,8 +1645,8 @@ class Nightmare extends Helper {
    * 
    * @param {string }text to wait for.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
-   * @param {CodeceptJS.LocatorOrString} [context] (optional) element located by CSS|XPath|strict locator.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @param {string | object} [context] (optional) element located by CSS|XPath|strict locator.
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async waitForText(text, sec, context = null) {
@@ -1675,9 +1674,9 @@ class Nightmare extends Helper {
    * I.waitForVisible('#popup');
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
+   * @param {string | object} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   waitForVisible(locator, sec) {
@@ -1703,9 +1702,9 @@ class Nightmare extends Helper {
    * I.waitToHide('#popup');
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
+   * @param {string | object} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async waitToHide(locator, sec = null) {
@@ -1720,9 +1719,9 @@ class Nightmare extends Helper {
    * I.waitForInvisible('#popup');
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
+   * @param {string | object} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   waitForInvisible(locator, sec) {
@@ -1749,9 +1748,9 @@ class Nightmare extends Helper {
    * I.waitForElement('.btn.continue', 5); // wait for 5 secs
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
+   * @param {string | object} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec] (optional, `1` by default) time in seconds to wait
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async waitForElement(locator, sec) {
@@ -1780,9 +1779,9 @@ class Nightmare extends Helper {
    * I.waitForDetached('#popup');
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
+   * @param {string | object} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async waitForDetached(locator, sec) {
@@ -1803,7 +1802,7 @@ class Nightmare extends Helper {
    * ```js
    * I.refreshPage();
    * ```
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async refreshPage() {
@@ -1826,9 +1825,9 @@ class Nightmare extends Helper {
    * I.saveElementScreenshot(`#submit`,'debug.png');
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
+   * @param {string | object} locator element located by CSS|XPath|strict locator.
    * @param {string} fileName file name to save.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    *
    */
@@ -1867,7 +1866,7 @@ class Nightmare extends Helper {
    * const width = await I.grabElementBoundingRect('h3', 'width');
    * // width == 527
    * ```
-   * @param {LocatorOrString} locator element located by CSS|XPath|strict locator.
+   * @param {string | object} locator element located by CSS|XPath|strict locator.
    * @param {string=} elementSize x, y, width or height of the given element.
    * @returns {Promise<DOMRect>|Promise<number>} Element bounding rectangle
    * 
@@ -1909,7 +1908,7 @@ class Nightmare extends Helper {
    * 
    * @param {string} fileName file name to save.
    * @param {boolean} [fullPage=false] (optional, `false` by default) flag to enable fullscreen screenshot mode.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async saveScreenshot(fileName, fullPage = this.options.fullPageScreenshots) {
@@ -1940,10 +1939,10 @@ class Nightmare extends Helper {
    * I.scrollTo('#submit', 5, 5);
    * ```
    * 
-   * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
+   * @param {string | object} locator located by CSS|XPath|strict locator.
    * @param {number} [offsetX=0] (optional, `0` by default) X-axis offset.
    * @param {number} [offsetY=0] (optional, `0` by default) Y-axis offset.
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async scrollTo(locator, offsetX = 0, offsetY = 0) {
@@ -1971,7 +1970,7 @@ class Nightmare extends Helper {
    * ```js
    * I.scrollPageToTop();
    * ```
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async scrollPageToTop() {
@@ -1984,7 +1983,7 @@ class Nightmare extends Helper {
    * ```js
    * I.scrollPageToBottom();
    * ```
-   * @returns {Promise<void>} automatically synchronized promise through #recorder
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    */
   async scrollPageToBottom() {
