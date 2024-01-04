@@ -56,10 +56,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {
           group: "Helpers",
           items: [
-            { text: "Using Playwright", link: '/playwright' },            
+            { text: "Using Playwright", link: '/playwright' },
             { text: "Using WebDriver", link: '/webdriver' },
             { text: "Using Puppeteer", link: '/puppeteer' },
-            { text: "API Testing", link: '/api' },            
+            { text: "API Testing", link: '/api' },
             { text: "Using TestCafe", link: '/testcafe' },
             { text: "Mobile Testing", link: '/mobile' },
           ]
@@ -150,9 +150,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         },
         {
           group: 'other',
+          text: 'Other Helpers',
           items: [
             { text: "OpenAI", link: "/helpers/OpenAI" },
             { text: "FileSystem", link: "/helpers/FileSystem" },
+            { text: "Expect", link: "/helpers/Expect" },
             { text: "Community Helpers", link: "/community-helpers" },
           ]
         },
