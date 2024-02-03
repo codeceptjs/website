@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "autoprefixer": "10.4.16",
+    "autoprefixer": "10.4.17",
     "npm": "10.2.5",
     "postcss": "8.4.33",
     "sass": "1.69.6",
