@@ -17,7 +17,7 @@
     "sass": "1.69.6",
     "sass-loader": "10.3.1",
     "tailwindcss": "1.9.6",
-    "vue": "2.7.14",
+    "vue": "3.4.18",
     "vue-carousel": "0.18.0",
     "vue-slider-component": "3.2.24",
     "vueperslides": "2.16.0",
