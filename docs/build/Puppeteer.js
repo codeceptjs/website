@@ -5,6 +5,7 @@ const path = require('path');
 
 const Helper = require('@codeceptjs/helper');
 const { v4: uuidv4 } = require('uuid');
+const promiseRetry = require('promise-retry');
 const Locator = require('../locator');
 const recorder = require('../recorder');
 const store = require('../store');
@@ -493,7 +494,7 @@ class Puppeteer extends Helper {
     if (!page) return;
     page.setDefaultNavigationTimeout(this.options.getPageTimeout);
     this.context = await this.page.$('body');
-    if (this.config.browser === 'chrome') {
+    if (this.options.browser === 'chrome') {
       await page.bringToFront();
     }
   }
@@ -676,9 +677,9 @@ class Puppeteer extends Helper {
       url = this.options.url + url;
     }
 
-    if (this.config.basicAuth && (this.isAuthenticated !== true)) {
+    if (this.options.basicAuth && (this.isAuthenticated !== true)) {
       if (url.includes(this.options.url)) {
-        await this.page.authenticate(this.config.basicAuth);
+        await this.page.authenticate(this.options.basicAuth);
         this.isAuthenticated = true;
       }
     }
@@ -2325,6 +2326,47 @@ class Puppeteer extends Helper {
     if (!name) return cookies;
     const cookie = cookies.filter(c => c.name === name);
     if (cookie[0]) return cookie[0];
+  }
+
+  /**
+   * Waits for the specified cookie in the cookies.
+   * 
+   * ```js
+   * I.waitForCookie("token");
+   * ```
+   * 
+   * @param {string} name expected cookie name.
+   * @param {number} [sec=3] (optional, `3` by default) time in seconds to wait
+   * @returns {void} automatically synchronized promise through #recorder
+   * 
+   */
+  async waitForCookie(name, sec) {
+    // by default, we will retry 3 times
+    let retries = 3;
+    const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout;
+
+    if (sec) {
+      retries = sec;
+    } else {
+      retries = Math.ceil(waitTimeout / 1000) - 1;
+    }
+
+    return promiseRetry(async (retry, number) => {
+      const _grabCookie = async (name) => {
+        const cookies = await this.page.cookies();
+        const cookie = cookies.filter(c => c.name === name);
+        if (cookie.length === 0) throw Error(`Cookie ${name} is not found after ${retries}s`);
+      };
+
+      this.debugSection('Wait for cookie: ', name);
+      if (number > 1) this.debugSection('Retrying... Attempt #', number);
+
+      try {
+        await _grabCookie(name);
+      } catch (e) {
+        retry(e);
+      }
+    }, { retries, maxTimeout: 1000 });
   }
 
   /**

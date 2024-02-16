@@ -4,8 +4,8 @@ const fs = require('fs');
 const Helper = require('@codeceptjs/helper');
 const { v4: uuidv4 } = require('uuid');
 const assert = require('assert');
+const promiseRetry = require('promise-retry');
 const Locator = require('../locator');
-const store = require('../store');
 const recorder = require('../recorder');
 const stringIncludes = require('../assert/include').includes;
 const { urlEquals } = require('../assert/equal');
@@ -50,6 +50,8 @@ const { createValueEngine, createDisabledEngine } = require('./extras/Playwright
 const {
   seeElementError, dontSeeElementError, dontSeeElementInDOMError, seeElementInDOMError,
 } = require('./errors/ElementAssertion');
+const { createAdvancedTestResults, allParameterValuePairsMatchExtreme, extractQueryObjects } = require('./networkTraffics/utils');
+const { log } = require('../output');
 
 const pathSeparator = path.sep;
 
@@ -756,9 +758,7 @@ class Playwright extends Helper {
     });
     this.context = await this.page;
     this.contextLocator = null;
-    if (this.options.browser === 'chrome') {
-      await page.bringToFront();
-    }
+    await page.bringToFront();
   }
 
   /**
@@ -2323,7 +2323,7 @@ class Playwright extends Helper {
     let optionToSelect = '';
 
     try {
-      optionToSelect = await el.locator('option', { hasText: option }).textContent();
+      optionToSelect = (await el.locator('option', { hasText: option }).textContent()).trim();
     } catch (e) {
       optionToSelect = option;
     }
@@ -3644,6 +3644,7 @@ class Playwright extends Helper {
    */
   async waitForText(text, sec = null, context = null) {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout;
+    const errorMessage = `Text "${text}" was not found on page after ${waitTimeout / 1000} sec.`;
     let waiter;
 
     const contextObject = await this._getContext();
@@ -3654,18 +3655,21 @@ class Playwright extends Helper {
         try {
           await contextObject.locator(`${locator.isCustom() ? `${locator.type}=${locator.value}` : locator.simplify()} >> text=${text}`).first().waitFor({ timeout: waitTimeout, state: 'visible' });
         } catch (e) {
-          console.log(e);
-          throw new Error(`Text "${text}" was not found on page after ${waitTimeout / 1000} sec\n${e.message}`);
+          throw new Error(`${errorMessage}\n${e.message}`);
         }
       }
 
       if (locator.isXPath()) {
-        waiter = contextObject.waitForFunction(([locator, text, $XPath]) => {
-          eval($XPath); // eslint-disable-line no-eval
-          const el = $XPath(null, locator);
-          if (!el.length) return false;
-          return el[0].innerText.indexOf(text) > -1;
-        }, [locator.value, text, $XPath.toString()], { timeout: waitTimeout });
+        try {
+          await contextObject.waitForFunction(([locator, text, $XPath]) => {
+            eval($XPath); // eslint-disable-line no-eval
+            const el = $XPath(null, locator);
+            if (!el.length) return false;
+            return el[0].innerText.indexOf(text) > -1;
+          }, [locator.value, text, $XPath.toString()], { timeout: waitTimeout });
+        } catch (e) {
+          throw new Error(`${errorMessage}\n${e.message}`);
+        }
       }
     } else {
       // we have this as https://github.com/microsoft/playwright/issues/26829 is not yet implemented
@@ -3679,7 +3683,7 @@ class Playwright extends Helper {
         count += 1000;
       } while (count <= waitTimeout);
 
-      if (!waiter) throw new Error(`Text "${text}" was not found on page after ${waitTimeout / 1000} sec`);
+      if (!waiter) throw new Error(`${errorMessage}`);
     }
   }
 
@@ -3892,6 +3896,47 @@ class Playwright extends Helper {
     }
   }
 
+  /**
+   * Waits for the specified cookie in the cookies.
+   * 
+   * ```js
+   * I.waitForCookie("token");
+   * ```
+   * 
+   * @param {string} name expected cookie name.
+   * @param {number} [sec=3] (optional, `3` by default) time in seconds to wait
+   * @returns {void} automatically synchronized promise through #recorder
+   * 
+   */
+  async waitForCookie(name, sec) {
+    // by default, we will retry 3 times
+    let retries = 3;
+    const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout;
+
+    if (sec) {
+      retries = sec;
+    } else {
+      retries = Math.ceil(waitTimeout / 1000) - 1;
+    }
+
+    return promiseRetry(async (retry, number) => {
+      const _grabCookie = async (name) => {
+        const cookies = await this.browserContext.cookies();
+        const cookie = cookies.filter(c => c.name === name);
+        if (cookie.length === 0) throw Error(`Cookie ${name} is not found after ${retries}s`);
+      };
+
+      this.debugSection('Wait for cookie: ', name);
+      if (number > 1) this.debugSection('Retrying... Attempt #', number);
+
+      try {
+        await _grabCookie(name);
+      } catch (e) {
+        retry(e);
+      }
+    }, { retries, maxTimeout: 1000 });
+  }
+
   async _waitForAction() {
     return this.wait(this.options.waitForAction / 1000);
   }
@@ -3986,14 +4031,13 @@ class Playwright extends Helper {
   }
 
   /**
-   * Starts recording the network traffics.
-   * This also resets recorded network requests.
-   *
+   * Resets all recorded network requests.
+   * 
    * ```js
-   * I.startRecordingTraffic();
+   * I.flushNetworkTraffics();
    * ```
+   * 
    *
-   * @return {void}
    */
   startRecordingTraffic() {
     this.flushNetworkTraffics();
@@ -4020,18 +4064,18 @@ class Playwright extends Helper {
   }
 
   /**
-  *  Grab the recording network traffics
-  *
-  * ```js
-  * const traffics = await I.grabRecordedNetworkTraffics();
-  * expect(traffics[0].url).to.equal('https://reqres.in/api/comments/1');
-  * expect(traffics[0].response.status).to.equal(200);
-  * expect(traffics[0].response.body).to.contain({ name: 'this was mocked' });
-  * ```
-  *
-  * @return { Promise<Array<any>> }
-  *
-  */
+   * Grab the recording network traffics
+   * 
+   * ```js
+   * const traffics = await I.grabRecordedNetworkTraffics();
+   * expect(traffics[0].url).to.equal('https://reqres.in/api/comments/1');
+   * expect(traffics[0].response.status).to.equal(200);
+   * expect(traffics[0].response.body).to.contain({ name: 'this was mocked' });
+   * ```
+   * 
+   * @return { Array } recorded network traffics
+   * 
+   */
   async grabRecordedNetworkTraffics() {
     if (!this.recording || !this.recordedAtLeastOnce) {
       throw new Error('Failure in test automation. You use "I.grabRecordedNetworkTraffics", but "I.startRecordingTraffic" was never called before.');
@@ -4140,6 +4184,11 @@ class Playwright extends Helper {
 
   /**
    * Resets all recorded network requests.
+   * 
+   * ```js
+   * I.flushNetworkTraffics();
+   * ```
+   * 
    */
   flushNetworkTraffics() {
     this.requests = [];
@@ -4147,10 +4196,11 @@ class Playwright extends Helper {
 
   /**
    * Stops recording of network traffic. Recorded traffic is not flashed.
-   *
+   * 
    * ```js
    * I.stopRecordingTraffic();
    * ```
+   * 
    */
   stopRecordingTraffic() {
     this.page.removeAllListeners('request');
@@ -4159,41 +4209,42 @@ class Playwright extends Helper {
 
   /**
    * Verifies that a certain request is part of network traffic.
-   *
+   * 
    * ```js
    * // checking the request url contains certain query strings
    * I.amOnPage('https://openai.com/blog/chatgpt');
    * I.startRecordingTraffic();
    * await I.seeTraffic({
-   *    name: 'sentry event',
-   *    url: 'https://images.openai.com/blob/cf717bdb-0c8c-428a-b82b-3c3add87a600',
-   *    parameters: {
-   *       width: '1919',
-   *       height: '1138',
+   *     name: 'sentry event',
+   *     url: 'https://images.openai.com/blob/cf717bdb-0c8c-428a-b82b-3c3add87a600',
+   *     parameters: {
+   *     width: '1919',
+   *     height: '1138',
    *     },
-   * });
+   *   });
    * ```
-   *
+   * 
    * ```js
    * // checking the request url contains certain post data
    * I.amOnPage('https://openai.com/blog/chatgpt');
    * I.startRecordingTraffic();
    * await I.seeTraffic({
-   *    name: 'event',
-   *    url: 'https://cloudflareinsights.com/cdn-cgi/rum',
-   *    requestPostData: {
-   *       st: 2,
+   *     name: 'event',
+   *     url: 'https://cloudflareinsights.com/cdn-cgi/rum',
+   *     requestPostData: {
+   *     st: 2,
    *     },
-   * });
+   *   });
    * ```
-   *
+   * 
    * @param {Object} opts - options when checking the traffic network.
    * @param {string} opts.name A name of that request. Can be any value. Only relevant to have a more meaningful error message in case of fail.
    * @param {string} opts.url Expected URL of request in network traffic
    * @param {Object} [opts.parameters] Expected parameters of that request in network traffic
    * @param {Object} [opts.requestPostData] Expected that request contains post data in network traffic
    * @param {number} [opts.timeout] Timeout to wait for request in seconds. Default is 10 seconds.
-   * @return { Promise<*> }
+   * @return {void} automatically synchronized promise through #recorder
+   * 
    */
   async seeTraffic({
     name, url, parameters, requestPostData, timeout = 10,
@@ -4276,17 +4327,19 @@ class Playwright extends Helper {
 
   /**
    * Verifies that a certain request is not part of network traffic.
-   *
+   * 
    * Examples:
-   *
+   * 
    * ```js
    * I.dontSeeTraffic({ name: 'Unexpected API Call', url: 'https://api.example.com' });
    * I.dontSeeTraffic({ name: 'Unexpected API Call of "user" endpoint', url: /api.example.com.*user/ });
    * ```
-   *
+   * 
    * @param {Object} opts - options when checking the traffic network.
    * @param {string} opts.name A name of that request. Can be any value. Only relevant to have a more meaningful error message in case of fail.
    * @param {string|RegExp} opts.url Expected URL of request in network traffic. Can be a string or a regular expression.
+   * @return {void} automatically synchronized promise through #recorder
+   * 
    *
    */
   dontSeeTraffic({ name, url }) {
@@ -4998,134 +5051,3 @@ async function highlightActiveElement(element) {
     });
   }
 }
-
-const createAdvancedTestResults = (url, dataToCheck, requests) => {
-  // Creates advanced test results for a network traffic check.
-  // Advanced test results only applies when expected parameters are set
-  if (!dataToCheck) return '';
-
-  let urlFound = false;
-  let advancedResults;
-  requests.forEach((request) => {
-    // url not found in this request. continue with next request
-    if (urlFound || !request.url.match(new RegExp(url))) return;
-    urlFound = true;
-
-    // Url found. Now we create advanced test report for that URL and show which parameters failed
-    if (!request.requestPostData) {
-      advancedResults = allParameterValuePairsMatchExtreme(extractQueryObjects(request.url), dataToCheck);
-    } else if (request.requestPostData) {
-      advancedResults = allRequestPostDataValuePairsMatchExtreme(request.requestPostData, dataToCheck);
-    }
-  });
-  return advancedResults;
-};
-
-const extractQueryObjects = (queryString) => {
-  // Converts a string of GET parameters into an array of parameter objects. Each parameter object contains the properties "name" and "value".
-  if (queryString.indexOf('?') === -1) {
-    return [];
-  }
-  const queryObjects = [];
-
-  const queryPart = queryString.split('?')[1];
-
-  const queryParameters = queryPart.split('&');
-
-  queryParameters.forEach((queryParameter) => {
-    const keyValue = queryParameter.split('=');
-    const queryObject = {};
-    // eslint-disable-next-line prefer-destructuring
-    queryObject.name = keyValue[0];
-    queryObject.value = decodeURIComponent(keyValue[1]);
-    queryObjects.push(queryObject);
-  });
-
-  return queryObjects;
-};
-
-const allParameterValuePairsMatchExtreme = (queryStringObject, advancedExpectedParameterValuePairs) => {
-  // More advanced check if all request parameters match with the expectations
-  let littleReport = '\nQuery parameters:\n';
-  let success = true;
-
-  for (const expectedKey in advancedExpectedParameterValuePairs) {
-    if (!Object.prototype.hasOwnProperty.call(advancedExpectedParameterValuePairs, expectedKey)) {
-      continue;
-    }
-    let parameterFound = false;
-    const expectedValue = advancedExpectedParameterValuePairs[expectedKey];
-
-    for (const queryParameter of queryStringObject) {
-      if (queryParameter.name === expectedKey) {
-        parameterFound = true;
-        if (expectedValue === undefined) {
-          littleReport += `   ${expectedKey.padStart(10, ' ')}\n`;
-        } else if (typeof expectedValue === 'object' && expectedValue.base64) {
-          const decodedActualValue = Buffer.from(queryParameter.value, 'base64').toString('utf8');
-          if (decodedActualValue === expectedValue.base64) {
-            littleReport += `   ${expectedKey.padStart(10, ' ')} = base64(${expectedValue.base64})\n`;
-          } else {
-            littleReport += ` ✖ ${expectedKey.padStart(10, ' ')} = base64(${expectedValue.base64})     -> actual value: "base64(${decodedActualValue})"\n`;
-            success = false;
-          }
-        } else if (queryParameter.value === expectedValue) {
-          littleReport += `   ${expectedKey.padStart(10, ' ')} = ${expectedValue}\n`;
-        } else {
-          littleReport += ` ✖ ${expectedKey.padStart(10, ' ')} = ${expectedValue}      -> actual value: "${queryParameter.value}"\n`;
-          success = false;
-        }
-      }
-    }
-
-    if (parameterFound === false) {
-      littleReport += ` ✖ ${expectedKey.padStart(10, ' ')}${expectedValue ? ` = ${JSON.stringify(expectedValue)}` : ''}      -> parameter not found in request\n`;
-      success = false;
-    }
-  }
-
-  return success ? true : littleReport;
-};
-
-const allRequestPostDataValuePairsMatchExtreme = (RequestPostDataObject, advancedExpectedRequestPostValuePairs) => {
-  // More advanced check if all request post data match with the expectations
-  let littleReport = '\nRequest Post Data:\n';
-  let success = true;
-
-  for (const expectedKey in advancedExpectedRequestPostValuePairs) {
-    if (!Object.prototype.hasOwnProperty.call(advancedExpectedRequestPostValuePairs, expectedKey)) {
-      continue;
-    }
-    let keyFound = false;
-    const expectedValue = advancedExpectedRequestPostValuePairs[expectedKey];
-
-    for (const [key, value] of Object.entries(RequestPostDataObject)) {
-      if (key === expectedKey) {
-        keyFound = true;
-        if (expectedValue === undefined) {
-          littleReport += `   ${expectedKey.padStart(10, ' ')}\n`;
-        } else if (typeof expectedValue === 'object' && expectedValue.base64) {
-          const decodedActualValue = Buffer.from(value, 'base64').toString('utf8');
-          if (decodedActualValue === expectedValue.base64) {
-            littleReport += `   ${expectedKey.padStart(10, ' ')} = base64(${expectedValue.base64})\n`;
-          } else {
-            littleReport += ` ✖ ${expectedKey.padStart(10, ' ')} = base64(${expectedValue.base64})     -> actual value: "base64(${decodedActualValue})"\n`;
-            success = false;
-          }
-        } else if (value === expectedValue) {
-          littleReport += `   ${expectedKey.padStart(10, ' ')} = ${expectedValue}\n`;
-        } else {
-          littleReport += ` ✖ ${expectedKey.padStart(10, ' ')} = ${expectedValue}      -> actual value: "${value}"\n`;
-          success = false;
-        }
-      }
-    }
-
-    if (keyFound === false) {
-      littleReport += ` ✖ ${expectedKey.padStart(10, ' ')}${expectedValue ? ` = ${JSON.stringify(expectedValue)}` : ''}      -> key not found in request\n`;
-      success = false;
-    }
-  }
-
-  return success ? true : littleReport;
-};

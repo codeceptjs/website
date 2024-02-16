@@ -6,6 +6,7 @@ const fs = require('fs');
 
 const Helper = require('@codeceptjs/helper');
 const crypto = require('crypto');
+const promiseRetry = require('promise-retry');
 const stringIncludes = require('../assert/include').includes;
 const { urlEquals, equals } = require('../assert/equal');
 const { debug } = require('../output');
@@ -35,6 +36,7 @@ const { blurElement } = require('./scripts/blurElement');
 const {
   dontSeeElementError, seeElementError, seeElementInDOMError, dontSeeElementInDOMError,
 } = require('./errors/ElementAssertion');
+const { allParameterValuePairsMatchExtreme, extractQueryObjects, createAdvancedTestResults } = require('./networkTraffics/utils');
 
 const SHADOW = 'shadow';
 const webRoot = 'body';
@@ -451,6 +453,11 @@ class WebDriver extends Helper {
     this.activeSessionName = '';
     this.customLocatorStrategies = config.customLocatorStrategies;
 
+    // for network stuff
+    this.requests = [];
+    this.recording = false;
+    this.recordedAtLeastOnce = false;
+
     this._setConfig(config);
 
     Locator.addFilter((locator, result) => {
@@ -490,8 +497,9 @@ class WebDriver extends Helper {
     if (config.host) {
       // webdriverio spec
       config.hostname = config.host;
-      config.path = '/wd/hub';
+      config.path = config.path ? config.path : '/wd/hub';
     }
+
     config.baseUrl = config.url || config.baseUrl;
     if (config.desiredCapabilities && Object.keys(config.desiredCapabilities).length) {
       config.capabilities = config.desiredCapabilities;
@@ -632,6 +640,11 @@ class WebDriver extends Helper {
     if (this.browser.capabilities && this.browser.capabilities.platformName) {
       this.browser.capabilities.platformName = this.browser.capabilities.platformName.toLowerCase();
     }
+
+    if (this.options.automationProtocol) {
+      this.puppeteerBrowser = await this.browser.getPuppeteer();
+    }
+
     return this.browser;
   }
 
@@ -984,12 +997,12 @@ class WebDriver extends Helper {
    */
   amOnPage(url) {
     let split_url;
-    if (this.config.basicAuth) {
+    if (this.options.basicAuth) {
       if (url.startsWith('/')) {
-        url = this.config.url + url;
+        url = this.options.url + url;
       }
       split_url = url.split('//');
-      url = `${split_url[0]}//${this.config.basicAuth.username}:${this.config.basicAuth.password}@${split_url[1]}`;
+      url = `${split_url[0]}//${this.options.basicAuth.username}:${this.options.basicAuth.password}@${split_url[1]}`;
     }
     return this.browser.url(url);
   }
@@ -2584,6 +2597,46 @@ class WebDriver extends Helper {
   }
 
   /**
+   * Waits for the specified cookie in the cookies.
+   * 
+   * ```js
+   * I.waitForCookie("token");
+   * ```
+   * 
+   * @param {string} name expected cookie name.
+   * @param {number} [sec=3] (optional, `3` by default) time in seconds to wait
+   * @returns {void} automatically synchronized promise through #recorder
+   * 
+   */
+  async waitForCookie(name, sec) {
+    // by default, we will retry 3 times
+    let retries = 3;
+    const waitTimeout = sec || this.options.waitForTimeoutInSeconds;
+
+    if (sec) {
+      retries = sec;
+    } else {
+      retries = waitTimeout - 1;
+    }
+
+    return promiseRetry(async (retry, number) => {
+      const _grabCookie = async (name) => {
+        const cookie = await this.browser.getCookies([name]);
+        if (cookie.length === 0) throw Error(`Cookie ${name} is not found after ${retries}s`);
+      };
+
+      this.debugSection('Wait for cookie: ', name);
+      if (number > 1) this.debugSection('Retrying... Attempt #', number);
+
+      try {
+        await _grabCookie(name);
+      } catch (e) {
+        retry(e);
+      }
+    }, { retries, maxTimeout: 1000 });
+  }
+
+  /**
    * Accepts the active JavaScript native popup window, as created by window.alert|window.confirm|window.prompt.
    * Don't confuse popups with modal windows, as created by [various
    * libraries](http://jster.net/category/windows-modals-popups).
@@ -3725,9 +3778,9 @@ class WebDriver extends Helper {
       return;
     }
     this.geoLocation = { latitude, longitude };
-    const puppeteerBrowser = await this.browser.getPuppeteer();
+
     await this.browser.call(async () => {
-      const pages = await puppeteerBrowser.pages();
+      const pages = await this.puppeteerBrowser.pages();
       await pages[0].setGeolocation({ latitude, longitude });
     });
   }
@@ -3815,6 +3868,332 @@ class WebDriver extends Helper {
    */
   runInWeb(fn) {
     return fn();
+  }
+
+  /**
+   *
+   * _Note:_ Only works when devtoolsProtocol is enabled.
+   *
+   * Resets all recorded network requests.
+   * 
+   * ```js
+   * I.flushNetworkTraffics();
+   * ```
+   * 
+   */
+  flushNetworkTraffics() {
+    if (!this.options.automationProtocol) {
+      console.log('* Switch to devtools protocol to use this command by setting devtoolsProtocol: true in the configuration');
+      return;
+    }
+    this.requests = [];
+  }
+
+  /**
+   *
+   * _Note:_ Only works when devtoolsProtocol is enabled.
+   *
+   * Stops recording of network traffic. Recorded traffic is not flashed.
+   * 
+   * ```js
+   * I.stopRecordingTraffic();
+   * ```
+   * 
+   */
+  stopRecordingTraffic() {
+    if (!this.options.automationProtocol) {
+      console.log('* Switch to devtools protocol to use this command by setting devtoolsProtocol: true in the configuration');
+      return;
+    }
+    this.page.removeAllListeners('request');
+    this.recording = false;
+  }
+
+  /**
+   *
+   * _Note:_ Only works when devtoolsProtocol is enabled.
+   *
+   * Starts recording the network traffics.
+   * This also resets recorded network requests.
+   * 
+   * ```js
+   * I.startRecordingTraffic();
+   * ```
+   * 
+   * @returns {void} automatically synchronized promise through #recorder
+   * 
+   *
+   */
+  async startRecordingTraffic() {
+    if (!this.options.automationProtocol) {
+      console.log('* Switch to devtools protocol to use this command by setting devtoolsProtocol: true in the configuration');
+      return;
+    }
+    this.flushNetworkTraffics();
+    this.recording = true;
+    this.recordedAtLeastOnce = true;
+
+    this.page = (await this.puppeteerBrowser.pages())[0];
+    await this.page.setRequestInterception(true);
+
+    this.page.on('request', (request) => {
+      const information = {
+        url: request.url(),
+        method: request.method(),
+        requestHeaders: request.headers(),
+        requestPostData: request.postData(),
+        response: request.response(),
+      };
+
+      this.debugSection('REQUEST: ', JSON.stringify(information));
+
+      if (typeof information.requestPostData === 'object') {
+        information.requestPostData = JSON.parse(information.requestPostData);
+      }
+      request.continue();
+      this.requests.push(information);
+    });
+  }
+
+  /**
+   *
+   * _Note:_ Only works when devtoolsProtocol is enabled.
+   *
+   * Grab the recording network traffics
+   * 
+   * ```js
+   * const traffics = await I.grabRecordedNetworkTraffics();
+   * expect(traffics[0].url).to.equal('https://reqres.in/api/comments/1');
+   * expect(traffics[0].response.status).to.equal(200);
+   * expect(traffics[0].response.body).to.contain({ name: 'this was mocked' });
+   * ```
+   * 
+   * @return { Array } recorded network traffics
+   * 
+   */
+  async grabRecordedNetworkTraffics() {
+    if (!this.options.automationProtocol) {
+      console.log('* Switch to devtools protocol to use this command by setting devtoolsProtocol: true in the configuration');
+      return;
+    }
+    if (!this.recording || !this.recordedAtLeastOnce) {
+      throw new Error('Failure in test automation. You use "I.grabRecordedNetworkTraffics", but "I.startRecordingTraffic" was never called before.');
+    }
+
+    const promises = this.requests.map(async (request) => {
+      const resp = await request.response;
+
+      if (!resp) {
+        return {
+          url: '',
+          response: {
+            status: '',
+            statusText: '',
+            body: '',
+          },
+        };
+      }
+
+      let body;
+      try {
+        // There's no 'body' for some requests (redirect etc...)
+        body = JSON.parse((await resp.body()).toString());
+      } catch (e) {
+        // only interested in JSON, not HTML responses.
+      }
+
+      return {
+        url: resp.url(),
+        response: {
+          status: resp.status(),
+          statusText: resp.statusText(),
+          body,
+        },
+      };
+    });
+    return Promise.all(promises);
+  }
+
+  /**
+   *
+   * _Note:_ Only works when devtoolsProtocol is enabled.
+   *
+   * Verifies that a certain request is part of network traffic.
+   * 
+   * ```js
+   * // checking the request url contains certain query strings
+   * I.amOnPage('https://openai.com/blog/chatgpt');
+   * I.startRecordingTraffic();
+   * await I.seeTraffic({
+   *     name: 'sentry event',
+   *     url: 'https://images.openai.com/blob/cf717bdb-0c8c-428a-b82b-3c3add87a600',
+   *     parameters: {
+   *     width: '1919',
+   *     height: '1138',
+   *     },
+   *   });
+   * ```
+   * 
+   * ```js
+   * // checking the request url contains certain post data
+   * I.amOnPage('https://openai.com/blog/chatgpt');
+   * I.startRecordingTraffic();
+   * await I.seeTraffic({
+   *     name: 'event',
+   *     url: 'https://cloudflareinsights.com/cdn-cgi/rum',
+   *     requestPostData: {
+   *     st: 2,
+   *     },
+   *   });
+   * ```
+   * 
+   * @param {Object} opts - options when checking the traffic network.
+   * @param {string} opts.name A name of that request. Can be any value. Only relevant to have a more meaningful error message in case of fail.
+   * @param {string} opts.url Expected URL of request in network traffic
+   * @param {Object} [opts.parameters] Expected parameters of that request in network traffic
+   * @param {Object} [opts.requestPostData] Expected that request contains post data in network traffic
+   * @param {number} [opts.timeout] Timeout to wait for request in seconds. Default is 10 seconds.
+   * @return {void} automatically synchronized promise through #recorder
+   * 
+   */
+  async seeTraffic({
+    name, url, parameters, requestPostData, timeout = 10,
+  }) {
+    if (!this.options.automationProtocol) {
+      console.log('* Switch to devtools protocol to use this command by setting devtoolsProtocol: true in the configuration');
+      return;
+    }
+    if (!name) {
+      throw new Error('Missing required key "name" in object given to "I.seeTraffic".');
+    }
+
+    if (!url) {
+      throw new Error('Missing required key "url" in object given to "I.seeTraffic".');
+    }
+
+    if (!this.recording || !this.recordedAtLeastOnce) {
+      throw new Error('Failure in test automation. You use "I.seeTraffic", but "I.startRecordingTraffic" was never called before.');
+    }
+
+    for (let i = 0; i <= timeout * 2; i++) {
+      const found = this._isInTraffic(url, parameters);
+      if (found) {
+        return true;
+      }
+      await new Promise((done) => {
+        setTimeout(done, 1000);
+      });
+    }
+
+    // check request post data
+    if (requestPostData && this._isInTraffic(url)) {
+      const advancedTestResults = createAdvancedTestResults(url, requestPostData, this.requests);
+
+      assert.equal(advancedTestResults, true, `Traffic named "${name}" found correct URL ${url}, BUT the post data did not match:\n ${advancedTestResults}`);
+    } else if (parameters && this._isInTraffic(url)) {
+      const advancedTestResults = createAdvancedTestResults(url, parameters, this.requests);
+
+      assert.fail(
+        `Traffic named "${name}" found correct URL ${url}, BUT the query parameters did not match:\n`
+        + `${advancedTestResults}`,
+      );
+    } else {
+      assert.fail(
+        `Traffic named "${name}" not found in recorded traffic within ${timeout} seconds.\n`
+        + `Expected url: ${url}.\n`
+        + `Recorded traffic:\n${this._getTrafficDump()}`,
+      );
+    }
+  }
+
+  /**
+   *
+   * _Note:_ Only works when devtoolsProtocol is enabled.
+   *
+   * Verifies that a certain request is not part of network traffic.
+   * 
+   * Examples:
+   * 
+   * ```js
+   * I.dontSeeTraffic({ name: 'Unexpected API Call', url: 'https://api.example.com' });
+   * I.dontSeeTraffic({ name: 'Unexpected API Call of "user" endpoint', url: /api.example.com.*user/ });
+   * ```
+   * 
+   * @param {Object} opts - options when checking the traffic network.
+   * @param {string} opts.name A name of that request. Can be any value. Only relevant to have a more meaningful error message in case of fail.
+   * @param {string|RegExp} opts.url Expected URL of request in network traffic. Can be a string or a regular expression.
+   * @return {void} automatically synchronized promise through #recorder
+   * 
+   *
+   */
+  dontSeeTraffic({ name, url }) {
+    if (!this.options.automationProtocol) {
+      console.log('* Switch to devtools protocol to use this command by setting devtoolsProtocol: true in the configuration');
+      return;
+    }
+    if (!this.recordedAtLeastOnce) {
+      throw new Error('Failure in test automation. You use "I.dontSeeTraffic", but "I.startRecordingTraffic" was never called before.');
+    }
+
+    if (!name) {
+      throw new Error('Missing required key "name" in object given to "I.dontSeeTraffic".');
+    }
+
+    if (!url) {
+      throw new Error('Missing required key "url" in object given to "I.dontSeeTraffic".');
+    }
+
+    if (this._isInTraffic(url)) {
+      assert.fail(`Traffic with name "${name}" (URL: "${url}') found, but was not expected to be found.`);
+    }
+  }
+
+  /**
+   * Checks if URL with parameters is part of network traffic. Returns true or false. Internal method for this helper.
+   *
+   * @param url URL to look for.
+   * @param [parameters] Parameters that this URL needs to contain
+   * @return {boolean} Whether or not URL with parameters is part of network traffic.
+   * @private
+   */
+  _isInTraffic(url, parameters) {
+    let isInTraffic = false;
+    this.requests.forEach((request) => {
+      if (isInTraffic) {
+        return; // We already found traffic. Continue with next request
+      }
+
+      if (!request.url.match(new RegExp(url))) {
+        return; // url not found in this request. continue with next request
+      }
+
+      // URL has matched. Now we check the parameters
+
+      if (parameters) {
+        const advancedReport = allParameterValuePairsMatchExtreme(extractQueryObjects(request.url), parameters);
+        if (advancedReport === true) {
+          isInTraffic = true;
+        }
+      } else {
+        isInTraffic = true;
+      }
+    });
+
+    return isInTraffic;
+  }
+
+  /**
+   * Returns all URLs of all network requests recorded so far during execution of test scenario.
+   *
+   * @return {string} List of URLs recorded as a string, separated by new lines after each URL
+   * @private
+   */
+  _getTrafficDump() {
+    let dumpedTraffic = '';
+    this.requests.forEach((request) => {
+      dumpedTraffic += `${request.method} - ${request.url}\n`;
+    });
+    return dumpedTraffic;
   }
 }
 
