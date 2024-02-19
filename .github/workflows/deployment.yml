@@ -1,0 +1,19 @@
+name: Publish website
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
+      - name: Install deps
+        run: npm i
+      - name: deployment
+        run: ./runok.js publish
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
