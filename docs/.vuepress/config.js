@@ -155,6 +155,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             { text: "OpenAI", link: "/helpers/OpenAI" },
             { text: "FileSystem", link: "/helpers/FileSystem" },
             { text: "Expect", link: "/helpers/Expect" },
+            { text: "MockServer", link: "/helpers/MockServer" },
             { text: "Community Helpers", link: "/community-helpers" },
           ]
         },
