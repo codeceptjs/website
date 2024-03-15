@@ -78,7 +78,7 @@ const consoleLogStore = new Console();
  * @prop {string} [browser=chrome] - can be changed to `firefox` when using [puppeteer-firefox](https://codecept.io/helpers/Puppeteer-firefox).
  * @prop {object} [chrome] - pass additional [Puppeteer run options](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteerlaunchoptions).
  * @prop {boolean} [highlightElement] - highlight the interacting elements. Default: false. Note: only activate under verbose mode (--verbose).
-*/
+ */
 const config = {};
 
 /**
@@ -369,7 +369,7 @@ class Puppeteer extends Helper {
         this.debugSection('Incognito Tab', 'opened');
         this.activeSessionName = name;
 
-        const bc = await this.browser.createIncognitoBrowserContext();
+        const bc = await this.browser.createBrowserContext();
         await bc.newPage();
 
         // Create a new page inside context.
@@ -607,14 +607,7 @@ class Puppeteer extends Helper {
   }
 
   async _evaluateHandeInContext(...args) {
-    let context = await this._getContext();
-
-    if (context.constructor.name === 'Frame') {
-      // Currently there is no evalateHandle for the Frame object
-      // https://github.com/GoogleChrome/puppeteer/issues/1051
-      context = await context.executionContext();
-    }
-
+    const context = await this._getContext();
     return context.evaluateHandle(...args);
   }
 
@@ -1030,7 +1023,8 @@ class Puppeteer extends Helper {
    * {{ react }}
    */
   async _locate(locator) {
-    return findElements(await this.context, locator);
+    const context = await this.context;
+    return findElements.call(this, context, locator);
   }
 
   /**
@@ -1056,7 +1050,7 @@ class Puppeteer extends Helper {
    * ```
    */
   async _locateClickable(locator) {
-    const context = await this._getContext();
+    const context = await this.context;
     return findClickable.call(this, context, locator);
   }
 
@@ -2423,8 +2417,8 @@ class Puppeteer extends Helper {
    * 
    */
   async executeScript(...args) {
-    let context = this.page;
-    if (this.context && this.context.constructor.name === 'Frame') {
+    let context = await this._getContext();
+    if (this.context && this.context.constructor.name === 'CdpFrame') {
       context = this.context; // switching to iframe context
     }
     return context.evaluate.apply(context, args);
@@ -2574,7 +2568,7 @@ class Puppeteer extends Helper {
    */
   async grabHTMLFromAll(locator) {
     const els = await this._locate(locator);
-    const values = await Promise.all(els.map(el => el.executionContext().evaluate(element => element.innerHTML, el)));
+    const values = await Promise.all(els.map(el => el.evaluate(element => element.innerHTML, el)));
     return values;
   }
 
@@ -2617,7 +2611,7 @@ class Puppeteer extends Helper {
    */
   async grabCssPropertyFromAll(locator, cssProperty) {
     const els = await this._locate(locator);
-    const res = await Promise.all(els.map(el => el.executionContext().evaluate(el => JSON.parse(JSON.stringify(getComputedStyle(el))), el)));
+    const res = await Promise.all(els.map(el => el.evaluate(el => JSON.parse(JSON.stringify(getComputedStyle(el))), el)));
     const cssValues = res.map(props => props[toCamelCase(cssProperty)]);
 
     return cssValues;
@@ -2708,35 +2702,34 @@ class Puppeteer extends Helper {
    * {{ react }}
    */
   async seeAttributesOnElements(locator, attributes) {
-    const res = await this._locate(locator);
-    assertElementExists(res, locator);
+    const elements = await this._locate(locator);
+    assertElementExists(elements, locator);
 
-    const elemAmount = res.length;
-    const commands = [];
-    res.forEach((el) => {
-      Object.keys(attributes).forEach((prop) => {
-        commands.push(el
-          .executionContext()
-          .evaluateHandle((el, attr) => el[attr] || el.getAttribute(attr), el, prop)
-          .then(el => el.jsonValue()));
-      });
+    const expectedAttributes = Object.entries(attributes);
+
+    const valuesPromises = elements.map(async (element) => {
+      const elementAttributes = {};
+      await Promise.all(expectedAttributes.map(async ([attribute, expectedValue]) => {
+        const actualValue = await element.evaluate((el, attr) => el[attr] || el.getAttribute(attr), attribute);
+        elementAttributes[attribute] = actualValue;
+      }));
+      return elementAttributes;
     });
-    let attrs = await Promise.all(commands);
-    const values = Object.keys(attributes).map(key => attributes[key]);
-    if (!Array.isArray(attrs)) attrs = [attrs];
-    let chunked = chunkArray(attrs, values.length);
-    chunked = chunked.filter((val) => {
-      for (let i = 0; i < val.length; ++i) {
-        const _actual = Number.isNaN(val[i]) || (typeof values[i]) === 'string' ? val[i] : Number.parseInt(values[i], 10);
-        const _expected = Number.isNaN(values[i]) || (typeof values[i]) === 'string' ? values[i] : Number.parseInt(values[i], 10);
-        // the attribute could be a boolean
-        if (typeof _actual === 'boolean') return _actual === _expected;
-        // if the attribute doesn't exist, returns false as well
-        if (!_actual || !_actual.includes(_expected)) return false;
-      }
-      return true;
-    });
-    return equals(`all elements (${(new Locator(locator))}) to have attributes ${JSON.stringify(attributes)}`).assert(chunked.length, elemAmount);
+
+    const actualAttributes = await Promise.all(valuesPromises);
+
+    const matchingElements = actualAttributes.filter((attrs) => expectedAttributes.every(([attribute, expectedValue]) => {
+      const actualValue = attrs[attribute];
+      if (!actualValue) return false;
+      if (actualValue.toString().match(new RegExp(expectedValue.toString()))) return true;
+      return expectedValue === actualValue;
+    }));
+
+    const elementsCount = elements.length;
+    const matchingCount = matchingElements.length;
+
+    return equals(`all elements (${(new Locator(locator))}) to have attributes ${JSON.stringify(attributes)}`)
+      .assert(matchingCount, elementsCount);
   }
 
   /**
@@ -3100,7 +3093,7 @@ class Puppeteer extends Helper {
     if (locator.isCSS()) {
       waiter = context.waitForSelector(locator.simplify(), { timeout: waitTimeout });
     } else {
-      waiter = context.waitForXPath(locator.value, { timeout: waitTimeout });
+      waiter = _waitForElement.call(this, locator, { timeout: waitTimeout });
     }
     return waiter.catch((err) => {
       throw new Error(`element (${locator.toString()}) still not present on page after ${waitTimeout / 1000} sec\n${err.message}`);
@@ -3131,7 +3124,7 @@ class Puppeteer extends Helper {
     if (locator.isCSS()) {
       waiter = context.waitForSelector(locator.simplify(), { timeout: waitTimeout, visible: true });
     } else {
-      waiter = context.waitForXPath(locator.value, { timeout: waitTimeout, visible: true });
+      waiter = _waitForElement.call(this, locator, { timeout: waitTimeout, visible: true });
     }
     return waiter.catch((err) => {
       throw new Error(`element (${locator.toString()}) still not visible after ${waitTimeout / 1000} sec\n${err.message}`);
@@ -3160,7 +3153,7 @@ class Puppeteer extends Helper {
     if (locator.isCSS()) {
       waiter = context.waitForSelector(locator.simplify(), { timeout: waitTimeout, hidden: true });
     } else {
-      waiter = context.waitForXPath(locator.value, { timeout: waitTimeout, hidden: true });
+      waiter = _waitForElement.call(this, locator, { timeout: waitTimeout, hidden: true });
     }
     return waiter.catch((err) => {
       throw new Error(`element (${locator.toString()}) still visible after ${waitTimeout / 1000} sec\n${err.message}`);
@@ -3188,7 +3181,7 @@ class Puppeteer extends Helper {
     if (locator.isCSS()) {
       waiter = context.waitForSelector(locator.simplify(), { timeout: waitTimeout, hidden: true });
     } else {
-      waiter = context.waitForXPath(locator.value, { timeout: waitTimeout, hidden: true });
+      waiter = _waitForElement.call(this, locator, { timeout: waitTimeout, hidden: true });
     }
     return waiter.catch((err) => {
       throw new Error(`element (${locator.toString()}) still not hidden after ${waitTimeout / 1000} sec\n${err.message}`);
@@ -3223,7 +3216,7 @@ class Puppeteer extends Helper {
   }
 
   async _getContext() {
-    if (this.context && this.context.constructor.name === 'Frame') {
+    if (this.context && this.context.constructor.name === 'CdpFrame') {
       return this.context;
     }
     return this.page;
@@ -3387,35 +3380,37 @@ class Puppeteer extends Helper {
   async switchTo(locator) {
     if (Number.isInteger(locator)) {
       // Select by frame index of current context
-
-      let childFrames = null;
+      let frames = [];
       if (this.context && typeof this.context.childFrames === 'function') {
-        childFrames = this.context.childFrames();
+        frames = await this.context.childFrames();
       } else {
-        childFrames = this.page.mainFrame().childFrames();
+        frames = await this.page.mainFrame().childFrames();
       }
 
-      if (locator >= 0 && locator < childFrames.length) {
-        this.context = childFrames[locator];
+      if (locator >= 0 && locator < frames.length) {
+        this.context = frames[locator];
       } else {
-        throw new Error('Element #invalidIframeSelector was not found by text|CSS|XPath');
+        throw new Error('Frame index out of bounds');
       }
       return;
     }
+
     if (!locator) {
-      this.context = await this.page.mainFrame().$('body');
+      this.context = await this.page.mainFrame();
       return;
     }
 
-    // iframe by selector
+    // Select iframe by selector
     const els = await this._locate(locator);
     assertElementExists(els, locator);
-    const contentFrame = await els[0].contentFrame();
+
+    const iframeElement = els[0];
+    const contentFrame = await iframeElement.contentFrame();
 
     if (contentFrame) {
       this.context = contentFrame;
     } else {
-      this.context = els[0];
+      throw new Error('Element "#invalidIframeSelector" was not found by text|CSS|XPath');
     }
   }
 
@@ -3578,7 +3573,7 @@ class Puppeteer extends Helper {
 module.exports = Puppeteer;
 
 async function findElements(matcher, locator) {
-  if (locator.react) return findReact(matcher.executionContext(), locator);
+  if (locator.react) return findReactElements.call(this, locator);
   locator = new Locator(locator, 'css');
   if (!locator.isXPath()) return matcher.$$(locator.simplify());
   // puppeteer version < 19.4.0 is no longer supported. This one is backward support.
@@ -3615,7 +3610,7 @@ async function proceedClick(locator, context = null, options = {}) {
 }
 
 async function findClickable(matcher, locator) {
-  if (locator.react) return findReact(matcher.executionContext(), locator);
+  if (locator.react) return findReactElements.call(this, locator);
   locator = new Locator(locator);
   if (!locator.isFuzzy()) return findElements.call(this, matcher, locator);
 
@@ -3963,4 +3958,71 @@ function highlightActiveElement(element, context) {
   if (this.options.highlightElement && global.debugMode) {
     highlightElement(element, context);
   }
+}
+
+function _waitForElement(locator, options) {
+  try {
+    return this.context.waitForXPath(locator.value, options);
+  } catch (e) {
+    return this.context.waitForSelector(`::-p-xpath(${locator.value})`, options);
+  }
+}
+
+async function findReactElements(locator, props = {}, state = {}) {
+  const resqScript = await fs.promises.readFile(require.resolve('resq'), 'utf-8');
+  await this.page.evaluate(resqScript.toString());
+
+  await this.page.evaluate(() => window.resq.waitToLoadReact());
+  const arrayHandle = await this.page.evaluateHandle((obj) => {
+    const { selector, props, state } = obj;
+    let elements = window.resq.resq$$(selector);
+    if (Object.keys(props).length) {
+      elements = elements.byProps(props);
+    }
+    if (Object.keys(state).length) {
+      elements = elements.byState(state);
+    }
+
+    if (!elements.length) {
+      return [];
+    }
+
+    // resq returns an array of HTMLElements if the React component is a fragment
+    // this avoids having nested arrays of nodes which the driver does not understand
+    // [[div, div], [div, div]] => [div, div, div, div]
+    let nodes = [];
+
+    elements.forEach((element) => {
+      let { node, isFragment } = element;
+
+      if (!node) {
+        isFragment = true;
+        node = element.children;
+      }
+
+      if (isFragment) {
+        nodes = nodes.concat(node);
+      } else {
+        nodes.push(node);
+      }
+    });
+
+    return [...nodes];
+  }, {
+    selector: locator.react,
+    props: locator.props || {},
+    state: locator.state || {},
+  });
+
+  const properties = await arrayHandle.getProperties();
+  const result = [];
+  for (const property of properties.values()) {
+    const elementHandle = property.asElement();
+    if (elementHandle) {
+      result.push(elementHandle);
+    }
+  }
+
+  await arrayHandle.dispose();
+  return result;
 }
