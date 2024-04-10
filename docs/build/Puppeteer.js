@@ -36,13 +36,14 @@ const ElementNotFound = require('./errors/ElementNotFound');
 const RemoteBrowserConnectionRefused = require('./errors/RemoteBrowserConnectionRefused');
 const Popup = require('./extras/Popup');
 const Console = require('./extras/Console');
-const findReact = require('./extras/React');
 const { highlightElement } = require('./scripts/highlightElement');
 const { blurElement } = require('./scripts/blurElement');
-const { focusElement } = require('./scripts/focusElement');
 const {
   dontSeeElementError, seeElementError, dontSeeElementInDOMError, seeElementInDOMError,
 } = require('./errors/ElementAssertion');
+const {
+  dontSeeTraffic, seeTraffic, grabRecordedNetworkTraffics, stopRecordingTraffic, flushNetworkTraffics,
+} = require('./network/actions');
 
 let puppeteer;
 let perfTiming;
@@ -225,6 +226,17 @@ class Puppeteer extends Helper {
     this.isAuthenticated = false;
     this.sessionPages = {};
     this.activeSessionName = '';
+
+    // for network stuff
+    this.requests = [];
+    this.recording = false;
+    this.recordedAtLeastOnce = false;
+
+    // for websocket messages
+    this.webSocketMessages = [];
+    this.recordingWebSocketMessages = false;
+    this.recordedWebSocketMessagesAtLeastOnce = false;
+    this.cdpSession = null;
 
     // override defaults with config
     this._setConfig(config);
@@ -3018,7 +3030,6 @@ class Puppeteer extends Helper {
   async waitNumberOfVisibleElements(locator, num, sec) {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout;
     locator = new Locator(locator, 'css');
-    await this.context;
     let waiter;
     const context = await this._getContext();
     if (locator.isCSS()) {
@@ -3567,6 +3578,306 @@ class Puppeteer extends Helper {
     const rect = await els[0].boundingBox();
     if (prop) return rect[prop];
     return rect;
+  }
+
+  /**
+   * Mocks network request using [`Request Interception`](https://pptr.dev/next/guides/request-interception)
+   *
+   * ```js
+   * I.mockRoute(/(\.png$)|(\.jpg$)/, route => route.abort());
+   * ```
+   * This method allows intercepting and mocking requests & responses. [Learn more about it](https://pptr.dev/next/guides/request-interception)
+   *
+   * @param {string|RegExp} [url] URL, regex or pattern for to match URL
+   * @param {function} [handler] a function to process request
+   */
+  async mockRoute(url, handler) {
+    await this.page.setRequestInterception(true);
+
+    this.page.on('request', interceptedRequest => {
+      if (interceptedRequest.url().match(url)) {
+        // @ts-ignore
+        handler(interceptedRequest);
+      } else {
+        interceptedRequest.continue();
+      }
+    });
+  }
+
+  /**
+   * Stops network mocking created by `mockRoute`.
+   *
+   * ```js
+   * I.stopMockingRoute(/(\.png$)|(\.jpg$)/);
+   * ```
+   *
+   * @param {string|RegExp} [url] URL, regex or pattern for to match URL
+   */
+  async stopMockingRoute(url) {
+    await this.page.setRequestInterception(true);
+
+    this.page.off('request');
+
+    // Resume normal request handling for the given URL
+    this.page.on('request', interceptedRequest => {
+      if (interceptedRequest.url().includes(url)) {
+        interceptedRequest.continue();
+      } else {
+        interceptedRequest.continue();
+      }
+    });
+  }
+
+  /**
+   *
+   * Resets all recorded network requests.
+   * 
+   * ```js
+   * I.flushNetworkTraffics();
+   * ```
+   * 
+   */
+  flushNetworkTraffics() {
+    flushNetworkTraffics.call(this);
+  }
+
+  /**
+   *
+   * Stops recording of network traffic. Recorded traffic is not flashed.
+   * 
+   * ```js
+   * I.stopRecordingTraffic();
+   * ```
+   * 
+   */
+  stopRecordingTraffic() {
+    stopRecordingTraffic.call(this);
+  }
+
+  /**
+   * Starts recording the network traffics.
+   * This also resets recorded network requests.
+   * 
+   * ```js
+   * I.startRecordingTraffic();
+   * ```
+   * 
+   * @returns {void} automatically synchronized promise through #recorder
+   * 
+   *
+   */
+  async startRecordingTraffic() {
+    this.flushNetworkTraffics();
+    this.recording = true;
+    this.recordedAtLeastOnce = true;
+
+    await this.page.setRequestInterception(true);
+
+    this.page.on('request', (request) => {
+      const information = {
+        url: request.url(),
+        method: request.method(),
+        requestHeaders: request.headers(),
+        requestPostData: request.postData(),
+        response: request.response(),
+      };
+
+      this.debugSection('REQUEST: ', JSON.stringify(information));
+
+      if (typeof information.requestPostData === 'object') {
+        information.requestPostData = JSON.parse(information.requestPostData);
+      }
+      request.continue();
+      this.requests.push(information);
+    });
+  }
+
+  /**
+   *
+   * Grab the recording network traffics
+   * 
+   * ```js
+   * const traffics = await I.grabRecordedNetworkTraffics();
+   * expect(traffics[0].url).to.equal('https://reqres.in/api/comments/1');
+   * expect(traffics[0].response.status).to.equal(200);
+   * expect(traffics[0].response.body).to.contain({ name: 'this was mocked' });
+   * ```
+   * 
+   * @return { Array } recorded network traffics
+   * 
+   */
+  async grabRecordedNetworkTraffics() {
+    return grabRecordedNetworkTraffics.call(this);
+  }
+
+  /**
+   *
+   * Verifies that a certain request is part of network traffic.
+   * 
+   * ```js
+   * // checking the request url contains certain query strings
+   * I.amOnPage('https://openai.com/blog/chatgpt');
+   * I.startRecordingTraffic();
+   * await I.seeTraffic({
+   *     name: 'sentry event',
+   *     url: 'https://images.openai.com/blob/cf717bdb-0c8c-428a-b82b-3c3add87a600',
+   *     parameters: {
+   *     width: '1919',
+   *     height: '1138',
+   *     },
+   *   });
+   * ```
+   * 
+   * ```js
+   * // checking the request url contains certain post data
+   * I.amOnPage('https://openai.com/blog/chatgpt');
+   * I.startRecordingTraffic();
+   * await I.seeTraffic({
+   *     name: 'event',
+   *     url: 'https://cloudflareinsights.com/cdn-cgi/rum',
+   *     requestPostData: {
+   *     st: 2,
+   *     },
+   *   });
+   * ```
+   * 
+   * @param {Object} opts - options when checking the traffic network.
+   * @param {string} opts.name A name of that request. Can be any value. Only relevant to have a more meaningful error message in case of fail.
+   * @param {string} opts.url Expected URL of request in network traffic
+   * @param {Object} [opts.parameters] Expected parameters of that request in network traffic
+   * @param {Object} [opts.requestPostData] Expected that request contains post data in network traffic
+   * @param {number} [opts.timeout] Timeout to wait for request in seconds. Default is 10 seconds.
+   * @return {void} automatically synchronized promise through #recorder
+   * 
+   */
+  async seeTraffic({
+    name, url, parameters, requestPostData, timeout = 10,
+  }) {
+    await seeTraffic.call(this, ...arguments);
+  }
+
+  /**
+   *
+   * Verifies that a certain request is not part of network traffic.
+   * 
+   * Examples:
+   * 
+   * ```js
+   * I.dontSeeTraffic({ name: 'Unexpected API Call', url: 'https://api.example.com' });
+   * I.dontSeeTraffic({ name: 'Unexpected API Call of "user" endpoint', url: /api.example.com.*user/ });
+   * ```
+   * 
+   * @param {Object} opts - options when checking the traffic network.
+   * @param {string} opts.name A name of that request. Can be any value. Only relevant to have a more meaningful error message in case of fail.
+   * @param {string|RegExp} opts.url Expected URL of request in network traffic. Can be a string or a regular expression.
+   * @return {void} automatically synchronized promise through #recorder
+   * 
+   *
+   */
+  dontSeeTraffic({ name, url }) {
+    dontSeeTraffic.call(this, ...arguments);
+  }
+
+  async getNewCDPSession() {
+    const client = await this.page.target().createCDPSession();
+    return client;
+  }
+
+  /**
+   * Starts recording of websocket messages.
+   * This also resets recorded websocket messages.
+   * 
+   * ```js
+   * await I.startRecordingWebSocketMessages();
+   * ```
+   * 
+   * @returns {void} automatically synchronized promise through #recorder
+   * 
+   */
+  async startRecordingWebSocketMessages() {
+    this.flushWebSocketMessages();
+    this.recordingWebSocketMessages = true;
+    this.recordedWebSocketMessagesAtLeastOnce = true;
+
+    this.cdpSession = await this.getNewCDPSession();
+    await this.cdpSession.send('Network.enable');
+    await this.cdpSession.send('Page.enable');
+
+    this.cdpSession.on(
+      'Network.webSocketFrameReceived',
+      (payload) => {
+        this._logWebsocketMessages(this._getWebSocketLog('RECEIVED', payload));
+      },
+    );
+
+    this.cdpSession.on(
+      'Network.webSocketFrameSent',
+      (payload) => {
+        this._logWebsocketMessages(this._getWebSocketLog('SENT', payload));
+      },
+    );
+
+    this.cdpSession.on(
+      'Network.webSocketFrameError',
+      (payload) => {
+        this._logWebsocketMessages(this._getWebSocketLog('ERROR', payload));
+      },
+    );
+  }
+
+  /**
+   * Stops recording WS messages. Recorded WS messages is not flashed.
+   * 
+   * ```js
+   * await I.stopRecordingWebSocketMessages();
+   * ```
+   * 
+   * @returns {void} automatically synchronized promise through #recorder
+   * 
+   */
+  async stopRecordingWebSocketMessages() {
+    await this.cdpSession.send('Network.disable');
+    await this.cdpSession.send('Page.disable');
+    this.page.removeAllListeners('Network');
+    this.recordingWebSocketMessages = false;
+  }
+
+  /**
+   *  Grab the recording WS messages
+   *
+   * @return { Array<any>|undefined }
+   *
+   */
+  grabWebSocketMessages() {
+    if (!this.recordingWebSocketMessages) {
+      if (!this.recordedWebSocketMessagesAtLeastOnce) {
+        throw new Error('Failure in test automation. You use "I.grabWebSocketMessages", but "I.startRecordingWebSocketMessages" was never called before.');
+      }
+    }
+    return this.webSocketMessages;
+  }
+
+  /**
+   * Resets all recorded WS messages.
+   */
+  flushWebSocketMessages() {
+    this.webSocketMessages = [];
+  }
+
+  _getWebSocketMessage(payload) {
+    if (payload.errorMessage) {
+      return payload.errorMessage;
+    }
+
+    return payload.response.payloadData;
+  }
+
+  _getWebSocketLog(prefix, payload) {
+    return `${prefix} ID: ${payload.requestId} TIMESTAMP: ${payload.timestamp} (${new Date().toISOString()})\n\n${this._getWebSocketMessage(payload)}\n\n`;
+  }
+
+  _logWebsocketMessages(message) {
+    this.webSocketMessages += message;
   }
 }
 

@@ -33,7 +33,7 @@ const ElementNotFound = require('./errors/ElementNotFound');
 const RemoteBrowserConnectionRefused = require('./errors/RemoteBrowserConnectionRefused');
 const Popup = require('./extras/Popup');
 const Console = require('./extras/Console');
-const { findReact, findVue } = require('./extras/PlaywrightReactVueLocator');
+const { findReact, findVue, findByPlaywrightLocator } = require('./extras/PlaywrightReactVueLocator');
 
 let playwright;
 let perfTiming;
@@ -50,8 +50,9 @@ const { createValueEngine, createDisabledEngine } = require('./extras/Playwright
 const {
   seeElementError, dontSeeElementError, dontSeeElementInDOMError, seeElementInDOMError,
 } = require('./errors/ElementAssertion');
-const { createAdvancedTestResults, allParameterValuePairsMatchExtreme, extractQueryObjects } = require('./networkTraffics/utils');
-const { log } = require('../output');
+const {
+  dontSeeTraffic, seeTraffic, grabRecordedNetworkTraffics, stopRecordingTraffic, flushNetworkTraffics,
+} = require('./network/actions');
 
 const pathSeparator = path.sep;
 
@@ -100,6 +101,7 @@ const pathSeparator = path.sep;
  * @prop {boolean} [bypassCSP] - bypass Content Security Policy or CSP
  * @prop {boolean} [highlightElement] - highlight the interacting elements. Default: false. Note: only activate under verbose mode (--verbose).
  * @prop {object} [recordHar] - record HAR and will be saved to `output/har`. See more of [HAR options](https://playwright.dev/docs/api/class-browser#browser-new-context-option-record-har).
+ * @prop {string} [testIdAttribute=data-testid] - locate elements based on the testIdAttribute. See more of [locate by test id](https://playwright.dev/docs/locators#locate-by-test-id).
  */
 const config = {};
 
@@ -379,6 +381,7 @@ class Playwright extends Helper {
       highlightElement: false,
     };
 
+    process.env.testIdAttribute = 'data-testid';
     config = Object.assign(defaults, config);
 
     if (availableBrowsers.indexOf(config.browser) < 0) {
@@ -464,6 +467,7 @@ class Playwright extends Helper {
     try {
       await playwright.selectors.register('__value', createValueEngine);
       await playwright.selectors.register('__disabled', createDisabledEngine);
+      if (process.env.testIdAttribute) await playwright.selectors.setTestIdAttribute(process.env.testIdAttribute);
     } catch (e) {
       console.warn(e);
     }
@@ -3341,7 +3345,7 @@ class Playwright extends Helper {
   async waitNumberOfVisibleElements(locator, num, sec) {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout;
     locator = new Locator(locator, 'css');
-    await this.context;
+
     let waiter;
     const context = await this._getContext();
     if (locator.isCSS()) {
@@ -4008,7 +4012,7 @@ class Playwright extends Helper {
    * This method allows intercepting and mocking requests & responses. [Learn more about it](https://playwright.dev/docs/network#handle-requests)
    *
    * @param {string|RegExp} [url] URL, regex or pattern for to match URL
-   * @param {function} [handler] a function to process reques
+   * @param {function} [handler] a function to process request
    */
   async mockRoute(url, handler) {
     return this.browserContext.route(...arguments);
@@ -4024,7 +4028,7 @@ class Playwright extends Helper {
    * If no handler is passed, all mock requests for the rote are disabled.
    *
    * @param {string|RegExp} [url] URL, regex or pattern for to match URL
-   * @param {function} [handler] a function to process reques
+   * @param {function} [handler] a function to process request
    */
   async stopMockingRoute(url, handler) {
     return this.browserContext.unroute(...arguments);
@@ -4061,47 +4065,6 @@ class Playwright extends Helper {
 
       this.requests.push(information);
     });
-  }
-
-  /**
-   * Grab the recording network traffics
-   * 
-   * ```js
-   * const traffics = await I.grabRecordedNetworkTraffics();
-   * expect(traffics[0].url).to.equal('https://reqres.in/api/comments/1');
-   * expect(traffics[0].response.status).to.equal(200);
-   * expect(traffics[0].response.body).to.contain({ name: 'this was mocked' });
-   * ```
-   * 
-   * @return { Array } recorded network traffics
-   * 
-   */
-  async grabRecordedNetworkTraffics() {
-    if (!this.recording || !this.recordedAtLeastOnce) {
-      throw new Error('Failure in test automation. You use "I.grabRecordedNetworkTraffics", but "I.startRecordingTraffic" was never called before.');
-    }
-
-    const promises = this.requests.map(async (request) => {
-      const resp = await request.response;
-      let body;
-      try {
-        // There's no 'body' for some requests (redirect etc...)
-        body = JSON.parse((await resp.body()).toString());
-      } catch (e) {
-        // only interested in JSON, not HTML responses.
-      }
-
-      return {
-        url: resp.url(),
-        response: {
-          status: resp.status(),
-          statusText: resp.statusText(),
-          body,
-        },
-      };
-    });
-
-    return Promise.all(promises);
   }
 
   /**
@@ -4183,6 +4146,7 @@ class Playwright extends Helper {
   }
 
   /**
+   *
    * Resets all recorded network requests.
    * 
    * ```js
@@ -4191,10 +4155,11 @@ class Playwright extends Helper {
    * 
    */
   flushNetworkTraffics() {
-    this.requests = [];
+    flushNetworkTraffics.call(this);
   }
 
   /**
+   *
    * Stops recording of network traffic. Recorded traffic is not flashed.
    * 
    * ```js
@@ -4203,11 +4168,62 @@ class Playwright extends Helper {
    * 
    */
   stopRecordingTraffic() {
-    this.page.removeAllListeners('request');
-    this.recording = false;
+    stopRecordingTraffic.call(this);
   }
 
   /**
+   * Returns full URL of request matching parameter "urlMatch".
+   *
+   * @param {string|RegExp} urlMatch Expected URL of request in network traffic. Can be a string or a regular expression.
+   *
+   * Examples:
+   *
+   * ```js
+   * I.grabTrafficUrl('https://api.example.com/session');
+   * I.grabTrafficUrl(/session.*start/);
+   * ```
+   *
+   * @return {Promise<*>}
+   */
+  grabTrafficUrl(urlMatch) {
+    if (!this.recordedAtLeastOnce) {
+      throw new Error('Failure in test automation. You use "I.grabTrafficUrl", but "I.startRecordingTraffic" was never called before.');
+    }
+
+    for (const i in this.requests) {
+      // eslint-disable-next-line no-prototype-builtins
+      if (this.requests.hasOwnProperty(i)) {
+        const request = this.requests[i];
+
+        if (request.url && request.url.match(new RegExp(urlMatch))) {
+          return request.url;
+        }
+      }
+    }
+
+    assert.fail(`Method "getTrafficUrl" failed: No request found in traffic that matches ${urlMatch}`);
+  }
+
+  /**
+   *
+   * Grab the recording network traffics
+   * 
+   * ```js
+   * const traffics = await I.grabRecordedNetworkTraffics();
+   * expect(traffics[0].url).to.equal('https://reqres.in/api/comments/1');
+   * expect(traffics[0].response.status).to.equal(200);
+   * expect(traffics[0].response.body).to.contain({ name: 'this was mocked' });
+   * ```
+   * 
+   * @return { Array } recorded network traffics
+   * 
+   */
+  async grabRecordedNetworkTraffics() {
+    return grabRecordedNetworkTraffics.call(this);
+  }
+
+  /**
+   *
    * Verifies that a certain request is part of network traffic.
    * 
    * ```js
@@ -4249,83 +4265,11 @@ class Playwright extends Helper {
   async seeTraffic({
     name, url, parameters, requestPostData, timeout = 10,
   }) {
-    if (!name) {
-      throw new Error('Missing required key "name" in object given to "I.seeTraffic".');
-    }
-
-    if (!url) {
-      throw new Error('Missing required key "url" in object given to "I.seeTraffic".');
-    }
-
-    if (!this.recording || !this.recordedAtLeastOnce) {
-      throw new Error('Failure in test automation. You use "I.seeTraffic", but "I.startRecordingTraffic" was never called before.');
-    }
-
-    for (let i = 0; i <= timeout * 2; i++) {
-      const found = this._isInTraffic(url, parameters);
-      if (found) {
-        return true;
-      }
-      await new Promise((done) => {
-        setTimeout(done, 1000);
-      });
-    }
-
-    // check request post data
-    if (requestPostData && this._isInTraffic(url)) {
-      const advancedTestResults = createAdvancedTestResults(url, requestPostData, this.requests);
-
-      assert.equal(advancedTestResults, true, `Traffic named "${name}" found correct URL ${url}, BUT the post data did not match:\n ${advancedTestResults}`);
-    } else if (parameters && this._isInTraffic(url)) {
-      const advancedTestResults = createAdvancedTestResults(url, parameters, this.requests);
-
-      assert.fail(
-        `Traffic named "${name}" found correct URL ${url}, BUT the query parameters did not match:\n`
-        + `${advancedTestResults}`,
-      );
-    } else {
-      assert.fail(
-        `Traffic named "${name}" not found in recorded traffic within ${timeout} seconds.\n`
-        + `Expected url: ${url}.\n`
-        + `Recorded traffic:\n${this._getTrafficDump()}`,
-      );
-    }
+    await seeTraffic.call(this, ...arguments);
   }
 
   /**
-   * Returns full URL of request matching parameter "urlMatch".
    *
-   * @param {string|RegExp} urlMatch Expected URL of request in network traffic. Can be a string or a regular expression.
-   *
-   * Examples:
-   *
-   * ```js
-   * I.grabTrafficUrl('https://api.example.com/session');
-   * I.grabTrafficUrl(/session.*start/);
-   * ```
-   *
-   * @return {Promise<*>}
-   */
-  grabTrafficUrl(urlMatch) {
-    if (!this.recordedAtLeastOnce) {
-      throw new Error('Failure in test automation. You use "I.grabTrafficUrl", but "I.startRecordingTraffic" was never called before.');
-    }
-
-    for (const i in this.requests) {
-      // eslint-disable-next-line no-prototype-builtins
-      if (this.requests.hasOwnProperty(i)) {
-        const request = this.requests[i];
-
-        if (request.url && request.url.match(new RegExp(urlMatch))) {
-          return request.url;
-        }
-      }
-    }
-
-    assert.fail(`Method "getTrafficUrl" failed: No request found in traffic that matches ${urlMatch}`);
-  }
-
-  /**
    * Verifies that a certain request is not part of network traffic.
    * 
    * Examples:
@@ -4343,79 +4287,19 @@ class Playwright extends Helper {
    *
    */
   dontSeeTraffic({ name, url }) {
-    if (!this.recordedAtLeastOnce) {
-      throw new Error('Failure in test automation. You use "I.dontSeeTraffic", but "I.startRecordingTraffic" was never called before.');
-    }
-
-    if (!name) {
-      throw new Error('Missing required key "name" in object given to "I.dontSeeTraffic".');
-    }
-
-    if (!url) {
-      throw new Error('Missing required key "url" in object given to "I.dontSeeTraffic".');
-    }
-
-    if (this._isInTraffic(url)) {
-      assert.fail(`Traffic with name "${name}" (URL: "${url}') found, but was not expected to be found.`);
-    }
-  }
-
-  /**
-   * Checks if URL with parameters is part of network traffic. Returns true or false. Internal method for this helper.
-   *
-   * @param url URL to look for.
-   * @param [parameters] Parameters that this URL needs to contain
-   * @return {boolean} Whether or not URL with parameters is part of network traffic.
-   * @private
-   */
-  _isInTraffic(url, parameters) {
-    let isInTraffic = false;
-    this.requests.forEach((request) => {
-      if (isInTraffic) {
-        return; // We already found traffic. Continue with next request
-      }
-
-      if (!request.url.match(new RegExp(url))) {
-        return; // url not found in this request. continue with next request
-      }
-
-      // URL has matched. Now we check the parameters
-
-      if (parameters) {
-        const advancedReport = allParameterValuePairsMatchExtreme(extractQueryObjects(request.url), parameters);
-        if (advancedReport === true) {
-          isInTraffic = true;
-        }
-      } else {
-        isInTraffic = true;
-      }
-    });
-
-    return isInTraffic;
-  }
-
-  /**
-   * Returns all URLs of all network requests recorded so far during execution of test scenario.
-   *
-   * @return {string} List of URLs recorded as a string, separated by new lines after each URL
-   * @private
-   */
-  _getTrafficDump() {
-    let dumpedTraffic = '';
-    this.requests.forEach((request) => {
-      dumpedTraffic += `${request.method} - ${request.url}\n`;
-    });
-    return dumpedTraffic;
+    dontSeeTraffic.call(this, ...arguments);
   }
 
   /**
    * Starts recording of websocket messages.
    * This also resets recorded websocket messages.
-   *
+   * 
    * ```js
    * await I.startRecordingWebSocketMessages();
    * ```
-   *
+   * 
+   * @returns {void} automatically synchronized promise through #recorder
+   * 
    */
   async startRecordingWebSocketMessages() {
     this.flushWebSocketMessages();
@@ -4450,10 +4334,13 @@ class Playwright extends Helper {
 
   /**
    * Stops recording WS messages. Recorded WS messages is not flashed.
-   *
+   * 
    * ```js
    * await I.stopRecordingWebSocketMessages();
    * ```
+   * 
+   * @returns {void} automatically synchronized promise through #recorder
+   * 
    */
   async stopRecordingWebSocketMessages() {
     await this.cdpSession.send('Network.disable');
@@ -4580,6 +4467,7 @@ function buildLocatorString(locator) {
 async function findElements(matcher, locator) {
   if (locator.react) return findReact(matcher, locator);
   if (locator.vue) return findVue(matcher, locator);
+  if (locator.pw) return findByPlaywrightLocator.call(this, matcher, locator);
   locator = new Locator(locator, 'css');
 
   return matcher.locator(buildLocatorString(locator)).all();
@@ -4587,6 +4475,8 @@ async function findElements(matcher, locator) {
 
 async function findElement(matcher, locator) {
   if (locator.react) return findReact(matcher, locator);
+  if (locator.vue) return findVue(matcher, locator);
+  if (locator.pw) return findByPlaywrightLocator.call(this, matcher, locator);
   locator = new Locator(locator, 'css');
 
   return matcher.locator(buildLocatorString(locator)).first();
@@ -4642,6 +4532,7 @@ async function proceedClick(locator, context = null, options = {}) {
 async function findClickable(matcher, locator) {
   if (locator.react) return findReact(matcher, locator);
   if (locator.vue) return findVue(matcher, locator);
+  if (locator.pw) return findByPlaywrightLocator.call(this, matcher, locator);
 
   locator = new Locator(locator);
   if (!locator.isFuzzy()) return findElements.call(this, matcher, locator);
