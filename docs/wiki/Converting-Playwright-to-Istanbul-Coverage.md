@@ -59,39 +59,3 @@ void (async () => {
     }
 })()
 ```
-
-Or simply use the plugin [`codeceptjs-monocart-coverage`](https://github.com/cenfun/codeceptjs-monocart-coverage)
-- Install
-```sh
-npm i codeceptjs-monocart-coverage
-```
-- Usage
-```js
-// codecept.conf.js
-{
-    plugins: {
-        monocart: {
-            require: 'codeceptjs-monocart-coverage',
-            enabled: true,
-            coverageOptions: {
-                // more options: https://github.com/cenfun/monocart-coverage-reports
-                name: 'My CodeceptJS Coverage Report',
-                outputDir: 'coverage-reports'
-            }
-        }
-    },
-    helpers: {
-        // Coverage is only supported in Playwright or Puppeteer
-        Playwright: {
-            browser: 'chromium',
-            url: 'http://localhost',
-            show: false
-        }
-        // Puppeteer: {
-        //     url: 'http://localhost',
-        //     show: false
-        // }
-    }
-}
-```
-

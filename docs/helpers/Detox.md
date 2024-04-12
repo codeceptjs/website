@@ -17,15 +17,15 @@ This is a wrapper on top of [Detox][1] library, aimied to unify testing experien
 Detox provides a grey box testing for mobile applications, playing especially good for React Native apps.
 
 Detox plays quite differently from Appium. To establish detox testing you need to build a mobile application in a special way to inject Detox code.
-This why **Detox is grey box testing** solution, so you need access to application source code, and a way to build and execute it on emulator.
+This why **Detox is grey box testing** solution, so you need an access to application source code, and a way to build and execute it on emulator.
 
 Comparing to Appium, Detox runs faster and more stable but requires an additional setup for build.
 
 ### Setup
 
-1.  [Install and configure Detox][2]
-2.  [Build an application][3] using `detox build` command.
-3.  Install [CodeceptJS][4] and detox-helper:
+1.  [Install and configure Detox for iOS][2] and [Android][3]
+2.  [Build an application][4] using `detox build` command.
+3.  Install [CodeceptJS][5] and detox-helper: 
 
 
     npm i @codeceptjs/detox-helper --save
@@ -36,28 +36,15 @@ If you completed step 1 and step 2 you should have a configuration similar this:
 
 ```js
  "detox": {
-    "configurations": {
-      "ios.sim.debug": {
-        "device": "simulator",
-        "app": "ios.debug"
-      }
-    },
-    "apps": {
-      "ios.debug": {
-        "type": "ios.app",
-        "binaryPath": "../test/ios/build/Build/Products/Debug-iphonesimulator/MyTestApp.app",
-        "build": "xcodebuild -workspace ../test/ios/MyTestApp.xcworkspace -scheme MyTestApp -configuration Debug -sdk iphonesimulator -derivedDataPath ../test/ios/build"
-      }
-    },
-    "devices": {
-      "simulator": {
-        "type": "ios.simulator",
-        "device": {
-          "type": "iPhone 15"
-        }
-      }
-    }
-  }
+   "configurations": {
+     "ios.sim.debug": {
+       "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/example.app",
+       "build": "xcodebuild -project ios/example.xcodeproj -scheme example -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+       "type": "ios.simulator",
+       "name": "iPhone 7"
+     }
+   }
+ }
 ```
 
 ### Configuration
@@ -70,8 +57,8 @@ In `codecept.conf.js` enable Detox helper:
 helpers: {
    Detox: {
      require: '@codeceptjs/detox-helper',
-     configuration: '<detox-configuration-name>',
-   }
+     configuration: '<detox-configuration-name>', 
+   }   
 }
 ```
 
@@ -99,22 +86,8 @@ I.appendField('name', 'davert');
 
 #### Parameters
 
--   `field` **([string][5] \| [object][6])** 
--   `value` **[string][5]** 
-
-### checkIfElementExists
-
-Checks if an element exists.
-
-```js
-I.checkIfElementExists('~edit'); // located by accessibility id
-I.checkIfElementExists('~edit', '#menu'); // element inside #menu
-```
-
-#### Parameters
-
--   `locator` **([string][5] \| [object][6])** element to locate
--   `context` **([string][5] \| [object][6] | null)** context element (optional, default `null`)
+-   `field` **([string][6] \| [object][7])** 
+-   `value` **[string][6]** 
 
 ### clearField
 
@@ -127,16 +100,16 @@ I.clearField('~name');
 
 #### Parameters
 
--   `field` **([string][5] \| [object][6])** an input element to clear
+-   `field` **([string][6] \| [object][7])** an input element to clear
 
 ### click
 
-Clicks on an element.
+Clicks on an element. 
 Element can be located by its text or id or accessibility id
 
 The second parameter is a context (id | type | accessibility id) to narrow the search.
 
-Same as [tap][7]
+Same as [tap][8]
 
 ```js
 I.click('Login'); // locate by text
@@ -148,8 +121,8 @@ I.click({ ios: 'Save', android: 'SAVE' }, '#main'); // different texts on iOS an
 
 #### Parameters
 
--   `locator` **([string][5] \| [object][6])** 
--   `context` **([string][5] \| [object][6] | null)**  (optional, default `null`)
+-   `locator` **([string][6] \| [object][7])** 
+-   `context` **([string][6] \| [object][7] | null)**  (optional, default `null`)
 
 ### clickAtPoint
 
@@ -163,9 +136,9 @@ I.clickAtPoint('~save', 10, 10); // locate by accessibility id
 
 #### Parameters
 
--   `locator` **([string][5] \| [object][6])** 
--   `x` **[number][8]** horizontal offset (optional, default `0`)
--   `y` **[number][8]** vertical offset (optional, default `0`)
+-   `locator` **([string][6] \| [object][7])** 
+-   `x` **[number][9]** horizontal offset (optional, default `0`)
+-   `y` **[number][9]** vertical offset (optional, default `0`)
 
 ### dontSee
 
@@ -180,8 +153,8 @@ I.dontSee('Record deleted', '~message');
 
 #### Parameters
 
--   `text` **[string][5]** to check invisibility
--   `context` **([string][5] \| [object][6] | null)** element in which to search for text (optional, default `null`)
+-   `text` **[string][6]** to check invisibility
+-   `context` **([string][6] \| [object][7] | null)** element in which to search for text (optional, default `null`)
 
 ### dontSeeElement
 
@@ -195,8 +168,8 @@ I.dontSeeElement('~edit', '#menu'); // element inside #menu
 
 #### Parameters
 
--   `locator` **([string][5] \| [object][6])** element to locate
--   `context` **([string][5] \| [object][6] | null)** context element (optional, default `null`)
+-   `locator` **([string][6] \| [object][7])** element to locate
+-   `context` **([string][6] \| [object][7] | null)** context element (optional, default `null`)
 
 ### dontSeeElementExists
 
@@ -210,8 +183,8 @@ I.dontSeeElementExist('~edit', '#menu'); // element inside #menu
 
 #### Parameters
 
--   `locator` **([string][5] \| [object][6])** element to locate
--   `context` **([string][5] \| [object][6])** context element (optional, default `null`)
+-   `locator` **([string][6] \| [object][7])** element to locate
+-   `context` **([string][6] \| [object][7])** context element (optional, default `null`)
 
 ### fillField
 
@@ -226,8 +199,8 @@ I.fillField({ android: 'NAME', ios: 'name' }, 'davert');
 
 #### Parameters
 
--   `field` **([string][5] \| [object][6])** an input element to fill in
--   `value` **[string][5]** value to fill
+-   `field` **([string][6] \| [object][7])** an input element to fill in
+-   `value` **[string][6]** value to fill
 
 ### goBack
 
@@ -235,14 +208,6 @@ Goes back on Android
 
 ```js
 I.goBack(); // on Android only
-```
-
-### grabPlatform
-
-Grab the device platform
-
-```js
-const platform = await I.grabPlatform();
 ```
 
 ### installApp
@@ -256,7 +221,7 @@ I.installApp();
 
 ### launchApp
 
-Launches an application. If application instance already exists, use [relaunchApp][9].
+Launches an application. If application instance already exists, use [relaunchApp][10].
 
 ```js
 I.launchApp();
@@ -274,9 +239,9 @@ I.longPress('Update', 2, '#menu'); // locate by text inside #menu, hold for 2 se
 
 #### Parameters
 
--   `locator` **([string][5] \| [object][6])** element to locate
--   `sec` **[number][8]** number of seconds to hold tap
--   `context` **([string][5] \| [object][6] | null)** context element (optional, default `null`)
+-   `locator` **([string][6] \| [object][7])** element to locate
+-   `sec` **[number][9]** number of seconds to hold tap
+-   `context` **([string][6] \| [object][7] | null)** context element (optional, default `null`)
 
 ### multiTap
 
@@ -295,9 +260,9 @@ I.multiTap('Update', 2, '#menu'); // locate by id
 
 #### Parameters
 
--   `locator` **([string][5] \| [object][6])** element to locate
--   `num` **[number][8]** number of taps
--   `context` **([string][5] \| [object][6] | null)** context element (optional, default `null`)
+-   `locator` **([string][6] \| [object][7])** element to locate
+-   `num` **[number][9]** number of taps
+-   `context` **([string][6] \| [object][7] | null)** context element (optional, default `null`)
 
 ### relaunchApp
 
@@ -320,7 +285,7 @@ I.runOnAndroid(() => {
 
 #### Parameters
 
--   `fn` **[Function][10]** a function which will be executed on android
+-   `fn` **[Function][11]** a function which will be executed on android
 
 ### runOnIOS
 
@@ -335,7 +300,7 @@ I.runOnIOS(() => {
 
 #### Parameters
 
--   `fn` **[Function][10]** a function which will be executed on iOS
+-   `fn` **[Function][11]** a function which will be executed on iOS
 
 ### saveScreenshot
 
@@ -347,7 +312,7 @@ I.saveScreenshot('main-window.png');
 
 #### Parameters
 
--   `name` **[string][5]** 
+-   `name` **[string][6]** 
 
 ### scrollDown
 
@@ -359,7 +324,7 @@ I.scrollDown('#container');
 
 #### Parameters
 
--   `locator` **([string][5] \| [object][6])** 
+-   `locator` **([string][6] \| [object][7])** 
 
 ### scrollLeft
 
@@ -371,7 +336,7 @@ I.scrollLeft('#container');
 
 #### Parameters
 
--   `locator` **([string][5] \| [object][6])** 
+-   `locator` **([string][6] \| [object][7])** 
 
 ### scrollRight
 
@@ -383,18 +348,7 @@ I.scrollRight('#container');
 
 #### Parameters
 
--   `locator` **([string][5] \| [object][6])** 
-
-### scrollToElement
-
-Scrolls within a scrollable container to an element.
-
-#### Parameters
-
--   `targetLocator` **([string][5] \| [object][6])** Locator of the element to scroll to
--   `containerLocator` **([string][5] \| [object][6])** Locator of the scrollable container
--   `direction` **[string][5]** 'up' or 'down' (optional, default `'down'`)
--   `offset` **[number][8]** Offset for scroll, can be adjusted based on need (optional, default `100`)
+-   `locator` **([string][6] \| [object][7])** 
 
 ### scrollUp
 
@@ -406,7 +360,7 @@ I.scrollUp('#container');
 
 #### Parameters
 
--   `locator` **([string][5] \| [object][6])** 
+-   `locator` **([string][6] \| [object][7])** 
 
 ### see
 
@@ -421,8 +375,8 @@ I.see('Record deleted', '~message');
 
 #### Parameters
 
--   `text` **[string][5]** to check visibility
--   `context` **([string][5] \| [object][6] | null)** element inside which to search for text (optional, default `null`)
+-   `text` **[string][6]** to check visibility
+-   `context` **([string][6] \| [object][7] | null)** element inside which to search for text (optional, default `null`)
 
 ### seeElement
 
@@ -436,8 +390,8 @@ I.seeElement('~edit', '#menu'); // element inside #menu
 
 #### Parameters
 
--   `locator` **([string][5] \| [object][6])** element to locate
--   `context` **([string][5] \| [object][6] | null)** context element (optional, default `null`)
+-   `locator` **([string][6] \| [object][7])** element to locate
+-   `context` **([string][6] \| [object][7] | null)** context element (optional, default `null`)
 
 ### seeElementExists
 
@@ -451,8 +405,8 @@ I.seeElementExists('~edit', '#menu'); // element inside #menu
 
 #### Parameters
 
--   `locator` **([string][5] \| [object][6])** element to locate
--   `context` **([string][5] \| [object][6])** context element (optional, default `null`)
+-   `locator` **([string][6] \| [object][7])** element to locate
+-   `context` **([string][6] \| [object][7])** context element (optional, default `null`)
 
 ### setLandscapeOrientation
 
@@ -489,8 +443,8 @@ I.swipeUp('#container');
 
 #### Parameters
 
--   `locator` **([string][5] \| [object][6])** an element on which to perform swipe
--   `speed` **[string][5]** a speed to perform: `slow` or `fast`. (optional, default `'slow'`)
+-   `locator` **([string][6] \| [object][7])** an element on which to perform swipe
+-   `speed` **[string][6]** a speed to perform: `slow` or `fast`. (optional, default `'slow'`)
 
 ### swipeLeft
 
@@ -503,8 +457,8 @@ I.swipeUp('#container');
 
 #### Parameters
 
--   `locator` **([string][5] \| [object][6])** an element on which to perform swipe
--   `speed` **[string][5]** a speed to perform: `slow` or `fast`. (optional, default `'slow'`)
+-   `locator` **([string][6] \| [object][7])** an element on which to perform swipe
+-   `speed` **[string][6]** a speed to perform: `slow` or `fast`. (optional, default `'slow'`)
 
 ### swipeRight
 
@@ -517,8 +471,8 @@ I.swipeUp('#container');
 
 #### Parameters
 
--   `locator` **([string][5] \| [object][6])** an element on which to perform swipe
--   `speed` **[string][5]** a speed to perform: `slow` or `fast`. (optional, default `'slow'`)
+-   `locator` **([string][6] \| [object][7])** an element on which to perform swipe
+-   `speed` **[string][6]** a speed to perform: `slow` or `fast`. (optional, default `'slow'`)
 
 ### swipeUp
 
@@ -531,17 +485,17 @@ I.swipeUp('#container');
 
 #### Parameters
 
--   `locator` **([string][5] \| [object][6])** an element on which to perform swipe
--   `speed` **[string][5]** a speed to perform: `slow` or `fast`. (optional, default `'slow'`)
+-   `locator` **([string][6] \| [object][7])** an element on which to perform swipe
+-   `speed` **[string][6]** a speed to perform: `slow` or `fast`. (optional, default `'slow'`)
 
 ### tap
 
-Taps on an element.
+Taps on an element. 
 Element can be located by its text or id or accessibility id.
 
 The second parameter is a context element to narrow the search.
 
-Same as [click][11]
+Same as [click][12]
 
 ```js
 I.tap('Login'); // locate by text
@@ -553,40 +507,8 @@ I.tap({ ios: 'Save', android: 'SAVE' }, '#main'); // different texts on iOS and 
 
 #### Parameters
 
--   `locator` **([string][5] \| [object][6])** 
--   `context` **([string][5] \| [object][6] | null)**  (optional, default `null`)
-
-### tapByLabel
-
-Clicks on an element.
-Element can be located by its label
-
-The second parameter is a context (id | type | accessibility id) to narrow the search.
-
-```js
-I.tapByLabel('Login'); // locate by text
-I.tapByLabel('Login', '#nav'); // locate by text inside #nav
-```
-
-#### Parameters
-
--   `locator` **([string][5] \| [object][6])** 
--   `context` **([string][5] \| [object][6] | null)**  (optional, default `null`)
-
-### tapReturnKey
-
-Taps return key.
-A field can be located by text, accessibility id, id.
-
-```js
-I.tapReturnKey('Username');
-I.tapReturnKey('~name');
-I.tapReturnKey({ android: 'NAME', ios: 'name' });
-```
-
-#### Parameters
-
--   `field` **([string][5] \| [object][6])** an input element to fill in
+-   `locator` **([string][6] \| [object][7])** 
+-   `context` **([string][6] \| [object][7] | null)**  (optional, default `null`)
 
 ### wait
 
@@ -598,7 +520,7 @@ I.wait(2); // waits for 2 seconds
 
 #### Parameters
 
--   `sec` **[number][8]** number of seconds to wait
+-   `sec` **[number][9]** number of seconds to wait
 
 ### waitForElement
 
@@ -610,8 +532,8 @@ I.waitForElement('#message', 1); // wait for 1 second
 
 #### Parameters
 
--   `locator` **([string][5] \| [object][6])** an element to wait for
--   `sec` **[number][8]** number of seconds to wait, 5 by default (optional, default `5`)
+-   `locator` **([string][6] \| [object][7])** an element to wait for
+-   `sec` **[number][9]** number of seconds to wait, 5 by default (optional, default `5`)
 
 ### waitForElementVisible
 
@@ -623,12 +545,12 @@ I.waitForElementVisible('#message', 1); // wait for 1 second
 
 #### Parameters
 
--   `locator` **([string][5] \| [object][6])** an element to wait for
--   `sec` **[number][8]** number of seconds to wait (optional, default `5`)
+-   `locator` **([string][6] \| [object][7])** an element to wait for
+-   `sec` **[number][9]** number of seconds to wait (optional, default `5`)
 
 ### waitToHide
 
-Waits an elmenet to become not visible.
+Waits an elment to become not visible.
 
 ```js
 I.waitToHide('#message', 2); // wait for 2 seconds
@@ -636,27 +558,29 @@ I.waitToHide('#message', 2); // wait for 2 seconds
 
 #### Parameters
 
--   `locator` **([string][5] \| [object][6])** an element to wait for
--   `sec` **[number][8]** number of seconds to wait (optional, default `5`)
+-   `locator` **([string][6] \| [object][7])** an element to wait for
+-   `sec` **[number][9]** number of seconds to wait (optional, default `5`)
 
 [1]: https://github.com/wix/Detox
 
-[2]: https://wix.github.io/Detox/docs/introduction/project-setup
+[2]: https://github.com/wix/Detox/blob/master/docs/Introduction.GettingStarted.md
 
-[3]: https://wix.github.io/Detox/docs/introduction/project-setup#step-5-build-the-app
+[3]: https://github.com/wix/Detox/blob/master/docs/Introduction.Android.md
 
-[4]: https://codecept.io
+[4]: https://github.com/wix/Detox/blob/master/docs/Introduction.GettingStarted.md#step-4-build-your-app-and-run-detox-tests
 
-[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[5]: https://codecept.io
 
-[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[7]: #tap
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[8]: #tap
 
-[9]: #relaunchApp
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[10]: #relaunchApp
 
-[11]: #click
+[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
+[12]: #click

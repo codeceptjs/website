@@ -7,6 +7,10 @@ layout: Section
 
 # Releases
 
+## 3.6.1
+
+* Fixed regression in interactive pause.
+
 ## 3.6.0
 
 🛩️ *Features*
