@@ -74,6 +74,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             { text: "Data Management", link: "/data" },
             { text: "Parallel Execution", link: "/parallel" },
             { text: "Reports", link: "/reports" },
+            { text: "Testing with AI", link: "/ai" },
+            { text: "Self-Healing Tests", link: "/heal" },
           ]
         },
         {
@@ -270,6 +272,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'hooks',
             'internal-api',
             'react',
+            "ai",
+            "heal",
           ]
         },
       ]
