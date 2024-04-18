@@ -49,8 +49,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           items: [
             { text: "Getting Started", link: '/basics' },
             { text: "Tutorial", link: '/tutorial' },
-            { text: "AI Testing 🪄", link: '/ai' },
-            { text: "CodeceptUI", link: '/ui' },
           ]
         },
         {
@@ -73,9 +71,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             { text: "TypeScript", link: "/typescript" },
             { text: "Data Management", link: "/data" },
             { text: "Parallel Execution", link: "/parallel" },
+            { text: "Self-Healing Tests", link: "/heal" },    
+            { text: "AI Testing 🪄", link: '/ai' },
             { text: "Reports", link: "/reports" },
-            { text: "Testing with AI", link: "/ai" },
-            { text: "Self-Healing Tests", link: "/heal" },
           ]
         },
         {
