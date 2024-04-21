@@ -28,7 +28,7 @@ CodeceptJS AI can do the following:
 
 ![](/img/fill_form.gif)
 
-### How it works
+## How it works
 
 As we can't send a browser window with ChatGPT we are not be able to fully share the context. But we can chare HTML of the current page, which is quite enough to analyze and identify if a page contains an element which can be used in a test.
 
@@ -40,7 +40,7 @@ Even though, the HTML is still quite big and may exceed the token limit. So we r
 
 
 
-### Set up AI Provider
+## Set up AI Provider
 
 To enable AI features in CodeceptJS you should pick an AI provider and add `ai` section to `codecept.conf` file. This section should contain `request` function which will take a prompt from CodeceptJS, send it to AI provider and return a result.
 
@@ -85,15 +85,44 @@ ai: {
   request: async (messages) => {
     const OpenAI = require('openai');
     const openai = new OpenAI({ apiKey: process.env['OPENAI_API_KEY'] })
-    const response = await openai.chat.completions.create({
+
+    const completion = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo-0125',
       messages,
     });
-    // return only text content
-    return response?.data?.choices[0]?.message?.content;
+    
+    return completion?.choices[0]?.message?.content;
   }
 }
 ```
+
+#### Mixtral
+
+Mixtral is opensource and can be used via Cloudflare, Google Cloud, Azure or installed locally.
+
+The simplest way to try Mixtral on your case is using [Groq Cloud](https://groq.com) which provides Mixtral access with GPT-like API:
+
+Prerequisite:
+
+* Install `groq-sdk` package
+* obtain `GROQ_API_KEY` from OpenAI
+* set `GROQ_API_KEY` as environment variable
+
+Sample Groq configuration with Mixtral model:
+
+```js
+ai: {
+  request: async (messages) => {
+    const chatCompletion = await groq.chat.completions.create({
+        messages,
+        model: "mixtral-8x7b-32768",
+    });
+    return chatCompletion.choices[0]?.message?.content || "";
+  }
+}
+```
+
+> Groq also provides access to other opensource models like llama or gemma
 
 #### Anthropic Claude
 
