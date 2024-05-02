@@ -2466,14 +2466,21 @@ class WebDriver extends Helper {
    * 
    */
   async saveScreenshot(fileName, fullPage = false) {
-    const outputFile = screenshotOutputFolder(fileName);
+    let outputFile = screenshotOutputFolder(fileName);
 
     if (this.activeSessionName) {
       const browser = this.sessionWindows[this.activeSessionName];
 
-      if (browser) {
-        this.debug(`Screenshot of ${this.activeSessionName} session has been saved to ${outputFile}`);
-        return browser.saveScreenshot(outputFile);
+      for (const sessionName in this.sessionWindows) {
+        const activeSessionPage = this.sessionWindows[sessionName];
+        outputFile = screenshotOutputFolder(`${sessionName}_${fileName}`);
+
+        this.debug(`${sessionName} - Screenshot is saving to ${outputFile}`);
+
+        if (browser) {
+          this.debug(`Screenshot of ${sessionName} session has been saved to ${outputFile}`);
+          return browser.saveScreenshot(outputFile);
+        }
       }
     }
 

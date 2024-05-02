@@ -417,7 +417,14 @@ class Playwright extends Helper {
     }
 
     if (this.options.video) {
-      this.options.recordVideo = { size: parseWindowSize(this.options.windowSize) };
+      // set the video resolution with window size
+      let size = parseWindowSize(this.options.windowSize);
+
+      // if the video resolution is passed, set the record resoultion with that resolution
+      if (this.options.recordVideo && this.options.recordVideo.size) {
+        size = parseWindowSize(this.options.recordVideo.size);
+      }
+      this.options.recordVideo = { size };
     }
     if (this.options.recordVideo && !this.options.recordVideo.dir) {
       this.options.recordVideo.dir = `${global.output_dir}/videos/`;
@@ -4035,11 +4042,14 @@ class Playwright extends Helper {
   }
 
   /**
-   * Resets all recorded network requests.
+   * Starts recording the network traffics.
+   * This also resets recorded network requests.
    * 
    * ```js
-   * I.flushNetworkTraffics();
+   * I.startRecordingTraffic();
    * ```
+   * 
+   * @returns {void} automatically synchronized promise through #recorder
    * 
    *
    */
@@ -4174,8 +4184,6 @@ class Playwright extends Helper {
   /**
    * Returns full URL of request matching parameter "urlMatch".
    *
-   * @param {string|RegExp} urlMatch Expected URL of request in network traffic. Can be a string or a regular expression.
-   *
    * Examples:
    *
    * ```js
@@ -4183,6 +4191,7 @@ class Playwright extends Helper {
    * I.grabTrafficUrl(/session.*start/);
    * ```
    *
+   * @param {string|RegExp} urlMatch Expected URL of request in network traffic. Can be a string or a regular expression.
    * @return {Promise<*>}
    */
   grabTrafficUrl(urlMatch) {
@@ -4796,6 +4805,11 @@ async function targetCreatedHandler(page) {
 
 function parseWindowSize(windowSize) {
   if (!windowSize) return { width: 800, height: 600 };
+
+  if (windowSize.width && windowSize.height) {
+    return { width: parseInt(windowSize.width, 10), height: parseInt(windowSize.height, 10) };
+  }
+
   const dimensions = windowSize.split('x');
   if (dimensions.length < 2 || windowSize === 'maximize') {
     console.log('Invalid window size, setting window to default values');
