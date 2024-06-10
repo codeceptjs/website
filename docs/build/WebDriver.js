@@ -642,6 +642,7 @@ class WebDriver extends Helper {
 
     if (this.options.automationProtocol) {
       this.puppeteerBrowser = await this.browser.getPuppeteer();
+      this.page = (await this.puppeteerBrowser.pages())[0];
     }
 
     return this.browser;
@@ -3939,7 +3940,6 @@ class WebDriver extends Helper {
     this.recording = true;
     this.recordedAtLeastOnce = true;
 
-    this.page = (await this.puppeteerBrowser.pages())[0];
     await this.page.setRequestInterception(true);
 
     this.page.on('request', (request) => {

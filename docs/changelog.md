@@ -7,6 +7,25 @@ layout: Section
 
 # Releases
 
+## 3.6.3
+
+❤️ Thanks all to those who contributed to make this release! ❤️
+
+🛩️ *Features*
+* feat(plugin): coverage with WebDriver - devtools ([#4349](https://github.com/codeceptjs/CodeceptJS/issues/4349)) - by **[KobeNguyent](https://github.com/KobeNguyent)**
+  ![Screenshot 2024-05-16 at 16 49 20](https://github.com/codeceptjs/CodeceptJS/assets/7845001/a02f0f99-ac78-4d3f-9774-2cb51c688025)
+
+🐛 *Bug Fixes*
+* fix(cli): stale process ([#4367](https://github.com/codeceptjs/CodeceptJS/issues/4367)) - by **[Horsty80](https://github.com/Horsty80)** **[kobenguyent](https://github.com/kobenguyent)**
+* fix(runner): screenshot error in beforeSuite/AfterSuite ([#4385](https://github.com/codeceptjs/CodeceptJS/issues/4385)) - by **[kobenguyent](https://github.com/kobenguyent)**
+* fix(cli): gherkin command init with TypeScript ([#4366](https://github.com/codeceptjs/CodeceptJS/issues/4366)) - by **[andonary](https://github.com/andonary)**
+* fix(webApi): error message of dontSeeCookie ([#4357](https://github.com/codeceptjs/CodeceptJS/issues/4357)) - by **[a-stankevich](https://github.com/a-stankevich)**
+
+📖 *Documentation*
+* fix(doc): Expect helper is not described correctly ([#4370](https://github.com/codeceptjs/CodeceptJS/issues/4370)) - by **[kobenguyent](https://github.com/kobenguyent)**
+* fix(docs): some strange characters ([#4387](https://github.com/codeceptjs/CodeceptJS/issues/4387)) - by **[kobenguyent](https://github.com/kobenguyent)**
+* fix: Puppeteer helper doc typo ([#4369](https://github.com/codeceptjs/CodeceptJS/issues/4369)) - by **[yoannfleurydev](https://github.com/yoannfleurydev)**
+
 ## 3.6.2
 
 ❤️ Thanks all to those who contributed to make this release! ❤️
