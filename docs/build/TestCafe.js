@@ -1,29 +1,34 @@
 // @ts-nocheck
-const fs = require('fs')
-const assert = require('assert')
-const path = require('path')
-const qrcode = require('qrcode-terminal')
-const createTestCafe = require('testcafe')
-const { Selector, ClientFunction } = require('testcafe')
+const fs = require('fs');
+const assert = require('assert');
+const path = require('path');
+const qrcode = require('qrcode-terminal');
+const createTestCafe = require('testcafe');
+const { Selector, ClientFunction } = require('testcafe');
 
-const Helper = require('@codeceptjs/helper')
-const ElementNotFound = require('./errors/ElementNotFound')
-const testControllerHolder = require('./testcafe/testControllerHolder')
-const { mapError, createTestFile, createClientFunction } = require('./testcafe/testcafe-utils')
+const Helper = require('@codeceptjs/helper');
+const ElementNotFound = require('./errors/ElementNotFound');
+const testControllerHolder = require('./testcafe/testControllerHolder');
+const {
+  mapError,
+  createTestFile,
+  createClientFunction,
+} = require('./testcafe/testcafe-utils');
 
-const stringIncludes = require('../assert/include').includes
-const { urlEquals } = require('../assert/equal')
-const { empty } = require('../assert/empty')
-const { truth } = require('../assert/truth')
-const { xpathLocator, normalizeSpacesInString } = require('../utils')
-const Locator = require('../locator')
+const stringIncludes = require('../assert/include').includes;
+const { urlEquals } = require('../assert/equal');
+const { empty } = require('../assert/empty');
+const { truth } = require('../assert/truth');
+const {
+  xpathLocator, normalizeSpacesInString,
+} = require('../utils');
+const Locator = require('../locator');
 
 /**
  * Client Functions
  */
-const getPageUrl = (t) => ClientFunction(() => document.location.href).with({ boundTestRun: t })
-const getHtmlSource = (t) =>
-  ClientFunction(() => document.getElementsByTagName('html')[0].innerHTML).with({ boundTestRun: t })
+const getPageUrl = t => ClientFunction(() => document.location.href).with({ boundTestRun: t });
+const getHtmlSource = t => ClientFunction(() => document.getElementsByTagName('html')[0].innerHTML).with({ boundTestRun: t });
 
 /**
  * Uses [TestCafe](https://github.com/DevExpress/testcafe) library to run cross-browser tests.
@@ -94,16 +99,16 @@ const getHtmlSource = (t) =>
  */
 class TestCafe extends Helper {
   constructor(config) {
-    super(config)
+    super(config);
 
-    this.testcafe = undefined // testcafe instance
-    this.t = undefined // testcafe test controller
-    this.dummyTestcafeFile // generated testcafe test file
+    this.testcafe = undefined; // testcafe instance
+    this.t = undefined; // testcafe test controller
+    this.dummyTestcafeFile; // generated testcafe test file
 
     // context is used for within() function.
     // It requires to have _withinBeginand _withinEnd implemented.
     // Inside _withinBegin we should define that all next element calls should be started from a specific element (this.context).
-    this.context = undefined // TODO Not sure if this applies to testcafe
+    this.context = undefined; // TODO Not sure if this applies to testcafe
 
     this.options = {
       url: 'http://localhost',
@@ -118,15 +123,15 @@ class TestCafe extends Helper {
       disableScreenshots: false,
       windowSize: undefined,
       ...config,
-    }
+    };
   }
 
   // TOOD Do a requirements check
   static _checkRequirements() {
     try {
-      require('testcafe')
+      require('testcafe');
     } catch (e) {
-      return ['testcafe@^1.1.0']
+      return ['testcafe@^1.1.0'];
     }
   }
 
@@ -135,36 +140,33 @@ class TestCafe extends Helper {
       { name: 'url', message: 'Base url of site to be tested', default: 'http://localhost' },
       { name: 'browser', message: 'Browser to be used', default: 'chrome' },
       {
-        name: 'show',
-        message: 'Show browser window',
-        default: true,
-        type: 'confirm',
+        name: 'show', message: 'Show browser window', default: true, type: 'confirm',
       },
-    ]
+    ];
   }
 
   async _configureAndStartBrowser() {
-    this.dummyTestcafeFile = createTestFile(global.output_dir) // create a dummy test file to get hold of the test controller
+    this.dummyTestcafeFile = createTestFile(global.output_dir); // create a dummy test file to get hold of the test controller
 
-    this.iteration += 2 // Use different ports for each test run
+    this.iteration += 2; // Use different ports for each test run
     // @ts-ignore
-    this.testcafe = await createTestCafe('', null, null)
+    this.testcafe = await createTestCafe('', null, null);
 
-    this.debugSection('_before', 'Starting testcafe browser...')
+    this.debugSection('_before', 'Starting testcafe browser...');
 
-    this.isRunning = true
+    this.isRunning = true;
 
     // TODO Do we have to cleanup the runner?
-    const runner = this.testcafe.createRunner()
+    const runner = this.testcafe.createRunner();
 
-    this.options.browser !== 'remote' ? this._startBrowser(runner) : this._startRemoteBrowser(runner)
+    this.options.browser !== 'remote' ? this._startBrowser(runner) : this._startRemoteBrowser(runner);
 
-    this.t = await testControllerHolder.get()
-    assert(this.t, 'Expected to have the testcafe test controller')
+    this.t = await testControllerHolder.get();
+    assert(this.t, 'Expected to have the testcafe test controller');
 
     if (this.options.windowSize && this.options.windowSize.indexOf('x') > 0) {
-      const dimensions = this.options.windowSize.split('x')
-      await this.t.resizeWindow(parseInt(dimensions[0], 10), parseInt(dimensions[1], 10))
+      const dimensions = this.options.windowSize.split('x');
+      await this.t.resizeWindow(parseInt(dimensions[0], 10), parseInt(dimensions[1], 10));
     }
   }
 
@@ -188,16 +190,16 @@ class TestCafe extends Helper {
         takeScreenshotsOnFails: true,
       })
       .catch((err) => {
-        this.debugSection('_before', `Error ${err.toString()}`)
-        this.isRunning = false
-        this.testcafe.close()
-      })
+        this.debugSection('_before', `Error ${err.toString()}`);
+        this.isRunning = false;
+        this.testcafe.close();
+      });
   }
 
   async _startRemoteBrowser(runner) {
-    const remoteConnection = await this.testcafe.createBrowserConnection()
-    console.log('Connect your device to the following URL or scan QR Code: ', remoteConnection.url)
-    qrcode.generate(remoteConnection.url)
+    const remoteConnection = await this.testcafe.createBrowserConnection();
+    console.log('Connect your device to the following URL or scan QR Code: ', remoteConnection.url);
+    qrcode.generate(remoteConnection.url);
     remoteConnection.once('ready', () => {
       runner
         .src(this.dummyTestcafeFile)
@@ -209,67 +211,70 @@ class TestCafe extends Helper {
           skipUncaughtErrors: true,
         })
         .catch((err) => {
-          this.debugSection('_before', `Error ${err.toString()}`)
-          this.isRunning = false
-          this.testcafe.close()
-        })
-    })
+          this.debugSection('_before', `Error ${err.toString()}`);
+          this.isRunning = false;
+          this.testcafe.close();
+        });
+    });
   }
 
   async _stopBrowser() {
-    this.debugSection('_after', 'Stopping testcafe browser...')
+    this.debugSection('_after', 'Stopping testcafe browser...');
 
-    testControllerHolder.free()
+    testControllerHolder.free();
     if (this.testcafe) {
-      this.testcafe.close()
+      this.testcafe.close();
     }
 
-    fs.unlinkSync(this.dummyTestcafeFile) // remove the dummy test
-    this.t = undefined
+    fs.unlinkSync(this.dummyTestcafeFile); // remove the dummy test
+    this.t = undefined;
 
-    this.isRunning = false
+    this.isRunning = false;
   }
 
-  _init() {}
+  _init() {
+  }
 
   async _beforeSuite() {
     if (!this.options.restart && !this.options.manualStart && !this.isRunning) {
-      this.debugSection('Session', 'Starting singleton browser session')
-      return this._configureAndStartBrowser()
+      this.debugSection('Session', 'Starting singleton browser session');
+      return this._configureAndStartBrowser();
     }
   }
 
   async _before() {
-    if (this.options.restart && !this.options.manualStart) return this._configureAndStartBrowser()
-    if (!this.isRunning && !this.options.manualStart) return this._configureAndStartBrowser()
-    this.context = null
+    if (this.options.restart && !this.options.manualStart) return this._configureAndStartBrowser();
+    if (!this.isRunning && !this.options.manualStart) return this._configureAndStartBrowser();
+    this.context = null;
   }
 
   async _after() {
-    if (!this.isRunning) return
+    if (!this.isRunning) return;
 
     if (this.options.restart) {
-      this.isRunning = false
-      return this._stopBrowser()
+      this.isRunning = false;
+      return this._stopBrowser();
     }
 
-    if (this.options.keepBrowserState) return
+    if (this.options.keepBrowserState) return;
 
     if (!this.options.keepCookies) {
-      this.debugSection('Session', 'cleaning cookies and localStorage')
-      await this.clearCookie()
+      this.debugSection('Session', 'cleaning cookies and localStorage');
+      await this.clearCookie();
 
       // TODO IMHO that should only happen when
-      await this.executeScript(() => localStorage.clear()).catch((err) => {
-        if (!(err.message.indexOf("Storage is disabled inside 'data:' URLs.") > -1)) throw err
-      })
+      await this.executeScript(() => localStorage.clear())
+        .catch((err) => {
+          if (!(err.message.indexOf("Storage is disabled inside 'data:' URLs.") > -1)) throw err;
+        });
     }
   }
 
-  _afterSuite() {}
+  _afterSuite() {
+  }
 
   async _finishTest() {
-    if (!this.options.restart && this.isRunning) return this._stopBrowser()
+    if (!this.options.restart && this.isRunning) return this._stopBrowser();
   }
 
   /**
@@ -292,7 +297,7 @@ class TestCafe extends Helper {
    * @param {function} fn async functuion that executed with TestCafe helper as argument
    */
   useTestCafeTo(description, fn) {
-    return this._useTo(...arguments)
+    return this._useTo(...arguments);
   }
 
   /**
@@ -305,17 +310,17 @@ class TestCafe extends Helper {
    *
    */
   async _locate(locator) {
-    return findElements.call(this, this.context, locator).catch(mapError)
+    return findElements.call(this, this.context, locator).catch(mapError);
   }
 
   async _withinBegin(locator) {
-    const els = await this._locate(locator)
-    assertElementExists(els, locator)
-    this.context = await els.nth(0)
+    const els = await this._locate(locator);
+    assertElementExists(els, locator);
+    this.context = await els.nth(0);
   }
 
   async _withinEnd() {
-    this.context = null
+    this.context = null;
   }
 
   /**
@@ -333,11 +338,12 @@ class TestCafe extends Helper {
    * 
    */
   async amOnPage(url) {
-    if (!/^\w+\:\/\//.test(url)) {
-      url = this.options.url + url
+    if (!(/^\w+\:\/\//.test(url))) {
+      url = this.options.url + url;
     }
 
-    return this.t.navigateTo(url).catch(mapError)
+    return this.t.navigateTo(url)
+      .catch(mapError);
   }
 
   /**
@@ -351,10 +357,10 @@ class TestCafe extends Helper {
    */
   async resizeWindow(width, height) {
     if (width === 'maximize') {
-      return this.t.maximizeWindow().catch(mapError)
+      return this.t.maximizeWindow().catch(mapError);
     }
 
-    return this.t.resizeWindow(width, height).catch(mapError)
+    return this.t.resizeWindow(width, height).catch(mapError);
   }
 
   /**
@@ -375,16 +381,13 @@ class TestCafe extends Helper {
    *
    */
   async focus(locator) {
-    const els = await this._locate(locator)
-    await assertElementExists(els, locator, 'Element to focus')
-    const element = await els.nth(0)
+    const els = await this._locate(locator);
+    await assertElementExists(els, locator, 'Element to focus');
+    const element = await els.nth(0);
 
-    const focusElement = ClientFunction(() => element().focus(), {
-      boundTestRun: this.t,
-      dependencies: { element },
-    })
+    const focusElement = ClientFunction(() => element().focus(), { boundTestRun: this.t, dependencies: { element } });
 
-    return focusElement()
+    return focusElement();
   }
 
   /**
@@ -410,13 +413,13 @@ class TestCafe extends Helper {
    *
    */
   async blur(locator) {
-    const els = await this._locate(locator)
-    await assertElementExists(els, locator, 'Element to blur')
-    const element = await els.nth(0)
+    const els = await this._locate(locator);
+    await assertElementExists(els, locator, 'Element to blur');
+    const element = await els.nth(0);
 
-    const blurElement = ClientFunction(() => element().blur(), { boundTestRun: this.t, dependencies: { element } })
+    const blurElement = ClientFunction(() => element().blur(), { boundTestRun: this.t, dependencies: { element } });
 
-    return blurElement()
+    return blurElement();
   }
 
   /**
@@ -449,7 +452,7 @@ class TestCafe extends Helper {
    *
    */
   async click(locator, context = null) {
-    return proceedClick.call(this, locator, context)
+    return proceedClick.call(this, locator, context);
   }
 
   /**
@@ -463,7 +466,7 @@ class TestCafe extends Helper {
    */
   async refreshPage() {
     // eslint-disable-next-line no-restricted-globals
-    return this.t.eval(() => location.reload(true), { boundTestRun: this.t }).catch(mapError)
+    return this.t.eval(() => location.reload(true), { boundTestRun: this.t }).catch(mapError);
   }
 
   /**
@@ -481,11 +484,11 @@ class TestCafe extends Helper {
    *
    */
   async waitForVisible(locator, sec) {
-    const timeout = sec ? sec * 1000 : undefined
+    const timeout = sec ? sec * 1000 : undefined;
 
     return (await findElements.call(this, this.context, locator))
       .with({ visibilityCheck: true, timeout })()
-      .catch(mapError)
+      .catch(mapError);
   }
 
   /**
@@ -508,10 +511,12 @@ class TestCafe extends Helper {
    * 
    */
   async fillField(field, value) {
-    const els = await findFields.call(this, field)
-    assertElementExists(els, field, 'Field')
-    const el = await els.nth(0)
-    return this.t.typeText(el, value.toString(), { replace: true }).catch(mapError)
+    const els = await findFields.call(this, field);
+    assertElementExists(els, field, 'Field');
+    const el = await els.nth(0);
+    return this.t
+      .typeText(el, value.toString(), { replace: true })
+      .catch(mapError);
   }
 
   /**
@@ -527,12 +532,14 @@ class TestCafe extends Helper {
    * 
    */
   async clearField(field) {
-    const els = await findFields.call(this, field)
-    assertElementExists(els, field, 'Field')
-    const el = await els.nth(0)
+    const els = await findFields.call(this, field);
+    assertElementExists(els, field, 'Field');
+    const el = await els.nth(0);
 
-    const res = await this.t.selectText(el).pressKey('delete')
-    return res
+    const res = await this.t
+      .selectText(el)
+      .pressKey('delete');
+    return res;
   }
 
   /**
@@ -551,11 +558,13 @@ class TestCafe extends Helper {
    *
    */
   async appendField(field, value) {
-    const els = await findFields.call(this, field)
-    assertElementExists(els, field, 'Field')
-    const el = await els.nth(0)
+    const els = await findFields.call(this, field);
+    assertElementExists(els, field, 'Field');
+    const el = await els.nth(0);
 
-    return this.t.typeText(el, value.toString(), { replace: false }).catch(mapError)
+    return this.t
+      .typeText(el, value.toString(), { replace: false })
+      .catch(mapError);
   }
 
   /**
@@ -575,12 +584,14 @@ class TestCafe extends Helper {
    *
    */
   async attachFile(field, pathToFile) {
-    const els = await findFields.call(this, field)
-    assertElementExists(els, field, 'Field')
-    const el = await els.nth(0)
-    const file = path.join(global.codecept_dir, pathToFile)
+    const els = await findFields.call(this, field);
+    assertElementExists(els, field, 'Field');
+    const el = await els.nth(0);
+    const file = path.join(global.codecept_dir, pathToFile);
 
-    return this.t.setFilesToUpload(el, [file]).catch(mapError)
+    return this.t
+      .setFilesToUpload(el, [file])
+      .catch(mapError);
   }
 
   /**
@@ -601,11 +612,11 @@ class TestCafe extends Helper {
    * {{ keys }}
    */
   async pressKey(key) {
-    assert(key, 'Expected a sequence of keys or key combinations')
+    assert(key, 'Expected a sequence of keys or key combinations');
 
     return this.t
       .pressKey(key.toLowerCase()) // testcafe keys are lowercase
-      .catch(mapError)
+      .catch(mapError);
   }
 
   /**
@@ -625,10 +636,12 @@ class TestCafe extends Helper {
    *
    */
   async moveCursorTo(locator, offsetX = 0, offsetY = 0) {
-    const els = (await findElements.call(this, this.context, locator)).filterVisible()
-    await assertElementExists(els, locator)
+    const els = (await findElements.call(this, this.context, locator)).filterVisible();
+    await assertElementExists(els, locator);
 
-    return this.t.hover(els.nth(0), { offsetX, offsetY }).catch(mapError)
+    return this.t
+      .hover(els.nth(0), { offsetX, offsetY })
+      .catch(mapError);
   }
 
   /**
@@ -649,15 +662,17 @@ class TestCafe extends Helper {
    *
    */
   async doubleClick(locator, context = null) {
-    let matcher
+    let matcher;
     if (context) {
-      const els = await this._locate(context)
-      await assertElementExists(els, context)
-      matcher = await els.nth(0)
+      const els = await this._locate(context);
+      await assertElementExists(els, context);
+      matcher = await els.nth(0);
     }
 
-    const els = (await findClickable.call(this, matcher, locator)).filterVisible()
-    return this.t.doubleClick(els.nth(0)).catch(mapError)
+    const els = (await findClickable.call(this, matcher, locator)).filterVisible();
+    return this.t
+      .doubleClick(els.nth(0))
+      .catch(mapError);
   }
 
   /**
@@ -679,15 +694,17 @@ class TestCafe extends Helper {
    *
    */
   async rightClick(locator, context = null) {
-    let matcher
+    let matcher;
     if (context) {
-      const els = await this._locate(context)
-      await assertElementExists(els, context)
-      matcher = await els.nth(0)
+      const els = await this._locate(context);
+      await assertElementExists(els, context);
+      matcher = await els.nth(0);
     }
-    const els = (await findClickable.call(this, matcher, locator)).filterVisible()
-    assertElementExists(els, locator)
-    return this.t.rightClick(els.nth(0)).catch(mapError)
+    const els = (await findClickable.call(this, matcher, locator)).filterVisible();
+    assertElementExists(els, locator);
+    return this.t
+      .rightClick(els.nth(0))
+      .catch(mapError);
   }
 
   /**
@@ -707,9 +724,11 @@ class TestCafe extends Helper {
    * 
    */
   async checkOption(field, context = null) {
-    const el = await findCheckable.call(this, field, context)
+    const el = await findCheckable.call(this, field, context);
 
-    return this.t.click(el).catch(mapError)
+    return this.t
+      .click(el)
+      .catch(mapError);
   }
 
   /**
@@ -729,10 +748,12 @@ class TestCafe extends Helper {
    * 
    */
   async uncheckOption(field, context = null) {
-    const el = await findCheckable.call(this, field, context)
+    const el = await findCheckable.call(this, field, context);
 
     if (await el.checked) {
-      return this.t.click(el).catch(mapError)
+      return this.t
+        .click(el)
+        .catch(mapError);
     }
   }
 
@@ -750,7 +771,7 @@ class TestCafe extends Helper {
    * 
    */
   async seeCheckboxIsChecked(field) {
-    return proceedIsChecked.call(this, 'assert', field)
+    return proceedIsChecked.call(this, 'assert', field);
   }
 
   /**
@@ -767,7 +788,7 @@ class TestCafe extends Helper {
    * 
    */
   async dontSeeCheckboxIsChecked(field) {
-    return proceedIsChecked.call(this, 'negate', field)
+    return proceedIsChecked.call(this, 'negate', field);
   }
 
   /**
@@ -795,42 +816,44 @@ class TestCafe extends Helper {
    * 
    */
   async selectOption(select, option) {
-    const els = await findFields.call(this, select)
-    assertElementExists(els, select, 'Selectable field')
+    const els = await findFields.call(this, select);
+    assertElementExists(els, select, 'Selectable field');
 
-    const el = await els.filterVisible().nth(0)
+    const el = await els.filterVisible().nth(0);
 
     if ((await el.tagName).toLowerCase() !== 'select') {
-      throw new Error('Element is not <select>')
+      throw new Error('Element is not <select>');
     }
-    if (!Array.isArray(option)) option = [option]
+    if (!Array.isArray(option)) option = [option];
 
     // TODO As far as I understand the testcafe docs this should do a multi-select
     // but it does not work
     // const clickOpts = { ctrl: option.length > 1 };
-    await this.t.click(el).catch(mapError)
+    await this.t.click(el).catch(mapError);
 
     for (const key of option) {
-      const opt = key
+      const opt = key;
 
-      let optEl
+      let optEl;
       try {
-        optEl = el.child('option').withText(opt)
+        optEl = el.child('option').withText(opt);
         if (await optEl.count) {
-          await this.t.click(optEl).catch(mapError)
-          continue
+          await this.t.click(optEl).catch(mapError);
+          continue;
         }
         // eslint-disable-next-line no-empty
-      } catch (err) {}
+      } catch (err) {
+      }
 
       try {
-        const sel = `[value="${opt}"]`
-        optEl = el.find(sel)
+        const sel = `[value="${opt}"]`;
+        optEl = el.find(sel);
         if (await optEl.count) {
-          await this.t.click(optEl).catch(mapError)
+          await this.t.click(optEl).catch(mapError);
         }
         // eslint-disable-next-line no-empty
-      } catch (err) {}
+      } catch (err) {
+      }
     }
   }
 
@@ -846,7 +869,7 @@ class TestCafe extends Helper {
    * 
    */
   async seeInCurrentUrl(url) {
-    stringIncludes('url').assert(url, await getPageUrl(this.t)().catch(mapError))
+    stringIncludes('url').assert(url, await getPageUrl(this.t)().catch(mapError));
   }
 
   /**
@@ -857,7 +880,7 @@ class TestCafe extends Helper {
    * 
    */
   async dontSeeInCurrentUrl(url) {
-    stringIncludes('url').negate(url, await getPageUrl(this.t)().catch(mapError))
+    stringIncludes('url').negate(url, await getPageUrl(this.t)().catch(mapError));
   }
 
   /**
@@ -875,7 +898,7 @@ class TestCafe extends Helper {
    * 
    */
   async seeCurrentUrlEquals(url) {
-    urlEquals(this.options.url).assert(url, await getPageUrl(this.t)().catch(mapError))
+    urlEquals(this.options.url).assert(url, await getPageUrl(this.t)().catch(mapError));
   }
 
   /**
@@ -892,7 +915,7 @@ class TestCafe extends Helper {
    * 
    */
   async dontSeeCurrentUrlEquals(url) {
-    urlEquals(this.options.url).negate(url, await getPageUrl(this.t)().catch(mapError))
+    urlEquals(this.options.url).negate(url, await getPageUrl(this.t)().catch(mapError));
   }
 
   /**
@@ -911,14 +934,16 @@ class TestCafe extends Helper {
    *
    */
   async see(text, context = null) {
-    let els
+    let els;
     if (context) {
-      els = (await findElements.call(this, this.context, context)).withText(normalizeSpacesInString(text))
+      els = (await findElements.call(this, this.context, context)).withText(normalizeSpacesInString(text));
     } else {
-      els = (await findElements.call(this, this.context, '*')).withText(normalizeSpacesInString(text))
+      els = (await findElements.call(this, this.context, '*')).withText(normalizeSpacesInString(text));
     }
 
-    return this.t.expect(els.filterVisible().count).gt(0, `No element with text "${text}" found`).catch(mapError)
+    return this.t
+      .expect(els.filterVisible().count).gt(0, `No element with text "${text}" found`)
+      .catch(mapError);
   }
 
   /**
@@ -937,17 +962,16 @@ class TestCafe extends Helper {
    *
    */
   async dontSee(text, context = null) {
-    let els
+    let els;
     if (context) {
-      els = (await findElements.call(this, this.context, context)).withText(text)
+      els = (await findElements.call(this, this.context, context)).withText(text);
     } else {
-      els = (await findElements.call(this, this.context, 'body')).withText(text)
+      els = (await findElements.call(this, this.context, 'body')).withText(text);
     }
 
     return this.t
-      .expect(els.filterVisible().count)
-      .eql(0, `Element with text "${text}" can still be seen`)
-      .catch(mapError)
+      .expect(els.filterVisible().count).eql(0, `Element with text "${text}" can still be seen`)
+      .catch(mapError);
   }
 
   /**
@@ -962,11 +986,10 @@ class TestCafe extends Helper {
    * 
    */
   async seeElement(locator) {
-    const exists = (await findElements.call(this, this.context, locator)).filterVisible().exists
+    const exists = (await findElements.call(this, this.context, locator)).filterVisible().exists;
     return this.t
-      .expect(exists)
-      .ok(`No element "${new Locator(locator)}" found`)
-      .catch(mapError)
+      .expect(exists).ok(`No element "${(new Locator(locator))}" found`)
+      .catch(mapError);
   }
 
   /**
@@ -981,11 +1004,10 @@ class TestCafe extends Helper {
    * 
    */
   async dontSeeElement(locator) {
-    const exists = (await findElements.call(this, this.context, locator)).filterVisible().exists
+    const exists = (await findElements.call(this, this.context, locator)).filterVisible().exists;
     return this.t
-      .expect(exists)
-      .notOk(`Element "${new Locator(locator)}" is still visible`)
-      .catch(mapError)
+      .expect(exists).notOk(`Element "${(new Locator(locator))}" is still visible`)
+      .catch(mapError);
   }
 
   /**
@@ -1000,11 +1022,10 @@ class TestCafe extends Helper {
    * 
    */
   async seeElementInDOM(locator) {
-    const exists = (await findElements.call(this, this.context, locator)).exists
+    const exists = (await findElements.call(this, this.context, locator)).exists;
     return this.t
-      .expect(exists)
-      .ok(`No element "${new Locator(locator)}" found in DOM`)
-      .catch(mapError)
+      .expect(exists).ok(`No element "${(new Locator(locator))}" found in DOM`)
+      .catch(mapError);
   }
 
   /**
@@ -1019,11 +1040,10 @@ class TestCafe extends Helper {
    * 
    */
   async dontSeeElementInDOM(locator) {
-    const exists = (await findElements.call(this, this.context, locator)).exists
+    const exists = (await findElements.call(this, this.context, locator)).exists;
     return this.t
-      .expect(exists)
-      .notOk(`Element "${new Locator(locator)}" is still in DOM`)
-      .catch(mapError)
+      .expect(exists).notOk(`Element "${(new Locator(locator))}" is still in DOM`)
+      .catch(mapError);
   }
 
   /**
@@ -1041,8 +1061,10 @@ class TestCafe extends Helper {
    *
    */
   async seeNumberOfVisibleElements(locator, num) {
-    const count = (await findElements.call(this, this.context, locator)).filterVisible().count
-    return this.t.expect(count).eql(num).catch(mapError)
+    const count = (await findElements.call(this, this.context, locator)).filterVisible().count;
+    return this.t
+      .expect(count).eql(num)
+      .catch(mapError);
   }
 
   /**
@@ -1057,8 +1079,8 @@ class TestCafe extends Helper {
    * @returns {Promise<number>} number of visible elements
    */
   async grabNumberOfVisibleElements(locator) {
-    const count = (await findElements.call(this, this.context, locator)).filterVisible().count
-    return count
+    const count = (await findElements.call(this, this.context, locator)).filterVisible().count;
+    return count;
   }
 
   /**
@@ -1077,16 +1099,15 @@ class TestCafe extends Helper {
    * 
    */
   async seeInField(field, value) {
-    const _value = typeof value === 'boolean' ? value : value.toString()
+    const _value = (typeof value === 'boolean') ? value : value.toString();
     // const expectedValue = findElements.call(this, this.context, field).value;
-    const els = await findFields.call(this, field)
-    assertElementExists(els, field, 'Field')
-    const el = await els.nth(0)
+    const els = await findFields.call(this, field);
+    assertElementExists(els, field, 'Field');
+    const el = await els.nth(0);
 
     return this.t
-      .expect(await el.value)
-      .eql(_value)
-      .catch(mapError)
+      .expect(await el.value).eql(_value)
+      .catch(mapError);
   }
 
   /**
@@ -1104,13 +1125,15 @@ class TestCafe extends Helper {
    * 
    */
   async dontSeeInField(field, value) {
-    const _value = typeof value === 'boolean' ? value : value.toString()
+    const _value = (typeof value === 'boolean') ? value : value.toString();
     // const expectedValue = findElements.call(this, this.context, field).value;
-    const els = await findFields.call(this, field)
-    assertElementExists(els, field, 'Field')
-    const el = await els.nth(0)
+    const els = await findFields.call(this, field);
+    assertElementExists(els, field, 'Field');
+    const el = await els.nth(0);
 
-    return this.t.expect(el.value).notEql(_value).catch(mapError)
+    return this.t
+      .expect(el.value).notEql(_value)
+      .catch(mapError);
   }
 
   /**
@@ -1121,8 +1144,10 @@ class TestCafe extends Helper {
    * ```
    */
   async seeTextEquals(text, context = null) {
-    const expectedText = findElements.call(this, context, undefined).textContent
-    return this.t.expect(expectedText).eql(text).catch(mapError)
+    const expectedText = findElements.call(this, context, undefined).textContent;
+    return this.t
+      .expect(expectedText).eql(text)
+      .catch(mapError);
   }
 
   /**
@@ -1136,8 +1161,8 @@ class TestCafe extends Helper {
    * 
    */
   async seeInSource(text) {
-    const source = await getHtmlSource(this.t)()
-    stringIncludes('HTML source of a page').assert(text, source)
+    const source = await getHtmlSource(this.t)();
+    stringIncludes('HTML source of a page').assert(text, source);
   }
 
   /**
@@ -1152,8 +1177,8 @@ class TestCafe extends Helper {
    * 
    */
   async dontSeeInSource(text) {
-    const source = await getHtmlSource(this.t)()
-    stringIncludes('HTML source of a page').negate(text, source)
+    const source = await getHtmlSource(this.t)();
+    stringIncludes('HTML source of a page').negate(text, source);
   }
 
   /**
@@ -1171,14 +1196,14 @@ class TestCafe extends Helper {
    *
    */
   async saveElementScreenshot(locator, fileName) {
-    const outputFile = path.join(global.output_dir, fileName)
+    const outputFile = path.join(global.output_dir, fileName);
 
-    const sel = await findElements.call(this, this.context, locator)
-    assertElementExists(sel, locator)
-    const firstElement = await sel.filterVisible().nth(0)
+    const sel = await findElements.call(this, this.context, locator);
+    assertElementExists(sel, locator);
+    const firstElement = await sel.filterVisible().nth(0);
 
-    this.debug(`Screenshot of ${new Locator(locator)} element has been saved to ${outputFile}`)
-    return this.t.takeElementScreenshot(firstElement, fileName)
+    this.debug(`Screenshot of ${(new Locator(locator))} element has been saved to ${outputFile}`);
+    return this.t.takeElementScreenshot(firstElement, fileName);
   }
 
   /**
@@ -1198,11 +1223,11 @@ class TestCafe extends Helper {
    */
   // TODO Implement full page screenshots
   async saveScreenshot(fileName) {
-    const outputFile = path.join(global.output_dir, fileName)
-    this.debug(`Screenshot is saving to ${outputFile}`)
+    const outputFile = path.join(global.output_dir, fileName);
+    this.debug(`Screenshot is saving to ${outputFile}`);
 
     // TODO testcafe automatically creates thumbnail images (which cant be turned off)
-    return this.t.takeScreenshot(fileName)
+    return this.t.takeScreenshot(fileName);
   }
 
   /**
@@ -1217,9 +1242,9 @@ class TestCafe extends Helper {
    * 
    */
   async wait(sec) {
-    return new Promise((done) => {
-      setTimeout(done, sec * 1000)
-    })
+    return new Promise(((done) => {
+      setTimeout(done, sec * 1000);
+    }));
   }
 
   /**
@@ -1254,8 +1279,8 @@ class TestCafe extends Helper {
    * If a function returns a Promise It will wait for its resolution.
    */
   async executeScript(fn, ...args) {
-    const browserFn = createClientFunction(fn, args).with({ boundTestRun: this.t })
-    return browserFn()
+    const browserFn = createClientFunction(fn, args).with({ boundTestRun: this.t });
+    return browserFn();
   }
 
   /**
@@ -1271,14 +1296,14 @@ class TestCafe extends Helper {
    * 
    */
   async grabTextFromAll(locator) {
-    const sel = await findElements.call(this, this.context, locator)
-    const length = await sel.count
-    const texts = []
+    const sel = await findElements.call(this, this.context, locator);
+    const length = await sel.count;
+    const texts = [];
     for (let i = 0; i < length; i++) {
-      texts.push(await sel.nth(i).innerText)
+      texts.push(await sel.nth(i).innerText);
     }
 
-    return texts
+    return texts;
   }
 
   /**
@@ -1295,14 +1320,14 @@ class TestCafe extends Helper {
    * 
    */
   async grabTextFrom(locator) {
-    const sel = await findElements.call(this, this.context, locator)
-    assertElementExists(sel, locator)
-    const texts = await this.grabTextFromAll(locator)
+    const sel = await findElements.call(this, this.context, locator);
+    assertElementExists(sel, locator);
+    const texts = await this.grabTextFromAll(locator);
     if (texts.length > 1) {
-      this.debugSection('GrabText', `Using first element out of ${texts.length}`)
+      this.debugSection('GrabText', `Using first element out of ${texts.length}`);
     }
 
-    return texts[0]
+    return texts[0];
   }
 
   /**
@@ -1319,14 +1344,14 @@ class TestCafe extends Helper {
    * 
    */
   async grabAttributeFromAll(locator, attr) {
-    const sel = await findElements.call(this, this.context, locator)
-    const length = await sel.count
-    const attrs = []
+    const sel = await findElements.call(this, this.context, locator);
+    const length = await sel.count;
+    const attrs = [];
     for (let i = 0; i < length; i++) {
-      attrs.push(await (await sel.nth(i)).getAttribute(attr))
+      attrs.push(await (await sel.nth(i)).getAttribute(attr));
     }
 
-    return attrs
+    return attrs;
   }
 
   /**
@@ -1343,14 +1368,14 @@ class TestCafe extends Helper {
    * 
    */
   async grabAttributeFrom(locator, attr) {
-    const sel = await findElements.call(this, this.context, locator)
-    assertElementExists(sel, locator)
-    const attrs = await this.grabAttributeFromAll(locator, attr)
+    const sel = await findElements.call(this, this.context, locator);
+    assertElementExists(sel, locator);
+    const attrs = await this.grabAttributeFromAll(locator, attr);
     if (attrs.length > 1) {
-      this.debugSection('GrabAttribute', `Using first element out of ${attrs.length}`)
+      this.debugSection('GrabAttribute', `Using first element out of ${attrs.length}`);
     }
 
-    return attrs[0]
+    return attrs[0];
   }
 
   /**
@@ -1365,14 +1390,14 @@ class TestCafe extends Helper {
    * 
    */
   async grabValueFromAll(locator) {
-    const sel = await findElements.call(this, this.context, locator)
-    const length = await sel.count
-    const values = []
+    const sel = await findElements.call(this, this.context, locator);
+    const length = await sel.count;
+    const values = [];
     for (let i = 0; i < length; i++) {
-      values.push(await (await sel.nth(i)).value)
+      values.push(await (await sel.nth(i)).value);
     }
 
-    return values
+    return values;
   }
 
   /**
@@ -1388,14 +1413,14 @@ class TestCafe extends Helper {
    * 
    */
   async grabValueFrom(locator) {
-    const sel = await findElements.call(this, this.context, locator)
-    assertElementExists(sel, locator)
-    const values = await this.grabValueFromAll(locator)
+    const sel = await findElements.call(this, this.context, locator);
+    assertElementExists(sel, locator);
+    const values = await this.grabValueFromAll(locator);
     if (values.length > 1) {
-      this.debugSection('GrabValue', `Using first element out of ${values.length}`)
+      this.debugSection('GrabValue', `Using first element out of ${values.length}`);
     }
 
-    return values[0]
+    return values[0];
   }
 
   /**
@@ -1409,7 +1434,7 @@ class TestCafe extends Helper {
    * @returns {Promise<string>} source code
    */
   async grabSource() {
-    return ClientFunction(() => document.documentElement.innerHTML).with({ boundTestRun: this.t })()
+    return ClientFunction(() => document.documentElement.innerHTML).with({ boundTestRun: this.t })();
   }
 
   /**
@@ -1422,7 +1447,7 @@ class TestCafe extends Helper {
    */
   async grabBrowserLogs() {
     // TODO Must map?
-    return this.t.getBrowserConsoleMessages()
+    return this.t.getBrowserConsoleMessages();
   }
 
   /**
@@ -1437,7 +1462,7 @@ class TestCafe extends Helper {
    * @returns {Promise<string>} current URL
    */
   async grabCurrentUrl() {
-    return ClientFunction(() => document.location.href).with({ boundTestRun: this.t })()
+    return ClientFunction(() => document.location.href).with({ boundTestRun: this.t })();
   }
 
   /**
@@ -1452,7 +1477,7 @@ class TestCafe extends Helper {
    * 
    */
   async grabPageScrollPosition() {
-    return ClientFunction(() => ({ x: window.pageXOffset, y: window.pageYOffset })).with({ boundTestRun: this.t })()
+    return ClientFunction(() => ({ x: window.pageXOffset, y: window.pageYOffset })).with({ boundTestRun: this.t })();
   }
 
   /**
@@ -1465,9 +1490,7 @@ class TestCafe extends Helper {
    * 
    */
   scrollPageToTop() {
-    return ClientFunction(() => window.scrollTo(0, 0))
-      .with({ boundTestRun: this.t })()
-      .catch(mapError)
+    return ClientFunction(() => window.scrollTo(0, 0)).with({ boundTestRun: this.t })().catch(mapError);
   }
 
   /**
@@ -1481,15 +1504,16 @@ class TestCafe extends Helper {
    */
   scrollPageToBottom() {
     return ClientFunction(() => {
-      const body = document.body
-      const html = document.documentElement
-      window.scrollTo(
-        0,
-        Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight),
-      )
-    })
-      .with({ boundTestRun: this.t })()
-      .catch(mapError)
+      const body = document.body;
+      const html = document.documentElement;
+      window.scrollTo(0, Math.max(
+        body.scrollHeight,
+        body.offsetHeight,
+        html.clientHeight,
+        html.scrollHeight,
+        html.offsetHeight,
+      ));
+    }).with({ boundTestRun: this.t })().catch(mapError);
   }
 
   /**
@@ -1509,30 +1533,30 @@ class TestCafe extends Helper {
    */
   async scrollTo(locator, offsetX = 0, offsetY = 0) {
     if (typeof locator === 'number' && typeof offsetX === 'number') {
-      offsetY = offsetX
-      offsetX = locator
-      locator = null
+      offsetY = offsetX;
+      offsetX = locator;
+      locator = null;
     }
 
     const scrollBy = ClientFunction((offset) => {
       if (window && window.scrollBy && offset) {
-        window.scrollBy(offset.x, offset.y)
+        window.scrollBy(offset.x, offset.y);
       }
-    }).with({ boundTestRun: this.t })
+    }).with({ boundTestRun: this.t });
 
     if (locator) {
-      const els = await this._locate(locator)
-      assertElementExists(els, locator, 'Element')
-      const el = await els.nth(0)
-      const x = (await el.offsetLeft) + offsetX
-      const y = (await el.offsetTop) + offsetY
+      const els = await this._locate(locator);
+      assertElementExists(els, locator, 'Element');
+      const el = await els.nth(0);
+      const x = (await el.offsetLeft) + offsetX;
+      const y = (await el.offsetTop) + offsetY;
 
-      return scrollBy({ x, y }).catch(mapError)
+      return scrollBy({ x, y }).catch(mapError);
     }
 
-    const x = offsetX
-    const y = offsetY
-    return scrollBy({ x, y }).catch(mapError)
+    const x = offsetX;
+    const y = offsetY;
+    return scrollBy({ x, y }).catch(mapError);
   }
 
   /**
@@ -1549,15 +1573,15 @@ class TestCafe extends Helper {
    */
   async switchTo(locator) {
     if (Number.isInteger(locator)) {
-      throw new Error('Not supported switching to iframe by number')
+      throw new Error('Not supported switching to iframe by number');
     }
 
     if (!locator) {
-      return this.t.switchToMainWindow()
+      return this.t.switchToMainWindow();
     }
 
-    const el = await findElements.call(this, this.context, locator)
-    return this.t.switchToIframe(el)
+    const el = await findElements.call(this, this.context, locator);
+    return this.t.switchToIframe(el);
   }
 
   // TODO Add url assertions
@@ -1583,20 +1607,17 @@ class TestCafe extends Helper {
    */
   async setCookie(cookie) {
     if (Array.isArray(cookie)) {
-      throw new Error('cookie array is not supported')
+      throw new Error('cookie array is not supported');
     }
 
-    cookie.path = cookie.path || '/'
+    cookie.path = cookie.path || '/';
     // cookie.expires = cookie.expires || (new Date()).toUTCString();
 
-    const setCookie = ClientFunction(
-      () => {
-        document.cookie = `${cookie.name}=${cookie.value};path=${cookie.path};expires=${cookie.expires};`
-      },
-      { dependencies: { cookie } },
-    ).with({ boundTestRun: this.t })
+    const setCookie = ClientFunction(() => {
+      document.cookie = `${cookie.name}=${cookie.value};path=${cookie.path};expires=${cookie.expires};`;
+    }, { dependencies: { cookie } }).with({ boundTestRun: this.t });
 
-    return setCookie()
+    return setCookie();
   }
 
   /**
@@ -1612,8 +1633,8 @@ class TestCafe extends Helper {
    *
    */
   async seeCookie(name) {
-    const cookie = await this.grabCookie(name)
-    empty(`cookie ${name} to be set`).negate(cookie)
+    const cookie = await this.grabCookie(name);
+    empty(`cookie ${name} to be set`).negate(cookie);
   }
 
   /**
@@ -1628,8 +1649,8 @@ class TestCafe extends Helper {
    * 
    */
   async dontSeeCookie(name) {
-    const cookie = await this.grabCookie(name)
-    empty(`cookie ${name} not to be set`).assert(cookie)
+    const cookie = await this.grabCookie(name);
+    empty(`cookie ${name} not to be set`).assert(cookie);
   }
 
   /**
@@ -1651,21 +1672,18 @@ class TestCafe extends Helper {
   async grabCookie(name) {
     if (!name) {
       const getCookie = ClientFunction(() => {
-        return document.cookie.split(';').map((c) => c.split('='))
-      }).with({ boundTestRun: this.t })
-      const cookies = await getCookie()
-      return cookies.map((cookie) => ({ name: cookie[0].trim(), value: cookie[1] }))
+        return document.cookie.split(';').map(c => c.split('='));
+      }).with({ boundTestRun: this.t });
+      const cookies = await getCookie();
+      return cookies.map(cookie => ({ name: cookie[0].trim(), value: cookie[1] }));
     }
-    const getCookie = ClientFunction(
-      () => {
-        // eslint-disable-next-line prefer-template
-        const v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)')
-        return v ? v[2] : null
-      },
-      { dependencies: { name } },
-    ).with({ boundTestRun: this.t })
-    const value = await getCookie()
-    if (value) return { name, value }
+    const getCookie = ClientFunction(() => {
+      // eslint-disable-next-line prefer-template
+      const v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+      return v ? v[2] : null;
+    }, { dependencies: { name } }).with({ boundTestRun: this.t });
+    const value = await getCookie();
+    if (value) return { name, value };
   }
 
   /**
@@ -1681,23 +1699,20 @@ class TestCafe extends Helper {
    * 
    */
   async clearCookie(cookieName) {
-    const clearCookies = ClientFunction(
-      () => {
-        const cookies = document.cookie.split(';')
+    const clearCookies = ClientFunction(() => {
+      const cookies = document.cookie.split(';');
 
-        for (let i = 0; i < cookies.length; i++) {
-          const cookie = cookies[i]
-          const eqPos = cookie.indexOf('=')
-          const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie
-          if (cookieName === undefined || name === cookieName) {
-            document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT`
-          }
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i];
+        const eqPos = cookie.indexOf('=');
+        const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        if (cookieName === undefined || name === cookieName) {
+          document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT`;
         }
-      },
-      { dependencies: { cookieName } },
-    ).with({ boundTestRun: this.t })
+      }
+    }, { dependencies: { cookieName } }).with({ boundTestRun: this.t });
 
-    return clearCookies()
+    return clearCookies();
   }
 
   /**
@@ -1713,20 +1728,17 @@ class TestCafe extends Helper {
    * 
    */
   async waitInUrl(urlPart, sec = null) {
-    const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
+    const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout;
 
-    const clientFn = createClientFunction(
-      (urlPart) => {
-        const currUrl = decodeURIComponent(decodeURIComponent(decodeURIComponent(window.location.href)))
-        return currUrl.indexOf(urlPart) > -1
-      },
-      [urlPart],
-    ).with({ boundTestRun: this.t })
+    const clientFn = createClientFunction((urlPart) => {
+      const currUrl = decodeURIComponent(decodeURIComponent(decodeURIComponent(window.location.href)));
+      return currUrl.indexOf(urlPart) > -1;
+    }, [urlPart]).with({ boundTestRun: this.t });
 
     return waitForFunction(clientFn, waitTimeout).catch(async () => {
-      const currUrl = await this.grabCurrentUrl()
-      throw new Error(`expected url to include ${urlPart}, but found ${currUrl}`)
-    })
+      const currUrl = await this.grabCurrentUrl();
+      throw new Error(`expected url to include ${urlPart}, but found ${currUrl}`);
+    });
   }
 
   /**
@@ -1743,25 +1755,22 @@ class TestCafe extends Helper {
    * 
    */
   async waitUrlEquals(urlPart, sec = null) {
-    const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
+    const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout;
 
-    const baseUrl = this.options.url
+    const baseUrl = this.options.url;
     if (urlPart.indexOf('http') < 0) {
-      urlPart = baseUrl + urlPart
+      urlPart = baseUrl + urlPart;
     }
 
-    const clientFn = createClientFunction(
-      (urlPart) => {
-        const currUrl = decodeURIComponent(decodeURIComponent(decodeURIComponent(window.location.href)))
-        return currUrl === urlPart
-      },
-      [urlPart],
-    ).with({ boundTestRun: this.t })
+    const clientFn = createClientFunction((urlPart) => {
+      const currUrl = decodeURIComponent(decodeURIComponent(decodeURIComponent(window.location.href)));
+      return currUrl === urlPart;
+    }, [urlPart]).with({ boundTestRun: this.t });
 
     return waitForFunction(clientFn, waitTimeout).catch(async () => {
-      const currUrl = await this.grabCurrentUrl()
-      throw new Error(`expected url to be ${urlPart}, but found ${currUrl}`)
-    })
+      const currUrl = await this.grabCurrentUrl();
+      throw new Error(`expected url to be ${urlPart}, but found ${currUrl}`);
+    });
   }
 
   /**
@@ -1785,19 +1794,19 @@ class TestCafe extends Helper {
    * 
    */
   async waitForFunction(fn, argsOrSec = null, sec = null) {
-    let args = []
+    let args = [];
     if (argsOrSec) {
       if (Array.isArray(argsOrSec)) {
-        args = argsOrSec
+        args = argsOrSec;
       } else if (typeof argsOrSec === 'number') {
-        sec = argsOrSec
+        sec = argsOrSec;
       }
     }
-    const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
+    const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout;
 
-    const clientFn = createClientFunction(fn, args).with({ boundTestRun: this.t })
+    const clientFn = createClientFunction(fn, args).with({ boundTestRun: this.t });
 
-    return waitForFunction(clientFn, waitTimeout)
+    return waitForFunction(clientFn, waitTimeout);
   }
 
   /**
@@ -1814,14 +1823,12 @@ class TestCafe extends Helper {
    * 
    */
   async waitNumberOfVisibleElements(locator, num, sec) {
-    const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
+    const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout;
 
     return this.t
       .expect(createSelector(locator).with({ boundTestRun: this.t }).filterVisible().count)
-      .eql(num, `The number of elements (${new Locator(locator)}) is not ${num} after ${sec} sec`, {
-        timeout: waitTimeout,
-      })
-      .catch(mapError)
+      .eql(num, `The number of elements (${(new Locator(locator))}) is not ${num} after ${sec} sec`, { timeout: waitTimeout })
+      .catch(mapError);
   }
 
   /**
@@ -1839,9 +1846,11 @@ class TestCafe extends Helper {
    * 
    */
   async waitForElement(locator, sec) {
-    const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
+    const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout;
 
-    return this.t.expect(createSelector(locator).with({ boundTestRun: this.t }).exists).ok({ timeout: waitTimeout })
+    return this.t
+      .expect(createSelector(locator).with({ boundTestRun: this.t }).exists)
+      .ok({ timeout: waitTimeout });
   }
 
   /**
@@ -1858,11 +1867,11 @@ class TestCafe extends Helper {
    * 
    */
   async waitToHide(locator, sec) {
-    const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
+    const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout;
 
     return this.t
       .expect(createSelector(locator).filterHidden().with({ boundTestRun: this.t }).exists)
-      .notOk({ timeout: waitTimeout })
+      .notOk({ timeout: waitTimeout });
   }
 
   /**
@@ -1879,11 +1888,11 @@ class TestCafe extends Helper {
    * 
    */
   async waitForInvisible(locator, sec) {
-    const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
+    const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout;
 
     return this.t
       .expect(createSelector(locator).filterVisible().with({ boundTestRun: this.t }).exists)
-      .ok({ timeout: waitTimeout })
+      .ok({ timeout: waitTimeout });
   }
 
   /**
@@ -1904,221 +1913,213 @@ class TestCafe extends Helper {
    *
    */
   async waitForText(text, sec = null, context = null) {
-    const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
+    const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout;
 
-    let els
+    let els;
     if (context) {
-      els = await findElements.call(this, this.context, context)
-      await this.t.expect(els.exists).ok(`Context element ${context} not found`, { timeout: waitTimeout })
+      els = (await findElements.call(this, this.context, context));
+      await this.t
+        .expect(els.exists)
+        .ok(`Context element ${context} not found`, { timeout: waitTimeout });
     } else {
-      els = await findElements.call(this, this.context, '*')
+      els = (await findElements.call(this, this.context, '*'));
     }
 
     return this.t
       .expect(els.withText(text).filterVisible().exists)
       .ok(`No element with text "${text}" found in ${context || 'body'}`, { timeout: waitTimeout })
-      .catch(mapError)
+      .catch(mapError);
   }
 }
 
 async function waitForFunction(browserFn, waitTimeout) {
-  const pause = () =>
-    new Promise((done) => {
-      setTimeout(done, 50)
-    })
+  const pause = () => new Promise((done => {
+    setTimeout(done, 50);
+  }));
 
-  const start = Date.now()
+  const start = Date.now();
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    let result
+    let result;
     try {
-      result = await browserFn()
+      result = await browserFn();
       // eslint-disable-next-line no-empty
     } catch (err) {
-      throw new Error(`Error running function ${err.toString()}`)
+      throw new Error(`Error running function ${err.toString()}`);
     }
 
-    if (result) return result
+    if (result) return result;
 
-    const duration = Date.now() - start
+    const duration = (Date.now() - start);
     if (duration > waitTimeout) {
-      throw new Error('waitForFunction timed out')
+      throw new Error('waitForFunction timed out');
     }
-    await pause() // make polling
+    await pause(); // make polling
   }
 }
 
 const createSelector = (locator) => {
-  locator = new Locator(locator, 'css')
-  if (locator.isXPath()) return elementByXPath(locator.value)
-  return Selector(locator.simplify())
-}
+  locator = new Locator(locator, 'css');
+  if (locator.isXPath()) return elementByXPath(locator.value);
+  return Selector(locator.simplify());
+};
 
 const elementByXPath = (xpath) => {
-  assert(xpath, 'xpath is required')
+  assert(xpath, 'xpath is required');
 
-  return Selector(
-    () => {
-      const iterator = document.evaluate(xpath, document, null, XPathResult.UNORDERED_NODE_ITERATOR_TYPE, null)
-      const items = []
+  return Selector(() => {
+    const iterator = document.evaluate(xpath, document, null, XPathResult.UNORDERED_NODE_ITERATOR_TYPE, null);
+    const items = [];
 
-      let item = iterator.iterateNext()
+    let item = iterator.iterateNext();
 
-      while (item) {
-        items.push(item)
-        item = iterator.iterateNext()
-      }
+    while (item) {
+      items.push(item);
+      item = iterator.iterateNext();
+    }
 
-      return items
-    },
-    { dependencies: { xpath } },
-  )
-}
+    return items;
+  }, { dependencies: { xpath } });
+};
 
 const assertElementExists = async (res, locator, prefix, suffix) => {
   if (!res || !(await res.count) || !(await res.nth(0).tagName)) {
-    throw new ElementNotFound(locator, prefix, suffix)
+    throw new ElementNotFound(locator, prefix, suffix);
   }
-}
+};
 
 async function findElements(matcher, locator) {
-  if (locator && locator.react) throw new Error('react locators are not yet supported')
+  if (locator && locator.react) throw new Error('react locators are not yet supported');
 
-  locator = new Locator(locator, 'css')
+  locator = new Locator(locator, 'css');
 
   if (!locator.isXPath()) {
     return matcher
       ? matcher.find(locator.simplify())
-      : Selector(locator.simplify()).with({ timeout: 0, boundTestRun: this.t })
+      : Selector(locator.simplify()).with({ timeout: 0, boundTestRun: this.t });
   }
 
-  if (!matcher) return elementByXPath(locator.value).with({ timeout: 0, boundTestRun: this.t })
+  if (!matcher) return elementByXPath(locator.value).with({ timeout: 0, boundTestRun: this.t });
 
-  return matcher.find(
-    (node, idx, originNode) => {
-      const found = document.evaluate(xpath, originNode, null, 5, null)
-      let current = null
-      while ((current = found.iterateNext())) {
-        if (current === node) return true
-      }
-      return false
-    },
-    { xpath: locator.value },
-  )
+  return matcher.find((node, idx, originNode) => {
+    const found = document.evaluate(xpath, originNode, null, 5, null);
+    let current = null;
+    while (current = found.iterateNext()) {
+      if (current === node) return true;
+    }
+    return false;
+  }, { xpath: locator.value });
 }
 
 async function proceedClick(locator, context = null) {
-  let matcher
+  let matcher;
 
   if (context) {
-    const els = await this._locate(context)
-    await assertElementExists(els, context)
-    matcher = await els.nth(0)
+    const els = await this._locate(context);
+    await assertElementExists(els, context);
+    matcher = await els.nth(0);
   }
 
-  const els = await findClickable.call(this, matcher, locator)
+  const els = await findClickable.call(this, matcher, locator);
   if (context) {
-    await assertElementExists(
-      els,
-      locator,
-      'Clickable element',
-      `was not found inside element ${new Locator(context).toString()}`,
-    )
+    await assertElementExists(els, locator, 'Clickable element', `was not found inside element ${new Locator(context).toString()}`);
   } else {
-    await assertElementExists(els, locator, 'Clickable element')
+    await assertElementExists(els, locator, 'Clickable element');
   }
 
-  const firstElement = await els.filterVisible().nth(0)
+  const firstElement = await els.filterVisible().nth(0);
 
-  return this.t.click(firstElement).catch(mapError)
+  return this.t
+    .click(firstElement)
+    .catch(mapError);
 }
 
 async function findClickable(matcher, locator) {
-  if (locator && locator.react) throw new Error('react locators are not yet supported')
+  if (locator && locator.react) throw new Error('react locators are not yet supported');
 
-  locator = new Locator(locator)
-  if (!locator.isFuzzy()) return (await findElements.call(this, matcher, locator)).filterVisible()
+  locator = new Locator(locator);
+  if (!locator.isFuzzy()) return (await findElements.call(this, matcher, locator)).filterVisible();
 
-  let els
+  let els;
 
   // try to use native TestCafe locator
-  els = matcher ? matcher.find('a,button') : createSelector('a,button')
-  els = await els.withExactText(locator.value).with({ timeout: 0, boundTestRun: this.t })
-  if (await els.count) return els
+  els = matcher ? matcher.find('a,button') : createSelector('a,button');
+  els = await els.withExactText(locator.value).with({ timeout: 0, boundTestRun: this.t });
+  if (await els.count) return els;
 
-  const literal = xpathLocator.literal(locator.value)
+  const literal = xpathLocator.literal(locator.value);
 
-  els = (await findElements.call(this, matcher, Locator.clickable.narrow(literal))).filterVisible()
-  if (await els.count) return els
+  els = (await findElements.call(this, matcher, Locator.clickable.narrow(literal))).filterVisible();
+  if (await els.count) return els;
 
-  els = (await findElements.call(this, matcher, Locator.clickable.wide(literal))).filterVisible()
-  if (await els.count) return els
+  els = (await findElements.call(this, matcher, Locator.clickable.wide(literal))).filterVisible();
+  if (await els.count) return els;
 
-  els = (await findElements.call(this, matcher, Locator.clickable.self(literal))).filterVisible()
-  if (await els.count) return els
+  els = (await findElements.call(this, matcher, Locator.clickable.self(literal))).filterVisible();
+  if (await els.count) return els;
 
-  return findElements.call(this, matcher, locator.value) // by css or xpath
+  return findElements.call(this, matcher, locator.value); // by css or xpath
 }
 
 async function proceedIsChecked(assertType, option) {
-  const els = await findCheckable.call(this, option)
-  assertElementExists(els, option, 'Checkable')
+  const els = await findCheckable.call(this, option);
+  assertElementExists(els, option, 'Checkable');
 
-  const selected = await els.checked
+  const selected = await els.checked;
 
-  return truth(`checkable ${option}`, 'to be checked')[assertType](selected)
+  return truth(`checkable ${option}`, 'to be checked')[assertType](selected);
 }
 
 async function findCheckable(locator, context) {
-  assert(locator, 'locator is required')
-  assert(this.t, 'this.t is required')
+  assert(locator, 'locator is required');
+  assert(this.t, 'this.t is required');
 
-  let contextEl = await this.context
+  let contextEl = await this.context;
   if (typeof context === 'string') {
-    contextEl = (await findElements.call(this, contextEl, new Locator(context, 'css').simplify())).filterVisible()
-    contextEl = await contextEl.nth(0)
+    contextEl = (await findElements.call(this, contextEl, (new Locator(context, 'css')).simplify())).filterVisible();
+    contextEl = await contextEl.nth(0);
   }
 
-  const matchedLocator = new Locator(locator)
+  const matchedLocator = new Locator(locator);
   if (!matchedLocator.isFuzzy()) {
-    return (await findElements.call(this, contextEl, matchedLocator.simplify())).filterVisible()
+    return (await findElements.call(this, contextEl, matchedLocator.simplify())).filterVisible();
   }
 
-  const literal = xpathLocator.literal(locator)
-  let els = (await findElements.call(this, contextEl, Locator.checkable.byText(literal))).filterVisible()
+  const literal = xpathLocator.literal(locator);
+  let els = (await findElements.call(this, contextEl, Locator.checkable.byText(literal))).filterVisible();
   if (await els.count) {
-    return els
+    return els;
   }
 
-  els = (await findElements.call(this, contextEl, Locator.checkable.byName(literal))).filterVisible()
+  els = (await findElements.call(this, contextEl, Locator.checkable.byName(literal))).filterVisible();
   if (await els.count) {
-    return els
+    return els;
   }
 
-  return (await findElements.call(this, contextEl, locator)).filterVisible()
+  return (await findElements.call(this, contextEl, locator)).filterVisible();
 }
 
 async function findFields(locator) {
-  const matchedLocator = new Locator(locator)
+  const matchedLocator = new Locator(locator);
   if (!matchedLocator.isFuzzy()) {
-    return this._locate(matchedLocator)
+    return this._locate(matchedLocator);
   }
-  const literal = xpathLocator.literal(locator)
+  const literal = xpathLocator.literal(locator);
 
-  let els = await this._locate({ xpath: Locator.field.labelEquals(literal) })
+  let els = await this._locate({ xpath: Locator.field.labelEquals(literal) });
   if (await els.count) {
-    return els
+    return els;
   }
 
-  els = await this._locate({ xpath: Locator.field.labelContains(literal) })
+  els = await this._locate({ xpath: Locator.field.labelContains(literal) });
   if (await els.count) {
-    return els
+    return els;
   }
-  els = await this._locate({ xpath: Locator.field.byName(literal) })
+  els = await this._locate({ xpath: Locator.field.byName(literal) });
   if (await els.count) {
-    return els
+    return els;
   }
-  return this._locate({ css: locator })
+  return this._locate({ css: locator });
 }
 
-module.exports = TestCafe
+module.exports = TestCafe;

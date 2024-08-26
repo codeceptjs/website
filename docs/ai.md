@@ -1,6 +1,6 @@
 ---
 permalink: /ai
-title: Testing with AI 🪄 
+title: Testing with AI 🪄
 ---
 
 # 🪄 Testing with AI
@@ -37,7 +37,7 @@ AI providers have limits on input tokens but HTML pages can be huge. However, so
 
 Even though, the HTML is still quite big and may exceed the token limit. So we recommend using models with at least 16K input tokens, (approx. 50K of HTML text), which should be enough for most web pages. It is possible to strictly limit the size of HTML to not exceed tokens limit.
 
-> ❗AI features require sending HTML contents to AI provider. Choosing one may depend on the descurity policy of your company. Ask your security department which AI providers you can use. 
+> ❗AI features require sending HTML contents to AI provider. Choosing one may depend on the descurity policy of your company. Ask your security department which AI providers you can use.
 
 
 
@@ -91,7 +91,7 @@ ai: {
       model: 'gpt-3.5-turbo-0125',
       messages,
     });
-    
+
     return completion?.choices[0]?.message?.content;
   }
 }
@@ -146,7 +146,7 @@ ai: {
       model: 'claude-2.1',
       max_tokens: 1024,
       messages
-    });      
+    });
     return resp.content.map((c) => c.text).join('\n\n');
   }
 }
@@ -167,7 +167,7 @@ ai: {
     const { OpenAIClient, AzureKeyCredential } = require("@azure/openai");
 
     const client = new OpenAIClient(
-      "https://<resource name>.openai.azure.com/", 
+      "https://<resource name>.openai.azure.com/",
       new AzureKeyCredential("<Azure API key>")
     );
     const { choices } = await client.getCompletions("<deployment ID>", messages);
@@ -302,7 +302,7 @@ GPT will generate code and data and CodeceptJS will try to execute its code. If 
 
 This AI copilot works best with long static forms. In the case of complex and dynamic single-page applications, it may not perform as well, as the form may not be present on HTML page yet. For instance, interacting with calendars or inputs with real-time validations (like credit cards) can not yet be performed by AI.
 
-Please keep in mind that GPT can't react to page changes and operates with static text only. This is why it is not ready yet to write the test completely. However, if you are new to CodeceptJS and automated testing AI copilot may help you write tests more efficiently. 
+Please keep in mind that GPT can't react to page changes and operates with static text only. This is why it is not ready yet to write the test completely. However, if you are new to CodeceptJS and automated testing AI copilot may help you write tests more efficiently.
 
 > 👶 Enable AI copilot for junior test automation engineers. It may help them to get started with CodeceptJS and to write good semantic locators.
 
@@ -315,12 +315,28 @@ AI healing can solve exactly one problem: if a locator of an element has changed
 
 > You can define your own [heal recipes](./heal) that won't use AI to revive failing tests.
 
-Heal actions **work only on actions like `click`, `fillField`**, etc, and won't work on assertions, waiters, grabbers, etc. Assertions can't be guessed by AI, the same way as grabbers, as this may lead to unpredictable results.
+Heal actions **work only on actions like `click`, `fillField`, etc, and won't work on assertions, waiters, grabbers, etc. Assertions can't be guessed by AI, the same way as grabbers, as this may lead to unpredictable results.
 
 If Heal plugin successfully fixes the step, it will print a suggested change at the end of execution. Take it as actionable advice and use it to update the codebase. Heal plugin is supposed to be used on CI, and works automatically without human assistance.
 
 
-To start, make sure [AI provider is connected](#set-up-ai-provider), and [heal recipes were created](./heal#how-to-start-healing) and included into `codecept.conf.js` or `codecept.conf.ts` config file. Then enable `heal` plugin:
+To start, make sure [AI provider is connected](#set-up-ai-provider), and [heal recipes were created](/heal#how-to-start-healing) by running this command:
+
+```
+npx codeceptjs generate:heal
+```
+
+Heal recipes should be included into `codecept.conf.js` or `codecept.conf.ts` config file:
+
+```js
+
+require('./heal')
+
+exports.config = {
+  // ... your codeceptjs config
+```
+
+Then enable `heal` plugin:
 
 ```js
 plugins: {
@@ -330,7 +346,7 @@ plugins: {
 }
 ```
 
-If you tests in AI mode and test fails, a request to AI provider will be sent
+If you run tests in AI mode and a test fails, a request to AI provider will be sent
 
 ```
 npx codeceptjs run --ai
@@ -342,7 +358,7 @@ When execution finishes, you will receive information on token usage and code su
 By evaluating this information you will be able to check how effective AI can be for your case.
 
 
-### Arbitrary GPT Prompts
+## Arbitrary GPT Prompts
 
 What if you want to take AI on the journey of test automation and ask it questions while browsing pages?
 
@@ -396,7 +412,7 @@ npx codeceptjs shell --ai
 
 Also this is availble from `pause()` if AI helper is enabled,
 
-Ensure that browser is started in window mode, then browse the web pages on your site. 
+Ensure that browser is started in window mode, then browse the web pages on your site.
 On a page you want to create PageObject execute `askForPageObject()` command. The only required parameter is the name of a page:
 
 ```js
@@ -421,6 +437,8 @@ If page object has `clickForgotPassword` method you can execute it as:
 ```js
 => page.clickForgotPassword()
 ```
+
+Here is an example of a session:
 
 ```shell
 Page object for login is saved to .../output/loginPage-1718579784751.js
@@ -465,11 +483,11 @@ GPT prompts and HTML compression can also be configured inside `ai` section of `
 
 ```js
 ai: {
-  // define how requests to AI are sent 
+  // define how requests to AI are sent
   request: (messages) => {
     // ...
   }
-  // redefine prompts 
+  // redefine prompts
   prompts: {
     // {}
   },

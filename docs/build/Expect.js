@@ -23,7 +23,7 @@ import('chai').then(chai => {
  *{
  *   helpers: {
  *     Playwright: {...},
- *     ExpectHelper: {},
+ *     Expect: {},
  *   }
  *}
  * ```
