@@ -260,7 +260,7 @@ async function makeApiRequest(endpoint, deploymentId, messages) {
 }
 ```
 
-### Writing Tests with AI Copilot
+## Writing Tests with AI Copilot
 
 If AI features are enabled when using [interactive pause](/basics/#debug) with `pause()` command inside tests:
 
@@ -306,7 +306,7 @@ Please keep in mind that GPT can't react to page changes and operates with stati
 
 > 👶 Enable AI copilot for junior test automation engineers. It may help them to get started with CodeceptJS and to write good semantic locators.
 
-### Self-Healing Tests
+## Self-Healing Tests
 
 In large test suites, the cost of maintaining tests goes exponentially. That's why any effort that can improve the stability of tests pays itself. That's why CodeceptJS has concept of [heal recipes](./heal), functions that can be executed on a test failure. Those functions can try to revive the test and continue execution. When combined with AI, heal recipe can ask AI provider how to fix the test. It will provide error message, step being executed and HTML context of a page. Based on this information AI can suggest the code to be executed to fix the failing test.
 
@@ -358,7 +358,7 @@ When execution finishes, you will receive information on token usage and code su
 By evaluating this information you will be able to check how effective AI can be for your case.
 
 
-## Arbitrary GPT Prompts
+## Arbitrary Prompts
 
 What if you want to take AI on the journey of test automation and ask it questions while browsing pages?
 
