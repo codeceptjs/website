@@ -71,7 +71,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             { text: "TypeScript", link: "/typescript" },
             { text: "Data Management", link: "/data" },
             { text: "Parallel Execution", link: "/parallel" },
-            { text: "Self-Healing Tests", link: "/heal" },    
+            { text: "Self-Healing Tests", link: "/heal" },
             { text: "AI Testing 🪄", link: '/ai' },
             { text: "Reports", link: "/reports" },
           ]
@@ -155,6 +155,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             { text: "OpenAI", link: "/helpers/OpenAI" },
             { text: "FileSystem", link: "/helpers/FileSystem" },
             { text: "Expect", link: "/helpers/Expect" },
+            { text: "Soft Expect", link: "/helpers/SoftExpectHelper" },
             { text: "MockServer", link: "/helpers/MockServer" },
             { text: "Community Helpers", link: "/community-helpers" },
           ]
