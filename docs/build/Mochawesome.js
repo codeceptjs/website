@@ -3,7 +3,7 @@ let currentTest
 let currentSuite
 
 const Helper = require('@codeceptjs/helper')
-const { clearString } = require('../utils')
+const { clearString } = require('../utils.js')
 
 class Mochawesome extends Helper {
   constructor(config) {

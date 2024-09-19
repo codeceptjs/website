@@ -11,7 +11,7 @@ const stringIncludes = require('../assert/include').includes
 const { urlEquals, equals } = require('../assert/equal')
 const { empty } = require('../assert/empty')
 const { truth } = require('../assert/truth')
-const { xpathLocator, fileExists, convertCssPropertiesToCamelCase, screenshotOutputFolder } = require('../utils')
+const { xpathLocator, fileExists, convertCssPropertiesToCamelCase, screenshotOutputFolder } = require('../utils.js')
 const { isColorProperty, convertColorToRGBA } = require('../colorUtils')
 const ElementNotFound = require('./errors/ElementNotFound')
 const ConnectionRefused = require('./errors/ConnectionRefused')
@@ -449,16 +449,16 @@ class Protractor extends Helper {
   /**
    * Opens a web page in a browser. Requires relative or absolute url.
    * If url starts with `/`, opens a web page of a site defined in `url` config parameter.
-   * 
+   *
    * ```js
    * I.amOnPage('/'); // opens main page of website
    * I.amOnPage('https://github.com'); // opens github
    * I.amOnPage('/login'); // opens a login page
    * ```
-   * 
+   *
    * @param {string} url url path or global url.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async amOnPage(url) {
     if (!/^\w+\:\/\//.test(url)) {
@@ -474,9 +474,9 @@ class Protractor extends Helper {
    * If a fuzzy locator is given, the page will be searched for a button, link, or image matching the locator string.
    * For buttons, the "value" attribute, "name" attribute, and inner text are searched. For links, the link text is searched.
    * For images, the "alt" attribute and inner text of any parent links are searched.
-   * 
+   *
    * The second parameter is a context (CSS or XPath locator) to narrow the search.
-   * 
+   *
    * ```js
    * // simple link
    * I.click('Logout');
@@ -491,11 +491,11 @@ class Protractor extends Helper {
    * // using strict locator
    * I.click({css: 'nav a.login'});
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator clickable link or button located by text, or any element located by CSS|XPath|strict locator.
    * @param {?CodeceptJS.LocatorOrString | null} [context=null] (optional, `null` by default) element to search in CSS|XPath|Strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async click(locator, context = null) {
     let matcher = this.browser
@@ -511,18 +511,18 @@ class Protractor extends Helper {
   /**
    * Performs a double-click on an element matched by link|button|label|CSS or XPath.
    * Context can be specified as second parameter to narrow search.
-   * 
+   *
    * ```js
    * I.doubleClick('Edit');
    * I.doubleClick('Edit', '.actions');
    * I.doubleClick({css: 'button.accept'});
    * I.doubleClick('.btn.edit');
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator clickable link or button located by text, or any element located by CSS|XPath|strict locator.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element to search in CSS|XPath|Strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async doubleClick(locator, context = null) {
     let matcher = this.browser
@@ -537,7 +537,7 @@ class Protractor extends Helper {
 
   /**
    * Performs right click on a clickable element matched by semantic locator, CSS or XPath.
-   * 
+   *
    * ```js
    * // right click element with id el
    * I.rightClick('#el');
@@ -546,11 +546,11 @@ class Protractor extends Helper {
    * // right click button with text "Click me" inside .context
    * I.rightClick('Click me', '.context');
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator clickable element located by CSS|XPath|strict locator.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async rightClick(locator, context = null) {
     /**
@@ -574,17 +574,17 @@ class Protractor extends Helper {
   /**
    * Moves cursor to element matched by locator.
    * Extra shift can be set with offsetX and offsetY options.
-   * 
+   *
    * ```js
    * I.moveCursorTo('.tooltip');
    * I.moveCursorTo('#submit', 5,5);
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
    * @param {number} [offsetX=0] (optional, `0` by default) X-axis offset.
    * @param {number} [offsetY=0] (optional, `0` by default) Y-axis offset.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async moveCursorTo(locator, offsetX = null, offsetY = null) {
     let offset = null
@@ -599,7 +599,7 @@ class Protractor extends Helper {
   /**
    * Checks that a page contains a visible text.
    * Use context parameter to narrow down the search.
-   * 
+   *
    * ```js
    * I.see('Welcome'); // text welcome on a page
    * I.see('Welcome', '.content'); // text inside .content div
@@ -608,7 +608,7 @@ class Protractor extends Helper {
    * @param {string} text expected on page.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS|Xpath|strict locator in which to search for text.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async see(text, context = null) {
     return proceedSee.call(this, 'assert', text, context)
@@ -616,15 +616,15 @@ class Protractor extends Helper {
 
   /**
    * Checks that text is equal to provided one.
-   * 
+   *
    * ```js
    * I.seeTextEquals('text', 'h1');
    * ```
-   * 
+   *
    * @param {string} text element value to check.
    * @param {CodeceptJS.LocatorOrString?} [context=null]  element located by CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async seeTextEquals(text, context = null) {
     return proceedSee.call(this, 'assert', text, context, true)
@@ -633,16 +633,16 @@ class Protractor extends Helper {
   /**
    * Opposite to `see`. Checks that a text is not present on a page.
    * Use context parameter to narrow down the search.
-   * 
+   *
    * ```js
    * I.dontSee('Login'); // assume we are already logged in.
    * I.dontSee('Login', '.nav'); // no login inside .nav element
    * ```
-   * 
+   *
    * @param {string} text which is not present.
    * @param {CodeceptJS.LocatorOrString} [context] (optional) element located by CSS|XPath|strict locator in which to perfrom search.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   dontSee(text, context = null) {
     return proceedSee.call(this, 'negate', text, context)
@@ -651,14 +651,14 @@ class Protractor extends Helper {
   /**
    * Get JS log from browser. Log buffer is reset after each request.
    * Resumes test execution, so **should be used inside an async function with `await`** operator.
-   * 
+   *
    * ```js
    * let logs = await I.grabBrowserLogs();
    * console.log(JSON.stringify(logs))
    * ```
-   * 
+   *
    * @returns {Promise<object[]>|undefined} all browser logs
-   * 
+   *
    */
   async grabBrowserLogs() {
     return this.browser.manage().logs().get('browser')
@@ -667,12 +667,12 @@ class Protractor extends Helper {
   /**
    * Get current URL from browser.
    * Resumes test execution, so should be used inside an async function.
-   * 
+   *
    * ```js
    * let url = await I.grabCurrentUrl();
    * console.log(`Current URL is [${url}]`);
    * ```
-   * 
+   *
    * @returns {Promise<string>} current URL
    */
   async grabCurrentUrl() {
@@ -683,7 +683,7 @@ class Protractor extends Helper {
    * Selects an option in a drop-down select.
    * Field is searched by label | name | CSS | XPath.
    * Option is selected by visible text or by value.
-   * 
+   *
    * ```js
    * I.selectOption('Choose Plan', 'Monthly'); // select by label
    * I.selectOption('subscription', 'Monthly'); // match option by text
@@ -692,16 +692,16 @@ class Protractor extends Helper {
    * I.selectOption('form select[name=account]', 'Premium');
    * I.selectOption({css: 'form select[name=account]'}, 'Premium');
    * ```
-   * 
+   *
    * Provide an array for the second argument to select multiple options.
-   * 
+   *
    * ```js
    * I.selectOption('Which OS do you use?', ['Android', 'iOS']);
    * ```
    * @param {LocatorOrString} select field located by label|name|CSS|XPath|strict locator.
    * @param {string|Array<*>} option visible text or value of option.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async selectOption(select, option) {
     const fields = await findFields(this.browser, select)
@@ -726,7 +726,7 @@ class Protractor extends Helper {
   /**
    * Fills a text field or textarea, after clearing its value, with the given string.
    * Field is located by name, label, CSS, or XPath.
-   * 
+   *
    * ```js
    * // by label
    * I.fillField('Email', 'hello@world.com');
@@ -740,7 +740,7 @@ class Protractor extends Helper {
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
    * @param {CodeceptJS.StringOrSecret} value text value to fill.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async fillField(field, value) {
     const els = await findFields(this.browser, field)
@@ -753,15 +753,15 @@ class Protractor extends Helper {
    * Special keys like 'Enter', 'Control', [etc](https://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element/:id/value)
    * will be replaced with corresponding unicode.
    * If modifier key is used (Control, Command, Alt, Shift) in array, it will be released afterwards.
-   * 
+   *
    * ```js
    * I.pressKey('Enter');
    * I.pressKey(['Control','a']);
    * ```
-   * 
+   *
    * @param {string|string[]} key key or array of keys to press.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    * {{ keys }}
    */
   async pressKey(key) {
@@ -788,16 +788,16 @@ class Protractor extends Helper {
    * Attaches a file to element located by label, name, CSS or XPath
    * Path to file is relative current codecept directory (where codecept.conf.ts or codecept.conf.js is located).
    * File will be uploaded to remote system (if tests are running remotely).
-   * 
+   *
    * ```js
    * I.attachFile('Avatar', 'data/avatar.jpg');
    * I.attachFile('form input[name=avatar]', 'data/avatar.jpg');
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator field located by label|name|CSS|XPath|strict locator.
    * @param {string} pathToFile local file path relative to codecept.conf.ts or codecept.conf.js config file.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async attachFile(locator, pathToFile) {
     const file = path.join(global.codecept_dir, pathToFile)
@@ -816,7 +816,7 @@ class Protractor extends Helper {
   /**
    * Checks that the given input field or textarea equals to given value.
    * For fuzzy locators, fields are matched by label text, the "name" attribute, CSS, and XPath.
-   * 
+   *
    * ```js
    * I.seeInField('Username', 'davert');
    * I.seeInField({css: 'form textarea'},'Type your comment here');
@@ -826,7 +826,7 @@ class Protractor extends Helper {
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
    * @param {CodeceptJS.StringOrSecret} value value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async seeInField(field, value) {
     const _value = typeof value === 'boolean' ? value : value.toString()
@@ -836,16 +836,16 @@ class Protractor extends Helper {
   /**
    * Checks that value of input field or textarea doesn't equal to given value
    * Opposite to `seeInField`.
-   * 
+   *
    * ```js
    * I.dontSeeInField('email', 'user@user.com'); // field by name
    * I.dontSeeInField({ css: 'form input.email' }, 'user@user.com'); // field by CSS
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
    * @param {CodeceptJS.StringOrSecret} value value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async dontSeeInField(field, value) {
     const _value = typeof value === 'boolean' ? value : value.toString()
@@ -855,7 +855,7 @@ class Protractor extends Helper {
   /**
    * Appends text to a input field or textarea.
    * Field is located by name, label, CSS or XPath
-   * 
+   *
    * ```js
    * I.appendField('#myTextField', 'appended');
    * // typing secret
@@ -864,7 +864,7 @@ class Protractor extends Helper {
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator
    * @param {string} value text value to append.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async appendField(field, value) {
     const els = await findFields(this.browser, field)
@@ -874,7 +874,7 @@ class Protractor extends Helper {
 
   /**
    * Clears a `<textarea>` or text `<input>` element's value.
-   * 
+   *
    * ```js
    * I.clearField('Email');
    * I.clearField('user[email]');
@@ -882,7 +882,7 @@ class Protractor extends Helper {
    * ```
    * @param {LocatorOrString} editable field located by label|name|CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder.
-   * 
+   *
    */
   async clearField(field) {
     const els = await findFields(this.browser, field)
@@ -893,9 +893,9 @@ class Protractor extends Helper {
   /**
    * Selects a checkbox or radio button.
    * Element is located by label or name or CSS or XPath.
-   * 
+   *
    * The second parameter is a context (CSS or XPath locator) to narrow the search.
-   * 
+   *
    * ```js
    * I.checkOption('#agree');
    * I.checkOption('I Agree to Terms and Conditions');
@@ -904,7 +904,7 @@ class Protractor extends Helper {
    * @param {CodeceptJS.LocatorOrString} field checkbox located by label | name | CSS | XPath | strict locator.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS | XPath | strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async checkOption(field, context = null) {
     let matcher = this.browser
@@ -922,9 +922,9 @@ class Protractor extends Helper {
   /**
    * Unselects a checkbox or radio button.
    * Element is located by label or name or CSS or XPath.
-   * 
+   *
    * The second parameter is a context (CSS or XPath locator) to narrow the search.
-   * 
+   *
    * ```js
    * I.uncheckOption('#agree');
    * I.uncheckOption('I Agree to Terms and Conditions');
@@ -933,7 +933,7 @@ class Protractor extends Helper {
    * @param {CodeceptJS.LocatorOrString} field checkbox located by label | name | CSS | XPath | strict locator.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS | XPath | strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async uncheckOption(field, context = null) {
     let matcher = this.browser
@@ -950,16 +950,16 @@ class Protractor extends Helper {
 
   /**
    * Verifies that the specified checkbox is checked.
-   * 
+   *
    * ```js
    * I.seeCheckboxIsChecked('Agree');
    * I.seeCheckboxIsChecked('#agree'); // I suppose user agreed to terms
    * I.seeCheckboxIsChecked({css: '#signup_form input[type=checkbox]'});
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async seeCheckboxIsChecked(field) {
     return proceedIsChecked.call(this, 'assert', field)
@@ -967,16 +967,16 @@ class Protractor extends Helper {
 
   /**
    * Verifies that the specified checkbox is not checked.
-   * 
+   *
    * ```js
    * I.dontSeeCheckboxIsChecked('#agree'); // located by ID
    * I.dontSeeCheckboxIsChecked('I agree to terms'); // located by label
    * I.dontSeeCheckboxIsChecked('agree'); // located by name
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async dontSeeCheckboxIsChecked(field) {
     return proceedIsChecked.call(this, 'negate', field)
@@ -985,14 +985,14 @@ class Protractor extends Helper {
   /**
    * Retrieves all texts from an element located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async with `await`** operator.
-   * 
+   *
    * ```js
    * let pins = await I.grabTextFromAll('#pin li');
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @returns {Promise<string[]>} attribute value
-   * 
+   *
    */
   async grabTextFromAll(locator) {
     const els = await this._locate(locator)
@@ -1006,15 +1006,15 @@ class Protractor extends Helper {
   /**
    * Retrieves a text from an element located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async with `await`** operator.
-   * 
+   *
    * ```js
    * let pin = await I.grabTextFrom('#pin');
    * ```
    * If multiple elements found returns first element.
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @returns {Promise<string>} attribute value
-   * 
+   *
    */
   async grabTextFrom(locator) {
     const texts = await this.grabTextFromAll(locator)
@@ -1029,14 +1029,14 @@ class Protractor extends Helper {
   /**
    * Retrieves all the innerHTML from elements located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
-   * 
+   *
    * ```js
    * let postHTMLs = await I.grabHTMLFromAll('.post');
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} element located by CSS|XPath|strict locator.
    * @returns {Promise<string[]>} HTML code for an element
-   * 
+   *
    */
   async grabHTMLFromAll(locator) {
     const els = await this._locate(locator)
@@ -1054,14 +1054,14 @@ class Protractor extends Helper {
    * Retrieves the innerHTML from an element located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
    * If more than one element is found - HTML of first element is returned.
-   * 
+   *
    * ```js
    * let postHTML = await I.grabHTMLFrom('#post');
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} element located by CSS|XPath|strict locator.
    * @returns {Promise<string>} HTML code for an element
-   * 
+   *
    */
   async grabHTMLFrom(locator) {
     const html = await this.grabHTMLFromAll(locator)
@@ -1076,13 +1076,13 @@ class Protractor extends Helper {
   /**
    * Retrieves an array of value from a form located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
-   * 
+   *
    * ```js
    * let inputs = await I.grabValueFromAll('//form/input');
    * ```
    * @param {CodeceptJS.LocatorOrString} locator field located by label|name|CSS|XPath|strict locator.
    * @returns {Promise<string[]>} attribute value
-   * 
+   *
    */
   async grabValueFromAll(locator) {
     const els = await findFields(this.browser, locator)
@@ -1095,13 +1095,13 @@ class Protractor extends Helper {
    * Retrieves a value from a form element located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
    * If more than one element is found - value of first element is returned.
-   * 
+   *
    * ```js
    * let email = await I.grabValueFrom('input[name=email]');
    * ```
    * @param {CodeceptJS.LocatorOrString} locator field located by label|name|CSS|XPath|strict locator.
    * @returns {Promise<string>} attribute value
-   * 
+   *
    */
   async grabValueFrom(locator) {
     const values = await this.grabValueFromAll(locator)
@@ -1116,15 +1116,15 @@ class Protractor extends Helper {
   /**
    * Grab array of CSS properties for given locator
    * Resumes test execution, so **should be used inside an async function with `await`** operator.
-   * 
+   *
    * ```js
    * const values = await I.grabCssPropertyFromAll('h3', 'font-weight');
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {string} cssProperty CSS property name.
    * @returns {Promise<string[]>} CSS value
-   * 
+   *
    */
   async grabCssPropertyFromAll(locator, cssProperty) {
     const els = await this._locate(locator, true)
@@ -1137,15 +1137,15 @@ class Protractor extends Helper {
    * Grab CSS property for given locator
    * Resumes test execution, so **should be used inside an async function with `await`** operator.
    * If more than one element is found - value of first element is returned.
-   * 
+   *
    * ```js
    * const value = await I.grabCssPropertyFrom('h3', 'font-weight');
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {string} cssProperty CSS property name.
    * @returns {Promise<string>} CSS value
-   * 
+   *
    */
   async grabCssPropertyFrom(locator, cssProperty) {
     const cssValues = await this.grabCssPropertyFromAll(locator, cssProperty)
@@ -1161,14 +1161,14 @@ class Protractor extends Helper {
   /**
    * Retrieves an array of attributes from elements located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async with `await`** operator.
-   * 
+   *
    * ```js
    * let hints = await I.grabAttributeFromAll('.tooltip', 'title');
    * ```
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {string} attr attribute name.
    * @returns {Promise<string[]>} attribute value
-   * 
+   *
    */
   async grabAttributeFromAll(locator, attr) {
     const els = await this._locate(locator)
@@ -1185,14 +1185,14 @@ class Protractor extends Helper {
    * Retrieves an attribute from an element located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async with `await`** operator.
    * If more than one element is found - attribute of first element is returned.
-   * 
+   *
    * ```js
    * let hint = await I.grabAttributeFrom('#tooltip', 'title');
    * ```
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {string} attr attribute name.
    * @returns {Promise<string>} attribute value
-   * 
+   *
    */
   async grabAttributeFrom(locator, attr) {
     const attrs = await this.grabAttributeFromAll(locator, attr)
@@ -1206,14 +1206,14 @@ class Protractor extends Helper {
 
   /**
    * Checks that title contains text.
-   * 
+   *
    * ```js
    * I.seeInTitle('Home Page');
    * ```
-   * 
+   *
    * @param {string} text text value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async seeInTitle(text) {
     return this.browser.getTitle().then((title) => stringIncludes('web page title').assert(text, title))
@@ -1221,14 +1221,14 @@ class Protractor extends Helper {
 
   /**
    * Checks that title is equal to provided one.
-   * 
+   *
    * ```js
    * I.seeTitleEquals('Test title.');
    * ```
-   * 
+   *
    * @param {string} text value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async seeTitleEquals(text) {
     const title = await this.browser.getTitle()
@@ -1237,14 +1237,14 @@ class Protractor extends Helper {
 
   /**
    * Checks that title does not contain text.
-   * 
+   *
    * ```js
    * I.dontSeeInTitle('Error');
    * ```
-   * 
+   *
    * @param {string} text value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async dontSeeInTitle(text) {
     return this.browser.getTitle().then((title) => stringIncludes('web page title').negate(text, title))
@@ -1253,11 +1253,11 @@ class Protractor extends Helper {
   /**
    * Retrieves a page title and returns it to test.
    * Resumes test execution, so **should be used inside async with `await`** operator.
-   * 
+   *
    * ```js
    * let title = await I.grabTitle();
    * ```
-   * 
+   *
    * @returns {Promise<string>} title
    */
   async grabTitle() {
@@ -1270,13 +1270,13 @@ class Protractor extends Helper {
   /**
    * Checks that a given Element is visible
    * Element is located by CSS or XPath.
-   * 
+   *
    * ```js
    * I.seeElement('#modal');
    * ```
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async seeElement(locator) {
     let els = await this._locate(locator, true)
@@ -1286,14 +1286,14 @@ class Protractor extends Helper {
 
   /**
    * Opposite to `seeElement`. Checks that element is not visible (or in DOM)
-   * 
+   *
    * ```js
    * I.dontSeeElement('.modal'); // modal is not shown
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|Strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async dontSeeElement(locator) {
     let els = await this._locate(locator, false)
@@ -1304,13 +1304,13 @@ class Protractor extends Helper {
   /**
    * Checks that a given Element is present in the DOM
    * Element is located by CSS or XPath.
-   * 
+   *
    * ```js
    * I.seeElementInDOM('#modal');
    * ```
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async seeElementInDOM(locator) {
     return this.browser
@@ -1320,14 +1320,14 @@ class Protractor extends Helper {
 
   /**
    * Opposite to `seeElementInDOM`. Checks that element is not on page.
-   * 
+   *
    * ```js
    * I.dontSeeElementInDOM('.nav'); // checks that element is not on page visible or not
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|Strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async dontSeeElementInDOM(locator) {
     return this.browser
@@ -1337,13 +1337,13 @@ class Protractor extends Helper {
 
   /**
    * Checks that the current page contains the given string in its raw source code.
-   * 
+   *
    * ```js
    * I.seeInSource('<h1>Green eggs &amp; ham</h1>');
    * ```
    * @param {string} text value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async seeInSource(text) {
     return this.browser.getPageSource().then((source) => stringIncludes('HTML source of a page').assert(text, source))
@@ -1352,11 +1352,11 @@ class Protractor extends Helper {
   /**
    * Retrieves page source and returns it to test.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
-   * 
+   *
    * ```js
    * let pageSource = await I.grabSource();
    * ```
-   * 
+   *
    * @returns {Promise<string>} source code
    */
   async grabSource() {
@@ -1365,14 +1365,14 @@ class Protractor extends Helper {
 
   /**
    * Checks that the current page does not contains the given string in its raw source code.
-   * 
+   *
    * ```js
    * I.dontSeeInSource('<!--'); // no comments in source
    * ```
-   * 
+   *
    * @param {string} value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async dontSeeInSource(text) {
     return this.browser.getPageSource().then((source) => stringIncludes('HTML source of a page').negate(text, source))
@@ -1381,16 +1381,16 @@ class Protractor extends Helper {
   /**
    * Asserts that an element appears a given number of times in the DOM.
    * Element is located by label or name or CSS or XPath.
-   * 
-   * 
+   *
+   *
    * ```js
    * I.seeNumberOfElements('#submitBtn', 1);
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} num number of elements.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async seeNumberOfElements(locator, num) {
     const elements = await this._locate(locator)
@@ -1402,15 +1402,15 @@ class Protractor extends Helper {
   /**
    * Asserts that an element is visible a given number of times.
    * Element is located by CSS or XPath.
-   * 
+   *
    * ```js
    * I.seeNumberOfVisibleElements('.buttons', 3);
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} num number of elements.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async seeNumberOfVisibleElements(locator, num) {
     const res = await this.grabNumberOfVisibleElements(locator)
@@ -1423,11 +1423,11 @@ class Protractor extends Helper {
   /**
    * Grab number of visible elements by locator.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
-   * 
+   *
    * ```js
    * let numOfElements = await I.grabNumberOfVisibleElements('p');
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
    * @returns {Promise<number>} number of visible elements
    */
@@ -1439,15 +1439,15 @@ class Protractor extends Helper {
 
   /**
    * Checks that all elements with given locator have given CSS properties.
-   * 
+   *
    * ```js
    * I.seeCssPropertiesOnElements('h3', { 'font-weight': "bold"});
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
    * @param {object} cssProperties object with CSS properties and their values to check.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async seeCssPropertiesOnElements(locator, cssProperties) {
     const els = await this._locate(locator)
@@ -1481,15 +1481,15 @@ class Protractor extends Helper {
 
   /**
    * Checks that all elements with given locator have given attributes.
-   * 
+   *
    * ```js
    * I.seeAttributesOnElements('//form', { method: "post"});
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
    * @param {object} attributes attributes and their values to check.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async seeAttributesOnElements(locator, attributes) {
     const els = await this._locate(locator)
@@ -1523,9 +1523,9 @@ class Protractor extends Helper {
    * Pass arguments to function as additional parameters.
    * Will return execution result to a test.
    * In this case you should use async function and await to receive results.
-   * 
+   *
    * Example with jQuery DatePicker:
-   * 
+   *
    * ```js
    * // change date of jQuery DatePicker
    * I.executeScript(function() {
@@ -1534,18 +1534,18 @@ class Protractor extends Helper {
    * });
    * ```
    * Can return values. Don't forget to use `await` to get them.
-   * 
+   *
    * ```js
    * let date = await I.executeScript(function(el) {
    *   // only basic types can be returned
    *   return $(el).datetimepicker('getDate').toString();
    * }, '#date'); // passing jquery selector
    * ```
-   * 
+   *
    * @param {string|function} fn function to be executed in browser context.
    * @param {...any} args to be passed to function.
    * @returns {Promise<any>} script return value
-   * 
+   *
    */
   async executeScript() {
     return this.browser.executeScript.apply(this.browser, arguments)
@@ -1554,29 +1554,29 @@ class Protractor extends Helper {
   /**
    * Executes async script on page.
    * Provided function should execute a passed callback (as first argument) to signal it is finished.
-   * 
+   *
    * Example: In Vue.js to make components completely rendered we are waiting for [nextTick](https://vuejs.org/v2/api/#Vue-nextTick).
-   * 
+   *
    * ```js
    * I.executeAsyncScript(function(done) {
    *   Vue.nextTick(done); // waiting for next tick
    * });
    * ```
-   * 
+   *
    * By passing value to `done()` function you can return values.
    * Additional arguments can be passed as well, while `done` function is always last parameter in arguments list.
-   * 
+   *
    * ```js
    * let val = await I.executeAsyncScript(function(url, done) {
    *   // in browser context
    *   $.ajax(url, { success: (data) => done(data); }
    * }, 'http://ajax.callback.url/');
    * ```
-   * 
+   *
    * @param {string|function} fn function to be executed in browser context.
    * @param {...any} args to be passed to function.
    * @returns {Promise<any>} script return value
-   * 
+   *
    */
   async executeAsyncScript() {
     this.browser.manage().timeouts().setScriptTimeout(this.options.scriptTimeout)
@@ -1585,14 +1585,14 @@ class Protractor extends Helper {
 
   /**
    * Checks that current url contains a provided fragment.
-   * 
+   *
    * ```js
    * I.seeInCurrentUrl('/register'); // we are on registration page
    * ```
-   * 
+   *
    * @param {string} url a fragment to check
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async seeInCurrentUrl(url) {
     return this.browser.getCurrentUrl().then((currentUrl) => stringIncludes('url').assert(url, currentUrl))
@@ -1600,10 +1600,10 @@ class Protractor extends Helper {
 
   /**
    * Checks that current url does not contain a provided fragment.
-   * 
+   *
    * @param {string} url value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async dontSeeInCurrentUrl(url) {
     return this.browser.getCurrentUrl().then((currentUrl) => stringIncludes('url').negate(url, currentUrl))
@@ -1613,15 +1613,15 @@ class Protractor extends Helper {
    * Checks that current url is equal to provided one.
    * If a relative url provided, a configured url will be prepended to it.
    * So both examples will work:
-   * 
+   *
    * ```js
    * I.seeCurrentUrlEquals('/register');
    * I.seeCurrentUrlEquals('http://my.site.com/register');
    * ```
-   * 
+   *
    * @param {string} url value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async seeCurrentUrlEquals(url) {
     return this.browser.getCurrentUrl().then((currentUrl) => urlEquals(this.options.url).assert(url, currentUrl))
@@ -1630,15 +1630,15 @@ class Protractor extends Helper {
   /**
    * Checks that current url is not equal to provided one.
    * If a relative url provided, a configured url will be prepended to it.
-   * 
+   *
    * ```js
    * I.dontSeeCurrentUrlEquals('/login'); // relative url are ok
    * I.dontSeeCurrentUrlEquals('http://mysite.com/login'); // absolute urls are also ok
    * ```
-   * 
+   *
    * @param {string} url value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async dontSeeCurrentUrlEquals(url) {
     return this.browser.getCurrentUrl().then((currentUrl) => urlEquals(this.options.url).negate(url, currentUrl))
@@ -1647,15 +1647,15 @@ class Protractor extends Helper {
   /**
    * Saves screenshot of the specified locator to ouput folder (set in codecept.conf.ts or codecept.conf.js).
    * Filename is relative to output folder.
-   * 
+   *
    * ```js
    * I.saveElementScreenshot(`#submit`,'debug.png');
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {string} fileName file name to save.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    *
    */
   async saveElementScreenshot(locator, fileName) {
@@ -1682,16 +1682,16 @@ class Protractor extends Helper {
    * Saves a screenshot to ouput folder (set in codecept.conf.ts or codecept.conf.js).
    * Filename is relative to output folder.
    * Optionally resize the window to the full available page `scrollHeight` and `scrollWidth` to capture the entire page by passing `true` in as the second argument.
-   * 
+   *
    * ```js
    * I.saveScreenshot('debug.png');
    * I.saveScreenshot('debug.png', true) //resizes to available scrollHeight and scrollWidth before taking screenshot
    * ```
-   * 
+   *
    * @param {string} fileName file name to save.
    * @param {boolean} [fullPage=false] (optional, `false` by default) flag to enable fullscreen screenshot mode.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async saveScreenshot(fileName, fullPage = false) {
     const outputFile = screenshotOutputFolder(fileName)
@@ -1727,14 +1727,14 @@ class Protractor extends Helper {
   /**
    * Clears a cookie by name,
    * if none provided clears all cookies.
-   * 
+   *
    * ```js
    * I.clearCookie();
    * I.clearCookie('test'); // Playwright currently doesn't support clear a particular cookie name
    * ```
-   * 
+   *
    * @param {?string} [cookie=null] (optional, `null` by default) cookie name
-   * 
+   *
    */
   async clearCookie(cookie = null) {
     if (!cookie) {
@@ -1745,14 +1745,14 @@ class Protractor extends Helper {
 
   /**
    * Checks that cookie with given name exists.
-   * 
+   *
    * ```js
    * I.seeCookie('Auth');
    * ```
-   * 
+   *
    * @param {string} name cookie name.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async seeCookie(name) {
     return this.browser
@@ -1763,14 +1763,14 @@ class Protractor extends Helper {
 
   /**
    * Checks that cookie with given name does not exist.
-   * 
+   *
    * ```js
    * I.dontSeeCookie('auth'); // no auth cookie
    * ```
-   * 
+   *
    * @param {string} name cookie name.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async dontSeeCookie(name) {
     return this.browser
@@ -1783,15 +1783,15 @@ class Protractor extends Helper {
    * Gets a cookie object by name.
    * If none provided gets all cookies.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
-   * 
+   *
    * ```js
    * let cookie = await I.grabCookie('auth');
    * assert(cookie.value, '123456');
    * ```
-   * 
+   *
    * @param {?string} [name=null] cookie name.
    * @returns {any} attribute value
-   * 
+   *
    *
    * Returns cookie in JSON [format](https://code.google.com/p/selenium/wiki/JsonWireProtocol#Cookie_JSON_Object).
    */
@@ -1819,13 +1819,13 @@ class Protractor extends Helper {
   /**
    * Checks that the active JavaScript popup, as created by `window.alert|window.confirm|window.prompt`, contains the
    * given string.
-   * 
+   *
    * ```js
    * I.seeInPopup('Popup text');
    * ```
    * @param {string} text value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async seeInPopup(text) {
     const popupAlert = await this.browser.switchTo().alert()
@@ -1862,11 +1862,11 @@ class Protractor extends Helper {
   /**
    * Resize the current window to provided width and height.
    * First parameter can be set to `maximize`.
-   * 
+   *
    * @param {number} width width in pixels or `maximize`.
    * @param {number} height height in pixels.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async resizeWindow(width, height) {
     if (width === 'maximize') {
@@ -1878,15 +1878,15 @@ class Protractor extends Helper {
 
   /**
    * Drag an item to a destination element.
-   * 
+   *
    * ```js
    * I.dragAndDrop('#dragHandle', '#container');
    * ```
-   * 
+   *
    * @param {LocatorOrString} srcElement located by CSS|XPath|strict locator.
    * @param {LocatorOrString} destElement located by CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async dragAndDrop(srcElement, destElement) {
     const srcEl = await this._locate(srcElement, true)
@@ -2009,13 +2009,13 @@ class Protractor extends Helper {
   /**
    * Grab number of open tabs.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
-   * 
+   *
    * ```js
    * let tabs = await I.grabNumberOfOpenTabs();
    * ```
-   * 
+   *
    * @returns {Promise<number>} number of open tabs
-   * 
+   *
    */
   async grabNumberOfOpenTabs() {
     const pages = await this.browser.getAllWindowHandles()
@@ -2024,15 +2024,15 @@ class Protractor extends Helper {
 
   /**
    * Switches frame or in case of null locator reverts to parent.
-   * 
+   *
    * ```js
    * I.switchTo('iframe'); // switch to first iframe
    * I.switchTo(); // switch back to main page
    * ```
-   * 
+   *
    * @param {?CodeceptJS.LocatorOrString} [locator=null] (optional, `null` by default) element located by CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async switchTo(locator) {
     if (Number.isInteger(locator)) {
@@ -2049,14 +2049,14 @@ class Protractor extends Helper {
 
   /**
    * Pauses execution for a number of seconds.
-   * 
+   *
    * ```js
    * I.wait(2); // wait 2 secs
    * ```
-   * 
+   *
    * @param {number} sec number of second to wait.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   wait(sec) {
     return this.browser.sleep(sec * 1000)
@@ -2065,16 +2065,16 @@ class Protractor extends Helper {
   /**
    * Waits for element to be present on page (by default waits for 1sec).
    * Element can be located by CSS or XPath.
-   * 
+   *
    * ```js
    * I.waitForElement('.btn.continue');
    * I.waitForElement('.btn.continue', 5); // wait for 5 secs
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async waitForElement(locator, sec = null) {
     const aSec = sec || this.options.waitForTimeoutInSeconds
@@ -2092,15 +2092,15 @@ class Protractor extends Helper {
   /**
    * Waits for an element to become not attached to the DOM on a page (by default waits for 1sec).
    * Element can be located by CSS or XPath.
-   * 
+   *
    * ```js
    * I.waitForDetached('#popup');
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async waitForDetached(locator, sec = null) {
     const aSec = sec || this.options.waitForTimeoutInSeconds
@@ -2128,15 +2128,15 @@ class Protractor extends Helper {
   /**
    * Waits for an element to become visible on a page (by default waits for 1sec).
    * Element can be located by CSS or XPath.
-   * 
+   *
    * ```js
    * I.waitForVisible('#popup');
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async waitForVisible(locator, sec = null) {
     const aSec = sec || this.options.waitForTimeoutInSeconds
@@ -2147,15 +2147,15 @@ class Protractor extends Helper {
   /**
    * Waits for an element to hide (by default waits for 1sec).
    * Element can be located by CSS or XPath.
-   * 
+   *
    * ```js
    * I.waitToHide('#popup');
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async waitToHide(locator, sec = null) {
     return this.waitForInvisible(locator, sec)
@@ -2164,15 +2164,15 @@ class Protractor extends Helper {
   /**
    * Waits for an element to be removed or become invisible on a page (by default waits for 1sec).
    * Element can be located by CSS or XPath.
-   * 
+   *
    * ```js
    * I.waitForInvisible('#popup');
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async waitForInvisible(locator, sec = null) {
     const aSec = sec || this.options.waitForTimeoutInSeconds
@@ -2189,16 +2189,16 @@ class Protractor extends Helper {
 
   /**
    * Waits for a specified number of elements on the page.
-   * 
+   *
    * ```js
    * I.waitNumberOfVisibleElements('a', 3);
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} num number of elements.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async waitNumberOfVisibleElements(locator, num, sec = null) {
     function visibilityCountOf(loc, expectedCount) {
@@ -2222,11 +2222,11 @@ class Protractor extends Helper {
   /**
    * Waits for element to become enabled (by default waits for 1sec).
    * Element can be located by CSS or XPath.
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional) time in seconds to wait, 1 by default.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async waitForEnabled(locator, sec = null) {
     const aSec = sec || this.options.waitForTimeoutInSeconds
@@ -2239,16 +2239,16 @@ class Protractor extends Helper {
 
   /**
    * Waits for the specified value to be in value attribute.
-   * 
+   *
    * ```js
    * I.waitForValue('//input', "GoodValue");
    * ```
-   * 
+   *
    * @param {LocatorOrString} field input field.
    * @param {string }value expected value.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async waitForValue(field, value, sec = null) {
     const aSec = sec || this.options.waitForTimeoutInSeconds
@@ -2275,22 +2275,22 @@ class Protractor extends Helper {
   /**
    * Waits for a function to return true (waits for 1 sec by default).
    * Running in browser context.
-   * 
+   *
    * ```js
    * I.waitForFunction(fn[, [args[, timeout]])
    * ```
-   * 
+   *
    * ```js
    * I.waitForFunction(() => window.requests == 0);
    * I.waitForFunction(() => window.requests == 0, 5); // waits for 5 sec
    * I.waitForFunction((count) => window.requests == count, [3], 5) // pass args and wait for 5 sec
    * ```
-   * 
+   *
    * @param {string|function} fn to be executed in browser context.
    * @param {any[]|number} [argsOrSec] (optional, `1` by default) arguments for function or seconds.
    * @param {number} [sec] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async waitForFunction(fn, argsOrSec = null, sec = null) {
     let args = []
@@ -2308,15 +2308,15 @@ class Protractor extends Helper {
 
   /**
    * Waiting for the part of the URL to match the expected. Useful for SPA to understand that page was changed.
-   * 
+   *
    * ```js
    * I.waitInUrl('/info', 2);
    * ```
-   * 
+   *
    * @param {string} urlPart value to check.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async waitInUrl(urlPart, sec = null) {
     const aSec = sec || this.options.waitForTimeoutInSeconds
@@ -2334,16 +2334,16 @@ class Protractor extends Helper {
 
   /**
    * Waits for the entire URL to match the expected
-   * 
+   *
    * ```js
    * I.waitUrlEquals('/info', 2);
    * I.waitUrlEquals('http://127.0.0.1:8000/info');
    * ```
-   * 
+   *
    * @param {string} urlPart value to check.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async waitUrlEquals(urlPart, sec = null) {
     const aSec = sec || this.options.waitForTimeoutInSeconds
@@ -2367,17 +2367,17 @@ class Protractor extends Helper {
    * Waits for a text to appear (by default waits for 1sec).
    * Element can be located by CSS or XPath.
    * Narrow down search results by providing context.
-   * 
+   *
    * ```js
    * I.waitForText('Thank you, form has been submitted');
    * I.waitForText('Thank you, form has been submitted', 5, '#modal');
    * ```
-   * 
+   *
    * @param {string }text to wait for.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @param {CodeceptJS.LocatorOrString} [context] (optional) element located by CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async waitForText(text, sec = null, context = null) {
     if (!context) {
@@ -2399,12 +2399,12 @@ class Protractor extends Helper {
 
   /**
    * Reload the current page.
-   * 
+   *
    * ```js
    * I.refreshPage();
    * ```
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   refreshPage() {
     return this.browser.refresh()
@@ -2421,17 +2421,17 @@ class Protractor extends Helper {
   /**
    * Scrolls to element matched by locator.
    * Extra shift can be set with offsetX and offsetY options.
-   * 
+   *
    * ```js
    * I.scrollTo('footer');
    * I.scrollTo('#submit', 5, 5);
    * ```
-   * 
+   *
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
    * @param {number} [offsetX=0] (optional, `0` by default) X-axis offset.
    * @param {number} [offsetY=0] (optional, `0` by default) Y-axis offset.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async scrollTo(locator, offsetX = 0, offsetY = 0) {
     if (typeof locator === 'number' && typeof offsetX === 'number') {
@@ -2471,12 +2471,12 @@ class Protractor extends Helper {
 
   /**
    * Scroll page to the top.
-   * 
+   *
    * ```js
    * I.scrollPageToTop();
    * ```
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async scrollPageToTop() {
     return this.executeScript('window.scrollTo(0, 0);')
@@ -2484,12 +2484,12 @@ class Protractor extends Helper {
 
   /**
    * Scroll page to the bottom.
-   * 
+   *
    * ```js
    * I.scrollPageToBottom();
    * ```
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   async scrollPageToBottom() {
     /* eslint-disable prefer-arrow-callback, comma-dangle */
@@ -2507,13 +2507,13 @@ class Protractor extends Helper {
   /**
    * Retrieves a page scroll position and returns it to test.
    * Resumes test execution, so **should be used inside an async function with `await`** operator.
-   * 
+   *
    * ```js
    * let { x, y } = await I.grabPageScrollPosition();
    * ```
-   * 
+   *
    * @returns {Promise<PageScrollPosition>} scroll position
-   * 
+   *
    */
   async grabPageScrollPosition() {
     /* eslint-disable comma-dangle */
@@ -2557,22 +2557,22 @@ class Protractor extends Helper {
 
   /**
    * Sets cookie(s).
-   * 
+   *
    * Can be a single cookie object or an array of cookies:
-   * 
+   *
    * ```js
    * I.setCookie({name: 'auth', value: true});
-   * 
+   *
    * // as array
    * I.setCookie([
    *   {name: 'auth', value: true},
    *   {name: 'agree', value: true}
    * ]);
    * ```
-   * 
+   *
    * @param {Cookie|Array<Cookie>} cookie a cookie object or array of cookie objects.
    * @returns {void} automatically synchronized promise through #recorder
-   * 
+   *
    */
   setCookie(cookie) {
     return this.browser.manage().addCookie(cookie)

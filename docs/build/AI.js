@@ -6,8 +6,8 @@ const ai = require('../ai')
 const standardActingHelpers = require('../plugin/standardActingHelpers')
 const Container = require('../container')
 const { splitByChunks, minifyHtml } = require('../html')
-const { beautify } = require('../utils')
-const output = require('../output')
+const { beautify } = require('../utils.js')
+const output = require('../output.js')
 const { registerVariable } = require('../pause')
 
 const gtpRole = {

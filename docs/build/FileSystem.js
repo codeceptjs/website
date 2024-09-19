@@ -3,7 +3,7 @@ const path = require('path')
 const fs = require('fs')
 
 const Helper = require('@codeceptjs/helper')
-const { fileExists } = require('../utils')
+const { fileExists } = require('../utils.js')
 const { fileIncludes } = require('../assert/include')
 const { fileEquals } = require('../assert/equal')
 

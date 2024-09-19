@@ -1,4 +1,4 @@
-const output = require('../output')
+const output = require('../output.js')
 
 let expect
 

@@ -3,7 +3,7 @@ const Helper = require('@codeceptjs/helper')
 const { Agent } = require('https')
 const Secret = require('../secret')
 
-const { beautify } = require('../utils')
+const { beautify } = require('../utils.js')
 
 /**
  * ## Configuration
