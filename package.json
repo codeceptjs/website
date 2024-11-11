@@ -13,7 +13,7 @@
   "dependencies": {
     "autoprefixer": "10.4.20",
     "npm": "10.9.0",
-    "postcss": "8.4.47",
+    "postcss": "8.4.48",
     "sass": "1.80.6",
     "sass-loader": "10.3.1",
     "tailwindcss": "1.9.6",
