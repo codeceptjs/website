@@ -434,8 +434,8 @@ class Appium extends Webdriver {
   async runOnIOS(caps, fn) {
     if (this.platform !== 'ios') return
     recorder.session.start('iOS-only actions')
-    await this._runWithCaps(caps, fn)
-    await recorder.add('restore from iOS session', () => recorder.session.restore())
+    this._runWithCaps(caps, fn)
+    recorder.add('restore from iOS session', () => recorder.session.restore())
     return recorder.promise()
   }
 
@@ -476,8 +476,8 @@ class Appium extends Webdriver {
   async runOnAndroid(caps, fn) {
     if (this.platform !== 'android') return
     recorder.session.start('Android-only actions')
-    await this._runWithCaps(caps, fn)
-    await recorder.add('restore from Android session', () => recorder.session.restore())
+    this._runWithCaps(caps, fn)
+    recorder.add('restore from Android session', () => recorder.session.restore())
     return recorder.promise()
   }
 
@@ -491,19 +491,17 @@ class Appium extends Webdriver {
    * });
    * ```
    *
-   * @param {*} fn
    */
-  /* eslint-disable */
-  async runInWeb(fn) {
+
+  async runInWeb() {
     if (!this.isWeb) return
     recorder.session.start('Web-only actions')
 
     recorder.add('restore from Web session', () => recorder.session.restore(), true)
     return recorder.promise()
   }
-  /* eslint-enable */
 
-  async _runWithCaps(caps, fn) {
+  _runWithCaps(caps, fn) {
     if (typeof caps === 'object') {
       for (const key in caps) {
         // skip if capabilities do not match
@@ -1077,7 +1075,7 @@ class Appium extends Webdriver {
    *
    * Appium: support Android and iOS
    */
-  /* eslint-disable */
+
   async swipe(locator, xoffset, yoffset, speed = 1000) {
     onlyForApps.call(this)
     const res = await this.browser.$(parseLocator.call(this, locator))
@@ -1087,7 +1085,6 @@ class Appium extends Webdriver {
       y: (await res.getLocation()).y + yoffset,
     })
   }
-  /* eslint-enable */
 
   /**
    * Perform a swipe on the screen.

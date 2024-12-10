@@ -10,7 +10,7 @@ const { empty } = require('../assert/empty')
 const { truth } = require('../assert/truth')
 const Locator = require('../locator')
 const ElementNotFound = require('./errors/ElementNotFound')
-const { xpathLocator, fileExists, screenshotOutputFolder, toCamelCase } = require('../utils.js')
+const { xpathLocator, fileExists, screenshotOutputFolder, toCamelCase } = require('../utils')
 
 const specialKeys = {
   Backspace: '\u0008',
@@ -434,16 +434,16 @@ class Nightmare extends Helper {
   /**
    * Opens a web page in a browser. Requires relative or absolute url.
    * If url starts with `/`, opens a web page of a site defined in `url` config parameter.
-   *
+   * 
    * ```js
    * I.amOnPage('/'); // opens main page of website
    * I.amOnPage('https://github.com'); // opens github
    * I.amOnPage('/login'); // opens a login page
    * ```
-   *
+   * 
    * @param {string} url url path or global url.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    * @param {?object} headers list of request headers can be passed
    *
    */
@@ -465,14 +465,14 @@ class Nightmare extends Helper {
 
   /**
    * Checks that title contains text.
-   *
+   * 
    * ```js
    * I.seeInTitle('Home Page');
    * ```
-   *
+   * 
    * @param {string} text text value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeInTitle(text) {
     const title = await this.browser.title()
@@ -481,14 +481,14 @@ class Nightmare extends Helper {
 
   /**
    * Checks that title does not contain text.
-   *
+   * 
    * ```js
    * I.dontSeeInTitle('Error');
    * ```
-   *
+   * 
    * @param {string} text value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async dontSeeInTitle(text) {
     const title = await this.browser.title()
@@ -498,11 +498,11 @@ class Nightmare extends Helper {
   /**
    * Retrieves a page title and returns it to test.
    * Resumes test execution, so **should be used inside async with `await`** operator.
-   *
+   * 
    * ```js
    * let title = await I.grabTitle();
    * ```
-   *
+   * 
    * @returns {Promise<string>} title
    */
   async grabTitle() {
@@ -512,12 +512,12 @@ class Nightmare extends Helper {
   /**
    * Get current URL from browser.
    * Resumes test execution, so should be used inside an async function.
-   *
+   * 
    * ```js
    * let url = await I.grabCurrentUrl();
    * console.log(`Current URL is [${url}]`);
    * ```
-   *
+   * 
    * @returns {Promise<string>} current URL
    */
   async grabCurrentUrl() {
@@ -526,14 +526,14 @@ class Nightmare extends Helper {
 
   /**
    * Checks that current url contains a provided fragment.
-   *
+   * 
    * ```js
    * I.seeInCurrentUrl('/register'); // we are on registration page
    * ```
-   *
+   * 
    * @param {string} url a fragment to check
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeInCurrentUrl(url) {
     const currentUrl = await this.browser.url()
@@ -542,10 +542,10 @@ class Nightmare extends Helper {
 
   /**
    * Checks that current url does not contain a provided fragment.
-   *
+   * 
    * @param {string} url value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async dontSeeInCurrentUrl(url) {
     const currentUrl = await this.browser.url()
@@ -556,15 +556,15 @@ class Nightmare extends Helper {
    * Checks that current url is equal to provided one.
    * If a relative url provided, a configured url will be prepended to it.
    * So both examples will work:
-   *
+   * 
    * ```js
    * I.seeCurrentUrlEquals('/register');
    * I.seeCurrentUrlEquals('http://my.site.com/register');
    * ```
-   *
+   * 
    * @param {string} url value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeCurrentUrlEquals(url) {
     const currentUrl = await this.browser.url()
@@ -574,15 +574,15 @@ class Nightmare extends Helper {
   /**
    * Checks that current url is not equal to provided one.
    * If a relative url provided, a configured url will be prepended to it.
-   *
+   * 
    * ```js
    * I.dontSeeCurrentUrlEquals('/login'); // relative url are ok
    * I.dontSeeCurrentUrlEquals('http://mysite.com/login'); // absolute urls are also ok
    * ```
-   *
+   * 
    * @param {string} url value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async dontSeeCurrentUrlEquals(url) {
     const currentUrl = await this.browser.url()
@@ -592,7 +592,7 @@ class Nightmare extends Helper {
   /**
    * Checks that a page contains a visible text.
    * Use context parameter to narrow down the search.
-   *
+   * 
    * ```js
    * I.see('Welcome'); // text welcome on a page
    * I.see('Welcome', '.content'); // text inside .content div
@@ -601,7 +601,7 @@ class Nightmare extends Helper {
    * @param {string} text expected on page.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS|Xpath|strict locator in which to search for text.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async see(text, context = null) {
     return proceedSee.call(this, 'assert', text, context)
@@ -610,16 +610,16 @@ class Nightmare extends Helper {
   /**
    * Opposite to `see`. Checks that a text is not present on a page.
    * Use context parameter to narrow down the search.
-   *
+   * 
    * ```js
    * I.dontSee('Login'); // assume we are already logged in.
    * I.dontSee('Login', '.nav'); // no login inside .nav element
    * ```
-   *
+   * 
    * @param {string} text which is not present.
    * @param {CodeceptJS.LocatorOrString} [context] (optional) element located by CSS|XPath|strict locator in which to perfrom search.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   dontSee(text, context = null) {
     return proceedSee.call(this, 'negate', text, context)
@@ -628,13 +628,13 @@ class Nightmare extends Helper {
   /**
    * Checks that a given Element is visible
    * Element is located by CSS or XPath.
-   *
+   * 
    * ```js
    * I.seeElement('#modal');
    * ```
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeElement(locator) {
     locator = new Locator(locator, 'css')
@@ -650,14 +650,14 @@ class Nightmare extends Helper {
 
   /**
    * Opposite to `seeElement`. Checks that element is not visible (or in DOM)
-   *
+   * 
    * ```js
    * I.dontSeeElement('.modal'); // modal is not shown
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|Strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async dontSeeElement(locator) {
     locator = new Locator(locator, 'css')
@@ -675,13 +675,13 @@ class Nightmare extends Helper {
   /**
    * Checks that a given Element is present in the DOM
    * Element is located by CSS or XPath.
-   *
+   * 
    * ```js
    * I.seeElementInDOM('#modal');
    * ```
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeElementInDOM(locator) {
     locator = new Locator(locator, 'css')
@@ -691,14 +691,14 @@ class Nightmare extends Helper {
 
   /**
    * Opposite to `seeElementInDOM`. Checks that element is not on page.
-   *
+   * 
    * ```js
    * I.dontSeeElementInDOM('.nav'); // checks that element is not on page visible or not
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|Strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async dontSeeElementInDOM(locator) {
     locator = new Locator(locator, 'css')
@@ -708,13 +708,13 @@ class Nightmare extends Helper {
 
   /**
    * Checks that the current page contains the given string in its raw source code.
-   *
+   * 
    * ```js
    * I.seeInSource('<h1>Green eggs &amp; ham</h1>');
    * ```
    * @param {string} text value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeInSource(text) {
     const source = await this.browser.evaluate(() => document.documentElement.outerHTML)
@@ -723,14 +723,14 @@ class Nightmare extends Helper {
 
   /**
    * Checks that the current page does not contains the given string in its raw source code.
-   *
+   * 
    * ```js
    * I.dontSeeInSource('<!--'); // no comments in source
    * ```
-   *
+   * 
    * @param {string} value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async dontSeeInSource(text) {
     const source = await this.browser.evaluate(() => document.documentElement.outerHTML)
@@ -740,16 +740,16 @@ class Nightmare extends Helper {
   /**
    * Asserts that an element appears a given number of times in the DOM.
    * Element is located by label or name or CSS or XPath.
-   *
-   *
+   * 
+   * 
    * ```js
    * I.seeNumberOfElements('#submitBtn', 1);
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} num number of elements.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeNumberOfElements(locator, num) {
     const elements = await this._locate(locator)
@@ -761,15 +761,15 @@ class Nightmare extends Helper {
   /**
    * Asserts that an element is visible a given number of times.
    * Element is located by CSS or XPath.
-   *
+   * 
    * ```js
    * I.seeNumberOfVisibleElements('.buttons', 3);
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} num number of elements.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeNumberOfVisibleElements(locator, num) {
     const res = await this.grabNumberOfVisibleElements(locator)
@@ -782,11 +782,11 @@ class Nightmare extends Helper {
   /**
    * Grab number of visible elements by locator.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
-   *
+   * 
    * ```js
    * let numOfElements = await I.grabNumberOfVisibleElements('p');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
    * @returns {Promise<number>} number of visible elements
    */
@@ -809,9 +809,9 @@ class Nightmare extends Helper {
    * If a fuzzy locator is given, the page will be searched for a button, link, or image matching the locator string.
    * For buttons, the "value" attribute, "name" attribute, and inner text are searched. For links, the link text is searched.
    * For images, the "alt" attribute and inner text of any parent links are searched.
-   *
+   * 
    * The second parameter is a context (CSS or XPath locator) to narrow the search.
-   *
+   * 
    * ```js
    * // simple link
    * I.click('Logout');
@@ -826,11 +826,11 @@ class Nightmare extends Helper {
    * // using strict locator
    * I.click({css: 'nav a.login'});
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator clickable link or button located by text, or any element located by CSS|XPath|strict locator.
    * @param {?CodeceptJS.LocatorOrString | null} [context=null] (optional, `null` by default) element to search in CSS|XPath|Strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async click(locator, context = null) {
     const el = await findClickable.call(this, locator, context)
@@ -841,18 +841,18 @@ class Nightmare extends Helper {
   /**
    * Performs a double-click on an element matched by link|button|label|CSS or XPath.
    * Context can be specified as second parameter to narrow search.
-   *
+   * 
    * ```js
    * I.doubleClick('Edit');
    * I.doubleClick('Edit', '.actions');
    * I.doubleClick({css: 'button.accept'});
    * I.doubleClick('.btn.edit');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator clickable link or button located by text, or any element located by CSS|XPath|strict locator.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element to search in CSS|XPath|Strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async doubleClick(locator, context = null) {
     const el = await findClickable.call(this, locator, context)
@@ -862,7 +862,7 @@ class Nightmare extends Helper {
 
   /**
    * Performs right click on a clickable element matched by semantic locator, CSS or XPath.
-   *
+   * 
    * ```js
    * // right click element with id el
    * I.rightClick('#el');
@@ -871,11 +871,11 @@ class Nightmare extends Helper {
    * // right click button with text "Click me" inside .context
    * I.rightClick('Click me', '.context');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator clickable element located by CSS|XPath|strict locator.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async rightClick(locator, context = null) {
     const el = await findClickable.call(this, locator, context)
@@ -886,17 +886,17 @@ class Nightmare extends Helper {
   /**
    * Moves cursor to element matched by locator.
    * Extra shift can be set with offsetX and offsetY options.
-   *
+   * 
    * ```js
    * I.moveCursorTo('.tooltip');
    * I.moveCursorTo('#submit', 5,5);
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
    * @param {number} [offsetX=0] (optional, `0` by default) X-axis offset.
    * @param {number} [offsetY=0] (optional, `0` by default) Y-axis offset.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async moveCursorTo(locator, offsetX = 0, offsetY = 0) {
     locator = new Locator(locator, 'css')
@@ -912,9 +912,9 @@ class Nightmare extends Helper {
    * Pass arguments to function as additional parameters.
    * Will return execution result to a test.
    * In this case you should use async function and await to receive results.
-   *
+   * 
    * Example with jQuery DatePicker:
-   *
+   * 
    * ```js
    * // change date of jQuery DatePicker
    * I.executeScript(function() {
@@ -923,18 +923,18 @@ class Nightmare extends Helper {
    * });
    * ```
    * Can return values. Don't forget to use `await` to get them.
-   *
+   * 
    * ```js
    * let date = await I.executeScript(function(el) {
    *   // only basic types can be returned
    *   return $(el).datetimepicker('getDate').toString();
    * }, '#date'); // passing jquery selector
    * ```
-   *
+   * 
    * @param {string|function} fn function to be executed in browser context.
    * @param {...any} args to be passed to function.
    * @returns {Promise<any>} script return value
-   *
+   * 
    *
    * Wrapper for synchronous [evaluate](https://github.com/segmentio/nightmare#evaluatefn-arg1-arg2)
    */
@@ -945,29 +945,29 @@ class Nightmare extends Helper {
   /**
    * Executes async script on page.
    * Provided function should execute a passed callback (as first argument) to signal it is finished.
-   *
+   * 
    * Example: In Vue.js to make components completely rendered we are waiting for [nextTick](https://vuejs.org/v2/api/#Vue-nextTick).
-   *
+   * 
    * ```js
    * I.executeAsyncScript(function(done) {
    *   Vue.nextTick(done); // waiting for next tick
    * });
    * ```
-   *
+   * 
    * By passing value to `done()` function you can return values.
    * Additional arguments can be passed as well, while `done` function is always last parameter in arguments list.
-   *
+   * 
    * ```js
    * let val = await I.executeAsyncScript(function(url, done) {
    *   // in browser context
    *   $.ajax(url, { success: (data) => done(data); }
    * }, 'http://ajax.callback.url/');
    * ```
-   *
+   * 
    * @param {string|function} fn function to be executed in browser context.
    * @param {...any} args to be passed to function.
    * @returns {Promise<any>} script return value
-   *
+   * 
    *
    * Wrapper for asynchronous [evaluate](https://github.com/segmentio/nightmare#evaluatefn-arg1-arg2).
    * Unlike NightmareJS implementation calling `done` will return its first argument.
@@ -979,11 +979,11 @@ class Nightmare extends Helper {
   /**
    * Resize the current window to provided width and height.
    * First parameter can be set to `maximize`.
-   *
+   * 
    * @param {number} width width in pixels or `maximize`.
    * @param {number} height height in pixels.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async resizeWindow(width, height) {
     if (width === 'maximize') {
@@ -995,9 +995,9 @@ class Nightmare extends Helper {
   /**
    * Selects a checkbox or radio button.
    * Element is located by label or name or CSS or XPath.
-   *
+   * 
    * The second parameter is a context (CSS or XPath locator) to narrow the search.
-   *
+   * 
    * ```js
    * I.checkOption('#agree');
    * I.checkOption('I Agree to Terms and Conditions');
@@ -1006,7 +1006,7 @@ class Nightmare extends Helper {
    * @param {CodeceptJS.LocatorOrString} field checkbox located by label | name | CSS | XPath | strict locator.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS | XPath | strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async checkOption(field, context = null) {
     const els = await findCheckable.call(this, field, context)
@@ -1017,9 +1017,9 @@ class Nightmare extends Helper {
   /**
    * Unselects a checkbox or radio button.
    * Element is located by label or name or CSS or XPath.
-   *
+   * 
    * The second parameter is a context (CSS or XPath locator) to narrow the search.
-   *
+   * 
    * ```js
    * I.uncheckOption('#agree');
    * I.uncheckOption('I Agree to Terms and Conditions');
@@ -1028,7 +1028,7 @@ class Nightmare extends Helper {
    * @param {CodeceptJS.LocatorOrString} field checkbox located by label | name | CSS | XPath | strict locator.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS | XPath | strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async uncheckOption(field, context = null) {
     const els = await findCheckable.call(this, field, context)
@@ -1039,7 +1039,7 @@ class Nightmare extends Helper {
   /**
    * Fills a text field or textarea, after clearing its value, with the given string.
    * Field is located by name, label, CSS, or XPath.
-   *
+   * 
    * ```js
    * // by label
    * I.fillField('Email', 'hello@world.com');
@@ -1053,7 +1053,7 @@ class Nightmare extends Helper {
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
    * @param {CodeceptJS.StringOrSecret} value text value to fill.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async fillField(field, value) {
     const el = await findField.call(this, field)
@@ -1063,7 +1063,7 @@ class Nightmare extends Helper {
 
   /**
    * Clears a `<textarea>` or text `<input>` element's value.
-   *
+   * 
    * ```js
    * I.clearField('Email');
    * I.clearField('user[email]');
@@ -1071,7 +1071,7 @@ class Nightmare extends Helper {
    * ```
    * @param {LocatorOrString} editable field located by label|name|CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder.
-   *
+   * 
    */
   async clearField(field) {
     return this.fillField(field, '')
@@ -1080,7 +1080,7 @@ class Nightmare extends Helper {
   /**
    * Appends text to a input field or textarea.
    * Field is located by name, label, CSS or XPath
-   *
+   * 
    * ```js
    * I.appendField('#myTextField', 'appended');
    * // typing secret
@@ -1089,7 +1089,7 @@ class Nightmare extends Helper {
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator
    * @param {string} value text value to append.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async appendField(field, value) {
     const el = await findField.call(this, field)
@@ -1100,7 +1100,7 @@ class Nightmare extends Helper {
   /**
    * Checks that the given input field or textarea equals to given value.
    * For fuzzy locators, fields are matched by label text, the "name" attribute, CSS, and XPath.
-   *
+   * 
    * ```js
    * I.seeInField('Username', 'davert');
    * I.seeInField({css: 'form textarea'},'Type your comment here');
@@ -1110,7 +1110,7 @@ class Nightmare extends Helper {
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
    * @param {CodeceptJS.StringOrSecret} value value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeInField(field, value) {
     const _value = typeof value === 'boolean' ? value : value.toString()
@@ -1120,16 +1120,16 @@ class Nightmare extends Helper {
   /**
    * Checks that value of input field or textarea doesn't equal to given value
    * Opposite to `seeInField`.
-   *
+   * 
    * ```js
    * I.dontSeeInField('email', 'user@user.com'); // field by name
    * I.dontSeeInField({ css: 'form input.email' }, 'user@user.com'); // field by CSS
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
    * @param {CodeceptJS.StringOrSecret} value value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async dontSeeInField(field, value) {
     const _value = typeof value === 'boolean' ? value : value.toString()
@@ -1166,16 +1166,16 @@ class Nightmare extends Helper {
 
   /**
    * Verifies that the specified checkbox is checked.
-   *
+   * 
    * ```js
    * I.seeCheckboxIsChecked('Agree');
    * I.seeCheckboxIsChecked('#agree'); // I suppose user agreed to terms
    * I.seeCheckboxIsChecked({css: '#signup_form input[type=checkbox]'});
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeCheckboxIsChecked(field) {
     return proceedIsChecked.call(this, 'assert', field)
@@ -1183,16 +1183,16 @@ class Nightmare extends Helper {
 
   /**
    * Verifies that the specified checkbox is not checked.
-   *
+   * 
    * ```js
    * I.dontSeeCheckboxIsChecked('#agree'); // located by ID
    * I.dontSeeCheckboxIsChecked('I agree to terms'); // located by label
    * I.dontSeeCheckboxIsChecked('agree'); // located by name
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async dontSeeCheckboxIsChecked(field) {
     return proceedIsChecked.call(this, 'negate', field)
@@ -1202,16 +1202,16 @@ class Nightmare extends Helper {
    * Attaches a file to element located by label, name, CSS or XPath
    * Path to file is relative current codecept directory (where codecept.conf.ts or codecept.conf.js is located).
    * File will be uploaded to remote system (if tests are running remotely).
-   *
+   * 
    * ```js
    * I.attachFile('Avatar', 'data/avatar.jpg');
    * I.attachFile('form input[name=avatar]', 'data/avatar.jpg');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator field located by label|name|CSS|XPath|strict locator.
    * @param {string} pathToFile local file path relative to codecept.conf.ts or codecept.conf.js config file.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    * Doesn't work if the Chromium DevTools panel is open (as Chromium allows only one attachment to the debugger at a time. [See more](https://github.com/rosshinkley/nightmare-upload#important-note-about-setting-file-upload-inputs))
    */
@@ -1232,14 +1232,14 @@ class Nightmare extends Helper {
   /**
    * Retrieves all texts from an element located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async with `await`** operator.
-   *
+   * 
    * ```js
    * let pins = await I.grabTextFromAll('#pin li');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @returns {Promise<string[]>} attribute value
-   *
+   * 
    */
   async grabTextFromAll(locator) {
     locator = new Locator(locator, 'css')
@@ -1255,15 +1255,15 @@ class Nightmare extends Helper {
   /**
    * Retrieves a text from an element located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async with `await`** operator.
-   *
+   * 
    * ```js
    * let pin = await I.grabTextFrom('#pin');
    * ```
    * If multiple elements found returns first element.
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @returns {Promise<string>} attribute value
-   *
+   * 
    */
   async grabTextFrom(locator) {
     locator = new Locator(locator, 'css')
@@ -1280,13 +1280,13 @@ class Nightmare extends Helper {
   /**
    * Retrieves an array of value from a form located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
-   *
+   * 
    * ```js
    * let inputs = await I.grabValueFromAll('//form/input');
    * ```
    * @param {CodeceptJS.LocatorOrString} locator field located by label|name|CSS|XPath|strict locator.
    * @returns {Promise<string[]>} attribute value
-   *
+   * 
    */
   async grabValueFromAll(locator) {
     locator = new Locator(locator, 'css')
@@ -1304,13 +1304,13 @@ class Nightmare extends Helper {
    * Retrieves a value from a form element located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
    * If more than one element is found - value of first element is returned.
-   *
+   * 
    * ```js
    * let email = await I.grabValueFrom('input[name=email]');
    * ```
    * @param {CodeceptJS.LocatorOrString} locator field located by label|name|CSS|XPath|strict locator.
    * @returns {Promise<string>} attribute value
-   *
+   * 
    */
   async grabValueFrom(locator) {
     const el = await findField.call(this, locator)
@@ -1326,14 +1326,14 @@ class Nightmare extends Helper {
   /**
    * Retrieves an array of attributes from elements located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async with `await`** operator.
-   *
+   * 
    * ```js
    * let hints = await I.grabAttributeFromAll('.tooltip', 'title');
    * ```
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {string} attr attribute name.
    * @returns {Promise<string[]>} attribute value
-   *
+   * 
    */
   async grabAttributeFromAll(locator, attr) {
     locator = new Locator(locator, 'css')
@@ -1354,14 +1354,14 @@ class Nightmare extends Helper {
    * Retrieves an attribute from an element located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async with `await`** operator.
    * If more than one element is found - attribute of first element is returned.
-   *
+   * 
    * ```js
    * let hint = await I.grabAttributeFrom('#tooltip', 'title');
    * ```
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {string} attr attribute name.
    * @returns {Promise<string>} attribute value
-   *
+   * 
    */
   async grabAttributeFrom(locator, attr) {
     locator = new Locator(locator, 'css')
@@ -1379,14 +1379,14 @@ class Nightmare extends Helper {
   /**
    * Retrieves all the innerHTML from elements located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
-   *
+   * 
    * ```js
    * let postHTMLs = await I.grabHTMLFromAll('.post');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} element located by CSS|XPath|strict locator.
    * @returns {Promise<string[]>} HTML code for an element
-   *
+   * 
    */
   async grabHTMLFromAll(locator) {
     locator = new Locator(locator, 'css')
@@ -1406,14 +1406,14 @@ class Nightmare extends Helper {
    * Retrieves the innerHTML from an element located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
    * If more than one element is found - HTML of first element is returned.
-   *
+   * 
    * ```js
    * let postHTML = await I.grabHTMLFrom('#post');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} element located by CSS|XPath|strict locator.
    * @returns {Promise<string>} HTML code for an element
-   *
+   * 
    */
   async grabHTMLFrom(locator) {
     locator = new Locator(locator, 'css')
@@ -1431,15 +1431,15 @@ class Nightmare extends Helper {
    * Grab CSS property for given locator
    * Resumes test execution, so **should be used inside an async function with `await`** operator.
    * If more than one element is found - value of first element is returned.
-   *
+   * 
    * ```js
    * const value = await I.grabCssPropertyFrom('h3', 'font-weight');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {string} cssProperty CSS property name.
    * @returns {Promise<string>} CSS value
-   *
+   * 
    */
   async grabCssPropertyFrom(locator, cssProperty) {
     locator = new Locator(locator, 'css')
@@ -1472,7 +1472,7 @@ class Nightmare extends Helper {
    * Selects an option in a drop-down select.
    * Field is searched by label | name | CSS | XPath.
    * Option is selected by visible text or by value.
-   *
+   * 
    * ```js
    * I.selectOption('Choose Plan', 'Monthly'); // select by label
    * I.selectOption('subscription', 'Monthly'); // match option by text
@@ -1481,16 +1481,16 @@ class Nightmare extends Helper {
    * I.selectOption('form select[name=account]', 'Premium');
    * I.selectOption({css: 'form select[name=account]'}, 'Premium');
    * ```
-   *
+   * 
    * Provide an array for the second argument to select multiple options.
-   *
+   * 
    * ```js
    * I.selectOption('Which OS do you use?', ['Android', 'iOS']);
    * ```
    * @param {LocatorOrString} select field located by label|name|CSS|XPath|strict locator.
    * @param {string|Array<*>} option visible text or value of option.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async selectOption(select, option) {
     const fetchAndCheckOption = function (el, locator) {
@@ -1533,22 +1533,22 @@ class Nightmare extends Helper {
 
   /**
    * Sets cookie(s).
-   *
+   * 
    * Can be a single cookie object or an array of cookies:
-   *
+   * 
    * ```js
    * I.setCookie({name: 'auth', value: true});
-   *
+   * 
    * // as array
    * I.setCookie([
    *   {name: 'auth', value: true},
    *   {name: 'agree', value: true}
    * ]);
    * ```
-   *
+   * 
    * @param {Cookie|Array<Cookie>} cookie a cookie object or array of cookie objects.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    * Wrapper for `.cookies.set(cookie)`.
    * [See more](https://github.com/segmentio/nightmare/blob/master/Readme.md#cookiessetcookie)
@@ -1559,14 +1559,14 @@ class Nightmare extends Helper {
 
   /**
    * Checks that cookie with given name exists.
-   *
+   * 
    * ```js
    * I.seeCookie('Auth');
    * ```
-   *
+   * 
    * @param {string} name cookie name.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    */
   async seeCookie(name) {
@@ -1576,14 +1576,14 @@ class Nightmare extends Helper {
 
   /**
    * Checks that cookie with given name does not exist.
-   *
+   * 
    * ```js
    * I.dontSeeCookie('auth'); // no auth cookie
    * ```
-   *
+   * 
    * @param {string} name cookie name.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async dontSeeCookie(name) {
     const res = await this.browser.cookies.get(name)
@@ -1594,15 +1594,15 @@ class Nightmare extends Helper {
    * Gets a cookie object by name.
    * If none provided gets all cookies.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
-   *
+   * 
    * ```js
    * let cookie = await I.grabCookie('auth');
    * assert(cookie.value, '123456');
    * ```
-   *
+   * 
    * @param {?string} [name=null] cookie name.
    * @returns {any} attribute value
-   *
+   * 
    *
    * Cookie in JSON format. If name not passed returns all cookies for this domain.
    *
@@ -1615,14 +1615,14 @@ class Nightmare extends Helper {
   /**
    * Clears a cookie by name,
    * if none provided clears all cookies.
-   *
+   * 
    * ```js
    * I.clearCookie();
    * I.clearCookie('test'); // Playwright currently doesn't support clear a particular cookie name
    * ```
-   *
+   * 
    * @param {?string} [cookie=null] (optional, `null` by default) cookie name
-   *
+   * 
    */
   async clearCookie(cookie) {
     if (!cookie) {
@@ -1634,22 +1634,22 @@ class Nightmare extends Helper {
   /**
    * Waits for a function to return true (waits for 1 sec by default).
    * Running in browser context.
-   *
+   * 
    * ```js
    * I.waitForFunction(fn[, [args[, timeout]])
    * ```
-   *
+   * 
    * ```js
    * I.waitForFunction(() => window.requests == 0);
    * I.waitForFunction(() => window.requests == 0, 5); // waits for 5 sec
    * I.waitForFunction((count) => window.requests == count, [3], 5) // pass args and wait for 5 sec
    * ```
-   *
+   * 
    * @param {string|function} fn to be executed in browser context.
    * @param {any[]|number} [argsOrSec] (optional, `1` by default) arguments for function or seconds.
    * @param {number} [sec] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async waitForFunction(fn, argsOrSec = null, sec = null) {
     let args = []
@@ -1666,14 +1666,14 @@ class Nightmare extends Helper {
 
   /**
    * Pauses execution for a number of seconds.
-   *
+   * 
    * ```js
    * I.wait(2); // wait 2 secs
    * ```
-   *
+   * 
    * @param {number} sec number of second to wait.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async wait(sec) {
     return new Promise((done) => {
@@ -1685,17 +1685,17 @@ class Nightmare extends Helper {
    * Waits for a text to appear (by default waits for 1sec).
    * Element can be located by CSS or XPath.
    * Narrow down search results by providing context.
-   *
+   * 
    * ```js
    * I.waitForText('Thank you, form has been submitted');
    * I.waitForText('Thank you, form has been submitted', 5, '#modal');
    * ```
-   *
+   * 
    * @param {string }text to wait for.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @param {CodeceptJS.LocatorOrString} [context] (optional) element located by CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async waitForText(text, sec, context = null) {
     if (!context) {
@@ -1724,15 +1724,15 @@ class Nightmare extends Helper {
   /**
    * Waits for an element to become visible on a page (by default waits for 1sec).
    * Element can be located by CSS or XPath.
-   *
+   * 
    * ```js
    * I.waitForVisible('#popup');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   waitForVisible(locator, sec) {
     this.browser.options.waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
@@ -1758,15 +1758,15 @@ class Nightmare extends Helper {
   /**
    * Waits for an element to hide (by default waits for 1sec).
    * Element can be located by CSS or XPath.
-   *
+   * 
    * ```js
    * I.waitToHide('#popup');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async waitToHide(locator, sec = null) {
     return this.waitForInvisible(locator, sec)
@@ -1775,15 +1775,15 @@ class Nightmare extends Helper {
   /**
    * Waits for an element to be removed or become invisible on a page (by default waits for 1sec).
    * Element can be located by CSS or XPath.
-   *
+   * 
    * ```js
    * I.waitForInvisible('#popup');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   waitForInvisible(locator, sec) {
     this.browser.options.waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
@@ -1809,16 +1809,16 @@ class Nightmare extends Helper {
   /**
    * Waits for element to be present on page (by default waits for 1sec).
    * Element can be located by CSS or XPath.
-   *
+   * 
    * ```js
    * I.waitForElement('.btn.continue');
    * I.waitForElement('.btn.continue', 5); // wait for 5 secs
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async waitForElement(locator, sec) {
     this.browser.options.waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
@@ -1843,15 +1843,15 @@ class Nightmare extends Helper {
   /**
    * Waits for an element to become not attached to the DOM on a page (by default waits for 1sec).
    * Element can be located by CSS or XPath.
-   *
+   * 
    * ```js
    * I.waitForDetached('#popup');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async waitForDetached(locator, sec) {
     this.browser.options.waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
@@ -1869,12 +1869,12 @@ class Nightmare extends Helper {
 
   /**
    * Reload the current page.
-   *
+   * 
    * ```js
    * I.refreshPage();
    * ```
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async refreshPage() {
     return this.browser.refresh()
@@ -1891,15 +1891,15 @@ class Nightmare extends Helper {
   /**
    * Saves screenshot of the specified locator to ouput folder (set in codecept.conf.ts or codecept.conf.js).
    * Filename is relative to output folder.
-   *
+   * 
    * ```js
    * I.saveElementScreenshot(`#submit`,'debug.png');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {string} fileName file name to save.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    */
   async saveElementScreenshot(locator, fileName) {
@@ -1923,16 +1923,16 @@ class Nightmare extends Helper {
    * Grab the width, height, location of given locator.
    * Provide `width` or `height`as second param to get your desired prop.
    * Resumes test execution, so **should be used inside an async function with `await`** operator.
-   *
+   * 
    * Returns an object with `x`, `y`, `width`, `height` keys.
-   *
+   * 
    * ```js
    * const value = await I.grabElementBoundingRect('h3');
    * // value is like { x: 226.5, y: 89, width: 527, height: 220 }
    * ```
-   *
+   * 
    * To get only one metric use second parameter:
-   *
+   * 
    * ```js
    * const width = await I.grabElementBoundingRect('h3', 'width');
    * // width == 527
@@ -1940,7 +1940,7 @@ class Nightmare extends Helper {
    * @param {LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {string=} elementSize x, y, width or height of the given element.
    * @returns {Promise<DOMRect>|Promise<number>} Element bounding rectangle
-   *
+   * 
    */
   async grabElementBoundingRect(locator, prop) {
     locator = new Locator(locator, 'css')
@@ -1975,16 +1975,16 @@ class Nightmare extends Helper {
    * Saves a screenshot to ouput folder (set in codecept.conf.ts or codecept.conf.js).
    * Filename is relative to output folder.
    * Optionally resize the window to the full available page `scrollHeight` and `scrollWidth` to capture the entire page by passing `true` in as the second argument.
-   *
+   * 
    * ```js
    * I.saveScreenshot('debug.png');
    * I.saveScreenshot('debug.png', true) //resizes to available scrollHeight and scrollWidth before taking screenshot
    * ```
-   *
+   * 
    * @param {string} fileName file name to save.
    * @param {boolean} [fullPage=false] (optional, `false` by default) flag to enable fullscreen screenshot mode.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async saveScreenshot(fileName, fullPage = this.options.fullPageScreenshots) {
     const outputFile = screenshotOutputFolder(fileName)
@@ -2008,17 +2008,17 @@ class Nightmare extends Helper {
   /**
    * Scrolls to element matched by locator.
    * Extra shift can be set with offsetX and offsetY options.
-   *
+   * 
    * ```js
    * I.scrollTo('footer');
    * I.scrollTo('#submit', 5, 5);
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
    * @param {number} [offsetX=0] (optional, `0` by default) X-axis offset.
    * @param {number} [offsetY=0] (optional, `0` by default) Y-axis offset.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async scrollTo(locator, offsetX = 0, offsetY = 0) {
     if (typeof locator === 'number' && typeof offsetX === 'number') {
@@ -2041,7 +2041,7 @@ class Nightmare extends Helper {
         offsetY,
       )
     }
-    // eslint-disable-next-line prefer-arrow-callback
+
     return this.executeScript(
       function (x, y) {
         return window.scrollTo(x, y)
@@ -2053,12 +2053,12 @@ class Nightmare extends Helper {
 
   /**
    * Scroll page to the top.
-   *
+   * 
    * ```js
    * I.scrollPageToTop();
    * ```
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async scrollPageToTop() {
     return this.executeScript(() => window.scrollTo(0, 0))
@@ -2066,15 +2066,14 @@ class Nightmare extends Helper {
 
   /**
    * Scroll page to the bottom.
-   *
+   * 
    * ```js
    * I.scrollPageToBottom();
    * ```
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async scrollPageToBottom() {
-    /* eslint-disable prefer-arrow-callback, comma-dangle */
     return this.executeScript(function () {
       const body = document.body
       const html = document.documentElement
@@ -2083,29 +2082,27 @@ class Nightmare extends Helper {
         Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight),
       )
     })
-    /* eslint-enable */
   }
 
   /**
    * Retrieves a page scroll position and returns it to test.
    * Resumes test execution, so **should be used inside an async function with `await`** operator.
-   *
+   * 
    * ```js
    * let { x, y } = await I.grabPageScrollPosition();
    * ```
-   *
+   * 
    * @returns {Promise<PageScrollPosition>} scroll position
-   *
+   * 
    */
   async grabPageScrollPosition() {
-    /* eslint-disable comma-dangle */
     function getScrollPosition() {
       return {
         x: window.pageXOffset,
         y: window.pageYOffset,
       }
     }
-    /* eslint-enable comma-dangle */
+
     return this.executeScript(getScrollPosition)
   }
 }

@@ -3,7 +3,7 @@ const Helper = require('@codeceptjs/helper')
 const { Agent } = require('https')
 const Secret = require('../secret')
 
-const { beautify } = require('../utils.js')
+const { beautify } = require('../utils')
 
 /**
  * ## Configuration
@@ -403,6 +403,30 @@ class REST extends Helper {
     const request = {
       baseURL: this._url(url),
       method: 'DELETE',
+      headers,
+    }
+
+    return this._executeRequest(request)
+  }
+
+  /**
+   * Sends DELETE request to API with payload.
+   *
+   * ```js
+   * I.sendDeleteRequestWithPayload('/api/users/1', { author: 'john' });
+   * ```
+   *
+   * @param {*} url
+   * @param {*} [payload={}] - the payload to be sent. By default it is sent as an empty object
+   * @param {object} [headers={}] - the headers object to be sent. By default, it is sent as an empty object
+   *
+   * @returns {Promise<*>} response
+   */
+  async sendDeleteRequestWithPayload(url, payload = {}, headers = {}) {
+    const request = {
+      baseURL: this._url(url),
+      method: 'DELETE',
+      data: payload,
       headers,
     }
 

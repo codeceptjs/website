@@ -7,6 +7,56 @@ layout: Section
 
 # Releases
 
+## 3.6.8
+
+❤️ Thanks all to those who contributed to make this release! ❤️
+
+🛩️ *Features*
+* feat(cli): mask sensitive data in logs ([#4630](https://github.com/codeceptjs/CodeceptJS/issues/4630)) - by **[kobenguyent](https://github.com/kobenguyent)**
+```
+export const config: CodeceptJS.MainConfig = {
+  tests:  '**/*.e2e.test.ts',
+  retry: 4,
+  output: './output',
+  maskSensitiveData: true,
+  emptyOutputFolder: true,
+...
+
+    I login {"username":"helloworld@test.com","password": "****"}
+      I send post request "https://localhost:8000/login", {"username":"helloworld@test.com","password": "****"}
+      › **[Request]** {"baseURL":"https://localhost:8000/login","method":"POST","data":{"username":"helloworld@test.com","password": "****"},"headers":{}}
+      › **[Response]** {"access-token": "****"}
+```
+
+* feat(REST): DELETE request supports payload ([#4493](https://github.com/codeceptjs/CodeceptJS/issues/4493)) - by **[schaudhary111](https://github.com/schaudhary111)**
+
+```js
+I.sendDeleteRequestWithPayload('/api/users/1', { author: 'john' });
+```
+
+🐛 *Bug Fixes*
+* fix(playwright): Different behavior of see* and waitFor* when used in within ([#4557](https://github.com/codeceptjs/CodeceptJS/issues/4557)) - by **[kobenguyent](https://github.com/kobenguyent)**
+* fix(cli): dry run returns no tests when using a regex grep ([#4608](https://github.com/codeceptjs/CodeceptJS/issues/4608)) - by **[kobenguyent](https://github.com/kobenguyent)**
+```bash
+> codeceptjs dry-run --steps --grep "(?=.*Checkout process)"
+```
+* fix: Replace deprecated faker.name with faker.person ([#4581](https://github.com/codeceptjs/CodeceptJS/issues/4581)) - by **[thomashohn](https://github.com/thomashohn)**
+* fix(wdio): Remove dependency to devtools ([#4563](https://github.com/codeceptjs/CodeceptJS/issues/4563)) - by **[thomashohn](https://github.com/thomashohn)**
+* fix(typings): wrong defineParameterType ([#4548](https://github.com/codeceptjs/CodeceptJS/issues/4548)) - by **[kobenguyent](https://github.com/kobenguyent)**
+* fix(typing): `Locator.build` complains the empty locator ([#4543](https://github.com/codeceptjs/CodeceptJS/issues/4543)) - by **[kobenguyent](https://github.com/kobenguyent)**
+* fix: add hint to `I.seeEmailAttachment` treats parameter as regular expression ([#4629](https://github.com/codeceptjs/CodeceptJS/issues/4629)) - by **[ngraf](https://github.com/ngraf)**
+```
+Add hint to "I.seeEmailAttachment" that under the hood parameter is treated as RegExp. 
+When you don't know it, it can cause a lot of pain, wondering why your test fails with I.seeEmailAttachment('Attachment(1).pdf') although it looks just fine, but actually I.seeEmailAttachment('Attachment\\(1\\).pdf is required to make the test green, in case the attachment is called "Attachment(1).pdf" with special character in it.
+```
+* fix(playwright): waitForText fails when text contains double quotes ([#4528](https://github.com/codeceptjs/CodeceptJS/issues/4528)) - by **[DavertMik](https://github.com/DavertMik)**
+* fix(mock-server-helper): move to stand-alone package: https://www.npmjs.com/package/@codeceptjs/mock-server-helper ([#4536](https://github.com/codeceptjs/CodeceptJS/issues/4536)) - by **[kobenguyent](https://github.com/kobenguyent)**
+* fix(appium): issue with async on runOnIos and runOnAndroid ([#4525](https://github.com/codeceptjs/CodeceptJS/issues/4525)) - by **[kobenguyent](https://github.com/kobenguyent)**
+* fix: push ws messages to array ([#4513](https://github.com/codeceptjs/CodeceptJS/issues/4513)) - by **[kobenguyent](https://github.com/kobenguyent)**
+
+📖 *Documentation*
+* fix(docs): typo in ai.md ([#4501](https://github.com/codeceptjs/CodeceptJS/issues/4501)) - by **[tomaculum](https://github.com/tomaculum)**
+
 ## 3.6.6
 
 ❤️ Thanks all to those who contributed to make this release! ❤️

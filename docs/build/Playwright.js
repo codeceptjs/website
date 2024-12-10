@@ -24,7 +24,7 @@ const {
   clearString,
   requireWithFallback,
   normalizeSpacesInString,
-} = require('../utils.js')
+} = require('../utils')
 const { isColorProperty, convertColorToRGBA } = require('../colorUtils')
 const ElementNotFound = require('./errors/ElementNotFound')
 const RemoteBrowserConnectionRefused = require('./errors/RemoteBrowserConnectionRefused')
@@ -753,13 +753,13 @@ class Playwright extends Helper {
   /**
    * Checks that the active JavaScript popup, as created by `window.alert|window.confirm|window.prompt`, contains the
    * given string.
-   *
+   * 
    * ```js
    * I.seeInPopup('Popup text');
    * ```
    * @param {string} text value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeInPopup(text) {
     popupStore.assertPopupVisible()
@@ -958,16 +958,16 @@ class Playwright extends Helper {
   /**
    * Opens a web page in a browser. Requires relative or absolute url.
    * If url starts with `/`, opens a web page of a site defined in `url` config parameter.
-   *
+   * 
    * ```js
    * I.amOnPage('/'); // opens main page of website
    * I.amOnPage('https://github.com'); // opens github
    * I.amOnPage('/login'); // opens a login page
    * ```
-   *
+   * 
    * @param {string} url url path or global url.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async amOnPage(url) {
     if (this.isElectron) {
@@ -1015,11 +1015,11 @@ class Playwright extends Helper {
    *
    * Resize the current window to provided width and height.
    * First parameter can be set to `maximize`.
-   *
+   * 
    * @param {number} width width in pixels or `maximize`.
    * @param {number} height height in pixels.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async resizeWindow(width, height) {
     if (width === 'maximize') {
@@ -1051,17 +1051,17 @@ class Playwright extends Helper {
   /**
    * Moves cursor to element matched by locator.
    * Extra shift can be set with offsetX and offsetY options.
-   *
+   * 
    * ```js
    * I.moveCursorTo('.tooltip');
    * I.moveCursorTo('#submit', 5,5);
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
    * @param {number} [offsetX=0] (optional, `0` by default) X-axis offset.
    * @param {number} [offsetY=0] (optional, `0` by default) Y-axis offset.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    */
   async moveCursorTo(locator, offsetX = 0, offsetY = 0) {
@@ -1076,19 +1076,19 @@ class Playwright extends Helper {
 
   /**
    * Calls [focus](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus) on the matching element.
-   *
+   * 
    * Examples:
-   *
+   * 
    * ```js
    * I.dontSee('#add-to-cart-btn');
    * I.focus('#product-tile')
    * I.see('#add-to-cart-bnt');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator field located by label|name|CSS|XPath|strict locator.
    * @param {any} [options] Playwright only: [Additional options](https://playwright.dev/docs/api/class-locator#locator-focus) for available options object as 2nd argument.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    */
   async focus(locator, options = {}) {
@@ -1102,9 +1102,9 @@ class Playwright extends Helper {
   /**
    * Remove focus from a text input, button, etc.
    * Calls [blur](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus) on the element.
-   *
+   * 
    * Examples:
-   *
+   * 
    * ```js
    * I.blur('.text-area')
    * ```
@@ -1114,11 +1114,11 @@ class Playwright extends Helper {
    * I.blur('#product-tile')
    * I.dontSee('#add-to-cart-btn');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator field located by label|name|CSS|XPath|strict locator.
    * @param {any} [options] Playwright only: [Additional options](https://playwright.dev/docs/api/class-locator#locator-blur) for available options object as 2nd argument.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    */
   async blur(locator, options = {}) {
@@ -1171,15 +1171,15 @@ class Playwright extends Helper {
    * > When no option is set, custom drag and drop would be used, to use the dragAndDrop API from Playwright, please set options, for example `force: true`
    *
    * Drag an item to a destination element.
-   *
+   * 
    * ```js
    * I.dragAndDrop('#dragHandle', '#container');
    * ```
-   *
+   * 
    * @param {LocatorOrString} srcElement located by CSS|XPath|strict locator.
    * @param {LocatorOrString} destElement located by CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    * @param {any} [options] [Additional options](https://playwright.dev/docs/api/class-page#page-drag-and-drop) can be passed as 3rd argument.
    *
    */
@@ -1226,12 +1226,12 @@ class Playwright extends Helper {
 
   /**
    * Reload the current page.
-   *
+   * 
    * ```js
    * I.refreshPage();
    * ```
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async refreshPage() {
     return this.page.reload({ timeout: this.options.getPageTimeout, waitUntil: this.options.waitForNavigation })
@@ -1266,12 +1266,12 @@ class Playwright extends Helper {
 
   /**
    * Scroll page to the top.
-   *
+   * 
    * ```js
    * I.scrollPageToTop();
    * ```
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   scrollPageToTop() {
     return this.executeScript(() => {
@@ -1281,12 +1281,12 @@ class Playwright extends Helper {
 
   /**
    * Scroll page to the bottom.
-   *
+   * 
    * ```js
    * I.scrollPageToBottom();
    * ```
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async scrollPageToBottom() {
     return this.executeScript(() => {
@@ -1302,17 +1302,17 @@ class Playwright extends Helper {
   /**
    * Scrolls to element matched by locator.
    * Extra shift can be set with offsetX and offsetY options.
-   *
+   * 
    * ```js
    * I.scrollTo('footer');
    * I.scrollTo('#submit', 5, 5);
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
    * @param {number} [offsetX=0] (optional, `0` by default) X-axis offset.
    * @param {number} [offsetY=0] (optional, `0` by default) Y-axis offset.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async scrollTo(locator, offsetX = 0, offsetY = 0) {
     if (typeof locator === 'number' && typeof offsetX === 'number') {
@@ -1338,14 +1338,14 @@ class Playwright extends Helper {
 
   /**
    * Checks that title contains text.
-   *
+   * 
    * ```js
    * I.seeInTitle('Home Page');
    * ```
-   *
+   * 
    * @param {string} text text value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeInTitle(text) {
     const title = await this.page.title()
@@ -1355,36 +1355,35 @@ class Playwright extends Helper {
   /**
    * Retrieves a page scroll position and returns it to test.
    * Resumes test execution, so **should be used inside an async function with `await`** operator.
-   *
+   * 
    * ```js
    * let { x, y } = await I.grabPageScrollPosition();
    * ```
-   *
+   * 
    * @returns {Promise<PageScrollPosition>} scroll position
-   *
+   * 
    */
   async grabPageScrollPosition() {
-    /* eslint-disable comma-dangle */
     function getScrollPosition() {
       return {
         x: window.pageXOffset,
         y: window.pageYOffset,
       }
     }
-    /* eslint-enable comma-dangle */
+
     return this.executeScript(getScrollPosition)
   }
 
   /**
    * Checks that title is equal to provided one.
-   *
+   * 
    * ```js
    * I.seeTitleEquals('Test title.');
    * ```
-   *
+   * 
    * @param {string} text value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeTitleEquals(text) {
     const title = await this.page.title()
@@ -1393,14 +1392,14 @@ class Playwright extends Helper {
 
   /**
    * Checks that title does not contain text.
-   *
+   * 
    * ```js
    * I.dontSeeInTitle('Error');
    * ```
-   *
+   * 
    * @param {string} text value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async dontSeeInTitle(text) {
     const title = await this.page.title()
@@ -1410,11 +1409,11 @@ class Playwright extends Helper {
   /**
    * Retrieves a page title and returns it to test.
    * Resumes test execution, so **should be used inside async with `await`** operator.
-   *
+   * 
    * ```js
    * let title = await I.grabTitle();
    * ```
-   *
+   * 
    * @returns {Promise<string>} title
    */
   async grabTitle() {
@@ -1430,7 +1429,7 @@ class Playwright extends Helper {
    * ```
    */
   async _locate(locator) {
-    const context = (await this.context) || (await this._getContext())
+    const context = await this._getContext()
 
     if (this.frame) return findElements(this.frame, locator)
 
@@ -1446,7 +1445,7 @@ class Playwright extends Helper {
    * ```
    */
   async _locateElement(locator) {
-    const context = (await this.context) || (await this._getContext())
+    const context = await this._getContext()
     return findElement(context, locator)
   }
 
@@ -1491,14 +1490,14 @@ class Playwright extends Helper {
   /**
    * Grab WebElements for given locator
    * Resumes test execution, so **should be used inside an async function with `await`** operator.
-   *
+   * 
    * ```js
    * const webElements = await I.grabWebElements('#button');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @returns {Promise<*>} WebElement of being used Web helper
-   *
+   * 
    *
    */
   async grabWebElements(locator) {
@@ -1508,14 +1507,14 @@ class Playwright extends Helper {
   /**
    * Grab WebElement for given locator
    * Resumes test execution, so **should be used inside an async function with `await`** operator.
-   *
+   * 
    * ```js
    * const webElement = await I.grabWebElement('#button');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @returns {Promise<*>} WebElement of being used Web helper
-   *
+   * 
    *
    */
   async grabWebElement(locator) {
@@ -1637,13 +1636,13 @@ class Playwright extends Helper {
   /**
    * Grab number of open tabs.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
-   *
+   * 
    * ```js
    * let tabs = await I.grabNumberOfOpenTabs();
    * ```
-   *
+   * 
    * @returns {Promise<number>} number of open tabs
-   *
+   * 
    */
   async grabNumberOfOpenTabs() {
     const pages = await this.browserContext.pages()
@@ -1653,13 +1652,13 @@ class Playwright extends Helper {
   /**
    * Checks that a given Element is visible
    * Element is located by CSS or XPath.
-   *
+   * 
    * ```js
    * I.seeElement('#modal');
    * ```
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    */
   async seeElement(locator) {
@@ -1674,14 +1673,14 @@ class Playwright extends Helper {
 
   /**
    * Opposite to `seeElement`. Checks that element is not visible (or in DOM)
-   *
+   * 
    * ```js
    * I.dontSeeElement('.modal'); // modal is not shown
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|Strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    */
   async dontSeeElement(locator) {
@@ -1697,13 +1696,13 @@ class Playwright extends Helper {
   /**
    * Checks that a given Element is present in the DOM
    * Element is located by CSS or XPath.
-   *
+   * 
    * ```js
    * I.seeElementInDOM('#modal');
    * ```
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeElementInDOM(locator) {
     const els = await this._locate(locator)
@@ -1716,14 +1715,14 @@ class Playwright extends Helper {
 
   /**
    * Opposite to `seeElementInDOM`. Checks that element is not on page.
-   *
+   * 
    * ```js
    * I.dontSeeElementInDOM('.nav'); // checks that element is not on page visible or not
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|Strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async dontSeeElementInDOM(locator) {
     const els = await this._locate(locator)
@@ -1772,9 +1771,9 @@ class Playwright extends Helper {
    * If a fuzzy locator is given, the page will be searched for a button, link, or image matching the locator string.
    * For buttons, the "value" attribute, "name" attribute, and inner text are searched. For links, the link text is searched.
    * For images, the "alt" attribute and inner text of any parent links are searched.
-   *
+   * 
    * The second parameter is a context (CSS or XPath locator) to narrow the search.
-   *
+   * 
    * ```js
    * // simple link
    * I.click('Logout');
@@ -1789,11 +1788,11 @@ class Playwright extends Helper {
    * // using strict locator
    * I.click({css: 'nav a.login'});
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator clickable link or button located by text, or any element located by CSS|XPath|strict locator.
    * @param {?CodeceptJS.LocatorOrString | null} [context=null] (optional, `null` by default) element to search in CSS|XPath|Strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    * @param {any} [options] [Additional options](https://playwright.dev/docs/api/class-page#page-click) for click available as 3rd argument.
    *
@@ -1825,13 +1824,13 @@ class Playwright extends Helper {
    * Perform an emulated click on a link or a button, given by a locator.
    * Unlike normal click instead of sending native event, emulates a click with JavaScript.
    * This works on hidden, animated or inactive elements as well.
-   *
+   * 
    * If a fuzzy locator is given, the page will be searched for a button, link, or image matching the locator string.
    * For buttons, the "value" attribute, "name" attribute, and inner text are searched. For links, the link text is searched.
    * For images, the "alt" attribute and inner text of any parent links are searched.
-   *
+   * 
    * The second parameter is a context (CSS or XPath locator) to narrow the search.
-   *
+   * 
    * ```js
    * // simple link
    * I.forceClick('Logout');
@@ -1846,11 +1845,11 @@ class Playwright extends Helper {
    * // using strict locator
    * I.forceClick({css: 'nav a.login'});
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator clickable link or button located by text, or any element located by CSS|XPath|strict locator.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element to search in CSS|XPath|Strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async forceClick(locator, context = null) {
     return proceedClick.call(this, locator, context, { force: true })
@@ -1859,18 +1858,18 @@ class Playwright extends Helper {
   /**
    * Performs a double-click on an element matched by link|button|label|CSS or XPath.
    * Context can be specified as second parameter to narrow search.
-   *
+   * 
    * ```js
    * I.doubleClick('Edit');
    * I.doubleClick('Edit', '.actions');
    * I.doubleClick({css: 'button.accept'});
    * I.doubleClick('.btn.edit');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator clickable link or button located by text, or any element located by CSS|XPath|strict locator.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element to search in CSS|XPath|Strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async doubleClick(locator, context = null) {
     return proceedClick.call(this, locator, context, { clickCount: 2 })
@@ -1878,7 +1877,7 @@ class Playwright extends Helper {
 
   /**
    * Performs right click on a clickable element matched by semantic locator, CSS or XPath.
-   *
+   * 
    * ```js
    * // right click element with id el
    * I.rightClick('#el');
@@ -1887,11 +1886,11 @@ class Playwright extends Helper {
    * // right click button with text "Click me" inside .context
    * I.rightClick('Click me', '.context');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator clickable element located by CSS|XPath|strict locator.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async rightClick(locator, context = null) {
     return proceedClick.call(this, locator, context, { button: 'right' })
@@ -1911,9 +1910,9 @@ class Playwright extends Helper {
    *
    * Selects a checkbox or radio button.
    * Element is located by label or name or CSS or XPath.
-   *
+   * 
    * The second parameter is a context (CSS or XPath locator) to narrow the search.
-   *
+   * 
    * ```js
    * I.checkOption('#agree');
    * I.checkOption('I Agree to Terms and Conditions');
@@ -1922,7 +1921,7 @@ class Playwright extends Helper {
    * @param {CodeceptJS.LocatorOrString} field checkbox located by label | name | CSS | XPath | strict locator.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS | XPath | strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    */
   async checkOption(field, context = null, options = { force: true }) {
@@ -1945,9 +1944,9 @@ class Playwright extends Helper {
    *
    * Unselects a checkbox or radio button.
    * Element is located by label or name or CSS or XPath.
-   *
+   * 
    * The second parameter is a context (CSS or XPath locator) to narrow the search.
-   *
+   * 
    * ```js
    * I.uncheckOption('#agree');
    * I.uncheckOption('I Agree to Terms and Conditions');
@@ -1956,7 +1955,7 @@ class Playwright extends Helper {
    * @param {CodeceptJS.LocatorOrString} field checkbox located by label | name | CSS | XPath | strict locator.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS | XPath | strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async uncheckOption(field, context = null, options = { force: true }) {
     const elm = await this._locateCheckable(field, context)
@@ -1966,16 +1965,16 @@ class Playwright extends Helper {
 
   /**
    * Verifies that the specified checkbox is checked.
-   *
+   * 
    * ```js
    * I.seeCheckboxIsChecked('Agree');
    * I.seeCheckboxIsChecked('#agree'); // I suppose user agreed to terms
    * I.seeCheckboxIsChecked({css: '#signup_form input[type=checkbox]'});
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeCheckboxIsChecked(field) {
     return proceedIsChecked.call(this, 'assert', field)
@@ -1983,16 +1982,16 @@ class Playwright extends Helper {
 
   /**
    * Verifies that the specified checkbox is not checked.
-   *
+   * 
    * ```js
    * I.dontSeeCheckboxIsChecked('#agree'); // located by ID
    * I.dontSeeCheckboxIsChecked('I agree to terms'); // located by label
    * I.dontSeeCheckboxIsChecked('agree'); // located by name
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async dontSeeCheckboxIsChecked(field) {
     return proceedIsChecked.call(this, 'negate', field)
@@ -2000,18 +1999,18 @@ class Playwright extends Helper {
 
   /**
    * Presses a key in the browser and leaves it in a down state.
-   *
+   * 
    * To make combinations with modifier key and user operation (e.g. `'Control'` + [`click`](#click)).
-   *
+   * 
    * ```js
    * I.pressKeyDown('Control');
    * I.click('#element');
    * I.pressKeyUp('Control');
    * ```
-   *
+   * 
    * @param {string} key name of key to press down.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async pressKeyDown(key) {
     key = getNormalizedKey.call(this, key)
@@ -2021,18 +2020,18 @@ class Playwright extends Helper {
 
   /**
    * Releases a key in the browser which was previously set to a down state.
-   *
+   * 
    * To make combinations with modifier key and user operation (e.g. `'Control'` + [`click`](#click)).
-   *
+   * 
    * ```js
    * I.pressKeyDown('Control');
    * I.click('#element');
    * I.pressKeyUp('Control');
    * ```
-   *
+   * 
    * @param {string} key name of key to release.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async pressKeyUp(key) {
     key = getNormalizedKey.call(this, key)
@@ -2045,26 +2044,26 @@ class Playwright extends Helper {
    * _Note:_ Shortcuts like `'Meta'` + `'A'` do not work on macOS ([GoogleChrome/Puppeteer#1313](https://github.com/GoogleChrome/puppeteer/issues/1313)).
    *
    * Presses a key in the browser (on a focused element).
-   *
+   * 
    * _Hint:_ For populating text field or textarea, it is recommended to use [`fillField`](#fillfield).
-   *
+   * 
    * ```js
    * I.pressKey('Backspace');
    * ```
-   *
+   * 
    * To press a key in combination with modifier keys, pass the sequence as an array. All modifier keys (`'Alt'`, `'Control'`, `'Meta'`, `'Shift'`) will be released afterwards.
-   *
+   * 
    * ```js
    * I.pressKey(['Control', 'Z']);
    * ```
-   *
+   * 
    * For specifying operation modifier key based on operating system it is suggested to use `'CommandOrControl'`.
    * This will press `'Command'` (also known as `'Meta'`) on macOS machines and `'Control'` on non-macOS machines.
-   *
+   * 
    * ```js
    * I.pressKey(['CommandOrControl', 'Z']);
    * ```
-   *
+   * 
    * Some of the supported key names are:
    * - `'AltLeft'` or `'Alt'`
    * - `'AltRight'`
@@ -2101,10 +2100,10 @@ class Playwright extends Helper {
    * - `'ShiftRight'`
    * - `'Space'`
    * - `'Tab'`
-   *
+   * 
    * @param {string|string[]} key key or array of keys to press.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async pressKey(key) {
     const modifiers = []
@@ -2135,25 +2134,25 @@ class Playwright extends Helper {
    * Types out the given text into an active field.
    * To slow down typing use a second parameter, to set interval between key presses.
    * _Note:_ Should be used when [`fillField`](#fillfield) is not an option.
-   *
+   * 
    * ```js
    * // passing in a string
    * I.type('Type this out.');
-   *
+   * 
    * // typing values with a 100ms interval
    * I.type('4141555311111111', 100);
-   *
+   * 
    * // passing in an array
    * I.type(['T', 'E', 'X', 'T']);
-   *
+   * 
    * // passing a secret
    * I.type(secret('123456'));
    * ```
-   *
+   * 
    * @param {string|string[]} key or array of keys to type.
    * @param {?number} [delay=null] (optional) delay in ms between key presses
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async type(keys, delay = null) {
     if (!Array.isArray(keys)) {
@@ -2170,7 +2169,7 @@ class Playwright extends Helper {
   /**
    * Fills a text field or textarea, after clearing its value, with the given string.
    * Field is located by name, label, CSS, or XPath.
-   *
+   * 
    * ```js
    * // by label
    * I.fillField('Email', 'hello@world.com');
@@ -2184,7 +2183,7 @@ class Playwright extends Helper {
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
    * @param {CodeceptJS.StringOrSecret} value text value to fill.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    */
   async fillField(field, value) {
@@ -2234,7 +2233,7 @@ class Playwright extends Helper {
   /**
    * Appends text to a input field or textarea.
    * Field is located by name, label, CSS or XPath
-   *
+   * 
    * ```js
    * I.appendField('#myTextField', 'appended');
    * // typing secret
@@ -2243,7 +2242,7 @@ class Playwright extends Helper {
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator
    * @param {string} value text value to append.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async appendField(field, value) {
     const els = await findFields.call(this, field)
@@ -2257,7 +2256,7 @@ class Playwright extends Helper {
   /**
    * Checks that the given input field or textarea equals to given value.
    * For fuzzy locators, fields are matched by label text, the "name" attribute, CSS, and XPath.
-   *
+   * 
    * ```js
    * I.seeInField('Username', 'davert');
    * I.seeInField({css: 'form textarea'},'Type your comment here');
@@ -2267,7 +2266,7 @@ class Playwright extends Helper {
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
    * @param {CodeceptJS.StringOrSecret} value value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeInField(field, value) {
     const _value = typeof value === 'boolean' ? value : value.toString()
@@ -2277,16 +2276,16 @@ class Playwright extends Helper {
   /**
    * Checks that value of input field or textarea doesn't equal to given value
    * Opposite to `seeInField`.
-   *
+   * 
    * ```js
    * I.dontSeeInField('email', 'user@user.com'); // field by name
    * I.dontSeeInField({ css: 'form input.email' }, 'user@user.com'); // field by CSS
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
    * @param {CodeceptJS.StringOrSecret} value value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async dontSeeInField(field, value) {
     const _value = typeof value === 'boolean' ? value : value.toString()
@@ -2297,16 +2296,16 @@ class Playwright extends Helper {
    * Attaches a file to element located by label, name, CSS or XPath
    * Path to file is relative current codecept directory (where codecept.conf.ts or codecept.conf.js is located).
    * File will be uploaded to remote system (if tests are running remotely).
-   *
+   * 
    * ```js
    * I.attachFile('Avatar', 'data/avatar.jpg');
    * I.attachFile('form input[name=avatar]', 'data/avatar.jpg');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator field located by label|name|CSS|XPath|strict locator.
    * @param {string} pathToFile local file path relative to codecept.conf.ts or codecept.conf.js config file.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    */
   async attachFile(locator, pathToFile) {
@@ -2325,7 +2324,7 @@ class Playwright extends Helper {
    * Selects an option in a drop-down select.
    * Field is searched by label | name | CSS | XPath.
    * Option is selected by visible text or by value.
-   *
+   * 
    * ```js
    * I.selectOption('Choose Plan', 'Monthly'); // select by label
    * I.selectOption('subscription', 'Monthly'); // match option by text
@@ -2334,16 +2333,16 @@ class Playwright extends Helper {
    * I.selectOption('form select[name=account]', 'Premium');
    * I.selectOption({css: 'form select[name=account]'}, 'Premium');
    * ```
-   *
+   * 
    * Provide an array for the second argument to select multiple options.
-   *
+   * 
    * ```js
    * I.selectOption('Which OS do you use?', ['Android', 'iOS']);
    * ```
    * @param {LocatorOrString} select field located by label|name|CSS|XPath|strict locator.
    * @param {string|Array<*>} option visible text or value of option.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async selectOption(select, option) {
     const els = await findFields.call(this, select)
@@ -2368,11 +2367,11 @@ class Playwright extends Helper {
   /**
    * Grab number of visible elements by locator.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
-   *
+   * 
    * ```js
    * let numOfElements = await I.grabNumberOfVisibleElements('p');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
    * @returns {Promise<number>} number of visible elements
    *
@@ -2385,14 +2384,14 @@ class Playwright extends Helper {
 
   /**
    * Checks that current url contains a provided fragment.
-   *
+   * 
    * ```js
    * I.seeInCurrentUrl('/register'); // we are on registration page
    * ```
-   *
+   * 
    * @param {string} url a fragment to check
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeInCurrentUrl(url) {
     stringIncludes('url').assert(url, await this._getPageUrl())
@@ -2400,10 +2399,10 @@ class Playwright extends Helper {
 
   /**
    * Checks that current url does not contain a provided fragment.
-   *
+   * 
    * @param {string} url value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async dontSeeInCurrentUrl(url) {
     stringIncludes('url').negate(url, await this._getPageUrl())
@@ -2413,15 +2412,15 @@ class Playwright extends Helper {
    * Checks that current url is equal to provided one.
    * If a relative url provided, a configured url will be prepended to it.
    * So both examples will work:
-   *
+   * 
    * ```js
    * I.seeCurrentUrlEquals('/register');
    * I.seeCurrentUrlEquals('http://my.site.com/register');
    * ```
-   *
+   * 
    * @param {string} url value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeCurrentUrlEquals(url) {
     urlEquals(this.options.url).assert(url, await this._getPageUrl())
@@ -2430,15 +2429,15 @@ class Playwright extends Helper {
   /**
    * Checks that current url is not equal to provided one.
    * If a relative url provided, a configured url will be prepended to it.
-   *
+   * 
    * ```js
    * I.dontSeeCurrentUrlEquals('/login'); // relative url are ok
    * I.dontSeeCurrentUrlEquals('http://mysite.com/login'); // absolute urls are also ok
    * ```
-   *
+   * 
    * @param {string} url value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async dontSeeCurrentUrlEquals(url) {
     urlEquals(this.options.url).negate(url, await this._getPageUrl())
@@ -2447,7 +2446,7 @@ class Playwright extends Helper {
   /**
    * Checks that a page contains a visible text.
    * Use context parameter to narrow down the search.
-   *
+   * 
    * ```js
    * I.see('Welcome'); // text welcome on a page
    * I.see('Welcome', '.content'); // text inside .content div
@@ -2456,7 +2455,7 @@ class Playwright extends Helper {
    * @param {string} text expected on page.
    * @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS|Xpath|strict locator in which to search for text.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    *
    */
@@ -2466,15 +2465,15 @@ class Playwright extends Helper {
 
   /**
    * Checks that text is equal to provided one.
-   *
+   * 
    * ```js
    * I.seeTextEquals('text', 'h1');
    * ```
-   *
+   * 
    * @param {string} text element value to check.
    * @param {CodeceptJS.LocatorOrString?} [context=null]  element located by CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeTextEquals(text, context = null) {
     return proceedSee.call(this, 'assert', text, context, true)
@@ -2483,16 +2482,16 @@ class Playwright extends Helper {
   /**
    * Opposite to `see`. Checks that a text is not present on a page.
    * Use context parameter to narrow down the search.
-   *
+   * 
    * ```js
    * I.dontSee('Login'); // assume we are already logged in.
    * I.dontSee('Login', '.nav'); // no login inside .nav element
    * ```
-   *
+   * 
    * @param {string} text which is not present.
    * @param {CodeceptJS.LocatorOrString} [context] (optional) element located by CSS|XPath|strict locator in which to perfrom search.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    *
    */
@@ -2503,11 +2502,11 @@ class Playwright extends Helper {
   /**
    * Retrieves page source and returns it to test.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
-   *
+   * 
    * ```js
    * let pageSource = await I.grabSource();
    * ```
-   *
+   * 
    * @returns {Promise<string>} source code
    */
   async grabSource() {
@@ -2534,12 +2533,12 @@ class Playwright extends Helper {
   /**
    * Get current URL from browser.
    * Resumes test execution, so should be used inside an async function.
-   *
+   * 
    * ```js
    * let url = await I.grabCurrentUrl();
    * console.log(`Current URL is [${url}]`);
    * ```
-   *
+   * 
    * @returns {Promise<string>} current URL
    */
   async grabCurrentUrl() {
@@ -2548,13 +2547,13 @@ class Playwright extends Helper {
 
   /**
    * Checks that the current page contains the given string in its raw source code.
-   *
+   * 
    * ```js
    * I.seeInSource('<h1>Green eggs &amp; ham</h1>');
    * ```
    * @param {string} text value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeInSource(text) {
     const source = await this.page.content()
@@ -2563,14 +2562,14 @@ class Playwright extends Helper {
 
   /**
    * Checks that the current page does not contains the given string in its raw source code.
-   *
+   * 
    * ```js
    * I.dontSeeInSource('<!--'); // no comments in source
    * ```
-   *
+   * 
    * @param {string} value to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async dontSeeInSource(text) {
     const source = await this.page.content()
@@ -2580,16 +2579,16 @@ class Playwright extends Helper {
   /**
    * Asserts that an element appears a given number of times in the DOM.
    * Element is located by label or name or CSS or XPath.
-   *
-   *
+   * 
+   * 
    * ```js
    * I.seeNumberOfElements('#submitBtn', 1);
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} num number of elements.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    *
    */
@@ -2603,15 +2602,15 @@ class Playwright extends Helper {
   /**
    * Asserts that an element is visible a given number of times.
    * Element is located by CSS or XPath.
-   *
+   * 
    * ```js
    * I.seeNumberOfVisibleElements('.buttons', 3);
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} num number of elements.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    *
    */
@@ -2625,22 +2624,22 @@ class Playwright extends Helper {
 
   /**
    * Sets cookie(s).
-   *
+   * 
    * Can be a single cookie object or an array of cookies:
-   *
+   * 
    * ```js
    * I.setCookie({name: 'auth', value: true});
-   *
+   * 
    * // as array
    * I.setCookie([
    *   {name: 'auth', value: true},
    *   {name: 'agree', value: true}
    * ]);
    * ```
-   *
+   * 
    * @param {Cookie|Array<Cookie>} cookie a cookie object or array of cookie objects.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async setCookie(cookie) {
     if (Array.isArray(cookie)) {
@@ -2651,14 +2650,14 @@ class Playwright extends Helper {
 
   /**
    * Checks that cookie with given name exists.
-   *
+   * 
    * ```js
    * I.seeCookie('Auth');
    * ```
-   *
+   * 
    * @param {string} name cookie name.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    */
   async seeCookie(name) {
@@ -2668,14 +2667,14 @@ class Playwright extends Helper {
 
   /**
    * Checks that cookie with given name does not exist.
-   *
+   * 
    * ```js
    * I.dontSeeCookie('auth'); // no auth cookie
    * ```
-   *
+   * 
    * @param {string} name cookie name.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async dontSeeCookie(name) {
     const cookies = await this.browserContext.cookies()
@@ -2688,15 +2687,15 @@ class Playwright extends Helper {
    * Gets a cookie object by name.
    * If none provided gets all cookies.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
-   *
+   * 
    * ```js
    * let cookie = await I.grabCookie('auth');
    * assert(cookie.value, '123456');
    * ```
-   *
+   * 
    * @param {?string} [name=null] cookie name.
    * @returns {any} attribute value
-   *
+   * 
    */
   async grabCookie(name) {
     const cookies = await this.browserContext.cookies()
@@ -2708,14 +2707,14 @@ class Playwright extends Helper {
   /**
    * Clears a cookie by name,
    * if none provided clears all cookies.
-   *
+   * 
    * ```js
    * I.clearCookie();
    * I.clearCookie('test'); // Playwright currently doesn't support clear a particular cookie name
    * ```
-   *
+   * 
    * @param {?string} [cookie=null] (optional, `null` by default) cookie name
-   *
+   * 
    */
   async clearCookie() {
     // Playwright currently doesn't support to delete a certain cookie
@@ -2775,15 +2774,15 @@ class Playwright extends Helper {
   /**
    * Retrieves a text from an element located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async with `await`** operator.
-   *
+   * 
    * ```js
    * let pin = await I.grabTextFrom('#pin');
    * ```
    * If multiple elements found returns first element.
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @returns {Promise<string>} attribute value
-   *
+   * 
    *
    */
   async grabTextFrom(locator) {
@@ -2797,14 +2796,14 @@ class Playwright extends Helper {
   /**
    * Retrieves all texts from an element located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async with `await`** operator.
-   *
+   * 
    * ```js
    * let pins = await I.grabTextFromAll('#pin li');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @returns {Promise<string[]>} attribute value
-   *
+   * 
    *
    */
   async grabTextFromAll(locator) {
@@ -2821,13 +2820,13 @@ class Playwright extends Helper {
    * Retrieves a value from a form element located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
    * If more than one element is found - value of first element is returned.
-   *
+   * 
    * ```js
    * let email = await I.grabValueFrom('input[name=email]');
    * ```
    * @param {CodeceptJS.LocatorOrString} locator field located by label|name|CSS|XPath|strict locator.
    * @returns {Promise<string>} attribute value
-   *
+   * 
    */
   async grabValueFrom(locator) {
     const values = await this.grabValueFromAll(locator)
@@ -2839,13 +2838,13 @@ class Playwright extends Helper {
   /**
    * Retrieves an array of value from a form located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
-   *
+   * 
    * ```js
    * let inputs = await I.grabValueFromAll('//form/input');
    * ```
    * @param {CodeceptJS.LocatorOrString} locator field located by label|name|CSS|XPath|strict locator.
    * @returns {Promise<string[]>} attribute value
-   *
+   * 
    */
   async grabValueFromAll(locator) {
     const els = await findFields.call(this, locator)
@@ -2857,14 +2856,14 @@ class Playwright extends Helper {
    * Retrieves the innerHTML from an element located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
    * If more than one element is found - HTML of first element is returned.
-   *
+   * 
    * ```js
    * let postHTML = await I.grabHTMLFrom('#post');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} element located by CSS|XPath|strict locator.
    * @returns {Promise<string>} HTML code for an element
-   *
+   * 
    */
   async grabHTMLFrom(locator) {
     const html = await this.grabHTMLFromAll(locator)
@@ -2876,14 +2875,14 @@ class Playwright extends Helper {
   /**
    * Retrieves all the innerHTML from elements located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async function with `await`** operator.
-   *
+   * 
    * ```js
    * let postHTMLs = await I.grabHTMLFromAll('.post');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} element located by CSS|XPath|strict locator.
    * @returns {Promise<string[]>} HTML code for an element
-   *
+   * 
    */
   async grabHTMLFromAll(locator) {
     const els = await this._locate(locator)
@@ -2895,15 +2894,15 @@ class Playwright extends Helper {
    * Grab CSS property for given locator
    * Resumes test execution, so **should be used inside an async function with `await`** operator.
    * If more than one element is found - value of first element is returned.
-   *
+   * 
    * ```js
    * const value = await I.grabCssPropertyFrom('h3', 'font-weight');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {string} cssProperty CSS property name.
    * @returns {Promise<string>} CSS value
-   *
+   * 
    *
    */
   async grabCssPropertyFrom(locator, cssProperty) {
@@ -2916,15 +2915,15 @@ class Playwright extends Helper {
   /**
    * Grab array of CSS properties for given locator
    * Resumes test execution, so **should be used inside an async function with `await`** operator.
-   *
+   * 
    * ```js
    * const values = await I.grabCssPropertyFromAll('h3', 'font-weight');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {string} cssProperty CSS property name.
    * @returns {Promise<string[]>} CSS value
-   *
+   * 
    *
    */
   async grabCssPropertyFromAll(locator, cssProperty) {
@@ -2941,15 +2940,15 @@ class Playwright extends Helper {
 
   /**
    * Checks that all elements with given locator have given CSS properties.
-   *
+   * 
    * ```js
    * I.seeCssPropertiesOnElements('h3', { 'font-weight': "bold"});
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
    * @param {object} cssProperties object with CSS properties and their values to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    */
   async seeCssPropertiesOnElements(locator, cssProperties) {
@@ -2988,15 +2987,15 @@ class Playwright extends Helper {
 
   /**
    * Checks that all elements with given locator have given attributes.
-   *
+   * 
    * ```js
    * I.seeAttributesOnElements('//form', { method: "post"});
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
    * @param {object} attributes attributes and their values to check.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    */
   async seeAttributesOnElements(locator, attributes) {
@@ -3032,16 +3031,16 @@ class Playwright extends Helper {
   /**
    * Drag the scrubber of a slider to a given position
    * For fuzzy locators, fields are matched by label text, the "name" attribute, CSS, and XPath.
-   *
+   * 
    * ```js
    * I.dragSlider('#slider', 30);
    * I.dragSlider('#slider', -70);
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator located by label|name|CSS|XPath|strict locator.
    * @param {number} offsetX position to drag.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    */
   async dragSlider(locator, offsetX = 0) {
@@ -3066,14 +3065,14 @@ class Playwright extends Helper {
    * Retrieves an attribute from an element located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async with `await`** operator.
    * If more than one element is found - attribute of first element is returned.
-   *
+   * 
    * ```js
    * let hint = await I.grabAttributeFrom('#tooltip', 'title');
    * ```
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {string} attr attribute name.
    * @returns {Promise<string>} attribute value
-   *
+   * 
    *
    */
   async grabAttributeFrom(locator, attr) {
@@ -3086,14 +3085,14 @@ class Playwright extends Helper {
   /**
    * Retrieves an array of attributes from elements located by CSS or XPath and returns it to test.
    * Resumes test execution, so **should be used inside async with `await`** operator.
-   *
+   * 
    * ```js
    * let hints = await I.grabAttributeFromAll('.tooltip', 'title');
    * ```
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {string} attr attribute name.
    * @returns {Promise<string[]>} attribute value
-   *
+   * 
    *
    */
   async grabAttributeFromAll(locator, attr) {
@@ -3111,15 +3110,15 @@ class Playwright extends Helper {
   /**
    * Saves screenshot of the specified locator to ouput folder (set in codecept.conf.ts or codecept.conf.js).
    * Filename is relative to output folder.
-   *
+   * 
    * ```js
    * I.saveElementScreenshot(`#submit`,'debug.png');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {string} fileName file name to save.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    */
   async saveElementScreenshot(locator, fileName) {
@@ -3136,16 +3135,16 @@ class Playwright extends Helper {
    * Saves a screenshot to ouput folder (set in codecept.conf.ts or codecept.conf.js).
    * Filename is relative to output folder.
    * Optionally resize the window to the full available page `scrollHeight` and `scrollWidth` to capture the entire page by passing `true` in as the second argument.
-   *
+   * 
    * ```js
    * I.saveScreenshot('debug.png');
    * I.saveScreenshot('debug.png', true) //resizes to available scrollHeight and scrollWidth before taking screenshot
    * ```
-   *
+   * 
    * @param {string} fileName file name to save.
    * @param {boolean} [fullPage=false] (optional, `false` by default) flag to enable fullscreen screenshot mode.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async saveScreenshot(fileName, fullPage) {
     const fullPageOption = fullPage || this.options.fullPageScreenshots
@@ -3302,14 +3301,14 @@ class Playwright extends Helper {
 
   /**
    * Pauses execution for a number of seconds.
-   *
+   * 
    * ```js
    * I.wait(2); // wait 2 secs
    * ```
-   *
+   * 
    * @param {number} sec number of second to wait.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async wait(sec) {
     return new Promise((done) => {
@@ -3320,11 +3319,11 @@ class Playwright extends Helper {
   /**
    * Waits for element to become enabled (by default waits for 1sec).
    * Element can be located by CSS or XPath.
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional) time in seconds to wait, 1 by default.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async waitForEnabled(locator, sec) {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
@@ -3354,11 +3353,11 @@ class Playwright extends Helper {
   /**
    * Waits for element to become disabled (by default waits for 1sec).
    * Element can be located by CSS or XPath.
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional) time in seconds to wait, 1 by default.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async waitForDisabled(locator, sec) {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
@@ -3387,16 +3386,16 @@ class Playwright extends Helper {
 
   /**
    * Waits for the specified value to be in value attribute.
-   *
+   * 
    * ```js
    * I.waitForValue('//input', "GoodValue");
    * ```
-   *
+   * 
    * @param {LocatorOrString} field input field.
    * @param {string }value expected value.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async waitForValue(field, value, sec) {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
@@ -3431,16 +3430,16 @@ class Playwright extends Helper {
 
   /**
    * Waits for a specified number of elements on the page.
-   *
+   * 
    * ```js
    * I.waitNumberOfVisibleElements('a', 3);
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} num number of elements.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    */
   async waitNumberOfVisibleElements(locator, num, sec) {
@@ -3477,16 +3476,16 @@ class Playwright extends Helper {
   /**
    * Waits for element to be clickable (by default waits for 1sec).
    * Element can be located by CSS or XPath.
-   *
+   * 
    * ```js
    * I.waitForClickable('.btn.continue');
    * I.waitForClickable('.btn.continue', 5); // wait for 5 secs
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async waitForClickable(locator, waitTimeout) {
     console.log(
@@ -3498,16 +3497,16 @@ class Playwright extends Helper {
   /**
    * Waits for element to be present on page (by default waits for 1sec).
    * Element can be located by CSS or XPath.
-   *
+   * 
    * ```js
    * I.waitForElement('.btn.continue');
    * I.waitForElement('.btn.continue', 5); // wait for 5 secs
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    */
   async waitForElement(locator, sec) {
@@ -3529,15 +3528,15 @@ class Playwright extends Helper {
    *
    * Waits for an element to become visible on a page (by default waits for 1sec).
    * Element can be located by CSS or XPath.
-   *
+   * 
    * ```js
    * I.waitForVisible('#popup');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async waitForVisible(locator, sec) {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
@@ -3568,15 +3567,15 @@ class Playwright extends Helper {
   /**
    * Waits for an element to be removed or become invisible on a page (by default waits for 1sec).
    * Element can be located by CSS or XPath.
-   *
+   * 
    * ```js
    * I.waitForInvisible('#popup');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async waitForInvisible(locator, sec) {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
@@ -3608,15 +3607,15 @@ class Playwright extends Helper {
   /**
    * Waits for an element to hide (by default waits for 1sec).
    * Element can be located by CSS or XPath.
-   *
+   * 
    * ```js
    * I.waitToHide('#popup');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async waitToHide(locator, sec) {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
@@ -3651,15 +3650,15 @@ class Playwright extends Helper {
 
   /**
    * Waits for number of tabs.
-   *
+   * 
    * ```js
    * I.waitForNumberOfTabs(2);
    * ```
-   *
+   * 
    * @param {number} expectedTabs expecting the number of tabs.
    * @param {number} sec number of secs to wait.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async waitForNumberOfTabs(expectedTabs, sec) {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
@@ -3677,7 +3676,7 @@ class Playwright extends Helper {
   }
 
   async _getContext() {
-    if (this.context && this.context.constructor.name === 'FrameLocator') {
+    if ((this.context && this.context.constructor.name === 'FrameLocator') || this.context) {
       return this.context
     }
     return this.page
@@ -3685,15 +3684,15 @@ class Playwright extends Helper {
 
   /**
    * Waiting for the part of the URL to match the expected. Useful for SPA to understand that page was changed.
-   *
+   * 
    * ```js
    * I.waitInUrl('/info', 2);
    * ```
-   *
+   * 
    * @param {string} urlPart value to check.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async waitInUrl(urlPart, sec = null) {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
@@ -3719,16 +3718,16 @@ class Playwright extends Helper {
 
   /**
    * Waits for the entire URL to match the expected
-   *
+   * 
    * ```js
    * I.waitUrlEquals('/info', 2);
    * I.waitUrlEquals('http://127.0.0.1:8000/info');
    * ```
-   *
+   * 
    * @param {string} urlPart value to check.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async waitUrlEquals(urlPart, sec = null) {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
@@ -3761,17 +3760,17 @@ class Playwright extends Helper {
    * Waits for a text to appear (by default waits for 1sec).
    * Element can be located by CSS or XPath.
    * Narrow down search results by providing context.
-   *
+   * 
    * ```js
    * I.waitForText('Thank you, form has been submitted');
    * I.waitForText('Thank you, form has been submitted', 5, '#modal');
    * ```
-   *
+   * 
    * @param {string }text to wait for.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @param {CodeceptJS.LocatorOrString} [context] (optional) element located by CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async waitForText(text, sec = null, context = null) {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
@@ -3811,11 +3810,14 @@ class Playwright extends Helper {
       }
     } else {
       // we have this as https://github.com/microsoft/playwright/issues/26829 is not yet implemented
-      // eslint-disable-next-line no-lonely-if
+
       const _contextObject = this.frame ? this.frame : contextObject
       let count = 0
       do {
-        waiter = await _contextObject.locator(`:has-text("${text}")`).first().isVisible()
+        waiter = await _contextObject
+          .locator(`:has-text(${JSON.stringify(text)})`)
+          .first()
+          .isVisible()
         if (waiter) break
         await this.wait(1)
         count += 1000
@@ -3859,15 +3861,15 @@ class Playwright extends Helper {
 
   /**
    * Switches frame or in case of null locator reverts to parent.
-   *
+   * 
    * ```js
    * I.switchTo('iframe'); // switch to first iframe
    * I.switchTo(); // switch back to main page
    * ```
-   *
+   * 
    * @param {?CodeceptJS.LocatorOrString} [locator=null] (optional, `null` by default) element located by CSS|XPath|strict locator.
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async switchTo(locator) {
     if (Number.isInteger(locator)) {
@@ -3924,22 +3926,22 @@ class Playwright extends Helper {
   /**
    * Waits for a function to return true (waits for 1 sec by default).
    * Running in browser context.
-   *
+   * 
    * ```js
    * I.waitForFunction(fn[, [args[, timeout]])
    * ```
-   *
+   * 
    * ```js
    * I.waitForFunction(() => window.requests == 0);
    * I.waitForFunction(() => window.requests == 0, 5); // waits for 5 sec
    * I.waitForFunction((count) => window.requests == count, [3], 5) // pass args and wait for 5 sec
    * ```
-   *
+   * 
    * @param {string|function} fn to be executed in browser context.
    * @param {any[]|number} [argsOrSec] (optional, `1` by default) arguments for function or seconds.
    * @param {number} [sec] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async waitForFunction(fn, argsOrSec = null, sec = null) {
     let args = []
@@ -4000,15 +4002,15 @@ class Playwright extends Helper {
   /**
    * Waits for an element to become not attached to the DOM on a page (by default waits for 1sec).
    * Element can be located by CSS or XPath.
-   *
+   * 
    * ```js
    * I.waitForDetached('#popup');
    * ```
-   *
+   * 
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {number} [sec=1] (optional, `1` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async waitForDetached(locator, sec) {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
@@ -4039,15 +4041,15 @@ class Playwright extends Helper {
 
   /**
    * Waits for the specified cookie in the cookies.
-   *
+   * 
    * ```js
    * I.waitForCookie("token");
    * ```
-   *
+   * 
    * @param {string} name expected cookie name.
    * @param {number} [sec=3] (optional, `3` by default) time in seconds to wait
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async waitForCookie(name, sec) {
     // by default, we will retry 3 times
@@ -4093,7 +4095,7 @@ class Playwright extends Helper {
    * - domContentLoadedEventEnd,
    * - loadEventEnd
    * Resumes test execution, so **should be used inside an async function with `await`** operator.
-   *
+   * 
    * ```js
    * await I.amOnPage('https://example.com');
    * let data = await I.grabDataFromPerformanceTiming();
@@ -4106,7 +4108,7 @@ class Playwright extends Helper {
    * }
    * ```
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async grabDataFromPerformanceTiming() {
     return perfTiming
@@ -4116,16 +4118,16 @@ class Playwright extends Helper {
    * Grab the width, height, location of given locator.
    * Provide `width` or `height`as second param to get your desired prop.
    * Resumes test execution, so **should be used inside an async function with `await`** operator.
-   *
+   * 
    * Returns an object with `x`, `y`, `width`, `height` keys.
-   *
+   * 
    * ```js
    * const value = await I.grabElementBoundingRect('h3');
    * // value is like { x: 226.5, y: 89, width: 527, height: 220 }
    * ```
-   *
+   * 
    * To get only one metric use second parameter:
-   *
+   * 
    * ```js
    * const width = await I.grabElementBoundingRect('h3', 'width');
    * // width == 527
@@ -4133,7 +4135,7 @@ class Playwright extends Helper {
    * @param {LocatorOrString} locator element located by CSS|XPath|strict locator.
    * @param {string=} elementSize x, y, width or height of the given element.
    * @returns {Promise<DOMRect>|Promise<number>} Element bounding rectangle
-   *
+   * 
    */
   async grabElementBoundingRect(locator, prop) {
     const el = await this._locateElement(locator)
@@ -4177,13 +4179,13 @@ class Playwright extends Helper {
   /**
    * Starts recording the network traffics.
    * This also resets recorded network requests.
-   *
+   * 
    * ```js
    * I.startRecordingTraffic();
    * ```
-   *
+   * 
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    */
   startRecordingTraffic() {
@@ -4291,11 +4293,11 @@ class Playwright extends Helper {
   /**
    *
    * Resets all recorded network requests.
-   *
+   * 
    * ```js
    * I.flushNetworkTraffics();
    * ```
-   *
+   * 
    */
   flushNetworkTraffics() {
     flushNetworkTraffics.call(this)
@@ -4304,11 +4306,11 @@ class Playwright extends Helper {
   /**
    *
    * Stops recording of network traffic. Recorded traffic is not flashed.
-   *
+   * 
    * ```js
    * I.stopRecordingTraffic();
    * ```
-   *
+   * 
    */
   stopRecordingTraffic() {
     stopRecordingTraffic.call(this)
@@ -4351,16 +4353,16 @@ class Playwright extends Helper {
   /**
    *
    * Grab the recording network traffics
-   *
+   * 
    * ```js
    * const traffics = await I.grabRecordedNetworkTraffics();
    * expect(traffics[0].url).to.equal('https://reqres.in/api/comments/1');
    * expect(traffics[0].response.status).to.equal(200);
    * expect(traffics[0].response.body).to.contain({ name: 'this was mocked' });
    * ```
-   *
+   * 
    * @return { Array } recorded network traffics
-   *
+   * 
    */
   async grabRecordedNetworkTraffics() {
     return grabRecordedNetworkTraffics.call(this)
@@ -4369,7 +4371,7 @@ class Playwright extends Helper {
   /**
    *
    * Verifies that a certain request is part of network traffic.
-   *
+   * 
    * ```js
    * // checking the request url contains certain query strings
    * I.amOnPage('https://openai.com/blog/chatgpt');
@@ -4383,7 +4385,7 @@ class Playwright extends Helper {
    *     },
    *   });
    * ```
-   *
+   * 
    * ```js
    * // checking the request url contains certain post data
    * I.amOnPage('https://openai.com/blog/chatgpt');
@@ -4396,7 +4398,7 @@ class Playwright extends Helper {
    *     },
    *   });
    * ```
-   *
+   * 
    * @param {Object} opts - options when checking the traffic network.
    * @param {string} opts.name A name of that request. Can be any value. Only relevant to have a more meaningful error message in case of fail.
    * @param {string} opts.url Expected URL of request in network traffic
@@ -4404,7 +4406,7 @@ class Playwright extends Helper {
    * @param {Object} [opts.requestPostData] Expected that request contains post data in network traffic
    * @param {number} [opts.timeout] Timeout to wait for request in seconds. Default is 10 seconds.
    * @return {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async seeTraffic({ name, url, parameters, requestPostData, timeout = 10 }) {
     await seeTraffic.call(this, ...arguments)
@@ -4413,19 +4415,19 @@ class Playwright extends Helper {
   /**
    *
    * Verifies that a certain request is not part of network traffic.
-   *
+   * 
    * Examples:
-   *
+   * 
    * ```js
    * I.dontSeeTraffic({ name: 'Unexpected API Call', url: 'https://api.example.com' });
    * I.dontSeeTraffic({ name: 'Unexpected API Call of "user" endpoint', url: /api.example.com.*user/ });
    * ```
-   *
+   * 
    * @param {Object} opts - options when checking the traffic network.
    * @param {string} opts.name A name of that request. Can be any value. Only relevant to have a more meaningful error message in case of fail.
    * @param {string|RegExp} opts.url Expected URL of request in network traffic. Can be a string or a regular expression.
    * @return {void} automatically synchronized promise through #recorder
-   *
+   * 
    *
    */
   dontSeeTraffic({ name, url }) {
@@ -4435,13 +4437,13 @@ class Playwright extends Helper {
   /**
    * Starts recording of websocket messages.
    * This also resets recorded websocket messages.
-   *
+   * 
    * ```js
    * await I.startRecordingWebSocketMessages();
    * ```
-   *
+   * 
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async startRecordingWebSocketMessages() {
     this.flushWebSocketMessages()
@@ -4467,13 +4469,13 @@ class Playwright extends Helper {
 
   /**
    * Stops recording WS messages. Recorded WS messages is not flashed.
-   *
+   * 
    * ```js
    * await I.stopRecordingWebSocketMessages();
    * ```
-   *
+   * 
    * @returns {void} automatically synchronized promise through #recorder
-   *
+   * 
    */
   async stopRecordingWebSocketMessages() {
     await this.cdpSession.send('Network.disable')
@@ -4584,7 +4586,7 @@ class Playwright extends Helper {
   }
 
   _logWebsocketMessages(message) {
-    this.webSocketMessages += message
+    this.webSocketMessages.push(message)
   }
 }
 
@@ -4962,7 +4964,6 @@ function parseWindowSize(windowSize) {
 // List of key values to key definitions
 // https://github.com/puppeteer/puppeteer/blob/v1.20.0/lib/USKeyboardLayout.js
 const keyDefinitionMap = {
-  /* eslint-disable quote-props */
   0: 'Digit0',
   1: 'Digit1',
   2: 'Digit2',
@@ -5010,7 +5011,6 @@ const keyDefinitionMap = {
   '\\': 'Backslash',
   ']': 'BracketRight',
   "'": 'Quote',
-  /* eslint-enable quote-props */
 }
 
 function getNormalizedKey(key) {

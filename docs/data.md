@@ -54,6 +54,7 @@ I.sendPostRequest()
 I.sendPutRequest()
 I.sendPatchRequest()
 I.sendDeleteRequest()
+I.sendDeleteRequestWithPayload()
 ```
 
 As well as a method for setting headers: `haveRequestHeaders`.
@@ -210,7 +211,7 @@ var Factory = require('rosie').Factory;
 var faker = require('@faker-js/faker');
 
 module.exports = new Factory()
-  .attr('name', () => faker.name.findName())
+  .attr('name', () => faker.person.findName())
   .attr('email', () => faker.internet.email());
 ```
 
@@ -270,7 +271,7 @@ module.exports = new Factory((buildObj) => {
     input: { ...buildObj },
   }
 })
-  .attr('name', () => faker.name.findName())
+  .attr('name', () => faker.person.findName())
   .attr('email', () => faker.internet.email());
 ```
 
