@@ -1,32 +1,20 @@
 {
-  "name": "codecept-website",
-  "version": "1.0.0",
-  "description": "CodeceptJS website",
+  "name": "no",
+  "type": "module",
+  "version": "0.0.1",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "npx vuepress dev docs",
-    "build": "vuepress build docs"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "autoprefixer": "10.4.20",
-    "npm": "11.0.0",
-    "postcss": "8.4.49",
-    "sass": "1.83.1",
-    "sass-loader": "10.3.1",
-    "tailwindcss": "1.9.6",
-    "vue": "2.7.16",
-    "vue-carousel": "0.18.0",
-    "vue-server-renderer": "2.7.16",
-    "vue-slider-component": "3.2.24",
-    "vueperslides": "2.16.0",
-    "vuepress": "1.9.10",
-    "vuepress-plugin-sitemap": "2.3.1"
-  },
-  "devDependencies": {
-    "@vuepress/plugin-google-analytics": "1.9.10",
-    "runok": "0.9.3"
+    "@astrojs/starlight": "^0.31.1",
+    "astro": "^5.1.5",
+    "astro-vtbot": "^2.0.5",
+    "sharp": "^0.32.5",
+    "starlight-image-zoom": "^0.10.1",
+    "starlight-sidebar-topics": "^0.3.0"
   }
 }
