@@ -2,6 +2,13 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import starlightSidebarTopics from 'starlight-sidebar-topics';
 import starlightImageZoom from 'starlight-image-zoom';
+import rehypeAstroRelativeMarkdownLinks from "astro-rehype-relative-markdown-links";
+import { rehypeHeadingIds } from '@astrojs/markdown-remark';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+
+const options = {
+	contentPath: 'src/content/docs',
+};
 
 export default defineConfig({
 	integrations: [
@@ -13,7 +20,12 @@ export default defineConfig({
 			components: {
 				Head: "./src/components/Head.astro",
 			},
+			customCss: [
+				'./src/styles/custom.css',
+				'./src/styles/headings.css',
+			],
 			plugins: [
+				starlightImageZoom(),
 				starlightSidebarTopics([
 					{
 						label: 'Documentation',
@@ -123,8 +135,20 @@ export default defineConfig({
 						],
 					},
 				]),
-				starlightImageZoom(),
 			],
 		}),
 	],
+	markdown: {
+		rehypePlugins: [
+			[rehypeAstroRelativeMarkdownLinks, options],
+			rehypeHeadingIds,
+			[
+				rehypeAutolinkHeadings,
+				{
+					behavior: 'wrap',
+				},
+			],
+
+		],
+	},
 });

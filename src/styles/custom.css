@@ -1,0 +1,22 @@
+:root,
+::backdrop {
+    --sl-color-text-accent: #ffe680;
+}
+
+a:where(.astro-wkinvgav):is(.starlight-sidebar-topics-current,:hover,:focus-visible) {
+    color: #ffe680;
+}
+
+:root[data-theme='light'],
+[data-theme='light'] ::backdrop {
+    --sl-color-text-accent: #7800b8;
+}
+
+[data-theme="light"] a:where(.astro-wkinvgav).starlight-sidebar-topics-current,
+[data-theme="light"] a:where(.astro-wkinvgav):is(.starlight-sidebar-topics-current,:hover,:focus-visible) {
+    color: #7800b8;
+}
+
+.hero img {
+    max-width: 200px;
+}

@@ -1,5 +1,5 @@
 {
-  "name": "no",
+  "name": "CodeceptJS",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -10,9 +10,13 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/markdown-remark": "^6.0.2",
     "@astrojs/starlight": "^0.31.1",
     "astro": "^5.1.5",
+    "astro-rehype-relative-markdown-links": "0.15.0",
     "astro-vtbot": "^2.0.5",
+    "rehype-autolink-headings": "^7.1.0",
+    "schema-dts": "^1.1.2",
     "sharp": "^0.32.5",
     "starlight-image-zoom": "^0.10.1",
     "starlight-sidebar-topics": "^0.3.0"
