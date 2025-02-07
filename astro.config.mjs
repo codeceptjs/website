@@ -14,11 +14,13 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'CodeceptJS',
+			favicon: '/favicon.svg',
 			social: {
 				github: 'https://github.com/codeceptjs/CodeceptJS',
 			},
 			components: {
 				Head: "./src/components/Head.astro",
+				PageTitle: './src/components/PageTitle.astro',
 			},
 			customCss: [
 				'./src/styles/custom.css',

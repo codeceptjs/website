@@ -2,9 +2,7 @@
 title: CodeceptUI
 ---
 
-
-<img src="./images/codeceptui.png" alt="CodeceptUI" style="width: 100%; border-radius: 5px; box-shadow: 0px 5px 10px rgba(0,0,0,0.1)" />
-
+![CodeceptUI](./images/codeceptui.png)
 
 ## CodeceptUI
 
