@@ -36,19 +36,8 @@ const Popup = require('./extras/Popup')
 const Console = require('./extras/Console')
 const { highlightElement } = require('./scripts/highlightElement')
 const { blurElement } = require('./scripts/blurElement')
-const {
-  dontSeeElementError,
-  seeElementError,
-  dontSeeElementInDOMError,
-  seeElementInDOMError,
-} = require('./errors/ElementAssertion')
-const {
-  dontSeeTraffic,
-  seeTraffic,
-  grabRecordedNetworkTraffics,
-  stopRecordingTraffic,
-  flushNetworkTraffics,
-} = require('./network/actions')
+const { dontSeeElementError, seeElementError, dontSeeElementInDOMError, seeElementInDOMError } = require('./errors/ElementAssertion')
+const { dontSeeTraffic, seeTraffic, grabRecordedNetworkTraffics, stopRecordingTraffic, flushNetworkTraffics } = require('./network/actions')
 
 let puppeteer
 let perfTiming
@@ -271,9 +260,7 @@ class Puppeteer extends Helper {
   }
 
   _getOptions(config) {
-    return config.browser === 'firefox'
-      ? Object.assign(this.options.firefox, { product: 'firefox' })
-      : this.options.chrome
+    return config.browser === 'firefox' ? Object.assign(this.options.firefox, { product: 'firefox' }) : this.options.chrome
   }
 
   _setConfig(config) {
@@ -325,8 +312,8 @@ class Puppeteer extends Helper {
     this.sessionPages = {}
     this.currentRunningTest = test
     recorder.retry({
-      retries: process.env.FAILED_STEP_RETRIES || 3,
-      when: (err) => {
+      retries: test?.opts?.conditionalRetries || 3,
+      when: err => {
         if (!err || typeof err.message !== 'string') {
           return false
         }
@@ -346,7 +333,7 @@ class Puppeteer extends Helper {
     const contexts = this.browser.browserContexts()
     const defaultCtx = contexts.shift()
 
-    await Promise.all(contexts.map((c) => c.close()))
+    await Promise.all(contexts.map(c => c.close()))
 
     if (this.options.restart) {
       this.isRunning = false
@@ -355,7 +342,7 @@ class Puppeteer extends Helper {
 
     // ensure this.page is from default context
     if (this.page) {
-      const existingPages = defaultCtx.targets().filter((t) => t.type() === 'page')
+      const existingPages = defaultCtx.targets().filter(t => t.type() === 'page')
       await this._setPage(await existingPages[0].page())
     }
 
@@ -368,10 +355,10 @@ class Puppeteer extends Helper {
     const currentUrl = await this.grabCurrentUrl()
 
     if (currentUrl.startsWith('http')) {
-      await this.executeScript('localStorage.clear();').catch((err) => {
+      await this.executeScript('localStorage.clear();').catch(err => {
         if (!(err.message.indexOf("Storage is disabled inside 'data:' URLs.") > -1)) throw err
       })
-      await this.executeScript('sessionStorage.clear();').catch((err) => {
+      await this.executeScript('sessionStorage.clear();').catch(err => {
         if (!(err.message.indexOf("Storage is disabled inside 'data:' URLs.") > -1)) throw err
       })
     }
@@ -400,12 +387,12 @@ class Puppeteer extends Helper {
       stop: async () => {
         // is closed by _after
       },
-      loadVars: async (context) => {
-        const existingPages = context.targets().filter((t) => t.type() === 'page')
+      loadVars: async context => {
+        const existingPages = context.targets().filter(t => t.type() === 'page')
         this.sessionPages[this.activeSessionName] = await existingPages[0].page()
         return this._setPage(this.sessionPages[this.activeSessionName])
       },
-      restoreVars: async (session) => {
+      restoreVars: async session => {
         this.withinLocator = null
 
         if (!session) {
@@ -414,7 +401,7 @@ class Puppeteer extends Helper {
           this.activeSessionName = session
         }
         const defaultCtx = this.browser.defaultBrowserContext()
-        const existingPages = defaultCtx.targets().filter((t) => t.type() === 'page')
+        const existingPages = defaultCtx.targets().filter(t => t.type() === 'page')
         await this._setPage(await existingPages[0].page())
 
         return this._waitForAction()
@@ -525,7 +512,7 @@ class Puppeteer extends Helper {
     if (!page) {
       return
     }
-    page.on('error', async (error) => {
+    page.on('error', async error => {
       console.error('Puppeteer page error', error)
     })
   }
@@ -541,7 +528,7 @@ class Puppeteer extends Helper {
     if (!page) {
       return
     }
-    page.on('dialog', async (dialog) => {
+    page.on('dialog', async dialog => {
       popupStore.popup = dialog
       const action = popupStore.actionType || this.options.defaultPopupAction
       await this._waitForAction()
@@ -596,15 +583,15 @@ class Puppeteer extends Helper {
       this.browser = await puppeteer.launch(this.puppeteerOptions)
     }
 
-    this.browser.on('targetcreated', (target) =>
+    this.browser.on('targetcreated', target =>
       target
         .page()
-        .then((page) => targetCreatedHandler.call(this, page))
-        .catch((e) => {
+        .then(page => targetCreatedHandler.call(this, page))
+        .catch(e => {
           console.error('Puppeteer page error', e)
         }),
     )
-    this.browser.on('targetchanged', (target) => {
+    this.browser.on('targetchanged', target => {
       this.debugSection('Url', target.url())
     })
 
@@ -647,9 +634,7 @@ class Puppeteer extends Helper {
 
     if (frame) {
       if (Array.isArray(frame)) {
-        return this.switchTo(null).then(() =>
-          frame.reduce((p, frameLocator) => p.then(() => this.switchTo(frameLocator)), Promise.resolve()),
-        )
+        return this.switchTo(null).then(() => frame.reduce((p, frameLocator) => p.then(() => this.switchTo(frameLocator)), Promise.resolve()))
       }
       await this.switchTo(frame)
       this.withinLocator = new Locator(frame)
@@ -672,7 +657,7 @@ class Puppeteer extends Helper {
     const navigationStart = timing.navigationStart
 
     const extractedData = {}
-    dataNames.forEach((name) => {
+    dataNames.forEach(name => {
       extractedData[name] = timing[name] - navigationStart
     })
 
@@ -717,13 +702,7 @@ class Puppeteer extends Helper {
 
     const performanceTiming = JSON.parse(await this.page.evaluate(() => JSON.stringify(window.performance.timing)))
 
-    perfTiming = this._extractDataFromPerformanceTiming(
-      performanceTiming,
-      'responseEnd',
-      'domInteractive',
-      'domContentLoadedEventEnd',
-      'loadEventEnd',
-    )
+    perfTiming = this._extractDataFromPerformanceTiming(performanceTiming, 'responseEnd', 'domInteractive', 'domContentLoadedEventEnd', 'loadEventEnd')
 
     return this._waitForAction()
   }
@@ -910,10 +889,7 @@ class Puppeteer extends Helper {
     return this.executeScript(() => {
       const body = document.body
       const html = document.documentElement
-      window.scrollTo(
-        0,
-        Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight),
-      )
+      window.scrollTo(0, Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight))
     })
   }
 
@@ -943,13 +919,9 @@ class Puppeteer extends Helper {
       const els = await this._locate(locator)
       assertElementExists(els, locator, 'Element')
       const el = els[0]
-      await el.evaluate((el) => el.scrollIntoView())
+      await el.evaluate(el => el.scrollIntoView())
       const elementCoordinates = await getClickablePoint(els[0])
-      await this.executeScript(
-        (x, y) => window.scrollBy(x, y),
-        elementCoordinates.x + offsetX,
-        elementCoordinates.y + offsetY,
-      )
+      await this.executeScript((x, y) => window.scrollBy(x, y), elementCoordinates.x + offsetX, elementCoordinates.y + offsetY)
     } else {
       await this.executeScript((x, y) => window.scrollTo(x, y), offsetX, offsetY)
     }
@@ -1180,10 +1152,10 @@ class Puppeteer extends Helper {
    */
   async closeOtherTabs() {
     const pages = await this.browser.pages()
-    const otherPages = pages.filter((page) => page !== this.page)
+    const otherPages = pages.filter(page => page !== this.page)
 
     let p = Promise.resolve()
-    otherPages.forEach((page) => {
+    otherPages.forEach(page => {
       p = p.then(() => page.close())
     })
     await p
@@ -1232,19 +1204,11 @@ class Puppeteer extends Helper {
    */
   async seeElement(locator) {
     let els = await this._locate(locator)
-    els = (await Promise.all(els.map((el) => el.boundingBox() && el))).filter((v) => v)
+    els = (await Promise.all(els.map(el => el.boundingBox() && el))).filter(v => v)
     // Puppeteer visibility was ignored? | Remove when Puppeteer is fixed
-    els = await Promise.all(
-      els.map(
-        async (el) =>
-          (await el.evaluate(
-            (node) =>
-              window.getComputedStyle(node).visibility !== 'hidden' && window.getComputedStyle(node).display !== 'none',
-          )) && el,
-      ),
-    )
+    els = await Promise.all(els.map(async el => (await el.evaluate(node => window.getComputedStyle(node).visibility !== 'hidden' && window.getComputedStyle(node).display !== 'none')) && el))
     try {
-      return empty('visible elements').negate(els.filter((v) => v).fill('ELEMENT'))
+      return empty('visible elements').negate(els.filter(v => v).fill('ELEMENT'))
     } catch (e) {
       dontSeeElementError(locator)
     }
@@ -1264,19 +1228,11 @@ class Puppeteer extends Helper {
    */
   async dontSeeElement(locator) {
     let els = await this._locate(locator)
-    els = (await Promise.all(els.map((el) => el.boundingBox() && el))).filter((v) => v)
+    els = (await Promise.all(els.map(el => el.boundingBox() && el))).filter(v => v)
     // Puppeteer visibility was ignored? | Remove when Puppeteer is fixed
-    els = await Promise.all(
-      els.map(
-        async (el) =>
-          (await el.evaluate(
-            (node) =>
-              window.getComputedStyle(node).visibility !== 'hidden' && window.getComputedStyle(node).display !== 'none',
-          )) && el,
-      ),
-    )
+    els = await Promise.all(els.map(async el => (await el.evaluate(node => window.getComputedStyle(node).visibility !== 'hidden' && window.getComputedStyle(node).display !== 'none')) && el))
     try {
-      return empty('visible elements').assert(els.filter((v) => v).fill('ELEMENT'))
+      return empty('visible elements').assert(els.filter(v => v).fill('ELEMENT'))
     } catch (e) {
       seeElementError(locator)
     }
@@ -1296,7 +1252,7 @@ class Puppeteer extends Helper {
   async seeElementInDOM(locator) {
     const els = await this._locate(locator)
     try {
-      return empty('elements on page').negate(els.filter((v) => v).fill('ELEMENT'))
+      return empty('elements on page').negate(els.filter(v => v).fill('ELEMENT'))
     } catch (e) {
       dontSeeElementInDOMError(locator)
     }
@@ -1316,7 +1272,7 @@ class Puppeteer extends Helper {
   async dontSeeElementInDOM(locator) {
     const els = await this._locate(locator)
     try {
-      return empty('elements on a page').assert(els.filter((v) => v).fill('ELEMENT'))
+      return empty('elements on a page').assert(els.filter(v => v).fill('ELEMENT'))
     } catch (e) {
       seeElementInDOMError(locator)
     }
@@ -1399,17 +1355,12 @@ class Puppeteer extends Helper {
 
     const els = await findClickable.call(this, matcher, locator)
     if (context) {
-      assertElementExists(
-        els,
-        locator,
-        'Clickable element',
-        `was not found inside element ${new Locator(context).toString()}`,
-      )
+      assertElementExists(els, locator, 'Clickable element', `was not found inside element ${new Locator(context).toString()}`)
     } else {
       assertElementExists(els, locator, 'Clickable element')
     }
     const elem = els[0]
-    return this.executeScript((el) => {
+    return this.executeScript(el => {
       if (document.activeElement instanceof HTMLElement) {
         document.activeElement.blur()
       }
@@ -1476,8 +1427,8 @@ class Puppeteer extends Helper {
     let fileName
     await this.page.setRequestInterception(true)
 
-    const xRequest = await new Promise((resolve) => {
-      this.page.on('request', (request) => {
+    const xRequest = await new Promise(resolve => {
+      this.page.on('request', request => {
         console.log('rq', request, customName)
         const grabbedFileName = request.url().split('/')[request.url().split('/').length - 1]
         const fileExtension = request.url().split('/')[request.url().split('/').length - 1].split('.')[1]
@@ -1504,7 +1455,7 @@ class Puppeteer extends Helper {
     }
 
     const cookies = await this.page.cookies()
-    options.headers.Cookie = cookies.map((ck) => `${ck.name}=${ck.value}`).join(';')
+    options.headers.Cookie = cookies.map(ck => `${ck.name}=${ck.value}`).join(';')
 
     const response = await axios({
       method: options.method,
@@ -1598,7 +1549,7 @@ class Puppeteer extends Helper {
    */
   async checkOption(field, context = null) {
     const elm = await this._locateCheckable(field, context)
-    const curentlyChecked = await elm.getProperty('checked').then((checkedProperty) => checkedProperty.jsonValue())
+    const curentlyChecked = await elm.getProperty('checked').then(checkedProperty => checkedProperty.jsonValue())
     // Only check if NOT currently checked
     if (!curentlyChecked) {
       await elm.click()
@@ -1624,7 +1575,7 @@ class Puppeteer extends Helper {
    */
   async uncheckOption(field, context = null) {
     const elm = await this._locateCheckable(field, context)
-    const curentlyChecked = await elm.getProperty('checked').then((checkedProperty) => checkedProperty.jsonValue())
+    const curentlyChecked = await elm.getProperty('checked').then(checkedProperty => checkedProperty.jsonValue())
     // Only uncheck if currently checked
     if (curentlyChecked) {
       await elm.click()
@@ -1858,12 +1809,12 @@ class Puppeteer extends Helper {
     const els = await findVisibleFields.call(this, field)
     assertElementExists(els, field, 'Field')
     const el = els[0]
-    const tag = await el.getProperty('tagName').then((el) => el.jsonValue())
-    const editable = await el.getProperty('contenteditable').then((el) => el.jsonValue())
+    const tag = await el.getProperty('tagName').then(el => el.jsonValue())
+    const editable = await el.getProperty('contenteditable').then(el => el.jsonValue())
     if (tag === 'INPUT' || tag === 'TEXTAREA') {
-      await this._evaluateHandeInContext((el) => (el.value = ''), el)
+      await this._evaluateHandeInContext(el => (el.value = ''), el)
     } else if (editable) {
-      await this._evaluateHandeInContext((el) => (el.innerHTML = ''), el)
+      await this._evaluateHandeInContext(el => (el.innerHTML = ''), el)
     }
 
     highlightActiveElement.call(this, el, await this._getContext())
@@ -2009,7 +1960,7 @@ class Puppeteer extends Helper {
     const els = await findVisibleFields.call(this, select)
     assertElementExists(els, select, 'Selectable field')
     const el = els[0]
-    if ((await el.getProperty('tagName').then((t) => t.jsonValue())) !== 'SELECT') {
+    if ((await el.getProperty('tagName').then(t => t.jsonValue())) !== 'SELECT') {
       throw new Error('Element is not <select>')
     }
     highlightActiveElement.call(this, els[0], await this._getContext())
@@ -2019,15 +1970,15 @@ class Puppeteer extends Helper {
       const opt = xpathLocator.literal(option[key])
       let optEl = await findElements.call(this, el, { xpath: Locator.select.byVisibleText(opt) })
       if (optEl.length) {
-        this._evaluateHandeInContext((el) => (el.selected = true), optEl[0])
+        this._evaluateHandeInContext(el => (el.selected = true), optEl[0])
         continue
       }
       optEl = await findElements.call(this, el, { xpath: Locator.select.byValue(opt) })
       if (optEl.length) {
-        this._evaluateHandeInContext((el) => (el.selected = true), optEl[0])
+        this._evaluateHandeInContext(el => (el.selected = true), optEl[0])
       }
     }
-    await this._evaluateHandeInContext((element) => {
+    await this._evaluateHandeInContext(element => {
       element.dispatchEvent(new Event('input', { bubbles: true }))
       element.dispatchEvent(new Event('change', { bubbles: true }))
     }, el)
@@ -2049,19 +2000,11 @@ class Puppeteer extends Helper {
    */
   async grabNumberOfVisibleElements(locator) {
     let els = await this._locate(locator)
-    els = (await Promise.all(els.map((el) => el.boundingBox() && el))).filter((v) => v)
+    els = (await Promise.all(els.map(el => el.boundingBox() && el))).filter(v => v)
     // Puppeteer visibility was ignored? | Remove when Puppeteer is fixed
-    els = await Promise.all(
-      els.map(
-        async (el) =>
-          (await el.evaluate(
-            (node) =>
-              window.getComputedStyle(node).visibility !== 'hidden' && window.getComputedStyle(node).display !== 'none',
-          )) && el,
-      ),
-    )
+    els = await Promise.all(els.map(async el => (await el.evaluate(node => window.getComputedStyle(node).visibility !== 'hidden' && window.getComputedStyle(node).display !== 'none')) && el))
 
-    return els.filter((v) => v).length
+    return els.filter(v => v).length
   }
 
   /**
@@ -2274,9 +2217,7 @@ class Puppeteer extends Helper {
    */
   async seeNumberOfElements(locator, num) {
     const elements = await this._locate(locator)
-    return equals(
-      `expected number of elements (${new Locator(locator)}) is ${num}, but found ${elements.length}`,
-    ).assert(elements.length, num)
+    return equals(`expected number of elements (${new Locator(locator)}) is ${num}, but found ${elements.length}`).assert(elements.length, num)
   }
 
   /**
@@ -2296,10 +2237,7 @@ class Puppeteer extends Helper {
    */
   async seeNumberOfVisibleElements(locator, num) {
     const res = await this.grabNumberOfVisibleElements(locator)
-    return equals(`expected number of visible elements (${new Locator(locator)}) is ${num}, but found ${res}`).assert(
-      res,
-      num,
-    )
+    return equals(`expected number of visible elements (${new Locator(locator)}) is ${num}, but found ${res}`).assert(res, num)
   }
 
   /**
@@ -2342,7 +2280,7 @@ class Puppeteer extends Helper {
    */
   async seeCookie(name) {
     const cookies = await this.page.cookies()
-    empty(`cookie ${name} to be set`).negate(cookies.filter((c) => c.name === name))
+    empty(`cookie ${name} to be set`).negate(cookies.filter(c => c.name === name))
   }
 
   /**
@@ -2358,7 +2296,7 @@ class Puppeteer extends Helper {
    */
   async dontSeeCookie(name) {
     const cookies = await this.page.cookies()
-    empty(`cookie ${name} not to be set`).assert(cookies.filter((c) => c.name === name))
+    empty(`cookie ${name} not to be set`).assert(cookies.filter(c => c.name === name))
   }
 
   /**
@@ -2380,7 +2318,7 @@ class Puppeteer extends Helper {
   async grabCookie(name) {
     const cookies = await this.page.cookies()
     if (!name) return cookies
-    const cookie = cookies.filter((c) => c.name === name)
+    const cookie = cookies.filter(c => c.name === name)
     if (cookie[0]) return cookie[0]
   }
 
@@ -2409,9 +2347,9 @@ class Puppeteer extends Helper {
 
     return promiseRetry(
       async (retry, number) => {
-        const _grabCookie = async (name) => {
+        const _grabCookie = async name => {
           const cookies = await this.page.cookies()
-          const cookie = cookies.filter((c) => c.name === name)
+          const cookie = cookies.filter(c => c.name === name)
           if (cookie.length === 0) throw Error(`Cookie ${name} is not found after ${retries}s`)
         }
 
@@ -2434,7 +2372,7 @@ class Puppeteer extends Helper {
    * 
    * ```js
    * I.clearCookie();
-   * I.clearCookie('test'); // Playwright currently doesn't support clear a particular cookie name
+   * I.clearCookie('test');
    * ```
    * 
    * @param {?string} [cookie=null] (optional, `null` by default) cookie name
@@ -2445,7 +2383,7 @@ class Puppeteer extends Helper {
     if (!name) {
       return this.page.deleteCookie.apply(this.page, cookies)
     }
-    const cookie = cookies.filter((c) => c.name === name)
+    const cookie = cookies.filter(c => c.name === name)
     if (!cookie[0]) return
     return this.page.deleteCookie(cookie[0])
   }
@@ -2520,8 +2458,8 @@ class Puppeteer extends Helper {
   async executeAsyncScript(...args) {
     const asyncFn = function () {
       const args = Array.from(arguments)
-      const fn = eval(`(${args.shift()})`) // eslint-disable-line no-eval
-      return new Promise((done) => {
+      const fn = eval(`(${args.shift()})`)
+      return new Promise(done => {
         args.push(done)
         fn.apply(null, args)
       })
@@ -2633,7 +2571,7 @@ class Puppeteer extends Helper {
    */
   async grabHTMLFromAll(locator) {
     const els = await this._locate(locator)
-    const values = await Promise.all(els.map((el) => el.evaluate((element) => element.innerHTML, el)))
+    const values = await Promise.all(els.map(el => el.evaluate(element => element.innerHTML, el)))
     return values
   }
 
@@ -2676,10 +2614,8 @@ class Puppeteer extends Helper {
    */
   async grabCssPropertyFromAll(locator, cssProperty) {
     const els = await this._locate(locator)
-    const res = await Promise.all(
-      els.map((el) => el.evaluate((el) => JSON.parse(JSON.stringify(getComputedStyle(el))), el)),
-    )
-    const cssValues = res.map((props) => props[toCamelCase(cssProperty)])
+    const res = await Promise.all(els.map(el => el.evaluate(el => JSON.parse(JSON.stringify(getComputedStyle(el))), el)))
+    const cssValues = res.map(props => props[toCamelCase(cssProperty)])
 
     return cssValues
   }
@@ -2742,19 +2678,16 @@ class Puppeteer extends Helper {
       }
     }
 
-    const values = Object.keys(cssPropertiesCamelCase).map((key) => cssPropertiesCamelCase[key])
+    const values = Object.keys(cssPropertiesCamelCase).map(key => cssPropertiesCamelCase[key])
     if (!Array.isArray(props)) props = [props]
     let chunked = chunkArray(props, values.length)
-    chunked = chunked.filter((val) => {
+    chunked = chunked.filter(val => {
       for (let i = 0; i < val.length; ++i) {
-        // eslint-disable-next-line eqeqeq
         if (val[i] != values[i]) return false
       }
       return true
     })
-    return equals(
-      `all elements (${new Locator(locator)}) to have CSS property ${JSON.stringify(cssProperties)}`,
-    ).assert(chunked.length, elemAmount)
+    return equals(`all elements (${new Locator(locator)}) to have CSS property ${JSON.stringify(cssProperties)}`).assert(chunked.length, elemAmount)
   }
 
   /**
@@ -2776,7 +2709,7 @@ class Puppeteer extends Helper {
 
     const expectedAttributes = Object.entries(attributes)
 
-    const valuesPromises = elements.map(async (element) => {
+    const valuesPromises = elements.map(async element => {
       const elementAttributes = {}
       await Promise.all(
         expectedAttributes.map(async ([attribute, expectedValue]) => {
@@ -2789,7 +2722,7 @@ class Puppeteer extends Helper {
 
     const actualAttributes = await Promise.all(valuesPromises)
 
-    const matchingElements = actualAttributes.filter((attrs) =>
+    const matchingElements = actualAttributes.filter(attrs =>
       expectedAttributes.every(([attribute, expectedValue]) => {
         const actualValue = attrs[attribute]
         if (!actualValue) return false
@@ -2801,10 +2734,7 @@ class Puppeteer extends Helper {
     const elementsCount = elements.length
     const matchingCount = matchingElements.length
 
-    return equals(`all elements (${new Locator(locator)}) to have attributes ${JSON.stringify(attributes)}`).assert(
-      matchingCount,
-      elementsCount,
-    )
+    return equals(`all elements (${new Locator(locator)}) to have attributes ${JSON.stringify(attributes)}`).assert(matchingCount, elementsCount)
   }
 
   /**
@@ -2994,7 +2924,7 @@ class Puppeteer extends Helper {
    * 
    */
   async wait(sec) {
-    return new Promise((done) => {
+    return new Promise(done => {
       setTimeout(done, sec * 1000)
     })
   }
@@ -3020,20 +2950,18 @@ class Puppeteer extends Helper {
         if (!els || els.length === 0) {
           return false
         }
-        return Array.prototype.filter.call(els, (el) => !el.disabled).length > 0
+        return Array.prototype.filter.call(els, el => !el.disabled).length > 0
       }
       waiter = context.waitForFunction(enabledFn, { timeout: waitTimeout }, locator.value)
     } else {
       const enabledFn = function (locator, $XPath) {
-        eval($XPath) // eslint-disable-line no-eval
-        return $XPath(null, locator).filter((el) => !el.disabled).length > 0
+        eval($XPath)
+        return $XPath(null, locator).filter(el => !el.disabled).length > 0
       }
       waiter = context.waitForFunction(enabledFn, { timeout: waitTimeout }, locator.value, $XPath.toString())
     }
-    return waiter.catch((err) => {
-      throw new Error(
-        `element (${locator.toString()}) still not enabled after ${waitTimeout / 1000} sec\n${err.message}`,
-      )
+    return waiter.catch(err => {
+      throw new Error(`element (${locator.toString()}) still not enabled after ${waitTimeout / 1000} sec\n${err.message}`)
     })
   }
 
@@ -3062,21 +2990,19 @@ class Puppeteer extends Helper {
         if (!els || els.length === 0) {
           return false
         }
-        return Array.prototype.filter.call(els, (el) => (el.value.toString() || '').indexOf(value) !== -1).length > 0
+        return Array.prototype.filter.call(els, el => (el.value.toString() || '').indexOf(value) !== -1).length > 0
       }
       waiter = context.waitForFunction(valueFn, { timeout: waitTimeout }, locator.value, value)
     } else {
       const valueFn = function (locator, $XPath, value) {
-        eval($XPath) // eslint-disable-line no-eval
-        return $XPath(null, locator).filter((el) => (el.value || '').indexOf(value) !== -1).length > 0
+        eval($XPath)
+        return $XPath(null, locator).filter(el => (el.value || '').indexOf(value) !== -1).length > 0
       }
       waiter = context.waitForFunction(valueFn, { timeout: waitTimeout }, locator.value, $XPath.toString(), value)
     }
-    return waiter.catch((err) => {
+    return waiter.catch(err => {
       const loc = locator.toString()
-      throw new Error(
-        `element (${loc}) is not in DOM or there is no element(${loc}) with value "${value}" after ${waitTimeout / 1000} sec\n${err.message}`,
-      )
+      throw new Error(`element (${loc}) is not in DOM or there is no element(${loc}) with value "${value}" after ${waitTimeout / 1000} sec\n${err.message}`)
     })
   }
 
@@ -3105,20 +3031,18 @@ class Puppeteer extends Helper {
         if (!els || els.length === 0) {
           return false
         }
-        return Array.prototype.filter.call(els, (el) => el.offsetParent !== null).length === num
+        return Array.prototype.filter.call(els, el => el.offsetParent !== null).length === num
       }
       waiter = context.waitForFunction(visibleFn, { timeout: waitTimeout }, locator.value, num)
     } else {
       const visibleFn = function (locator, $XPath, num) {
-        eval($XPath) // eslint-disable-line no-eval
-        return $XPath(null, locator).filter((el) => el.offsetParent !== null).length === num
+        eval($XPath)
+        return $XPath(null, locator).filter(el => el.offsetParent !== null).length === num
       }
       waiter = context.waitForFunction(visibleFn, { timeout: waitTimeout }, locator.value, $XPath.toString(), num)
     }
-    return waiter.catch((err) => {
-      throw new Error(
-        `The number of elements (${locator.toString()}) is not ${num} after ${waitTimeout / 1000} sec\n${err.message}`,
-      )
+    return waiter.catch(err => {
+      throw new Error(`The number of elements (${locator.toString()}) is not ${num} after ${waitTimeout / 1000} sec\n${err.message}`)
     })
   }
 
@@ -3140,11 +3064,9 @@ class Puppeteer extends Helper {
     const els = await this._locate(locator)
     assertElementExists(els, locator)
 
-    return this.waitForFunction(isElementClickable, [els[0]], waitTimeout).catch(async (e) => {
+    return this.waitForFunction(isElementClickable, [els[0]], waitTimeout).catch(async e => {
       if (/Waiting failed/i.test(e.message) || /failed: timeout/i.test(e.message)) {
-        throw new Error(
-          `element ${new Locator(locator).toString()} still not clickable after ${waitTimeout || this.options.waitForTimeout / 1000} sec`,
-        )
+        throw new Error(`element ${new Locator(locator).toString()} still not clickable after ${waitTimeout || this.options.waitForTimeout / 1000} sec`)
       } else {
         throw e
       }
@@ -3177,10 +3099,8 @@ class Puppeteer extends Helper {
     } else {
       waiter = _waitForElement.call(this, locator, { timeout: waitTimeout })
     }
-    return waiter.catch((err) => {
-      throw new Error(
-        `element (${locator.toString()}) still not present on page after ${waitTimeout / 1000} sec\n${err.message}`,
-      )
+    return waiter.catch(err => {
+      throw new Error(`element (${locator.toString()}) still not present on page after ${waitTimeout / 1000} sec\n${err.message}`)
     })
   }
 
@@ -3210,10 +3130,8 @@ class Puppeteer extends Helper {
     } else {
       waiter = _waitForElement.call(this, locator, { timeout: waitTimeout, visible: true })
     }
-    return waiter.catch((err) => {
-      throw new Error(
-        `element (${locator.toString()}) still not visible after ${waitTimeout / 1000} sec\n${err.message}`,
-      )
+    return waiter.catch(err => {
+      throw new Error(`element (${locator.toString()}) still not visible after ${waitTimeout / 1000} sec\n${err.message}`)
     })
   }
 
@@ -3241,7 +3159,7 @@ class Puppeteer extends Helper {
     } else {
       waiter = _waitForElement.call(this, locator, { timeout: waitTimeout, hidden: true })
     }
-    return waiter.catch((err) => {
+    return waiter.catch(err => {
       throw new Error(`element (${locator.toString()}) still visible after ${waitTimeout / 1000} sec\n${err.message}`)
     })
   }
@@ -3269,10 +3187,8 @@ class Puppeteer extends Helper {
     } else {
       waiter = _waitForElement.call(this, locator, { timeout: waitTimeout, hidden: true })
     }
-    return waiter.catch((err) => {
-      throw new Error(
-        `element (${locator.toString()}) still not hidden after ${waitTimeout / 1000} sec\n${err.message}`,
-      )
+    return waiter.catch(err => {
+      throw new Error(`element (${locator.toString()}) still not hidden after ${waitTimeout / 1000} sec\n${err.message}`)
     })
   }
 
@@ -3327,14 +3243,14 @@ class Puppeteer extends Helper {
 
     return this.page
       .waitForFunction(
-        (urlPart) => {
+        urlPart => {
           const currUrl = decodeURIComponent(decodeURIComponent(decodeURIComponent(window.location.href)))
           return currUrl.indexOf(urlPart) > -1
         },
         { timeout: waitTimeout },
         urlPart,
       )
-      .catch(async (e) => {
+      .catch(async e => {
         const currUrl = await this._getPageUrl() // Required because the waitForFunction can't return data.
         if (/Waiting failed:/i.test(e.message) || /failed: timeout/i.test(e.message)) {
           throw new Error(`expected url to include ${urlPart}, but found ${currUrl}`)
@@ -3367,14 +3283,14 @@ class Puppeteer extends Helper {
 
     return this.page
       .waitForFunction(
-        (urlPart) => {
+        urlPart => {
           const currUrl = decodeURIComponent(decodeURIComponent(decodeURIComponent(window.location.href)))
           return currUrl.indexOf(urlPart) > -1
         },
         { timeout: waitTimeout },
         urlPart,
       )
-      .catch(async (e) => {
+      .catch(async e => {
         const currUrl = await this._getPageUrl() // Required because the waitForFunction can't return data.
         if (/Waiting failed/i.test(e.message) || /failed: timeout/i.test(e.message)) {
           throw new Error(`expected url to be ${urlPart}, but found ${currUrl}`)
@@ -3424,7 +3340,7 @@ class Puppeteer extends Helper {
       if (locator.isXPath()) {
         waiter = contextObject.waitForFunction(
           (locator, text, $XPath) => {
-            eval($XPath) // eslint-disable-line no-eval
+            eval($XPath)
             const el = $XPath(null, locator)
             if (!el.length) return false
             return el[0].innerText.indexOf(text) > -1
@@ -3436,14 +3352,10 @@ class Puppeteer extends Helper {
         )
       }
     } else {
-      waiter = contextObject.waitForFunction(
-        (text) => document.body && document.body.innerText.indexOf(text) > -1,
-        { timeout: waitTimeout },
-        text,
-      )
+      waiter = contextObject.waitForFunction(text => document.body && document.body.innerText.indexOf(text) > -1, { timeout: waitTimeout }, text)
     }
 
-    return waiter.catch((err) => {
+    return waiter.catch(err => {
       throw new Error(`Text "${text}" was not found on page after ${waitTimeout / 1000} sec\n${err.message}`)
     })
   }
@@ -3612,12 +3524,12 @@ class Puppeteer extends Helper {
       waiter = context.waitForFunction(visibleFn, { timeout: waitTimeout }, locator.value)
     } else {
       const visibleFn = function (locator, $XPath) {
-        eval($XPath) // eslint-disable-line no-eval
+        eval($XPath)
         return $XPath(null, locator).length === 0
       }
       waiter = context.waitForFunction(visibleFn, { timeout: waitTimeout }, locator.value, $XPath.toString())
     }
-    return waiter.catch((err) => {
+    return waiter.catch(err => {
       throw new Error(`element (${locator.toString()}) still on page after ${waitTimeout / 1000} sec\n${err.message}`)
     })
   }
@@ -3698,7 +3610,7 @@ class Puppeteer extends Helper {
   async mockRoute(url, handler) {
     await this.page.setRequestInterception(true)
 
-    this.page.on('request', (interceptedRequest) => {
+    this.page.on('request', interceptedRequest => {
       if (interceptedRequest.url().match(url)) {
         // @ts-ignore
         handler(interceptedRequest)
@@ -3723,7 +3635,7 @@ class Puppeteer extends Helper {
     this.page.off('request')
 
     // Resume normal request handling for the given URL
-    this.page.on('request', (interceptedRequest) => {
+    this.page.on('request', interceptedRequest => {
       if (interceptedRequest.url().includes(url)) {
         interceptedRequest.continue()
       } else {
@@ -3777,7 +3689,7 @@ class Puppeteer extends Helper {
 
     await this.page.setRequestInterception(true)
 
-    this.page.on('request', (request) => {
+    this.page.on('request', request => {
       const information = {
         url: request.url(),
         method: request.method(),
@@ -3905,15 +3817,15 @@ class Puppeteer extends Helper {
     await this.cdpSession.send('Network.enable')
     await this.cdpSession.send('Page.enable')
 
-    this.cdpSession.on('Network.webSocketFrameReceived', (payload) => {
+    this.cdpSession.on('Network.webSocketFrameReceived', payload => {
       this._logWebsocketMessages(this._getWebSocketLog('RECEIVED', payload))
     })
 
-    this.cdpSession.on('Network.webSocketFrameSent', (payload) => {
+    this.cdpSession.on('Network.webSocketFrameSent', payload => {
       this._logWebsocketMessages(this._getWebSocketLog('SENT', payload))
     })
 
-    this.cdpSession.on('Network.webSocketFrameError', (payload) => {
+    this.cdpSession.on('Network.webSocketFrameError', payload => {
       this._logWebsocketMessages(this._getWebSocketLog('ERROR', payload))
     })
   }
@@ -3944,9 +3856,7 @@ class Puppeteer extends Helper {
   grabWebSocketMessages() {
     if (!this.recordingWebSocketMessages) {
       if (!this.recordedWebSocketMessagesAtLeastOnce) {
-        throw new Error(
-          'Failure in test automation. You use "I.grabWebSocketMessages", but "I.startRecordingWebSocketMessages" was never called before.',
-        )
+        throw new Error('Failure in test automation. You use "I.grabWebSocketMessages", but "I.startRecordingWebSocketMessages" was never called before.')
       }
     }
     return this.webSocketMessages
@@ -3998,12 +3908,7 @@ async function proceedClick(locator, context = null, options = {}) {
   }
   const els = await findClickable.call(this, matcher, locator)
   if (context) {
-    assertElementExists(
-      els,
-      locator,
-      'Clickable element',
-      `was not found inside element ${new Locator(context).toString()}`,
-    )
+    assertElementExists(els, locator, 'Clickable element', `was not found inside element ${new Locator(context).toString()}`)
   } else {
     assertElementExists(els, locator, 'Clickable element')
   }
@@ -4055,23 +3960,25 @@ async function proceedSee(assertType, text, context, strict = false) {
       el = await this.context.$('body')
     }
 
-    allText = [await el.getProperty('innerText').then((p) => p.jsonValue())]
+    allText = [await el.getProperty('innerText').then(p => p.jsonValue())]
     description = 'web application'
   } else {
     const locator = new Locator(context, 'css')
     description = `element ${locator.toString()}`
     const els = await this._locate(locator)
     assertElementExists(els, locator.toString())
-    allText = await Promise.all(els.map((el) => el.getProperty('innerText').then((p) => p.jsonValue())))
+    allText = await Promise.all(els.map(el => el.getProperty('innerText').then(p => p.jsonValue())))
+  }
+
+  if (store?.currentStep?.opts?.ignoreCase === true) {
+    text = text.toLowerCase()
+    allText = allText.map(elText => elText.toLowerCase())
   }
 
   if (strict) {
-    return allText.map((elText) => equals(description)[assertType](text, elText))
+    return allText.map(elText => equals(description)[assertType](text, elText))
   }
-  return stringIncludes(description)[assertType](
-    normalizeSpacesInString(text),
-    normalizeSpacesInString(allText.join(' | ')),
-  )
+  return stringIncludes(description)[assertType](normalizeSpacesInString(text), normalizeSpacesInString(allText.join(' | ')))
 }
 
 async function findCheckable(locator, context) {
@@ -4101,15 +4008,15 @@ async function findCheckable(locator, context) {
 async function proceedIsChecked(assertType, option) {
   let els = await findCheckable.call(this, option)
   assertElementExists(els, option, 'Checkable')
-  els = await Promise.all(els.map((el) => el.getProperty('checked')))
-  els = await Promise.all(els.map((el) => el.jsonValue()))
+  els = await Promise.all(els.map(el => el.getProperty('checked')))
+  els = await Promise.all(els.map(el => el.jsonValue()))
   const selected = els.reduce((prev, cur) => prev || cur)
   return truth(`checkable ${option}`, 'to be checked')[assertType](selected)
 }
 
 async function findVisibleFields(locator) {
   const els = await findFields.call(this, locator)
-  const visible = await Promise.all(els.map((el) => el.boundingBox()))
+  const visible = await Promise.all(els.map(el => el.boundingBox()))
   return els.filter((el, index) => visible[index])
 }
 
@@ -4162,15 +4069,15 @@ async function proceedSeeInField(assertType, field, value) {
   const els = await findVisibleFields.call(this, field)
   assertElementExists(els, field, 'Field')
   const el = els[0]
-  const tag = await el.getProperty('tagName').then((el) => el.jsonValue())
-  const fieldType = await el.getProperty('type').then((el) => el.jsonValue())
+  const tag = await el.getProperty('tagName').then(el => el.jsonValue())
+  const fieldType = await el.getProperty('type').then(el => el.jsonValue())
 
-  const proceedMultiple = async (elements) => {
+  const proceedMultiple = async elements => {
     const fields = Array.isArray(elements) ? elements : [elements]
 
     const elementValues = []
     for (const element of fields) {
-      elementValues.push(await element.getProperty('value').then((el) => el.jsonValue()))
+      elementValues.push(await element.getProperty('value').then(el => el.jsonValue()))
     }
 
     if (typeof value === 'boolean') {
@@ -4179,7 +4086,7 @@ async function proceedSeeInField(assertType, field, value) {
       if (assertType === 'assert') {
         equals(`select option by ${field}`)[assertType](true, elementValues.length > 0)
       }
-      elementValues.forEach((val) => stringIncludes(`fields by ${field}`)[assertType](value, val))
+      elementValues.forEach(val => stringIncludes(`fields by ${field}`)[assertType](value, val))
     }
   }
 
@@ -4207,14 +4114,14 @@ async function proceedSeeInField(assertType, field, value) {
     }
     return proceedMultiple(els[0])
   }
-  const fieldVal = await el.getProperty('value').then((el) => el.jsonValue())
+  const fieldVal = await el.getProperty('value').then(el => el.jsonValue())
   return stringIncludes(`fields by ${field}`)[assertType](value, fieldVal)
 }
 
 async function filterFieldsByValue(elements, value, onlySelected) {
   const matches = []
   for (const element of elements) {
-    const val = await element.getProperty('value').then((el) => el.jsonValue())
+    const val = await element.getProperty('value').then(el => el.jsonValue())
     let isSelected = true
     if (onlySelected) {
       isSelected = await elementSelected(element)
@@ -4238,12 +4145,12 @@ async function filterFieldsBySelectionState(elements, state) {
 }
 
 async function elementSelected(element) {
-  const type = await element.getProperty('type').then((el) => el.jsonValue())
+  const type = await element.getProperty('type').then(el => el.jsonValue())
 
   if (type === 'checkbox' || type === 'radio') {
-    return element.getProperty('checked').then((el) => el.jsonValue())
+    return element.getProperty('checked').then(el => el.jsonValue())
   }
-  return element.getProperty('selected').then((el) => el.jsonValue())
+  return element.getProperty('selected').then(el => el.jsonValue())
 }
 
 function isFrameLocator(locator) {
@@ -4278,9 +4185,9 @@ async function targetCreatedHandler(page) {
     page
       .$('body')
       .catch(() => null)
-      .then((context) => (this.context = context))
+      .then(context => (this.context = context))
   })
-  page.on('console', (msg) => {
+  page.on('console', msg => {
     this.debugSection(`Browser:${ucfirst(msg.type())}`, (msg._text || '') + msg.args().join(' '))
     consoleLogStore.add(msg)
   })
@@ -4387,7 +4294,7 @@ async function findReactElements(locator, props = {}, state = {}) {
 
   await this.page.evaluate(() => window.resq.waitToLoadReact())
   const arrayHandle = await this.page.evaluateHandle(
-    (obj) => {
+    obj => {
       const { selector, props, state } = obj
       let elements = window.resq.resq$$(selector)
       if (Object.keys(props).length) {
@@ -4406,7 +4313,7 @@ async function findReactElements(locator, props = {}, state = {}) {
       // [[div, div], [div, div]] => [div, div, div, div]
       let nodes = []
 
-      elements.forEach((element) => {
+      elements.forEach(element => {
         let { node, isFragment } = element
 
         if (!node) {

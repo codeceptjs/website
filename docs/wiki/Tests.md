@@ -1358,7 +1358,7 @@ Created by [Testomat.io](https://testomat.io/)
       * ✔️ `should inject custom opts to opts and without callback` <!-- check-tests: Add test docs below id=494969b1de1e2902517c3670b98a4b08e6e62cb8 -->
       * ✔️ `should inject custom opts to opts and with callback` <!-- check-tests: Add test docs below id=54a127615f2552b5cc4602f67a9c98d7fca76214 -->
 
-📝 [test/unit/utils.js_test.js](https://github.com/codeceptjs/CodeceptJS/tree/d60dde173b5aecc06e45de0a6b86a43dec69f8ef/test/unit/utils.js_test.js) <!-- check-tests: Add test docs below id=645ed189d4e3fa28e6795dcb1617ec2ada00f30d -->
+📝 [test/unit/utils_test.js](https://github.com/codeceptjs/CodeceptJS/tree/d60dde173b5aecc06e45de0a6b86a43dec69f8ef/test/unit/utils_test.js) <!-- check-tests: Add test docs below id=645ed189d4e3fa28e6795dcb1617ec2ada00f30d -->
 * 📎 **utils** <!-- check-tests: Add test docs below id=d83b5fd444b48193a438de0cd119a587385fadf0 -->
   * 📎 **#fileExists** <!-- check-tests: Add test docs below id=35580d7d8d1a4c9e88ec8ae8f6efc0b59a36fb74 -->
     * ✔️ `exists` <!-- check-tests: Add test docs below id=53b79a29cfa6bb80d18a10caa09be789503faeb1 -->

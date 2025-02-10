@@ -21,9 +21,8 @@ const Locator = require('../locator')
 /**
  * Client Functions
  */
-const getPageUrl = (t) => ClientFunction(() => document.location.href).with({ boundTestRun: t })
-const getHtmlSource = (t) =>
-  ClientFunction(() => document.getElementsByTagName('html')[0].innerHTML).with({ boundTestRun: t })
+const getPageUrl = t => ClientFunction(() => document.location.href).with({ boundTestRun: t })
+const getHtmlSource = t => ClientFunction(() => document.getElementsByTagName('html')[0].innerHTML).with({ boundTestRun: t })
 
 /**
  * Uses [TestCafe](https://github.com/DevExpress/testcafe) library to run cross-browser tests.
@@ -187,7 +186,7 @@ class TestCafe extends Helper {
         assertionTimeout: this.options.waitForTimeout,
         takeScreenshotsOnFails: true,
       })
-      .catch((err) => {
+      .catch(err => {
         this.debugSection('_before', `Error ${err.toString()}`)
         this.isRunning = false
         this.testcafe.close()
@@ -208,7 +207,7 @@ class TestCafe extends Helper {
           skipJsErrors: true,
           skipUncaughtErrors: true,
         })
-        .catch((err) => {
+        .catch(err => {
           this.debugSection('_before', `Error ${err.toString()}`)
           this.isRunning = false
           this.testcafe.close()
@@ -260,7 +259,7 @@ class TestCafe extends Helper {
       await this.clearCookie()
 
       // TODO IMHO that should only happen when
-      await this.executeScript(() => localStorage.clear()).catch((err) => {
+      await this.executeScript(() => localStorage.clear()).catch(err => {
         if (!(err.message.indexOf("Storage is disabled inside 'data:' URLs.") > -1)) throw err
       })
     }
@@ -462,7 +461,6 @@ class TestCafe extends Helper {
    * 
    */
   async refreshPage() {
-    // eslint-disable-next-line no-restricted-globals
     return this.t.eval(() => location.reload(true), { boundTestRun: this.t }).catch(mapError)
   }
 
@@ -483,9 +481,7 @@ class TestCafe extends Helper {
   async waitForVisible(locator, sec) {
     const timeout = sec ? sec * 1000 : undefined
 
-    return (await findElements.call(this, this.context, locator))
-      .with({ visibilityCheck: true, timeout })()
-      .catch(mapError)
+    return (await findElements.call(this, this.context, locator)).with({ visibilityCheck: true, timeout })().catch(mapError)
   }
 
   /**
@@ -820,7 +816,6 @@ class TestCafe extends Helper {
           await this.t.click(optEl).catch(mapError)
           continue
         }
-        // eslint-disable-next-line no-empty
       } catch (err) {}
 
       try {
@@ -829,7 +824,6 @@ class TestCafe extends Helper {
         if (await optEl.count) {
           await this.t.click(optEl).catch(mapError)
         }
-        // eslint-disable-next-line no-empty
       } catch (err) {}
     }
   }
@@ -944,10 +938,7 @@ class TestCafe extends Helper {
       els = (await findElements.call(this, this.context, 'body')).withText(text)
     }
 
-    return this.t
-      .expect(els.filterVisible().count)
-      .eql(0, `Element with text "${text}" can still be seen`)
-      .catch(mapError)
+    return this.t.expect(els.filterVisible().count).eql(0, `Element with text "${text}" can still be seen`).catch(mapError)
   }
 
   /**
@@ -1217,7 +1208,7 @@ class TestCafe extends Helper {
    * 
    */
   async wait(sec) {
-    return new Promise((done) => {
+    return new Promise(done => {
       setTimeout(done, sec * 1000)
     })
   }
@@ -1483,10 +1474,7 @@ class TestCafe extends Helper {
     return ClientFunction(() => {
       const body = document.body
       const html = document.documentElement
-      window.scrollTo(
-        0,
-        Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight),
-      )
+      window.scrollTo(0, Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight))
     })
       .with({ boundTestRun: this.t })()
       .catch(mapError)
@@ -1514,7 +1502,7 @@ class TestCafe extends Helper {
       locator = null
     }
 
-    const scrollBy = ClientFunction((offset) => {
+    const scrollBy = ClientFunction(offset => {
       if (window && window.scrollBy && offset) {
         window.scrollBy(offset.x, offset.y)
       }
@@ -1651,10 +1639,10 @@ class TestCafe extends Helper {
   async grabCookie(name) {
     if (!name) {
       const getCookie = ClientFunction(() => {
-        return document.cookie.split(';').map((c) => c.split('='))
+        return document.cookie.split(';').map(c => c.split('='))
       }).with({ boundTestRun: this.t })
       const cookies = await getCookie()
-      return cookies.map((cookie) => ({ name: cookie[0].trim(), value: cookie[1] }))
+      return cookies.map(cookie => ({ name: cookie[0].trim(), value: cookie[1] }))
     }
     const getCookie = ClientFunction(
       () => {
@@ -1673,7 +1661,7 @@ class TestCafe extends Helper {
    * 
    * ```js
    * I.clearCookie();
-   * I.clearCookie('test'); // Playwright currently doesn't support clear a particular cookie name
+   * I.clearCookie('test');
    * ```
    * 
    * @param {?string} [cookie=null] (optional, `null` by default) cookie name
@@ -1715,7 +1703,7 @@ class TestCafe extends Helper {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
 
     const clientFn = createClientFunction(
-      (urlPart) => {
+      urlPart => {
         const currUrl = decodeURIComponent(decodeURIComponent(decodeURIComponent(window.location.href)))
         return currUrl.indexOf(urlPart) > -1
       },
@@ -1750,7 +1738,7 @@ class TestCafe extends Helper {
     }
 
     const clientFn = createClientFunction(
-      (urlPart) => {
+      urlPart => {
         const currUrl = decodeURIComponent(decodeURIComponent(decodeURIComponent(window.location.href)))
         return currUrl === urlPart
       },
@@ -1859,9 +1847,7 @@ class TestCafe extends Helper {
   async waitToHide(locator, sec) {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
 
-    return this.t
-      .expect(createSelector(locator).filterHidden().with({ boundTestRun: this.t }).exists)
-      .notOk({ timeout: waitTimeout })
+    return this.t.expect(createSelector(locator).filterHidden().with({ boundTestRun: this.t }).exists).notOk({ timeout: waitTimeout })
   }
 
   /**
@@ -1880,9 +1866,7 @@ class TestCafe extends Helper {
   async waitForInvisible(locator, sec) {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
 
-    return this.t
-      .expect(createSelector(locator).filterVisible().with({ boundTestRun: this.t }).exists)
-      .ok({ timeout: waitTimeout })
+    return this.t.expect(createSelector(locator).filterVisible().with({ boundTestRun: this.t }).exists).ok({ timeout: waitTimeout })
   }
 
   /**
@@ -1922,7 +1906,7 @@ class TestCafe extends Helper {
 
 async function waitForFunction(browserFn, waitTimeout) {
   const pause = () =>
-    new Promise((done) => {
+    new Promise(done => {
       setTimeout(done, 50)
     })
 
@@ -1946,13 +1930,13 @@ async function waitForFunction(browserFn, waitTimeout) {
   }
 }
 
-const createSelector = (locator) => {
+const createSelector = locator => {
   locator = new Locator(locator, 'css')
   if (locator.isXPath()) return elementByXPath(locator.value)
   return Selector(locator.simplify())
 }
 
-const elementByXPath = (xpath) => {
+const elementByXPath = xpath => {
   assert(xpath, 'xpath is required')
 
   return Selector(
@@ -1985,9 +1969,7 @@ async function findElements(matcher, locator) {
   locator = new Locator(locator, 'css')
 
   if (!locator.isXPath()) {
-    return matcher
-      ? matcher.find(locator.simplify())
-      : Selector(locator.simplify()).with({ timeout: 0, boundTestRun: this.t })
+    return matcher ? matcher.find(locator.simplify()) : Selector(locator.simplify()).with({ timeout: 0, boundTestRun: this.t })
   }
 
   if (!matcher) return elementByXPath(locator.value).with({ timeout: 0, boundTestRun: this.t })
@@ -2016,12 +1998,7 @@ async function proceedClick(locator, context = null) {
 
   const els = await findClickable.call(this, matcher, locator)
   if (context) {
-    await assertElementExists(
-      els,
-      locator,
-      'Clickable element',
-      `was not found inside element ${new Locator(context).toString()}`,
-    )
+    await assertElementExists(els, locator, 'Clickable element', `was not found inside element ${new Locator(context).toString()}`)
   } else {
     await assertElementExists(els, locator, 'Clickable element')
   }

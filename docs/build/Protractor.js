@@ -117,9 +117,7 @@ class Protractor extends Helper {
     this.isRunning = false
     this._setConfig(config)
 
-    console.log(
-      'Protractor helper is deprecated as well as Protractor itself.\nThis helper will be removed in next major release',
-    )
+    console.log('Protractor helper is deprecated as well as Protractor itself.\nThis helper will be removed in next major release')
   }
 
   _validateConfig(config) {
@@ -152,7 +150,7 @@ class Protractor extends Helper {
   }
 
   async _init() {
-    process.on('unhandledRejection', (reason) => {
+    process.on('unhandledRejection', reason => {
       if (reason.message.indexOf('ECONNREFUSED') > 0) {
         this.browser = null
       }
@@ -288,9 +286,7 @@ class Protractor extends Helper {
     if (frame) {
       if (Array.isArray(frame)) {
         withinStore.frame = frame.join('>')
-        return this.switchTo(null).then(() =>
-          frame.reduce((p, frameLocator) => p.then(() => this.switchTo(frameLocator)), Promise.resolve()),
-        )
+        return this.switchTo(null).then(() => frame.reduce((p, frameLocator) => p.then(() => this.switchTo(frameLocator)), Promise.resolve()))
       }
       withinStore.frame = frame
       return this.switchTo(locator)
@@ -300,8 +296,8 @@ class Protractor extends Helper {
     const context = await global.element(guessLocator(locator) || global.by.css(locator))
     if (!context) throw new ElementNotFound(locator)
 
-    this.browser.findElement = (l) => (l ? context.element(l).getWebElement() : context.getWebElement())
-    this.browser.findElements = (l) => context.all(l).getWebElements()
+    this.browser.findElement = l => (l ? context.element(l).getWebElement() : context.getWebElement())
+    this.browser.findElements = l => context.all(l).getWebElements()
     return context
   }
 
@@ -320,7 +316,7 @@ class Protractor extends Helper {
   _session() {
     const defaultSession = this.browser
     return {
-      start: async (opts) => {
+      start: async opts => {
         opts = this._validateConfig(Object.assign(this.options, opts))
         this.debugSection('New Browser', JSON.stringify(opts))
         const runner = new Runner(opts)
@@ -331,10 +327,10 @@ class Protractor extends Helper {
         await browser.manage().window().setSize(parseInt(res[0], 10), parseInt(res[1], 10))
         return browser.ready
       },
-      stop: async (browser) => {
+      stop: async browser => {
         return browser.close()
       },
-      loadVars: async (browser) => {
+      loadVars: async browser => {
         if (isWithin()) throw new Error("Can't start session inside within block")
         this.browser = browser
         loadGlobals(this.browser)
@@ -717,7 +713,7 @@ class Protractor extends Helper {
       if (!els.length) {
         els = await field.findElements(global.by.xpath(Locator.select.byValue(opt)))
       }
-      els.forEach((el) => promises.push(el.click()))
+      els.forEach(el => promises.push(el.click()))
     }
 
     return Promise.all(promises)
@@ -1041,7 +1037,7 @@ class Protractor extends Helper {
     const els = await this._locate(locator)
 
     const html = await Promise.all(
-      els.map((el) => {
+      els.map(el => {
         return this.browser.executeScript('return arguments[0].innerHTML;', el)
       }),
     )
@@ -1085,7 +1081,7 @@ class Protractor extends Helper {
    */
   async grabValueFromAll(locator) {
     const els = await findFields(this.browser, locator)
-    const values = await Promise.all(els.map((el) => el.getAttribute('value')))
+    const values = await Promise.all(els.map(el => el.getAttribute('value')))
 
     return values
   }
@@ -1127,7 +1123,7 @@ class Protractor extends Helper {
    */
   async grabCssPropertyFromAll(locator, cssProperty) {
     const els = await this._locate(locator, true)
-    const values = await Promise.all(els.map((el) => el.getCssValue(cssProperty)))
+    const values = await Promise.all(els.map(el => el.getCssValue(cssProperty)))
 
     return values
   }
@@ -1215,7 +1211,7 @@ class Protractor extends Helper {
    * 
    */
   async seeInTitle(text) {
-    return this.browser.getTitle().then((title) => stringIncludes('web page title').assert(text, title))
+    return this.browser.getTitle().then(title => stringIncludes('web page title').assert(text, title))
   }
 
   /**
@@ -1246,7 +1242,7 @@ class Protractor extends Helper {
    * 
    */
   async dontSeeInTitle(text) {
-    return this.browser.getTitle().then((title) => stringIncludes('web page title').negate(text, title))
+    return this.browser.getTitle().then(title => stringIncludes('web page title').negate(text, title))
   }
 
   /**
@@ -1260,7 +1256,7 @@ class Protractor extends Helper {
    * @returns {Promise<string>} title
    */
   async grabTitle() {
-    return this.browser.getTitle().then((title) => {
+    return this.browser.getTitle().then(title => {
       this.debugSection('Title', title)
       return title
     })
@@ -1279,8 +1275,8 @@ class Protractor extends Helper {
    */
   async seeElement(locator) {
     let els = await this._locate(locator, true)
-    els = await Promise.all(els.map((el) => el.isDisplayed()))
-    return empty('elements').negate(els.filter((v) => v).fill('ELEMENT'))
+    els = await Promise.all(els.map(el => el.isDisplayed()))
+    return empty('elements').negate(els.filter(v => v).fill('ELEMENT'))
   }
 
   /**
@@ -1296,8 +1292,8 @@ class Protractor extends Helper {
    */
   async dontSeeElement(locator) {
     let els = await this._locate(locator, false)
-    els = await Promise.all(els.map((el) => el.isDisplayed()))
-    return empty('elements').assert(els.filter((v) => v).fill('ELEMENT'))
+    els = await Promise.all(els.map(el => el.isDisplayed()))
+    return empty('elements').assert(els.filter(v => v).fill('ELEMENT'))
   }
 
   /**
@@ -1312,9 +1308,7 @@ class Protractor extends Helper {
    * 
    */
   async seeElementInDOM(locator) {
-    return this.browser
-      .findElements(guessLocator(locator) || global.by.css(locator))
-      .then((els) => empty('elements').negate(els.fill('ELEMENT')))
+    return this.browser.findElements(guessLocator(locator) || global.by.css(locator)).then(els => empty('elements').negate(els.fill('ELEMENT')))
   }
 
   /**
@@ -1329,9 +1323,7 @@ class Protractor extends Helper {
    * 
    */
   async dontSeeElementInDOM(locator) {
-    return this.browser
-      .findElements(guessLocator(locator) || global.by.css(locator))
-      .then((els) => empty('elements').assert(els.fill('ELEMENT')))
+    return this.browser.findElements(guessLocator(locator) || global.by.css(locator)).then(els => empty('elements').assert(els.fill('ELEMENT')))
   }
 
   /**
@@ -1345,7 +1337,7 @@ class Protractor extends Helper {
    * 
    */
   async seeInSource(text) {
-    return this.browser.getPageSource().then((source) => stringIncludes('HTML source of a page').assert(text, source))
+    return this.browser.getPageSource().then(source => stringIncludes('HTML source of a page').assert(text, source))
   }
 
   /**
@@ -1374,7 +1366,7 @@ class Protractor extends Helper {
    * 
    */
   async dontSeeInSource(text) {
-    return this.browser.getPageSource().then((source) => stringIncludes('HTML source of a page').negate(text, source))
+    return this.browser.getPageSource().then(source => stringIncludes('HTML source of a page').negate(text, source))
   }
 
   /**
@@ -1393,9 +1385,7 @@ class Protractor extends Helper {
    */
   async seeNumberOfElements(locator, num) {
     const elements = await this._locate(locator)
-    return equals(
-      `expected number of elements (${new Locator(locator)}) is ${num}, but found ${elements.length}`,
-    ).assert(elements.length, num)
+    return equals(`expected number of elements (${new Locator(locator)}) is ${num}, but found ${elements.length}`).assert(elements.length, num)
   }
 
   /**
@@ -1413,10 +1403,7 @@ class Protractor extends Helper {
    */
   async seeNumberOfVisibleElements(locator, num) {
     const res = await this.grabNumberOfVisibleElements(locator)
-    return equals(`expected number of visible elements (${new Locator(locator)}) is ${num}, but found ${res}`).assert(
-      res,
-      num,
-    )
+    return equals(`expected number of visible elements (${new Locator(locator)}) is ${num}, but found ${res}`).assert(res, num)
   }
 
   /**
@@ -1432,7 +1419,7 @@ class Protractor extends Helper {
    */
   async grabNumberOfVisibleElements(locator) {
     let els = await this._locate(locator)
-    els = await Promise.all(els.map((el) => el.isDisplayed()))
+    els = await Promise.all(els.map(el => el.isDisplayed()))
     return els.length
   }
 
@@ -1455,11 +1442,11 @@ class Protractor extends Helper {
     const cssPropertiesCamelCase = convertCssPropertiesToCamelCase(cssProperties)
 
     const attributeNames = Object.keys(cssPropertiesCamelCase)
-    const expectedValues = attributeNames.map((name) => cssPropertiesCamelCase[name])
+    const expectedValues = attributeNames.map(name => cssPropertiesCamelCase[name])
     const missingAttributes = []
 
     for (const el of els) {
-      const attributeValues = await Promise.all(attributeNames.map((attr) => el.getCssValue(attr)))
+      const attributeValues = await Promise.all(attributeNames.map(attr => el.getCssValue(attr)))
 
       const missing = attributeValues.filter((actual, i) => {
         const prop = attributeNames[i]
@@ -1473,9 +1460,7 @@ class Protractor extends Helper {
         missingAttributes.push(...missing)
       }
     }
-    return equals(
-      `all elements (${new Locator(locator)}) to have CSS property ${JSON.stringify(cssProperties)}`,
-    ).assert(missingAttributes.length, 0)
+    return equals(`all elements (${new Locator(locator)}) to have CSS property ${JSON.stringify(cssProperties)}`).assert(missingAttributes.length, 0)
   }
 
   /**
@@ -1495,11 +1480,11 @@ class Protractor extends Helper {
     assertElementExists(els, locator)
 
     const attributeNames = Object.keys(attributes)
-    const expectedValues = attributeNames.map((name) => attributes[name])
+    const expectedValues = attributeNames.map(name => attributes[name])
     const missingAttributes = []
 
     for (const el of els) {
-      const attributeValues = await Promise.all(attributeNames.map((attr) => el.getAttribute(attr)))
+      const attributeValues = await Promise.all(attributeNames.map(attr => el.getAttribute(attr)))
       const missing = attributeValues.filter((actual, i) => {
         if (expectedValues[i] instanceof RegExp) {
           return expectedValues[i].test(actual)
@@ -1511,10 +1496,7 @@ class Protractor extends Helper {
       }
     }
 
-    return equals(`all elements (${new Locator(locator)}) to have attributes ${JSON.stringify(attributes)}`).assert(
-      missingAttributes.length,
-      0,
-    )
+    return equals(`all elements (${new Locator(locator)}) to have attributes ${JSON.stringify(attributes)}`).assert(missingAttributes.length, 0)
   }
 
   /**
@@ -1594,7 +1576,7 @@ class Protractor extends Helper {
    * 
    */
   async seeInCurrentUrl(url) {
-    return this.browser.getCurrentUrl().then((currentUrl) => stringIncludes('url').assert(url, currentUrl))
+    return this.browser.getCurrentUrl().then(currentUrl => stringIncludes('url').assert(url, currentUrl))
   }
 
   /**
@@ -1605,7 +1587,7 @@ class Protractor extends Helper {
    * 
    */
   async dontSeeInCurrentUrl(url) {
-    return this.browser.getCurrentUrl().then((currentUrl) => stringIncludes('url').negate(url, currentUrl))
+    return this.browser.getCurrentUrl().then(currentUrl => stringIncludes('url').negate(url, currentUrl))
   }
 
   /**
@@ -1623,7 +1605,7 @@ class Protractor extends Helper {
    * 
    */
   async seeCurrentUrlEquals(url) {
-    return this.browser.getCurrentUrl().then((currentUrl) => urlEquals(this.options.url).assert(url, currentUrl))
+    return this.browser.getCurrentUrl().then(currentUrl => urlEquals(this.options.url).assert(url, currentUrl))
   }
 
   /**
@@ -1640,7 +1622,7 @@ class Protractor extends Helper {
    * 
    */
   async dontSeeCurrentUrlEquals(url) {
-    return this.browser.getCurrentUrl().then((currentUrl) => urlEquals(this.options.url).negate(url, currentUrl))
+    return this.browser.getCurrentUrl().then(currentUrl => urlEquals(this.options.url).negate(url, currentUrl))
   }
 
   /**
@@ -1665,7 +1647,7 @@ class Protractor extends Helper {
       const stream = fs.createWriteStream(outputFile)
       stream.write(Buffer.from(png, 'base64'))
       stream.end()
-      return new Promise((resolve) => stream.on('finish', resolve)) // eslint-disable-line no-promise-executor-return
+      return new Promise(resolve => stream.on('finish', resolve))
     }
 
     const res = await this._locate(locator)
@@ -1700,7 +1682,7 @@ class Protractor extends Helper {
       const stream = fs.createWriteStream(outputFile)
       stream.write(Buffer.from(png, 'base64'))
       stream.end()
-      return new Promise((resolve) => stream.on('finish', resolve)) // eslint-disable-line no-promise-executor-return
+      return new Promise(resolve => stream.on('finish', resolve))
     }
 
     if (!fullPage) {
@@ -1728,7 +1710,7 @@ class Protractor extends Helper {
    * 
    * ```js
    * I.clearCookie();
-   * I.clearCookie('test'); // Playwright currently doesn't support clear a particular cookie name
+   * I.clearCookie('test');
    * ```
    * 
    * @param {?string} [cookie=null] (optional, `null` by default) cookie name
@@ -1756,7 +1738,7 @@ class Protractor extends Helper {
     return this.browser
       .manage()
       .getCookie(name)
-      .then((res) => truth(`cookie ${name}`, 'to be set').assert(res))
+      .then(res => truth(`cookie ${name}`, 'to be set').assert(res))
   }
 
   /**
@@ -1774,7 +1756,7 @@ class Protractor extends Helper {
     return this.browser
       .manage()
       .getCookie(name)
-      .then((res) => truth(`cookie ${name}`, 'to be set').negate(res))
+      .then(res => truth(`cookie ${name}`, 'to be set').negate(res))
   }
 
   /**
@@ -1906,11 +1888,11 @@ class Protractor extends Helper {
 
     const handles = await client.getAllWindowHandles()
     const currentHandle = await client.getWindowHandle()
-    const otherHandles = handles.filter((handle) => handle !== currentHandle)
+    const otherHandles = handles.filter(handle => handle !== currentHandle)
 
     if (!otherHandles || !otherHandles.length) return
     let p = Promise.resolve()
-    otherHandles.forEach((handle) => {
+    otherHandles.forEach(handle => {
       p = p.then(() =>
         client
           .switchTo()
@@ -2103,7 +2085,7 @@ class Protractor extends Helper {
   async waitForDetached(locator, sec = null) {
     const aSec = sec || this.options.waitForTimeoutInSeconds
     const el = global.element(guessLocator(locator) || global.by.css(locator))
-    return this.browser.wait(EC.not(EC.presenceOf(el)), aSec * 1000).catch((err) => {
+    return this.browser.wait(EC.not(EC.presenceOf(el)), aSec * 1000).catch(err => {
       if (err.message && err.message.indexOf('Wait timed out after') > -1) {
         throw new Error(`element (${JSON.stringify(locator)}) still on page after ${sec} sec`)
       } else throw err
@@ -2203,9 +2185,9 @@ class Protractor extends Helper {
       return function () {
         return global.element
           .all(loc)
-          .filter((el) => el.isDisplayed())
+          .filter(el => el.isDisplayed())
           .count()
-          .then((count) => count === expectedCount)
+          .then(count => count === expectedCount)
       }
     }
 
@@ -2251,22 +2233,20 @@ class Protractor extends Helper {
   async waitForValue(field, value, sec = null) {
     const aSec = sec || this.options.waitForTimeoutInSeconds
 
-    const valueToBeInElementValue = (loc) => {
+    const valueToBeInElementValue = loc => {
       return async () => {
         const els = await findFields(this.browser, loc)
 
         if (!els) {
           return false
         }
-        const values = await Promise.all(els.map((el) => el.getAttribute('value')))
-        return values.filter((part) => part.indexOf(value) >= 0).length > 0
+        const values = await Promise.all(els.map(el => el.getAttribute('value')))
+        return values.filter(part => part.indexOf(value) >= 0).length > 0
       }
     }
 
     return this.browser.wait(valueToBeInElementValue(field, value), aSec * 1000).catch(() => {
-      throw Error(
-        `element (${field}) is not in DOM or there is no element(${field}) with value "${value}" after ${aSec} sec`,
-      )
+      throw Error(`element (${field}) is not in DOM or there is no element(${field}) with value "${value}" after ${aSec} sec`)
     })
   }
 
@@ -2320,7 +2300,7 @@ class Protractor extends Helper {
     const aSec = sec || this.options.waitForTimeoutInSeconds
     const waitTimeout = aSec * 1000
 
-    return this.browser.wait(EC.urlContains(urlPart), waitTimeout).catch(async (e) => {
+    return this.browser.wait(EC.urlContains(urlPart), waitTimeout).catch(async e => {
       const currUrl = await this.browser.getCurrentUrl()
       if (/wait timed out after/i.test(e.message)) {
         throw new Error(`expected url to include ${urlPart}, but found ${currUrl}`)
@@ -2351,7 +2331,7 @@ class Protractor extends Helper {
       urlPart = baseUrl + urlPart
     }
 
-    return this.browser.wait(EC.urlIs(urlPart), waitTimeout).catch(async (e) => {
+    return this.browser.wait(EC.urlIs(urlPart), waitTimeout).catch(async e => {
       const currUrl = await this.browser.getCurrentUrl()
       if (/wait timed out after/i.test(e.message)) {
         throw new Error(`expected url to be ${urlPart}, but found ${currUrl}`)
@@ -2490,10 +2470,7 @@ class Protractor extends Helper {
     return this.executeScript(function () {
       const body = document.body
       const html = document.documentElement
-      window.scrollTo(
-        0,
-        Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight),
-      )
+      window.scrollTo(0, Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight))
     })
   }
 
@@ -2647,7 +2624,7 @@ async function proceedSee(assertType, text, context) {
   const els = await this._smartWait(() => this.browser.findElements(locator), enableSmartWait)
   const promises = []
   let source = ''
-  els.forEach((el) => promises.push(el.getText().then((elText) => (source += `| ${elText}`))))
+  els.forEach(el => promises.push(el.getText().then(elText => (source += `| ${elText}`))))
   await Promise.all(promises)
   return stringIncludes(description)[assertType](text, source)
 }
@@ -2672,7 +2649,7 @@ async function proceedIsChecked(assertType, option) {
   const els = await findCheckable(this.browser, option)
   assertElementExists(els, option, 'Option')
   const elsSelected = []
-  els.forEach((el) => elsSelected.push(el.isSelected()))
+  els.forEach(el => elsSelected.push(el.isSelected()))
   const values = await Promise.all(elsSelected)
   const selected = values.reduce((prev, cur) => prev || cur)
   return truth(`checkable ${option}`, 'to be checked')[assertType](selected)

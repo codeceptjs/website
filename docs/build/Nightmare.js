@@ -111,13 +111,7 @@ class Nightmare extends Helper {
       const by = Object.keys(locator)[0]
       const value = locator[by]
 
-      this.evaluate_now(
-        (by, locator, contextEl) => window.codeceptjs.findAndStoreElements(by, locator, contextEl),
-        done,
-        by,
-        value,
-        contextEl,
-      )
+      this.evaluate_now((by, locator, contextEl) => window.codeceptjs.findAndStoreElements(by, locator, contextEl), done, by, value, contextEl)
     })
 
     this.Nightmare.action('findElement', function (locator, contextEl, done) {
@@ -244,7 +238,7 @@ class Nightmare extends Helper {
                     nodeId: queryResult.nodeId,
                     files: pathsToUpload,
                   },
-                  (err) => {
+                  err => {
                     if (Object.keys(err).length > 0) {
                       parent.emit('log', 'problem setting input', err)
                       return done(err)
@@ -351,7 +345,7 @@ class Nightmare extends Helper {
     const outputFile = path.join(global.output_dir, fileName)
     this.debug(`HAR is saving to ${outputFile}`)
 
-    await this.browser.getHAR().then((har) => {
+    await this.browser.getHAR().then(har => {
       require('fs').writeFileSync(outputFile, JSON.stringify({ log: har }))
     })
   }
@@ -361,7 +355,7 @@ class Nightmare extends Helper {
   }
 
   async _stopBrowser() {
-    return this.browser.end().catch((error) => {
+    return this.browser.end().catch(error => {
       this.debugSection('Error on End', error)
     })
   }
@@ -456,7 +450,7 @@ class Nightmare extends Helper {
       // navigating to the same url will cause an error in nightmare, so don't do it
       return
     }
-    return this.browser.goto(url, headers).then((res) => {
+    return this.browser.goto(url, headers).then(res => {
       this.debugSection('URL', res.url)
       this.debugSection('Code', res.code)
       this.debugSection('Headers', JSON.stringify(res.headers))
@@ -640,7 +634,7 @@ class Nightmare extends Helper {
     locator = new Locator(locator, 'css')
     const num = await this.browser.evaluate(
       (by, locator) => {
-        return window.codeceptjs.findElements(by, locator).filter((e) => e.offsetWidth > 0 && e.offsetHeight > 0).length
+        return window.codeceptjs.findElements(by, locator).filter(e => e.offsetWidth > 0 && e.offsetHeight > 0).length
       },
       locator.type,
       locator.value,
@@ -664,7 +658,7 @@ class Nightmare extends Helper {
     locator = new Locator(locator, 'css')
     const num = await this.browser.evaluate(
       (by, locator) => {
-        return window.codeceptjs.findElements(by, locator).filter((e) => e.offsetWidth > 0 && e.offsetHeight > 0).length
+        return window.codeceptjs.findElements(by, locator).filter(e => e.offsetWidth > 0 && e.offsetHeight > 0).length
       },
       locator.type,
       locator.value,
@@ -753,9 +747,7 @@ class Nightmare extends Helper {
    */
   async seeNumberOfElements(locator, num) {
     const elements = await this._locate(locator)
-    return equals(
-      `expected number of elements (${new Locator(locator)}) is ${num}, but found ${elements.length}`,
-    ).assert(elements.length, num)
+    return equals(`expected number of elements (${new Locator(locator)}) is ${num}, but found ${elements.length}`).assert(elements.length, num)
   }
 
   /**
@@ -773,10 +765,7 @@ class Nightmare extends Helper {
    */
   async seeNumberOfVisibleElements(locator, num) {
     const res = await this.grabNumberOfVisibleElements(locator)
-    return equals(`expected number of visible elements (${new Locator(locator)}) is ${num}, but found ${res}`).assert(
-      res,
-      num,
-    )
+    return equals(`expected number of visible elements (${new Locator(locator)}) is ${num}, but found ${res}`).assert(res, num)
   }
 
   /**
@@ -795,7 +784,7 @@ class Nightmare extends Helper {
 
     const num = await this.browser.evaluate(
       (by, locator) => {
-        return window.codeceptjs.findElements(by, locator).filter((e) => e.offsetWidth > 0 && e.offsetHeight > 0).length
+        return window.codeceptjs.findElements(by, locator).filter(e => e.offsetWidth > 0 && e.offsetHeight > 0).length
       },
       locator.type,
       locator.value,
@@ -835,7 +824,7 @@ class Nightmare extends Helper {
   async click(locator, context = null) {
     const el = await findClickable.call(this, locator, context)
     assertElementExists(el, locator, 'Clickable')
-    return this.browser.evaluate((el) => window.codeceptjs.clickEl(el), el).wait(this.options.waitForAction)
+    return this.browser.evaluate(el => window.codeceptjs.clickEl(el), el).wait(this.options.waitForAction)
   }
 
   /**
@@ -857,7 +846,7 @@ class Nightmare extends Helper {
   async doubleClick(locator, context = null) {
     const el = await findClickable.call(this, locator, context)
     assertElementExists(el, locator, 'Clickable')
-    return this.browser.evaluate((el) => window.codeceptjs.doubleClickEl(el), el).wait(this.options.waitForAction)
+    return this.browser.evaluate(el => window.codeceptjs.doubleClickEl(el), el).wait(this.options.waitForAction)
   }
 
   /**
@@ -880,7 +869,7 @@ class Nightmare extends Helper {
   async rightClick(locator, context = null) {
     const el = await findClickable.call(this, locator, context)
     assertElementExists(el, locator, 'Clickable')
-    return this.browser.evaluate((el) => window.codeceptjs.rightClickEl(el), el).wait(this.options.waitForAction)
+    return this.browser.evaluate(el => window.codeceptjs.rightClickEl(el), el).wait(this.options.waitForAction)
   }
 
   /**
@@ -902,9 +891,7 @@ class Nightmare extends Helper {
     locator = new Locator(locator, 'css')
     const el = await this.browser.findElement(locator.toStrict())
     assertElementExists(el, locator)
-    return this.browser
-      .evaluate((el, x, y) => window.codeceptjs.hoverEl(el, x, y), el, offsetX, offsetY)
-      .wait(this.options.waitForAction) // wait for hover event to happen
+    return this.browser.evaluate((el, x, y) => window.codeceptjs.hoverEl(el, x, y), el, offsetX, offsetY).wait(this.options.waitForAction) // wait for hover event to happen
   }
 
   /**
@@ -939,7 +926,7 @@ class Nightmare extends Helper {
    * Wrapper for synchronous [evaluate](https://github.com/segmentio/nightmare#evaluatefn-arg1-arg2)
    */
   async executeScript(...args) {
-    return this.browser.evaluate.apply(this.browser, args).catch((err) => err) // Nightmare's first argument is error :(
+    return this.browser.evaluate.apply(this.browser, args).catch(err => err) // Nightmare's first argument is error :(
   }
 
   /**
@@ -973,7 +960,7 @@ class Nightmare extends Helper {
    * Unlike NightmareJS implementation calling `done` will return its first argument.
    */
   async executeAsyncScript(...args) {
-    return this.browser.evaluate.apply(this.browser, args).catch((err) => err) // Nightmare's first argument is error :(
+    return this.browser.evaluate.apply(this.browser, args).catch(err => err) // Nightmare's first argument is error :(
   }
 
   /**
@@ -1011,7 +998,7 @@ class Nightmare extends Helper {
   async checkOption(field, context = null) {
     const els = await findCheckable.call(this, field, context)
     assertElementExists(els[0], field, 'Checkbox or radio')
-    return this.browser.evaluate((els) => window.codeceptjs.checkEl(els[0]), els).wait(this.options.waitForAction)
+    return this.browser.evaluate(els => window.codeceptjs.checkEl(els[0]), els).wait(this.options.waitForAction)
   }
 
   /**
@@ -1033,7 +1020,7 @@ class Nightmare extends Helper {
   async uncheckOption(field, context = null) {
     const els = await findCheckable.call(this, field, context)
     assertElementExists(els[0], field, 'Checkbox or radio')
-    return this.browser.evaluate((els) => window.codeceptjs.unCheckEl(els[0]), els).wait(this.options.waitForAction)
+    return this.browser.evaluate(els => window.codeceptjs.unCheckEl(els[0]), els).wait(this.options.waitForAction)
   }
 
   /**
@@ -1245,7 +1232,7 @@ class Nightmare extends Helper {
     locator = new Locator(locator, 'css')
     const els = await this.browser.findElements(locator.toStrict())
     const texts = []
-    const getText = (el) => window.codeceptjs.fetchElement(el).innerText
+    const getText = el => window.codeceptjs.fetchElement(el).innerText
     for (const el of els) {
       texts.push(await this.browser.evaluate(getText, el))
     }
@@ -1292,7 +1279,7 @@ class Nightmare extends Helper {
     locator = new Locator(locator, 'css')
     const els = await this.browser.findElements(locator.toStrict())
     const values = []
-    const getValues = (el) => window.codeceptjs.fetchElement(el).value
+    const getValues = el => window.codeceptjs.fetchElement(el).value
     for (const el of els) {
       values.push(await this.browser.evaluate(getValues, el))
     }
@@ -1342,9 +1329,7 @@ class Nightmare extends Helper {
 
     for (let index = 0; index < els.length; index++) {
       const el = els[index]
-      array.push(
-        await this.browser.evaluate((el, attr) => window.codeceptjs.fetchElement(el).getAttribute(attr), el, attr),
-      )
+      array.push(await this.browser.evaluate((el, attr) => window.codeceptjs.fetchElement(el).getAttribute(attr), el, attr))
     }
 
     return array
@@ -1395,7 +1380,7 @@ class Nightmare extends Helper {
 
     for (let index = 0; index < els.length; index++) {
       const el = els[index]
-      array.push(await this.browser.evaluate((el) => window.codeceptjs.fetchElement(el).innerHTML, el))
+      array.push(await this.browser.evaluate(el => window.codeceptjs.fetchElement(el).innerHTML, el))
     }
     this.debugSection('GrabHTML', array)
 
@@ -1448,7 +1433,7 @@ class Nightmare extends Helper {
 
     const getCssPropForElement = async (el, prop) => {
       return (
-        await this.browser.evaluate((el) => {
+        await this.browser.evaluate(el => {
           return window.getComputedStyle(window.codeceptjs.fetchElement(el))
         }, el)
       )[toCamelCase(prop)]
@@ -1618,7 +1603,7 @@ class Nightmare extends Helper {
    * 
    * ```js
    * I.clearCookie();
-   * I.clearCookie('test'); // Playwright currently doesn't support clear a particular cookie name
+   * I.clearCookie('test');
    * ```
    * 
    * @param {?string} [cookie=null] (optional, `null` by default) cookie name
@@ -1676,7 +1661,7 @@ class Nightmare extends Helper {
    * 
    */
   async wait(sec) {
-    return new Promise((done) => {
+    return new Promise(done => {
       setTimeout(done, sec * 1000)
     })
   }
@@ -1712,7 +1697,7 @@ class Nightmare extends Helper {
         locator.value,
         text,
       )
-      .catch((err) => {
+      .catch(err => {
         if (err.message.indexOf('Cannot read property') > -1) {
           throw new Error(`element (${JSON.stringify(context)}) is not in DOM. Unable to wait text.`)
         } else if (err.message && err.message.indexOf('.wait() timed out after') > -1) {
@@ -1748,7 +1733,7 @@ class Nightmare extends Helper {
         locator.type,
         locator.value,
       )
-      .catch((err) => {
+      .catch(err => {
         if (err.message && err.message.indexOf('.wait() timed out after') > -1) {
           throw new Error(`element (${JSON.stringify(locator)}) still not visible on page after ${sec} sec`)
         } else throw err
@@ -1799,7 +1784,7 @@ class Nightmare extends Helper {
         locator.type,
         locator.value,
       )
-      .catch((err) => {
+      .catch(err => {
         if (err.message && err.message.indexOf('.wait() timed out after') > -1) {
           throw new Error(`element (${JSON.stringify(locator)}) still visible after ${sec} sec`)
         } else throw err
@@ -1826,7 +1811,7 @@ class Nightmare extends Helper {
 
     return this.browser
       .wait((by, locator) => window.codeceptjs.findElement(by, locator) !== null, locator.type, locator.value)
-      .catch((err) => {
+      .catch(err => {
         if (err.message && err.message.indexOf('.wait() timed out after') > -1) {
           throw new Error(`element (${JSON.stringify(locator)}) still not present on page after ${sec} sec`)
         } else throw err
@@ -1860,7 +1845,7 @@ class Nightmare extends Helper {
 
     return this.browser
       .wait((by, locator) => window.codeceptjs.findElement(by, locator) === null, locator.type, locator.value)
-      .catch((err) => {
+      .catch(err => {
         if (err.message && err.message.indexOf('.wait() timed out after') > -1) {
           throw new Error(`element (${JSON.stringify(locator)}) still on page after ${sec} sec`)
         } else throw err
@@ -2077,10 +2062,7 @@ class Nightmare extends Helper {
     return this.executeScript(function () {
       const body = document.body
       const html = document.documentElement
-      window.scrollTo(
-        0,
-        Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight),
-      )
+      window.scrollTo(0, Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight))
     })
   }
 
@@ -2127,7 +2109,7 @@ async function proceedSee(assertType, text, context) {
 
   const texts = await this.browser.evaluate(
     (by, locator) => {
-      return window.codeceptjs.findElements(by, locator).map((el) => el.innerText)
+      return window.codeceptjs.findElements(by, locator).map(el => el.innerText)
     },
     locator.type,
     locator.value,
@@ -2139,8 +2121,8 @@ async function proceedSee(assertType, text, context) {
 async function proceedSeeInField(assertType, field, value) {
   const el = await findField.call(this, field)
   assertElementExists(el, field, 'Field')
-  const tag = await this.browser.evaluate((el) => window.codeceptjs.fetchElement(el).tagName, el)
-  const fieldVal = await this.browser.evaluate((el) => window.codeceptjs.fetchElement(el).value, el)
+  const tag = await this.browser.evaluate(el => window.codeceptjs.fetchElement(el).tagName, el)
+  const fieldVal = await this.browser.evaluate(el => window.codeceptjs.fetchElement(el).value, el)
   if (tag === 'select') {
     // locate option by values and check them
     const text = await this.browser.evaluate(
@@ -2158,8 +2140,8 @@ async function proceedSeeInField(assertType, field, value) {
 async function proceedIsChecked(assertType, option) {
   const els = await findCheckable.call(this, option)
   assertElementExists(els, option, 'Checkable')
-  const selected = await this.browser.evaluate((els) => {
-    return els.map((el) => window.codeceptjs.fetchElement(el).checked).reduce((prev, cur) => prev || cur)
+  const selected = await this.browser.evaluate(els => {
+    return els.map(el => window.codeceptjs.fetchElement(el).checked).reduce((prev, cur) => prev || cur)
   }, els)
   return truth(`checkable ${option}`, 'to be checked')[assertType](selected)
 }

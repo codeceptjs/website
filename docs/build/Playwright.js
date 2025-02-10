@@ -7,6 +7,7 @@ const assert = require('assert')
 const promiseRetry = require('promise-retry')
 const Locator = require('../locator')
 const recorder = require('../recorder')
+const store = require('../store')
 const stringIncludes = require('../assert/include').includes
 const { urlEquals } = require('../assert/equal')
 const { equals } = require('../assert/equal')
@@ -24,6 +25,7 @@ const {
   clearString,
   requireWithFallback,
   normalizeSpacesInString,
+  relativeDir,
 } = require('../utils')
 const { isColorProperty, convertColorToRGBA } = require('../colorUtils')
 const ElementNotFound = require('./errors/ElementNotFound')
@@ -40,26 +42,10 @@ const popupStore = new Popup()
 const consoleLogStore = new Console()
 const availableBrowsers = ['chromium', 'webkit', 'firefox', 'electron']
 
-const {
-  setRestartStrategy,
-  restartsSession,
-  restartsContext,
-  restartsBrowser,
-} = require('./extras/PlaywrightRestartOpts')
+const { setRestartStrategy, restartsSession, restartsContext, restartsBrowser } = require('./extras/PlaywrightRestartOpts')
 const { createValueEngine, createDisabledEngine } = require('./extras/PlaywrightPropEngine')
-const {
-  seeElementError,
-  dontSeeElementError,
-  dontSeeElementInDOMError,
-  seeElementInDOMError,
-} = require('./errors/ElementAssertion')
-const {
-  dontSeeTraffic,
-  seeTraffic,
-  grabRecordedNetworkTraffics,
-  stopRecordingTraffic,
-  flushNetworkTraffics,
-} = require('./network/actions')
+const { seeElementError, dontSeeElementError, dontSeeElementInDOMError, seeElementInDOMError } = require('./errors/ElementAssertion')
+const { dontSeeTraffic, seeTraffic, grabRecordedNetworkTraffics, stopRecordingTraffic, flushNetworkTraffics } = require('./network/actions')
 
 const pathSeparator = path.sep
 
@@ -392,9 +378,7 @@ class Playwright extends Helper {
     config = Object.assign(defaults, config)
 
     if (availableBrowsers.indexOf(config.browser) < 0) {
-      throw new Error(
-        `Invalid config. Can't use browser "${config.browser}". Accepted values: ${availableBrowsers.join(', ')}`,
-      )
+      throw new Error(`Invalid config. Can't use browser "${config.browser}". Accepted values: ${availableBrowsers.join(', ')}`)
     }
 
     return config
@@ -440,9 +424,7 @@ class Playwright extends Helper {
     }
     this.isRemoteBrowser = !!this.playwrightOptions.browserWSEndpoint
     this.isElectron = this.options.browser === 'electron'
-    this.userDataDir = this.playwrightOptions.userDataDir
-      ? `${this.playwrightOptions.userDataDir}_${Date.now().toString()}`
-      : undefined
+    this.userDataDir = this.playwrightOptions.userDataDir ? `${this.playwrightOptions.userDataDir}_${Date.now().toString()}` : undefined
     this.isCDPConnection = this.playwrightOptions.cdpConnection
     popupStore.defaultAction = this.options.defaultPopupAction
   }
@@ -458,14 +440,14 @@ class Playwright extends Helper {
         name: 'url',
         message: 'Base url of site to be tested',
         default: 'http://localhost',
-        when: (answers) => answers.Playwright_browser !== 'electron',
+        when: answers => answers.Playwright_browser !== 'electron',
       },
       {
         name: 'show',
         message: 'Show browser window',
         default: true,
         type: 'confirm',
-        when: (answers) => answers.Playwright_browser !== 'electron',
+        when: answers => answers.Playwright_browser !== 'electron',
       },
     ]
   }
@@ -500,9 +482,10 @@ class Playwright extends Helper {
 
   async _before(test) {
     this.currentRunningTest = test
+
     recorder.retry({
-      retries: process.env.FAILED_STEP_RETRIES || 3,
-      when: (err) => {
+      retries: test?.opts?.conditionalRetries || 3,
+      when: err => {
         if (!err || typeof err.message !== 'string') {
           return false
         }
@@ -540,12 +523,17 @@ class Playwright extends Helper {
         this.currentRunningTest.artifacts.har = fileName
         contextOptions.recordHar = this.options.recordHar
       }
+
+      // load pre-saved cookies
+      if (test?.opts?.cookies) contextOptions.storageState = { cookies: test.opts.cookies }
+
       if (this.storageState) contextOptions.storageState = this.storageState
       if (this.options.userAgent) contextOptions.userAgent = this.options.userAgent
       if (this.options.locale) contextOptions.locale = this.options.locale
       if (this.options.colorScheme) contextOptions.colorScheme = this.options.colorScheme
       this.contextOptions = contextOptions
       if (!this.browserContext || !restartsSession()) {
+        this.debugSection('New Session', JSON.stringify(this.contextOptions))
         this.browserContext = await this.browser.newContext(this.contextOptions) // Adding the HTTPSError ignore in the context so that we can ignore those errors
       }
     }
@@ -559,10 +547,7 @@ class Playwright extends Helper {
         mainPage = existingPages[0] || (await this.browserContext.newPage())
       } catch (e) {
         if (this.playwrightOptions.userDataDir) {
-          this.browser = await playwright[this.options.browser].launchPersistentContext(
-            this.userDataDir,
-            this.playwrightOptions,
-          )
+          this.browser = await playwright[this.options.browser].launchPersistentContext(this.userDataDir, this.playwrightOptions)
           this.browserContext = this.browser
           const existingPages = await this.browserContext.pages()
           mainPage = existingPages[0]
@@ -572,6 +557,15 @@ class Playwright extends Helper {
     await targetCreatedHandler.call(this, mainPage)
 
     await this._setPage(mainPage)
+
+    try {
+      // set metadata for reporting
+      test.meta.browser = this.browser.browserType().name()
+      test.meta.browserVersion = this.browser.version()
+      test.meta.windowSize = `${this.page.viewportSize().width}x${this.page.viewportSize().height}`
+    } catch (e) {
+      this.debug('Failed to set metadata for reporting')
+    }
 
     if (this.options.trace) await this.browserContext.tracing.start({ screenshots: true, snapshots: true })
 
@@ -583,7 +577,7 @@ class Playwright extends Helper {
 
     if (this.isElectron) {
       this.browser.close()
-      this.electronSessions.forEach((session) => session.close())
+      this.electronSessions.forEach(session => session.close())
       return
     }
 
@@ -605,7 +599,7 @@ class Playwright extends Helper {
           this.storageState = await currentContext.storageState()
         }
 
-        await Promise.all(contexts.map((c) => c.close()))
+        await Promise.all(contexts.map(c => c.close()))
       }
     } catch (e) {
       console.log(e)
@@ -641,10 +635,7 @@ class Playwright extends Helper {
             page = await browserContext.newPage()
           } catch (e) {
             if (this.playwrightOptions.userDataDir) {
-              browserContext = await playwright[this.options.browser].launchPersistentContext(
-                `${this.userDataDir}_${this.activeSessionName}`,
-                this.playwrightOptions,
-              )
+              browserContext = await playwright[this.options.browser].launchPersistentContext(`${this.userDataDir}_${this.activeSessionName}`, this.playwrightOptions)
               this.browser = browserContext
               page = await browserContext.pages()[0]
             }
@@ -660,7 +651,7 @@ class Playwright extends Helper {
       stop: async () => {
         // is closed by _after
       },
-      loadVars: async (context) => {
+      loadVars: async context => {
         if (context) {
           this.browserContext = context
           const existingPages = await context.pages()
@@ -668,7 +659,7 @@ class Playwright extends Helper {
           return this._setPage(this.sessionPages[this.activeSessionName])
         }
       },
-      restoreVars: async (session) => {
+      restoreVars: async session => {
         this.withinLocator = null
         this.browserContext = defaultContext
 
@@ -801,7 +792,7 @@ class Playwright extends Helper {
       return
     }
     page.removeAllListeners('dialog')
-    page.on('dialog', async (dialog) => {
+    page.on('dialog', async dialog => {
       popupStore.popup = dialog
       const action = popupStore.actionType || this.options.defaultPopupAction
       await this._waitForAction()
@@ -864,16 +855,13 @@ class Playwright extends Helper {
         throw err
       }
     } else if (this.playwrightOptions.userDataDir) {
-      this.browser = await playwright[this.options.browser].launchPersistentContext(
-        this.userDataDir,
-        this.playwrightOptions,
-      )
+      this.browser = await playwright[this.options.browser].launchPersistentContext(this.userDataDir, this.playwrightOptions)
     } else {
       this.browser = await playwright[this.options.browser].launch(this.playwrightOptions)
     }
 
     // works only for Chromium
-    this.browser.on('targetchanged', (target) => {
+    this.browser.on('targetchanged', target => {
       this.debugSection('Url', target.url())
     })
 
@@ -948,7 +936,7 @@ class Playwright extends Helper {
     const navigationStart = timing.navigationStart
 
     const extractedData = {}
-    dataNames.forEach((name) => {
+    dataNames.forEach(name => {
       extractedData[name] = timing[name] - navigationStart
     })
 
@@ -974,7 +962,8 @@ class Playwright extends Helper {
       throw new Error('Cannot open pages inside an Electron container')
     }
     if (!/^\w+\:(\/\/|.+)/.test(url)) {
-      url = this.options.url + (url.startsWith('/') ? url : `/${url}`)
+      url = this.options.url + (!this.options.url.endsWith('/') && url.startsWith('/') ? url : `/${url}`)
+      this.debug(`Changed URL to base url + relative path: ${url}`)
     }
 
     if (this.options.basicAuth && this.isAuthenticated !== true) {
@@ -988,13 +977,7 @@ class Playwright extends Helper {
 
     const performanceTiming = JSON.parse(await this.page.evaluate(() => JSON.stringify(window.performance.timing)))
 
-    perfTiming = this._extractDataFromPerformanceTiming(
-      performanceTiming,
-      'responseEnd',
-      'domInteractive',
-      'domContentLoadedEventEnd',
-      'loadEventEnd',
-    )
+    perfTiming = this._extractDataFromPerformanceTiming(performanceTiming, 'responseEnd', 'domInteractive', 'domContentLoadedEventEnd', 'loadEventEnd')
 
     return this._waitForAction()
   }
@@ -1292,10 +1275,7 @@ class Playwright extends Helper {
     return this.executeScript(() => {
       const body = document.body
       const html = document.documentElement
-      window.scrollTo(
-        0,
-        Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight),
-      )
+      window.scrollTo(0, Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight))
     })
   }
 
@@ -1433,7 +1413,22 @@ class Playwright extends Helper {
 
     if (this.frame) return findElements(this.frame, locator)
 
-    return findElements(context, locator)
+    const els = await findElements(context, locator)
+
+    if (store.debugMode) {
+      const previewElements = els.slice(0, 3)
+      let htmls = await Promise.all(previewElements.map(el => elToString(el, previewElements.length)))
+      if (els.length > 3) htmls.push('...')
+      if (els.length > 1) {
+        this.debugSection(`Elements (${els.length})`, htmls.join('|').trim())
+      } else if (els.length === 1) {
+        this.debugSection('Element', htmls.join('|').trim())
+      } else {
+        this.debug(`No elements found by ${JSON.stringify(locator).slice(0, 50)}....`)
+      }
+    }
+
+    return els
   }
 
   /**
@@ -1601,10 +1596,10 @@ class Playwright extends Helper {
    */
   async closeOtherTabs() {
     const pages = await this.browserContext.pages()
-    const otherPages = pages.filter((page) => page !== this.page)
+    const otherPages = pages.filter(page => page !== this.page)
     if (otherPages.length) {
       this.debug(`Closing ${otherPages.length} tabs`)
-      return Promise.all(otherPages.map((p) => p.close()))
+      return Promise.all(otherPages.map(p => p.close()))
     }
     return Promise.resolve()
   }
@@ -1663,9 +1658,9 @@ class Playwright extends Helper {
    */
   async seeElement(locator) {
     let els = await this._locate(locator)
-    els = await Promise.all(els.map((el) => el.isVisible()))
+    els = await Promise.all(els.map(el => el.isVisible()))
     try {
-      return empty('visible elements').negate(els.filter((v) => v).fill('ELEMENT'))
+      return empty('visible elements').negate(els.filter(v => v).fill('ELEMENT'))
     } catch (e) {
       dontSeeElementError(locator)
     }
@@ -1685,9 +1680,9 @@ class Playwright extends Helper {
    */
   async dontSeeElement(locator) {
     let els = await this._locate(locator)
-    els = await Promise.all(els.map((el) => el.isVisible()))
+    els = await Promise.all(els.map(el => el.isVisible()))
     try {
-      return empty('visible elements').assert(els.filter((v) => v).fill('ELEMENT'))
+      return empty('visible elements').assert(els.filter(v => v).fill('ELEMENT'))
     } catch (e) {
       seeElementError(locator)
     }
@@ -1707,7 +1702,7 @@ class Playwright extends Helper {
   async seeElementInDOM(locator) {
     const els = await this._locate(locator)
     try {
-      return empty('elements on page').negate(els.filter((v) => v).fill('ELEMENT'))
+      return empty('elements on page').negate(els.filter(v => v).fill('ELEMENT'))
     } catch (e) {
       dontSeeElementInDOMError(locator)
     }
@@ -1727,7 +1722,7 @@ class Playwright extends Helper {
   async dontSeeElementInDOM(locator) {
     const els = await this._locate(locator)
     try {
-      return empty('elements on a page').assert(els.filter((v) => v).fill('ELEMENT'))
+      return empty('elements on a page').assert(els.filter(v => v).fill('ELEMENT'))
     } catch (e) {
       seeElementInDOMError(locator)
     }
@@ -1751,7 +1746,7 @@ class Playwright extends Helper {
    * @return {Promise<void>}
    */
   async handleDownloads(fileName) {
-    this.page.waitForEvent('download').then(async (download) => {
+    this.page.waitForEvent('download').then(async download => {
       const filePath = await download.path()
       fileName = fileName || `downloads/${path.basename(filePath)}`
 
@@ -2192,6 +2187,7 @@ class Playwright extends Helper {
     const el = els[0]
 
     await el.clear()
+    if (store.debugMode) this.debugSection('Focused', await elToString(el, 1))
 
     await highlightActiveElement.call(this, el)
 
@@ -2378,8 +2374,8 @@ class Playwright extends Helper {
    */
   async grabNumberOfVisibleElements(locator) {
     let els = await this._locate(locator)
-    els = await Promise.all(els.map((el) => el.isVisible()))
-    return els.filter((v) => v).length
+    els = await Promise.all(els.map(el => el.isVisible()))
+    return els.filter(v => v).length
   }
 
   /**
@@ -2594,9 +2590,7 @@ class Playwright extends Helper {
    */
   async seeNumberOfElements(locator, num) {
     const elements = await this._locate(locator)
-    return equals(
-      `expected number of elements (${new Locator(locator)}) is ${num}, but found ${elements.length}`,
-    ).assert(elements.length, num)
+    return equals(`expected number of elements (${new Locator(locator)}) is ${num}, but found ${elements.length}`).assert(elements.length, num)
   }
 
   /**
@@ -2616,10 +2610,7 @@ class Playwright extends Helper {
    */
   async seeNumberOfVisibleElements(locator, num) {
     const res = await this.grabNumberOfVisibleElements(locator)
-    return equals(`expected number of visible elements (${new Locator(locator)}) is ${num}, but found ${res}`).assert(
-      res,
-      num,
-    )
+    return equals(`expected number of visible elements (${new Locator(locator)}) is ${num}, but found ${res}`).assert(res, num)
   }
 
   /**
@@ -2662,7 +2653,7 @@ class Playwright extends Helper {
    */
   async seeCookie(name) {
     const cookies = await this.browserContext.cookies()
-    empty(`cookie ${name} to be set`).negate(cookies.filter((c) => c.name === name))
+    empty(`cookie ${name} to be set`).negate(cookies.filter(c => c.name === name))
   }
 
   /**
@@ -2678,7 +2669,7 @@ class Playwright extends Helper {
    */
   async dontSeeCookie(name) {
     const cookies = await this.browserContext.cookies()
-    empty(`cookie ${name} not to be set`).assert(cookies.filter((c) => c.name === name))
+    empty(`cookie ${name} not to be set`).assert(cookies.filter(c => c.name === name))
   }
 
   /**
@@ -2700,7 +2691,7 @@ class Playwright extends Helper {
   async grabCookie(name) {
     const cookies = await this.browserContext.cookies()
     if (!name) return cookies
-    const cookie = cookies.filter((c) => c.name === name)
+    const cookie = cookies.filter(c => c.name === name)
     if (cookie[0]) return cookie[0]
   }
 
@@ -2710,16 +2701,17 @@ class Playwright extends Helper {
    * 
    * ```js
    * I.clearCookie();
-   * I.clearCookie('test'); // Playwright currently doesn't support clear a particular cookie name
+   * I.clearCookie('test');
    * ```
    * 
    * @param {?string} [cookie=null] (optional, `null` by default) cookie name
    * 
    */
-  async clearCookie() {
-    // Playwright currently doesn't support to delete a certain cookie
-    // https://github.com/microsoft/playwright/blob/main/docs/src/api/class-browsercontext.md#async-method-browsercontextclearcookies
+  async clearCookie(cookieName) {
     if (!this.browserContext) return
+    if (cookieName) {
+      return this.browserContext.clearCookies({ name: cookieName })
+    }
     return this.browserContext.clearCookies()
   }
 
@@ -2810,7 +2802,7 @@ class Playwright extends Helper {
     const els = await this._locate(locator)
     const texts = []
     for (const el of els) {
-      texts.push(await await el.innerText())
+      texts.push(await el.innerText())
     }
     this.debug(`Matched ${els.length} elements`)
     return texts
@@ -2849,7 +2841,7 @@ class Playwright extends Helper {
   async grabValueFromAll(locator) {
     const els = await findFields.call(this, locator)
     this.debug(`Matched ${els.length} elements`)
-    return Promise.all(els.map((el) => el.inputValue()))
+    return Promise.all(els.map(el => el.inputValue()))
   }
 
   /**
@@ -2887,7 +2879,7 @@ class Playwright extends Helper {
   async grabHTMLFromAll(locator) {
     const els = await this._locate(locator)
     this.debug(`Matched ${els.length} elements`)
-    return Promise.all(els.map((el) => el.innerHTML()))
+    return Promise.all(els.map(el => el.innerHTML()))
   }
 
   /**
@@ -2929,11 +2921,7 @@ class Playwright extends Helper {
   async grabCssPropertyFromAll(locator, cssProperty) {
     const els = await this._locate(locator)
     this.debug(`Matched ${els.length} elements`)
-    const cssValues = await Promise.all(
-      els.map((el) =>
-        el.evaluate((el, cssProperty) => getComputedStyle(el).getPropertyValue(cssProperty), cssProperty),
-      ),
-    )
+    const cssValues = await Promise.all(els.map(el => el.evaluate((el, cssProperty) => getComputedStyle(el).getPropertyValue(cssProperty), cssProperty)))
 
     return cssValues
   }
@@ -2970,19 +2958,16 @@ class Playwright extends Helper {
       }
     }
 
-    const values = Object.keys(cssPropertiesCamelCase).map((key) => cssPropertiesCamelCase[key])
+    const values = Object.keys(cssPropertiesCamelCase).map(key => cssPropertiesCamelCase[key])
     if (!Array.isArray(props)) props = [props]
     let chunked = chunkArray(props, values.length)
-    chunked = chunked.filter((val) => {
+    chunked = chunked.filter(val => {
       for (let i = 0; i < val.length; ++i) {
-        // eslint-disable-next-line eqeqeq
         if (val[i] != values[i]) return false
       }
       return true
     })
-    return equals(
-      `all elements (${new Locator(locator)}) to have CSS property ${JSON.stringify(cssProperties)}`,
-    ).assert(chunked.length, elemAmount)
+    return equals(`all elements (${new Locator(locator)}) to have CSS property ${JSON.stringify(cssProperties)}`).assert(chunked.length, elemAmount)
   }
 
   /**
@@ -3004,16 +2989,16 @@ class Playwright extends Helper {
 
     const elemAmount = res.length
     const commands = []
-    res.forEach((el) => {
-      Object.keys(attributes).forEach((prop) => {
+    res.forEach(el => {
+      Object.keys(attributes).forEach(prop => {
         commands.push(el.evaluate((el, attr) => el[attr] || el.getAttribute(attr), prop))
       })
     })
     let attrs = await Promise.all(commands)
-    const values = Object.keys(attributes).map((key) => attributes[key])
+    const values = Object.keys(attributes).map(key => attributes[key])
     if (!Array.isArray(attrs)) attrs = [attrs]
     let chunked = chunkArray(attrs, values.length)
-    chunked = chunked.filter((val) => {
+    chunked = chunked.filter(val => {
       for (let i = 0; i < val.length; ++i) {
         // the attribute could be a boolean
         if (typeof val[i] === 'boolean') return val[i] === values[i]
@@ -3022,10 +3007,7 @@ class Playwright extends Helper {
       }
       return true
     })
-    return equals(`all elements (${new Locator(locator)}) to have attributes ${JSON.stringify(attributes)}`).assert(
-      chunked.length,
-      elemAmount,
-    )
+    return equals(`all elements (${new Locator(locator)}) to have attributes ${JSON.stringify(attributes)}`).assert(chunked.length, elemAmount)
   }
 
   /**
@@ -3150,7 +3132,7 @@ class Playwright extends Helper {
     const fullPageOption = fullPage || this.options.fullPageScreenshots
     let outputFile = screenshotOutputFolder(fileName)
 
-    this.debug(`Screenshot is saving to ${outputFile}`)
+    this.debugSection('Screenshot', relativeDir(outputFile))
 
     await this.page.screenshot({
       path: outputFile,
@@ -3163,7 +3145,7 @@ class Playwright extends Helper {
         const activeSessionPage = this.sessionPages[sessionName]
         outputFile = screenshotOutputFolder(`${sessionName}_${fileName}`)
 
-        this.debug(`${sessionName} - Screenshot is saving to ${outputFile}`)
+        this.debugSection('Screenshot', `${sessionName} - ${relativeDir(outputFile)}`)
 
         if (activeSessionPage) {
           await activeSessionPage.screenshot({
@@ -3197,9 +3179,7 @@ class Playwright extends Helper {
     method = method.toLowerCase()
     const allowedMethods = ['get', 'post', 'patch', 'head', 'fetch', 'delete']
     if (!allowedMethods.includes(method)) {
-      throw new Error(
-        `Method ${method} is not allowed, use the one from a list ${allowedMethods} or switch to using REST helper`,
-      )
+      throw new Error(`Method ${method} is not allowed, use the one from a list ${allowedMethods} or switch to using REST helper`)
     }
 
     if (url.startsWith('/')) {
@@ -3236,10 +3216,7 @@ class Playwright extends Helper {
     if (this.options.recordVideo && this.page && this.page.video()) {
       test.artifacts.video = saveVideoForPage(this.page, `${test.title}.failed`)
       for (const sessionName in this.sessionPages) {
-        test.artifacts[`video_${sessionName}`] = saveVideoForPage(
-          this.sessionPages[sessionName],
-          `${test.title}_${sessionName}.failed`,
-        )
+        test.artifacts[`video_${sessionName}`] = saveVideoForPage(this.sessionPages[sessionName], `${test.title}_${sessionName}.failed`)
       }
     }
 
@@ -3247,10 +3224,7 @@ class Playwright extends Helper {
       test.artifacts.trace = await saveTraceForContext(this.browserContext, `${test.title}.failed`)
       for (const sessionName in this.sessionPages) {
         if (!this.sessionPages[sessionName].context) continue
-        test.artifacts[`trace_${sessionName}`] = await saveTraceForContext(
-          this.sessionPages[sessionName].context,
-          `${test.title}_${sessionName}.failed`,
-        )
+        test.artifacts[`trace_${sessionName}`] = await saveTraceForContext(this.sessionPages[sessionName].context, `${test.title}_${sessionName}.failed`)
       }
     }
 
@@ -3264,16 +3238,13 @@ class Playwright extends Helper {
       if (this.options.keepVideoForPassedTests) {
         test.artifacts.video = saveVideoForPage(this.page, `${test.title}.passed`)
         for (const sessionName of Object.keys(this.sessionPages)) {
-          test.artifacts[`video_${sessionName}`] = saveVideoForPage(
-            this.sessionPages[sessionName],
-            `${test.title}_${sessionName}.passed`,
-          )
+          test.artifacts[`video_${sessionName}`] = saveVideoForPage(this.sessionPages[sessionName], `${test.title}_${sessionName}.passed`)
         }
       } else {
         this.page
           .video()
           .delete()
-          .catch((e) => {})
+          .catch(e => {})
       }
     }
 
@@ -3283,10 +3254,7 @@ class Playwright extends Helper {
           test.artifacts.trace = await saveTraceForContext(this.browserContext, `${test.title}.passed`)
           for (const sessionName in this.sessionPages) {
             if (!this.sessionPages[sessionName].context) continue
-            test.artifacts[`trace_${sessionName}`] = await saveTraceForContext(
-              this.sessionPages[sessionName].context,
-              `${test.title}_${sessionName}.passed`,
-            )
+            test.artifacts[`trace_${sessionName}`] = await saveTraceForContext(this.sessionPages[sessionName].context, `${test.title}_${sessionName}.passed`)
           }
         }
       } else {
@@ -3311,7 +3279,7 @@ class Playwright extends Helper {
    * 
    */
   async wait(sec) {
-    return new Promise((done) => {
+    return new Promise(done => {
       setTimeout(done, sec * 1000)
     })
   }
@@ -3333,20 +3301,18 @@ class Playwright extends Helper {
     const context = await this._getContext()
     if (!locator.isXPath()) {
       const valueFn = function ([locator]) {
-        return Array.from(document.querySelectorAll(locator)).filter((el) => !el.disabled).length > 0
+        return Array.from(document.querySelectorAll(locator)).filter(el => !el.disabled).length > 0
       }
       waiter = context.waitForFunction(valueFn, [locator.value], { timeout: waitTimeout })
     } else {
       const enabledFn = function ([locator, $XPath]) {
-        eval($XPath) // eslint-disable-line no-eval
-        return $XPath(null, locator).filter((el) => !el.disabled).length > 0
+        eval($XPath)
+        return $XPath(null, locator).filter(el => !el.disabled).length > 0
       }
       waiter = context.waitForFunction(enabledFn, [locator.value, $XPath.toString()], { timeout: waitTimeout })
     }
-    return waiter.catch((err) => {
-      throw new Error(
-        `element (${locator.toString()}) still not enabled after ${waitTimeout / 1000} sec\n${err.message}`,
-      )
+    return waiter.catch(err => {
+      throw new Error(`element (${locator.toString()}) still not enabled after ${waitTimeout / 1000} sec\n${err.message}`)
     })
   }
 
@@ -3367,20 +3333,18 @@ class Playwright extends Helper {
     const context = await this._getContext()
     if (!locator.isXPath()) {
       const valueFn = function ([locator]) {
-        return Array.from(document.querySelectorAll(locator)).filter((el) => el.disabled).length > 0
+        return Array.from(document.querySelectorAll(locator)).filter(el => el.disabled).length > 0
       }
       waiter = context.waitForFunction(valueFn, [locator.value], { timeout: waitTimeout })
     } else {
       const disabledFn = function ([locator, $XPath]) {
-        eval($XPath) // eslint-disable-line no-eval
-        return $XPath(null, locator).filter((el) => el.disabled).length > 0
+        eval($XPath)
+        return $XPath(null, locator).filter(el => el.disabled).length > 0
       }
       waiter = context.waitForFunction(disabledFn, [locator.value, $XPath.toString()], { timeout: waitTimeout })
     }
-    return waiter.catch((err) => {
-      throw new Error(
-        `element (${locator.toString()}) is still enabled after ${waitTimeout / 1000} sec\n${err.message}`,
-      )
+    return waiter.catch(err => {
+      throw new Error(`element (${locator.toString()}) is still enabled after ${waitTimeout / 1000} sec\n${err.message}`)
     })
   }
 
@@ -3405,26 +3369,21 @@ class Playwright extends Helper {
     const context = await this._getContext()
     if (!locator.isXPath()) {
       const valueFn = function ([locator, value]) {
-        return (
-          Array.from(document.querySelectorAll(locator)).filter((el) => (el.value || '').indexOf(value) !== -1).length >
-          0
-        )
+        return Array.from(document.querySelectorAll(locator)).filter(el => (el.value || '').indexOf(value) !== -1).length > 0
       }
       waiter = context.waitForFunction(valueFn, [locator.value, value], { timeout: waitTimeout })
     } else {
       const valueFn = function ([locator, $XPath, value]) {
-        eval($XPath) // eslint-disable-line no-eval
-        return $XPath(null, locator).filter((el) => (el.value || '').indexOf(value) !== -1).length > 0
+        eval($XPath)
+        return $XPath(null, locator).filter(el => (el.value || '').indexOf(value) !== -1).length > 0
       }
       waiter = context.waitForFunction(valueFn, [locator.value, $XPath.toString(), value], {
         timeout: waitTimeout,
       })
     }
-    return waiter.catch((err) => {
+    return waiter.catch(err => {
       const loc = locator.toString()
-      throw new Error(
-        `element (${loc}) is not in DOM or there is no element(${loc}) with value "${value}" after ${waitTimeout / 1000} sec\n${err.message}`,
-      )
+      throw new Error(`element (${loc}) is not in DOM or there is no element(${loc}) with value "${value}" after ${waitTimeout / 1000} sec\n${err.message}`)
     })
   }
 
@@ -3454,22 +3413,20 @@ class Playwright extends Helper {
         if (!els || els.length === 0) {
           return false
         }
-        return Array.prototype.filter.call(els, (el) => el.offsetParent !== null).length === num
+        return Array.prototype.filter.call(els, el => el.offsetParent !== null).length === num
       }
       waiter = context.waitForFunction(visibleFn, [locator.value, num], { timeout: waitTimeout })
     } else {
       const visibleFn = function ([locator, $XPath, num]) {
-        eval($XPath) // eslint-disable-line no-eval
-        return $XPath(null, locator).filter((el) => el.offsetParent !== null).length === num
+        eval($XPath)
+        return $XPath(null, locator).filter(el => el.offsetParent !== null).length === num
       }
       waiter = context.waitForFunction(visibleFn, [locator.value, $XPath.toString(), num], {
         timeout: waitTimeout,
       })
     }
-    return waiter.catch((err) => {
-      throw new Error(
-        `The number of elements (${locator.toString()}) is not ${num} after ${waitTimeout / 1000} sec\n${err.message}`,
-      )
+    return waiter.catch(err => {
+      throw new Error(`The number of elements (${locator.toString()}) is not ${num} after ${waitTimeout / 1000} sec\n${err.message}`)
     })
   }
 
@@ -3488,9 +3445,7 @@ class Playwright extends Helper {
    * 
    */
   async waitForClickable(locator, waitTimeout) {
-    console.log(
-      'I.waitForClickable is DEPRECATED: This is no longer needed, Playwright automatically waits for element to be clickable',
-    )
+    console.log('I.waitForClickable is DEPRECATED: This is no longer needed, Playwright automatically waits for element to be clickable')
     console.log('Remove usage of this function')
   }
 
@@ -3517,9 +3472,7 @@ class Playwright extends Helper {
     try {
       await context.locator(buildLocatorString(locator)).first().waitFor({ timeout: waitTimeout, state: 'attached' })
     } catch (e) {
-      throw new Error(
-        `element (${locator.toString()}) still not present on page after ${waitTimeout / 1000} sec\n${e.message}`,
-      )
+      throw new Error(`element (${locator.toString()}) still not present on page after ${waitTimeout / 1000} sec\n${e.message}`)
     }
   }
 
@@ -3641,10 +3594,8 @@ class Playwright extends Helper {
       .locator(buildLocatorString(locator))
       .first()
       .waitFor({ timeout: waitTimeout, state: 'hidden' })
-      .catch((err) => {
-        throw new Error(
-          `element (${locator.toString()}) still not hidden after ${waitTimeout / 1000} sec\n${err.message}`,
-        )
+      .catch(err => {
+        throw new Error(`element (${locator.toString()}) still not hidden after ${waitTimeout / 1000} sec\n${err.message}`)
       })
   }
 
@@ -3679,6 +3630,9 @@ class Playwright extends Helper {
     if ((this.context && this.context.constructor.name === 'FrameLocator') || this.context) {
       return this.context
     }
+    if (this.frame) {
+      return this.frame
+    }
     return this.page
   }
 
@@ -3699,14 +3653,14 @@ class Playwright extends Helper {
 
     return this.page
       .waitForFunction(
-        (urlPart) => {
+        urlPart => {
           const currUrl = decodeURIComponent(decodeURIComponent(decodeURIComponent(window.location.href)))
           return currUrl.indexOf(urlPart) > -1
         },
         urlPart,
         { timeout: waitTimeout },
       )
-      .catch(async (e) => {
+      .catch(async e => {
         const currUrl = await this._getPageUrl() // Required because the waitForFunction can't return data.
         if (/Timeout/i.test(e.message)) {
           throw new Error(`expected url to include ${urlPart}, but found ${currUrl}`)
@@ -3739,14 +3693,14 @@ class Playwright extends Helper {
 
     return this.page
       .waitForFunction(
-        (urlPart) => {
+        urlPart => {
           const currUrl = decodeURIComponent(decodeURIComponent(decodeURIComponent(window.location.href)))
           return currUrl.indexOf(urlPart) > -1
         },
         urlPart,
         { timeout: waitTimeout },
       )
-      .catch(async (e) => {
+      .catch(async e => {
         const currUrl = await this._getPageUrl() // Required because the waitForFunction can't return data.
         if (/Timeout/i.test(e.message)) {
           throw new Error(`expected url to be ${urlPart}, but found ${currUrl}`)
@@ -3775,28 +3729,23 @@ class Playwright extends Helper {
   async waitForText(text, sec = null, context = null) {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
     const errorMessage = `Text "${text}" was not found on page after ${waitTimeout / 1000} sec.`
-    let waiter
 
     const contextObject = await this._getContext()
 
     if (context) {
       const locator = new Locator(context, 'css')
-      if (!locator.isXPath()) {
-        try {
-          await contextObject
+      try {
+        if (!locator.isXPath()) {
+          return contextObject
             .locator(`${locator.isCustom() ? `${locator.type}=${locator.value}` : locator.simplify()} >> text=${text}`)
             .first()
             .waitFor({ timeout: waitTimeout, state: 'visible' })
-        } catch (e) {
-          throw new Error(`${errorMessage}\n${e.message}`)
         }
-      }
 
-      if (locator.isXPath()) {
-        try {
-          await contextObject.waitForFunction(
+        if (locator.isXPath()) {
+          return contextObject.waitForFunction(
             ([locator, text, $XPath]) => {
-              eval($XPath) // eslint-disable-line no-eval
+              eval($XPath)
               const el = $XPath(null, locator)
               if (!el.length) return false
               return el[0].innerText.indexOf(text) > -1
@@ -3804,27 +3753,34 @@ class Playwright extends Helper {
             [locator.value, text, $XPath.toString()],
             { timeout: waitTimeout },
           )
-        } catch (e) {
-          throw new Error(`${errorMessage}\n${e.message}`)
         }
+      } catch (e) {
+        throw new Error(`${errorMessage}\n${e.message}`)
       }
-    } else {
-      // we have this as https://github.com/microsoft/playwright/issues/26829 is not yet implemented
-
-      const _contextObject = this.frame ? this.frame : contextObject
-      let count = 0
-      do {
-        waiter = await _contextObject
-          .locator(`:has-text(${JSON.stringify(text)})`)
-          .first()
-          .isVisible()
-        if (waiter) break
-        await this.wait(1)
-        count += 1000
-      } while (count <= waitTimeout)
-
-      if (!waiter) throw new Error(`${errorMessage}`)
     }
+
+    const timeoutGap = waitTimeout + 1000
+
+    // We add basic timeout to make sure we don't wait forever
+    // We apply 2 strategies here: wait for text as innert text on page (wide strategy) - older
+    // or we use native Playwright matcher to wait for text in element (narrow strategy) - newer
+    // If a user waits for text on a page they are mostly expect it to be there, so wide strategy can be helpful even PW strategy is available
+    return Promise.race([
+      new Promise((_, reject) => {
+        setTimeout(() => reject(errorMessage), waitTimeout)
+      }),
+      this.page.waitForFunction(text => document.body && document.body.innerText.indexOf(text) > -1, text, { timeout: timeoutGap }),
+      promiseRetry(
+        async retry => {
+          const textPresent = await contextObject
+            .locator(`:has-text(${JSON.stringify(text)})`)
+            .first()
+            .isVisible()
+          if (!textPresent) retry(errorMessage)
+        },
+        { retries: 1000, minTimeout: 500, maxTimeout: 500, factor: 1 },
+      ),
+    ])
   }
 
   /**
@@ -4029,11 +3985,11 @@ class Playwright extends Helper {
       }
     } else {
       const visibleFn = function ([locator, $XPath]) {
-        eval($XPath) // eslint-disable-line no-eval
+        eval($XPath)
         return $XPath(null, locator).length === 0
       }
       waiter = context.waitForFunction(visibleFn, [locator.value, $XPath.toString()], { timeout: waitTimeout })
-      return waiter.catch((err) => {
+      return waiter.catch(err => {
         throw new Error(`element (${locator.toString()}) still on page after ${waitTimeout / 1000} sec\n${err.message}`)
       })
     }
@@ -4064,9 +4020,9 @@ class Playwright extends Helper {
 
     return promiseRetry(
       async (retry, number) => {
-        const _grabCookie = async (name) => {
+        const _grabCookie = async name => {
           const cookies = await this.browserContext.cookies()
-          const cookie = cookies.filter((c) => c.name === name)
+          const cookie = cookies.filter(c => c.name === name)
           if (cookie.length === 0) throw Error(`Cookie ${name} is not found after ${retries}s`)
         }
 
@@ -4193,7 +4149,7 @@ class Playwright extends Helper {
     this.recording = true
     this.recordedAtLeastOnce = true
 
-    this.page.on('requestfinished', async (request) => {
+    this.page.on('requestfinished', async request => {
       const information = {
         url: request.url(),
         method: request.method(),
@@ -4232,20 +4188,20 @@ class Playwright extends Helper {
    */
   blockTraffic(urls) {
     if (Array.isArray(urls)) {
-      urls.forEach((url) => {
-        this.page.route(url, (route) => {
+      urls.forEach(url => {
+        this.page.route(url, route => {
           route
             .abort()
             // Sometimes it happens that browser has been closed in the meantime. It is ok to ignore error then.
-            .catch((e) => {})
+            .catch(e => {})
         })
       })
     } else {
-      this.page.route(urls, (route) => {
+      this.page.route(urls, route => {
         route
           .abort()
           // Sometimes it happens that browser has been closed in the meantime. It is ok to ignore error then.
-          .catch((e) => {})
+          .catch(e => {})
       })
     }
   }
@@ -4274,8 +4230,8 @@ class Playwright extends Helper {
       urls = [urls]
     }
 
-    urls.forEach((url) => {
-      this.page.route(url, (route) => {
+    urls.forEach(url => {
+      this.page.route(url, route => {
         if (this.page.isClosed()) {
           // Sometimes it happens that browser has been closed in the meantime.
           // In this case we just don't fulfill to prevent error in test scenario.
@@ -4331,13 +4287,10 @@ class Playwright extends Helper {
    */
   grabTrafficUrl(urlMatch) {
     if (!this.recordedAtLeastOnce) {
-      throw new Error(
-        'Failure in test automation. You use "I.grabTrafficUrl", but "I.startRecordingTraffic" was never called before.',
-      )
+      throw new Error('Failure in test automation. You use "I.grabTrafficUrl", but "I.startRecordingTraffic" was never called before.')
     }
 
     for (const i in this.requests) {
-      // eslint-disable-next-line no-prototype-builtins
       if (this.requests.hasOwnProperty(i)) {
         const request = this.requests[i]
 
@@ -4454,15 +4407,15 @@ class Playwright extends Helper {
     await this.cdpSession.send('Network.enable')
     await this.cdpSession.send('Page.enable')
 
-    this.cdpSession.on('Network.webSocketFrameReceived', (payload) => {
+    this.cdpSession.on('Network.webSocketFrameReceived', payload => {
       this._logWebsocketMessages(this._getWebSocketLog('RECEIVED', payload))
     })
 
-    this.cdpSession.on('Network.webSocketFrameSent', (payload) => {
+    this.cdpSession.on('Network.webSocketFrameSent', payload => {
       this._logWebsocketMessages(this._getWebSocketLog('SENT', payload))
     })
 
-    this.cdpSession.on('Network.webSocketFrameError', (payload) => {
+    this.cdpSession.on('Network.webSocketFrameError', payload => {
       this._logWebsocketMessages(this._getWebSocketLog('ERROR', payload))
     })
   }
@@ -4493,9 +4446,7 @@ class Playwright extends Helper {
   grabWebSocketMessages() {
     if (!this.recordingWebSocketMessages) {
       if (!this.recordedWebSocketMessagesAtLeastOnce) {
-        throw new Error(
-          'Failure in test automation. You use "I.grabWebSocketMessages", but "I.startRecordingWebSocketMessages" was never called before.',
-        )
+        throw new Error('Failure in test automation. You use "I.grabWebSocketMessages", but "I.startRecordingWebSocketMessages" was never called before.')
       }
     }
     return this.webSocketMessages
@@ -4642,17 +4593,13 @@ async function proceedClick(locator, context = null, options = {}) {
   }
   const els = await findClickable.call(this, matcher, locator)
   if (context) {
-    assertElementExists(
-      els,
-      locator,
-      'Clickable element',
-      `was not found inside element ${new Locator(context).toString()}`,
-    )
+    assertElementExists(els, locator, 'Clickable element', `was not found inside element ${new Locator(context).toString()}`)
   } else {
     assertElementExists(els, locator, 'Clickable element')
   }
 
   await highlightActiveElement.call(this, els[0])
+  if (store.debugMode) this.debugSection('Clicked', await elToString(els[0], 1))
 
   /*
     using the force true options itself but instead dispatching a click
@@ -4714,16 +4661,18 @@ async function proceedSee(assertType, text, context, strict = false) {
     description = `element ${locator.toString()}`
     const els = await this._locate(locator)
     assertElementExists(els, locator.toString())
-    allText = await Promise.all(els.map((el) => el.innerText()))
+    allText = await Promise.all(els.map(el => el.innerText()))
+  }
+
+  if (store?.currentStep?.opts?.ignoreCase === true) {
+    text = text.toLowerCase()
+    allText = allText.map(elText => elText.toLowerCase())
   }
 
   if (strict) {
-    return allText.map((elText) => equals(description)[assertType](text, elText))
+    return allText.map(elText => equals(description)[assertType](text, elText))
   }
-  return stringIncludes(description)[assertType](
-    normalizeSpacesInString(text),
-    normalizeSpacesInString(allText.join(' | ')),
-  )
+  return stringIncludes(description)[assertType](normalizeSpacesInString(text), normalizeSpacesInString(allText.join(' | ')))
 }
 
 async function findCheckable(locator, context) {
@@ -4753,7 +4702,7 @@ async function findCheckable(locator, context) {
 async function proceedIsChecked(assertType, option) {
   let els = await findCheckable.call(this, option)
   assertElementExists(els, option, 'Checkable')
-  els = await Promise.all(els.map((el) => el.isChecked()))
+  els = await Promise.all(els.map(el => el.isChecked()))
   const selected = els.reduce((prev, cur) => prev || cur)
   return truth(`checkable ${option}`, 'to be checked')[assertType](selected)
 }
@@ -4785,10 +4734,10 @@ async function proceedSeeInField(assertType, field, value) {
   const els = await findFields.call(this, field)
   assertElementExists(els, field, 'Field')
   const el = els[0]
-  const tag = await el.evaluate((e) => e.tagName)
+  const tag = await el.evaluate(e => e.tagName)
   const fieldType = await el.getAttribute('type')
 
-  const proceedMultiple = async (elements) => {
+  const proceedMultiple = async elements => {
     const fields = Array.isArray(elements) ? elements : [elements]
 
     const elementValues = []
@@ -4802,7 +4751,7 @@ async function proceedSeeInField(assertType, field, value) {
       if (assertType === 'assert') {
         equals(`select option by ${field}`)[assertType](true, elementValues.length > 0)
       }
-      elementValues.forEach((val) => stringIncludes(`fields by ${field}`)[assertType](value, val))
+      elementValues.forEach(val => stringIncludes(`fields by ${field}`)[assertType](value, val))
     }
   }
 
@@ -4889,6 +4838,8 @@ function isFrameLocator(locator) {
 }
 
 function assertElementExists(res, locator, prefix, suffix) {
+  // if element text is an empty string, just exit this check
+  if (typeof res === 'string' && res === '') return
   if (!res || res.length === 0) {
     throw new ElementNotFound(locator, prefix, suffix)
   }
@@ -4925,12 +4876,9 @@ async function targetCreatedHandler(page) {
         this.contextLocator = null
       })
   })
-  page.on('console', (msg) => {
+  page.on('console', msg => {
     if (!consoleLogStore.includes(msg) && this.options.ignoreLog && !this.options.ignoreLog.includes(msg.type())) {
-      this.debugSection(
-        `Browser:${ucfirst(msg.type())}`,
-        ((msg.text && msg.text()) || msg._text || '') + msg.args().join(' '),
-      )
+      this.debugSection(`Browser:${ucfirst(msg.type())}`, ((msg.text && msg.text()) || msg._text || '') + msg.args().join(' '))
     }
     consoleLogStore.add(msg)
   })
@@ -5038,7 +4986,7 @@ async function refreshContextSession() {
     const contexts = await this.browser.contexts()
     contexts.shift()
 
-    await Promise.all(contexts.map((c) => c.close()))
+    await Promise.all(contexts.map(c => c.close()))
   } catch (e) {
     console.log(e)
   }
@@ -5057,10 +5005,10 @@ async function refreshContextSession() {
   const currentUrl = await this.grabCurrentUrl()
 
   if (currentUrl.startsWith('http')) {
-    await this.executeScript('localStorage.clear();').catch((err) => {
+    await this.executeScript('localStorage.clear();').catch(err => {
       if (!(err.message.indexOf("Storage is disabled inside 'data:' URLs.") > -1)) throw err
     })
-    await this.executeScript('sessionStorage.clear();').catch((err) => {
+    await this.executeScript('sessionStorage.clear();').catch(err => {
       if (!(err.message.indexOf("Storage is disabled inside 'data:' URLs.") > -1)) throw err
     })
   }
@@ -5090,11 +5038,22 @@ async function saveTraceForContext(context, name) {
 }
 
 async function highlightActiveElement(element) {
-  if (this.options.highlightElement && global.debugMode) {
-    await element.evaluate((el) => {
+  if ((this.options.highlightElement || store.onPause) && store.debugMode) {
+    await element.evaluate(el => {
       const prevStyle = el.style.boxShadow
-      el.style.boxShadow = '0px 0px 4px 3px rgba(255, 0, 0, 0.7)'
+      el.style.boxShadow = '0px 0px 4px 3px rgba(147, 51, 234, 0.8)' // Bright purple that works on both dark/light modes
       setTimeout(() => (el.style.boxShadow = prevStyle), 2000)
     })
   }
+}
+
+async function elToString(el, numberOfElements) {
+  const html = await el.evaluate(node => node.outerHTML)
+  return (
+    html
+      .replace(/\n/g, '')
+      .replace(/\s+/g, ' ')
+      .substring(0, 100 / numberOfElements)
+      .trim() + '...'
+  )
 }

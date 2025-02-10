@@ -7,19 +7,11 @@ const Helper = require('@codeceptjs/helper')
 const promiseRetry = require('promise-retry')
 const stringIncludes = require('../assert/include').includes
 const { urlEquals, equals } = require('../assert/equal')
+const store = require('../store')
 const { debug } = require('../output')
 const { empty } = require('../assert/empty')
 const { truth } = require('../assert/truth')
-const {
-  xpathLocator,
-  fileExists,
-  decodeUrl,
-  chunkArray,
-  convertCssPropertiesToCamelCase,
-  screenshotOutputFolder,
-  getNormalizedKeyAttributeValue,
-  modifierKeys,
-} = require('../utils')
+const { xpathLocator, fileExists, decodeUrl, chunkArray, convertCssPropertiesToCamelCase, screenshotOutputFolder, getNormalizedKeyAttributeValue, modifierKeys } = require('../utils')
 const { isColorProperty, convertColorToRGBA } = require('../colorUtils')
 const ElementNotFound = require('./errors/ElementNotFound')
 const ConnectionRefused = require('./errors/ConnectionRefused')
@@ -27,22 +19,12 @@ const Locator = require('../locator')
 const { highlightElement } = require('./scripts/highlightElement')
 const { focusElement } = require('./scripts/focusElement')
 const { blurElement } = require('./scripts/blurElement')
-const {
-  dontSeeElementError,
-  seeElementError,
-  seeElementInDOMError,
-  dontSeeElementInDOMError,
-} = require('./errors/ElementAssertion')
-const {
-  dontSeeTraffic,
-  seeTraffic,
-  grabRecordedNetworkTraffics,
-  stopRecordingTraffic,
-  flushNetworkTraffics,
-} = require('./network/actions')
+const { dontSeeElementError, seeElementError, seeElementInDOMError, dontSeeElementInDOMError } = require('./errors/ElementAssertion')
+const { dontSeeTraffic, seeTraffic, grabRecordedNetworkTraffics, stopRecordingTraffic, flushNetworkTraffics } = require('./network/actions')
 
 const SHADOW = 'shadow'
 const webRoot = 'body'
+let browserLogs = []
 
 /**
  * ## Configuration
@@ -595,10 +577,7 @@ class WebDriver extends Helper {
   }
 
   async _res(locator) {
-    const res =
-      this._isShadowLocator(locator) || this._isCustomLocator(locator)
-        ? await this._locate(locator)
-        : await this.$$(withStrictLocator(locator))
+    const res = this._isShadowLocator(locator) || this._isCustomLocator(locator) ? await this._locate(locator) : await this.$$(withStrictLocator(locator))
     return res
   }
 
@@ -631,7 +610,7 @@ class WebDriver extends Helper {
     this.$$ = this.browser.$$.bind(this.browser)
 
     if (this._isCustomLocatorStrategyDefined()) {
-      Object.keys(this.customLocatorStrategies).forEach(async (customLocator) => {
+      Object.keys(this.customLocatorStrategies).forEach(async customLocator => {
         this.debugSection('Weddriver', `adding custom locator strategy: ${customLocator}`)
         const locatorFunction = this._lookupCustomLocator(customLocator)
         this.browser.addLocatorStrategy(customLocator, locatorFunction)
@@ -641,6 +620,11 @@ class WebDriver extends Helper {
     if (this.browser.capabilities && this.browser.capabilities.platformName) {
       this.browser.capabilities.platformName = this.browser.capabilities.platformName.toLowerCase()
     }
+
+    this.browser.on('dialog', () => {})
+
+    await this.browser.sessionSubscribe({ events: ['log.entryAdded'] })
+    this.browser.on('log.entryAdded', logEvents)
 
     return this.browser
   }
@@ -667,7 +651,7 @@ class WebDriver extends Helper {
       this.isRunning = false
       return this.browser.deleteSession()
     }
-    if (this.browser.isInsideFrame) await this.browser.switchToFrame(null)
+    if (this.browser.isInsideFrame) await this.browser.switchFrame(null)
 
     if (this.options.keepBrowserState) return
 
@@ -675,10 +659,11 @@ class WebDriver extends Helper {
       this.debugSection('Session', 'cleaning cookies and localStorage')
       await this.browser.deleteCookies()
     }
-    await this.browser.execute('localStorage.clear();').catch((err) => {
+    await this.browser.execute('localStorage.clear();').catch(err => {
       if (!(err.message.indexOf("Storage is disabled inside 'data:' URLs.") > -1)) throw err
     })
     await this.closeOtherTabs()
+    browserLogs = []
     return this.browser
   }
 
@@ -705,17 +690,17 @@ class WebDriver extends Helper {
 
         return browser
       },
-      stop: async (browser) => {
+      stop: async browser => {
         if (!browser) return
         return browser.deleteSession()
       },
-      loadVars: async (browser) => {
+      loadVars: async browser => {
         if (this.context !== this.root) throw new Error("Can't start session inside within block")
         this.browser = browser
         this.$$ = this.browser.$$.bind(this.browser)
         this.sessionWindows[this.activeSessionName] = browser
       },
-      restoreVars: async (session) => {
+      restoreVars: async session => {
         if (!session) {
           this.activeSessionName = ''
         }
@@ -757,7 +742,7 @@ class WebDriver extends Helper {
       this.browser.isInsideFrame = true
       if (Array.isArray(frame)) {
         // this.switchTo(null);
-        await forEachAsync(frame, async (f) => this.switchTo(f))
+        await forEachAsync(frame, async f => this.switchTo(f))
         return
       }
       await this.switchTo(frame)
@@ -835,10 +820,7 @@ class WebDriver extends Helper {
    * @param {object} locator
    */
   async _smartWait(locator) {
-    this.debugSection(
-      `SmartWait (${this.options.smartWait}ms)`,
-      `Locating ${JSON.stringify(locator)} in ${this.options.smartWait}`,
-    )
+    this.debugSection(`SmartWait (${this.options.smartWait}ms)`, `Locating ${JSON.stringify(locator)} in ${this.options.smartWait}`)
     await this.defineTimeout({ implicit: this.options.smartWait })
   }
 
@@ -913,7 +895,7 @@ class WebDriver extends Helper {
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    */
   async _locateCheckable(locator) {
-    return findCheckable.call(this, locator, this.$$.bind(this)).then((res) => res)
+    return findCheckable.call(this, locator, this.$$.bind(this)).then(res => res)
   }
 
   /**
@@ -941,7 +923,7 @@ class WebDriver extends Helper {
    * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
    */
   async _locateFields(locator) {
-    return findFields.call(this, locator).then((res) => res)
+    return findFields.call(this, locator).then(res => res)
   }
 
   /**
@@ -1098,7 +1080,7 @@ class WebDriver extends Helper {
     const elem = usingFirstElement(res)
     highlightActiveElement.call(this, elem)
 
-    return this.executeScript((el) => {
+    return this.executeScript(el => {
       if (document.activeElement instanceof HTMLElement) {
         document.activeElement.blur()
       }
@@ -1215,7 +1197,7 @@ class WebDriver extends Helper {
     }
     const elem = usingFirstElement(res)
 
-    return this.executeScript((el) => {
+    return this.executeScript(el => {
       if (document.activeElement instanceof HTMLElement) {
         document.activeElement.blur()
       }
@@ -1335,15 +1317,9 @@ class WebDriver extends Helper {
     }
 
     // select options by visible text
-    let els = await forEachAsync(option, async (opt) =>
-      this.browser.findElementsFromElement(
-        getElementId(elem),
-        'xpath',
-        Locator.select.byVisibleText(xpathLocator.literal(opt)),
-      ),
-    )
+    let els = await forEachAsync(option, async opt => this.browser.findElementsFromElement(getElementId(elem), 'xpath', Locator.select.byVisibleText(xpathLocator.literal(opt))))
 
-    const clickOptionFn = async (el) => {
+    const clickOptionFn = async el => {
       if (el[0]) el = el[0]
       const elementId = getElementId(el)
       if (elementId) return this.browser.elementClick(elementId)
@@ -1353,19 +1329,9 @@ class WebDriver extends Helper {
       return forEachAsync(els, clickOptionFn)
     }
     // select options by value
-    els = await forEachAsync(option, async (opt) =>
-      this.browser.findElementsFromElement(
-        getElementId(elem),
-        'xpath',
-        Locator.select.byValue(xpathLocator.literal(opt)),
-      ),
-    )
+    els = await forEachAsync(option, async opt => this.browser.findElementsFromElement(getElementId(elem), 'xpath', Locator.select.byValue(xpathLocator.literal(opt))))
     if (els.length === 0) {
-      throw new ElementNotFound(
-        select,
-        `Option "${option}" in`,
-        'was not found neither by a visible text nor by a value',
-      )
+      throw new ElementNotFound(select, `Option "${option}" in`, 'was not found neither by a visible text nor by a value')
     }
     return forEachAsync(els, clickOptionFn)
   }
@@ -1404,9 +1370,7 @@ class WebDriver extends Helper {
         this.debugSection('File', 'Uploading file to remote server')
         file = await this.browser.uploadFile(file)
       } catch (err) {
-        throw new Error(
-          `File can't be transferred to remote server. Set \`remoteFileUpload: false\` in config to upload file locally.\n${err.message}`,
-        )
+        throw new Error(`File can't be transferred to remote server. Set \`remoteFileUpload: false\` in config to upload file locally.\n${err.message}`)
       }
     }
 
@@ -1494,7 +1458,11 @@ class WebDriver extends Helper {
    */
   async grabTextFromAll(locator) {
     const res = await this._locate(locator, true)
-    const val = await forEachAsync(res, (el) => this.browser.getElementText(getElementId(el)))
+    let val = []
+    await forEachAsync(res, async el => {
+      const text = await this.browser.getElementText(getElementId(el))
+      val.push(text)
+    })
     this.debugSection('GrabText', String(val))
     return val
   }
@@ -1538,7 +1506,7 @@ class WebDriver extends Helper {
    */
   async grabHTMLFromAll(locator) {
     const elems = await this._locate(locator, true)
-    const html = await forEachAsync(elems, (elem) => elem.getHTML(false))
+    const html = await forEachAsync(elems, elem => elem.getHTML(false))
     this.debugSection('GrabHTML', String(html))
     return html
   }
@@ -1581,7 +1549,7 @@ class WebDriver extends Helper {
    */
   async grabValueFromAll(locator) {
     const res = await this._locate(locator, true)
-    const val = await forEachAsync(res, (el) => el.getValue())
+    const val = await forEachAsync(res, el => el.getValue())
     this.debugSection('GrabValue', String(val))
 
     return val
@@ -1625,7 +1593,7 @@ class WebDriver extends Helper {
    */
   async grabCssPropertyFromAll(locator, cssProperty) {
     const res = await this._locate(locator, true)
-    const val = await forEachAsync(res, async (el) => this.browser.getElementCSSValue(getElementId(el), cssProperty))
+    const val = await forEachAsync(res, async el => this.browser.getElementCSSValue(getElementId(el), cssProperty))
     this.debugSection('Grab', String(val))
     return val
   }
@@ -1669,7 +1637,7 @@ class WebDriver extends Helper {
    */
   async grabAttributeFromAll(locator, attr) {
     const res = await this._locate(locator, true)
-    const val = await forEachAsync(res, async (el) => el.getAttribute(attr))
+    const val = await forEachAsync(res, async el => el.getAttribute(attr))
     this.debugSection('GrabAttribute', String(val))
     return val
   }
@@ -1909,7 +1877,7 @@ class WebDriver extends Helper {
   async seeElement(locator) {
     const res = await this._locate(locator, true)
     assertElementExists(res, locator)
-    const selected = await forEachAsync(res, async (el) => el.isDisplayed())
+    const selected = await forEachAsync(res, async el => el.isDisplayed())
     try {
       return truth(`elements of ${new Locator(locator)}`, 'to be seen').assert(selected)
     } catch (e) {
@@ -1934,7 +1902,7 @@ class WebDriver extends Helper {
     if (!res || res.length === 0) {
       return truth(`elements of ${new Locator(locator)}`, 'to be seen').negate(false)
     }
-    const selected = await forEachAsync(res, async (el) => el.isDisplayed())
+    const selected = await forEachAsync(res, async el => el.isDisplayed())
     try {
       return truth(`elements of ${new Locator(locator)}`, 'to be seen').negate(selected)
     } catch (e) {
@@ -2028,11 +1996,7 @@ class WebDriver extends Helper {
    * 
    */
   async grabBrowserLogs() {
-    if (this.browser.isW3C) {
-      this.debug('Logs not available in W3C specification')
-      return
-    }
-    return this.browser.getLogs('browser')
+    return browserLogs
   }
 
   /**
@@ -2085,11 +2049,7 @@ class WebDriver extends Helper {
    */
   async seeNumberOfElements(locator, num) {
     const res = await this._locate(locator)
-    return assert.equal(
-      res.length,
-      num,
-      `expected number of elements (${new Locator(locator)}) is ${num}, but found ${res.length}`,
-    )
+    return assert.equal(res.length, num, `expected number of elements (${new Locator(locator)}) is ${num}, but found ${res.length}`)
   }
 
   /**
@@ -2108,11 +2068,7 @@ class WebDriver extends Helper {
    */
   async seeNumberOfVisibleElements(locator, num) {
     const res = await this.grabNumberOfVisibleElements(locator)
-    return assert.equal(
-      res,
-      num,
-      `expected number of visible elements (${new Locator(locator)}) is ${num}, but found ${res}`,
-    )
+    return assert.equal(res, num, `expected number of visible elements (${new Locator(locator)}) is ${num}, but found ${res}`)
   }
 
   /**
@@ -2146,19 +2102,16 @@ class WebDriver extends Helper {
       }
     }
 
-    const values = Object.keys(cssPropertiesCamelCase).map((key) => cssPropertiesCamelCase[key])
+    const values = Object.keys(cssPropertiesCamelCase).map(key => cssPropertiesCamelCase[key])
     if (!Array.isArray(props)) props = [props]
     let chunked = chunkArray(props, values.length)
-    chunked = chunked.filter((val) => {
+    chunked = chunked.filter(val => {
       for (let i = 0; i < val.length; ++i) {
-        // eslint-disable-next-line eqeqeq
         if (val[i] != values[i]) return false
       }
       return true
     })
-    return equals(
-      `all elements (${new Locator(locator)}) to have CSS property ${JSON.stringify(cssProperties)}`,
-    ).assert(chunked.length, elemAmount)
+    return equals(`all elements (${new Locator(locator)}) to have CSS property ${JSON.stringify(cssProperties)}`).assert(chunked.length, elemAmount)
   }
 
   /**
@@ -2178,28 +2131,24 @@ class WebDriver extends Helper {
     assertElementExists(res, locator)
     const elemAmount = res.length
 
-    let attrs = await forEachAsync(res, async (el) => {
-      return forEachAsync(Object.keys(attributes), async (attr) => el.getAttribute(attr))
+    let attrs = await forEachAsync(res, async el => {
+      return forEachAsync(Object.keys(attributes), async attr => el.getAttribute(attr))
     })
 
-    const values = Object.keys(attributes).map((key) => attributes[key])
+    const values = Object.keys(attributes).map(key => attributes[key])
     if (!Array.isArray(attrs)) attrs = [attrs]
     let chunked = chunkArray(attrs, values.length)
-    chunked = chunked.filter((val) => {
+    chunked = chunked.filter(val => {
       for (let i = 0; i < val.length; ++i) {
         const _actual = Number.isNaN(val[i]) || typeof values[i] === 'string' ? val[i] : Number.parseInt(val[i], 10)
-        const _expected =
-          Number.isNaN(values[i]) || typeof values[i] === 'string' ? values[i] : Number.parseInt(values[i], 10)
+        const _expected = Number.isNaN(values[i]) || typeof values[i] === 'string' ? values[i] : Number.parseInt(values[i], 10)
         // the attribute could be a boolean
         if (typeof _actual === 'boolean') return _actual === _expected
         if (_actual !== _expected) return false
       }
       return true
     })
-    return assert.ok(
-      chunked.length === elemAmount,
-      `expected all elements (${new Locator(locator)}) to have attributes ${JSON.stringify(attributes)}`,
-    )
+    return assert.ok(chunked.length === elemAmount, `expected all elements (${new Locator(locator)}) to have attributes ${JSON.stringify(attributes)}`)
   }
 
   /**
@@ -2216,9 +2165,9 @@ class WebDriver extends Helper {
   async grabNumberOfVisibleElements(locator) {
     const res = await this._locate(locator)
 
-    let selected = await forEachAsync(res, async (el) => el.isDisplayed())
+    let selected = await forEachAsync(res, async el => el.isDisplayed())
     if (!Array.isArray(selected)) selected = [selected]
-    selected = selected.filter((val) => val === true)
+    selected = selected.filter(val => val === true)
     return selected.length
   }
 
@@ -2512,17 +2461,24 @@ class WebDriver extends Helper {
 
         if (browser) {
           this.debug(`Screenshot of ${sessionName} session has been saved to ${outputFile}`)
-          return browser.saveScreenshot(outputFile)
+          await browser.saveScreenshot(outputFile)
         }
       }
     }
 
     if (!fullPage) {
       this.debug(`Screenshot has been saved to ${outputFile}`)
-      return this.browser.saveScreenshot(outputFile)
+      await this.browser.saveScreenshot(outputFile)
     }
 
     const originalWindowSize = await this.browser.getWindowSize()
+
+    // this case running on device, so we could not set the windowSize
+    if (this.browser.isMobile) {
+      this.debug(`Screenshot has been saved to ${outputFile}, size: ${originalWindowSize.width}x${originalWindowSize.height}`)
+      const buffer = await this.browser.saveScreenshot(outputFile)
+      return buffer
+    }
 
     let { width, height } = await this.browser
       .execute(function () {
@@ -2531,7 +2487,7 @@ class WebDriver extends Helper {
           width: document.body.scrollWidth,
         }
       })
-      .then((res) => res)
+      .then(res => res)
 
     if (height < 100) height = 500 // errors for very small height
 
@@ -2572,7 +2528,7 @@ class WebDriver extends Helper {
    * 
    * ```js
    * I.clearCookie();
-   * I.clearCookie('test'); // Playwright currently doesn't support clear a particular cookie name
+   * I.clearCookie('test');
    * ```
    * 
    * @param {?string} [cookie=null] (optional, `null` by default) cookie name
@@ -2660,7 +2616,7 @@ class WebDriver extends Helper {
 
     return promiseRetry(
       async (retry, number) => {
-        const _grabCookie = async (name) => {
+        const _grabCookie = async name => {
           const cookie = await this.browser.getCookies([name])
           if (cookie.length === 0) throw Error(`Cookie ${name} is not found after ${retries}s`)
         }
@@ -2684,11 +2640,10 @@ class WebDriver extends Helper {
    * libraries](http://jster.net/category/windows-modals-popups).
    */
   async acceptPopup() {
-    return this.browser.getAlertText().then((res) => {
-      if (res !== null) {
-        return this.browser.acceptAlert()
-      }
-    })
+    const text = await this.browser.getAlertText()
+    if (text) {
+      return await this.browser.acceptAlert()
+    }
   }
 
   /**
@@ -2696,11 +2651,10 @@ class WebDriver extends Helper {
    *
    */
   async cancelPopup() {
-    return this.browser.getAlertText().then((res) => {
-      if (res !== null) {
-        return this.browser.dismissAlert()
-      }
-    })
+    const text = await this.browser.getAlertText()
+    if (text) {
+      return await this.browser.dismissAlert()
+    }
   }
 
   /**
@@ -2710,7 +2664,7 @@ class WebDriver extends Helper {
    * @param {string} text value to check.
    */
   async seeInPopup(text) {
-    return this.browser.getAlertText().then((res) => {
+    return await this.browser.getAlertText().then(res => {
       if (res === null) {
         throw new Error('Popup is not opened')
       }
@@ -3179,9 +3133,9 @@ class WebDriver extends Helper {
   async closeOtherTabs() {
     const handles = await this.browser.getWindowHandles()
     const currentHandle = await this.browser.getWindowHandle()
-    const otherHandles = handles.filter((handle) => handle !== currentHandle)
+    const otherHandles = handles.filter(handle => handle !== currentHandle)
 
-    await forEachAsync(otherHandles, async (handle) => {
+    await forEachAsync(otherHandles, async handle => {
       await this.browser.switchToWindow(handle)
       await this.browser.closeWindow()
     })
@@ -3200,7 +3154,7 @@ class WebDriver extends Helper {
    * 
    */
   async wait(sec) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(resolve, sec * 1000)
     })
   }
@@ -3223,9 +3177,9 @@ class WebDriver extends Helper {
         if (!res || res.length === 0) {
           return false
         }
-        const selected = await forEachAsync(res, async (el) => this.browser.isElementEnabled(getElementId(el)))
+        const selected = await forEachAsync(res, async el => this.browser.isElementEnabled(getElementId(el)))
         if (Array.isArray(selected)) {
-          return selected.filter((val) => val === true).length > 0
+          return selected.filter(val => val === true).length > 0
         }
         return selected
       },
@@ -3311,14 +3265,14 @@ class WebDriver extends Helper {
     return client
       .waitUntil(
         function () {
-          return this.getUrl().then((res) => {
+          return this.getUrl().then(res => {
             currUrl = decodeUrl(res)
             return currUrl.indexOf(urlPart) > -1
           })
         },
         { timeout: aSec * 1000 },
       )
-      .catch((e) => {
+      .catch(e => {
         if (e.message.indexOf('timeout')) {
           throw new Error(`expected url to include ${urlPart}, but found ${currUrl}`)
         }
@@ -3348,12 +3302,12 @@ class WebDriver extends Helper {
     let currUrl = ''
     return this.browser
       .waitUntil(function () {
-        return this.getUrl().then((res) => {
+        return this.getUrl().then(res => {
           currUrl = decodeUrl(res)
           return currUrl === urlPart
         })
       }, aSec * 1000)
-      .catch((e) => {
+      .catch(e => {
         if (e.message.indexOf('timeout')) {
           throw new Error(`expected url to be ${urlPart}, but found ${currUrl}`)
         }
@@ -3386,9 +3340,9 @@ class WebDriver extends Helper {
       async () => {
         const res = await this.$$(withStrictLocator.call(this, _context))
         if (!res || res.length === 0) return false
-        const selected = await forEachAsync(res, async (el) => this.browser.getElementText(getElementId(el)))
+        const selected = await forEachAsync(res, async el => this.browser.getElementText(getElementId(el)))
         if (Array.isArray(selected)) {
-          return selected.filter((part) => part.indexOf(text) >= 0).length > 0
+          return selected.filter(part => part.indexOf(text) >= 0).length > 0
         }
         return selected.indexOf(text) >= 0
       },
@@ -3420,9 +3374,9 @@ class WebDriver extends Helper {
       async () => {
         const res = await findFields.call(this, field)
         if (!res || res.length === 0) return false
-        const selected = await forEachAsync(res, async (el) => el.getValue())
+        const selected = await forEachAsync(res, async el => el.getValue())
         if (Array.isArray(selected)) {
-          return selected.filter((part) => part.indexOf(value) >= 0).length > 0
+          return selected.filter(part => part.indexOf(value) >= 0).length > 0
         }
         return selected.indexOf(value) >= 0
       },
@@ -3454,9 +3408,9 @@ class WebDriver extends Helper {
       async () => {
         const res = await this._res(locator)
         if (!res || res.length === 0) return false
-        const selected = await forEachAsync(res, async (el) => el.isDisplayed())
+        const selected = await forEachAsync(res, async el => el.isDisplayed())
         if (Array.isArray(selected)) {
-          return selected.filter((val) => val === true).length > 0
+          return selected.filter(val => val === true).length > 0
         }
         return selected
       },
@@ -3487,10 +3441,10 @@ class WebDriver extends Helper {
       async () => {
         const res = await this._res(locator)
         if (!res || res.length === 0) return false
-        let selected = await forEachAsync(res, async (el) => el.isDisplayed())
+        let selected = await forEachAsync(res, async el => el.isDisplayed())
 
         if (!Array.isArray(selected)) selected = [selected]
-        selected = selected.filter((val) => val === true)
+        selected = selected.filter(val => val === true)
         return selected.length === num
       },
       {
@@ -3520,7 +3474,7 @@ class WebDriver extends Helper {
       async () => {
         const res = await this._res(locator)
         if (!res || res.length === 0) return true
-        const selected = await forEachAsync(res, async (el) => el.isDisplayed())
+        const selected = await forEachAsync(res, async el => el.isDisplayed())
         return !selected.length
       },
       { timeout: aSec * 1000, timeoutMsg: `element (${new Locator(locator)}) still visible after ${aSec} sec` },
@@ -3651,17 +3605,14 @@ class WebDriver extends Helper {
    */
   async switchTo(locator) {
     this.browser.isInsideFrame = true
-    if (Number.isInteger(locator)) {
-      return this.browser.switchToFrame(locator)
-    }
     if (!locator) {
-      return this.browser.switchToFrame(null)
+      return this.browser.switchFrame(null)
     }
 
     let res = await this._locate(locator, true)
     assertElementExists(res, locator)
     res = usingFirstElement(res)
-    return this.browser.switchToFrame(res)
+    return this.browser.switchFrame(res)
   }
 
   /**
@@ -3684,7 +3635,7 @@ class WebDriver extends Helper {
 
     await this.browser.waitUntil(
       async () => {
-        await this.browser.getWindowHandles().then((handles) => {
+        await this.browser.getWindowHandles().then(handles => {
           if (handles.indexOf(current) + num + 1 <= handles.length) {
             target = handles[handles.indexOf(current) + num]
           }
@@ -3716,7 +3667,7 @@ class WebDriver extends Helper {
 
     await this.browser.waitUntil(
       async () => {
-        await this.browser.getWindowHandles().then((handles) => {
+        await this.browser.getWindowHandles().then(handles => {
           if (handles.indexOf(current) - num > -1) {
             target = handles[handles.indexOf(current) - num]
           }
@@ -3826,10 +3777,7 @@ class WebDriver extends Helper {
     return client.execute(function () {
       const body = document.body
       const html = document.documentElement
-      window.scrollTo(
-        0,
-        Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight),
-      )
+      window.scrollTo(0, Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight))
     })
   }
 
@@ -3931,10 +3879,17 @@ async function proceedSee(assertType, text, context, strict = false) {
   const smartWaitEnabled = assertType === 'assert'
   const res = await this._locate(withStrictLocator(context), smartWaitEnabled)
   assertElementExists(res, context)
-  const selected = await forEachAsync(res, async (el) => this.browser.getElementText(getElementId(el)))
+  let selected = await forEachAsync(res, async el => this.browser.getElementText(getElementId(el)))
+
+  // apply ignoreCase option
+  if (store?.currentStep?.opts?.ignoreCase === true) {
+    text = text.toLowerCase()
+    selected = selected.map(elText => elText.toLowerCase())
+  }
+
   if (strict) {
     if (Array.isArray(selected) && selected.length !== 0) {
-      return selected.map((elText) => equals(description)[assertType](text, elText))
+      return selected.map(elText => equals(description)[assertType](text, elText))
     }
     return equals(description)[assertType](text, selected)
   }
@@ -3962,7 +3917,7 @@ async function forEachAsync(array, callback, options = { expandArrayResults: tru
     const res = await callback(inputArray[index], index, inputArray)
 
     if (Array.isArray(res) && expandArrayResults) {
-      res.forEach((val) => values.push(val))
+      res.forEach(val => values.push(val))
     } else if (res) {
       values.push(res)
     }
@@ -4048,11 +4003,11 @@ async function proceedSeeField(assertType, field, value) {
   const elem = usingFirstElement(res)
   const elemId = getElementId(elem)
 
-  const proceedMultiple = async (fields) => {
+  const proceedMultiple = async fields => {
     const fieldResults = toArray(
-      await forEachAsync(fields, async (el) => {
+      await forEachAsync(fields, async el => {
         const elementId = getElementId(el)
-        return this.browser.isW3C ? el.getValue() : this.browser.getElementAttribute(elementId, 'value')
+        return this.browser.getElementAttribute(elementId, 'value')
       }),
     )
 
@@ -4061,27 +4016,24 @@ async function proceedSeeField(assertType, field, value) {
     } else {
       // Assert that results were found so the forEach assert does not silently pass
       equals(`no. of items matching > 0:  ${field}`)[assertType](true, !!fieldResults.length)
-      fieldResults.forEach((val) => stringIncludes(`fields by ${field}`)[assertType](value, val))
+      fieldResults.forEach(val => stringIncludes(`fields by ${field}`)[assertType](value, val))
     }
   }
 
-  const proceedSingle = (el) =>
-    el.getValue().then((res) => {
+  const proceedSingle = el =>
+    el.getValue().then(res => {
       if (res === null) {
         throw new Error(`Element ${el.selector} has no value attribute`)
       }
       stringIncludes(`fields by ${field}`)[assertType](value, res)
     })
 
-  const filterBySelected = async (elements) =>
-    filterAsync(elements, async (el) => this.browser.isElementSelected(getElementId(el)))
+  const filterBySelected = async elements => filterAsync(elements, async el => this.browser.isElementSelected(getElementId(el)))
 
   const filterSelectedByValue = async (elements, value) => {
-    return filterAsync(elements, async (el) => {
+    return filterAsync(elements, async el => {
       const elementId = getElementId(el)
-      const currentValue = this.browser.isW3C
-        ? await el.getValue()
-        : await this.browser.getElementAttribute(elementId, 'value')
+      const currentValue = await this.browser.getElementAttribute(elementId, 'value')
       const isSelected = await this.browser.isElementSelected(elementId)
       return currentValue === value && isSelected
     })
@@ -4089,7 +4041,13 @@ async function proceedSeeField(assertType, field, value) {
 
   const tag = await elem.getTagName()
   if (tag === 'select') {
-    const subOptions = await this.browser.findElementsFromElement(elemId, 'css', 'option')
+    let subOptions
+
+    try {
+      subOptions = await this.browser.findElementsFromElement(elemId, 'css', 'option')
+    } catch (e) {
+      subOptions = await this.browser.findElementsFromElement(elemId, 'xpath', 'option')
+    }
 
     if (value === '') {
       // Don't filter by value
@@ -4130,7 +4088,7 @@ async function proceedSeeCheckbox(assertType, field) {
   const res = await findFields.call(this, field)
   assertElementExists(res, field, 'Field')
 
-  const selected = await forEachAsync(res, async (el) => this.browser.isElementSelected(getElementId(el)))
+  const selected = await forEachAsync(res, async el => this.browser.isElementSelected(getElementId(el)))
   return truth(`checkable field "${field}"`, 'to be checked')[assertType](selected)
 }
 
@@ -4331,7 +4289,7 @@ function getNormalizedKey(key) {
   return convertKeyToRawKey(normalizedKey)
 }
 
-const unicodeModifierKeys = modifierKeys.map((k) => convertKeyToRawKey(k))
+const unicodeModifierKeys = modifierKeys.map(k => convertKeyToRawKey(k))
 function isModifierKey(key) {
   return unicodeModifierKeys.includes(key)
 }
@@ -4344,9 +4302,9 @@ function highlightActiveElement(element) {
 
 function prepareLocateFn(context) {
   if (!context) return this._locate.bind(this)
-  return (l) => {
+  return l => {
     l = new Locator(l, 'css')
-    return this._locate(context, true).then(async (res) => {
+    return this._locate(context, true).then(async res => {
       assertElementExists(res, context, 'Context element')
       if (l.react) {
         return res[0].react$$(l.react, l.props || undefined)
@@ -4354,6 +4312,10 @@ function prepareLocateFn(context) {
       return res[0].$$(l.simplify())
     })
   }
+}
+
+function logEvents(event) {
+  browserLogs.push(event.text) // add log message to the array
 }
 
 module.exports = WebDriver

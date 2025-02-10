@@ -44,7 +44,7 @@ const vendorPrefix = {
  *
  * This helper should be configured in codecept.conf.ts or codecept.conf.js
  *
- * * `appiumV2`: set this to true if you want to run tests with AppiumV2. See more how to setup [here](https://codecept.io/mobile/#setting-up)
+ * * `appiumV2`: by default is true, set this to false if you want to run tests with AppiumV1. See more how to setup [here](https://codecept.io/mobile/#setting-up)
  * * `app`: Application path. Local path or remote URL to an .ipa or .apk file, or a .zip containing one of these. Alias to desiredCapabilities.appPackage
  * * `host`: (default: 'localhost') Appium host
  * * `port`: (default: '4723') Appium port
@@ -124,7 +124,7 @@ const vendorPrefix = {
  * {
  * helpers: {
  *   Appium: {
- *         appiumV2: true,
+ *         appiumV2: true, // By default is true, set to false if you want to run against Appium v1
  *         host: "hub-cloud.browserstack.com",
  *         port: 4444,
  *         user: process.env.BROWSERSTACK_USER,
@@ -178,16 +178,12 @@ class Appium extends Webdriver {
     super(config)
 
     this.isRunning = false
-    if (config.appiumV2 === true) {
-      this.appiumV2 = true
-    }
+    this.appiumV2 = config.appiumV2 || true
     this.axios = axios.create()
 
     webdriverio = require('webdriverio')
     if (!config.appiumV2) {
-      console.log(
-        'The Appium core team does not maintain Appium 1.x anymore since the 1st of January 2022. Please migrating to Appium 2.x by adding appiumV2: true to your config.',
-      )
+      console.log('The Appium core team does not maintain Appium 1.x anymore since the 1st of January 2022. Appium 2.x is used by default.')
       console.log('More info: https://bit.ly/appium-v2-migration')
       console.log('This Appium 1.x support will be removed in next major release.')
     }
@@ -234,20 +230,14 @@ class Appium extends Webdriver {
 
     config.baseUrl = config.url || config.baseUrl
     if (config.desiredCapabilities && Object.keys(config.desiredCapabilities).length) {
-      config.capabilities =
-        this.appiumV2 === true ? this._convertAppiumV2Caps(config.desiredCapabilities) : config.desiredCapabilities
+      config.capabilities = this.appiumV2 === true ? this._convertAppiumV2Caps(config.desiredCapabilities) : config.desiredCapabilities
     }
 
     if (this.appiumV2) {
-      config.capabilities[`${vendorPrefix.appium}:deviceName`] =
-        config[`${vendorPrefix.appium}:device`] || config.capabilities[`${vendorPrefix.appium}:deviceName`]
-      config.capabilities[`${vendorPrefix.appium}:browserName`] =
-        config[`${vendorPrefix.appium}:browser`] || config.capabilities[`${vendorPrefix.appium}:browserName`]
-      config.capabilities[`${vendorPrefix.appium}:app`] =
-        config[`${vendorPrefix.appium}:app`] || config.capabilities[`${vendorPrefix.appium}:app`]
-      config.capabilities[`${vendorPrefix.appium}:tunnelIdentifier`] =
-        config[`${vendorPrefix.appium}:tunnelIdentifier`] ||
-        config.capabilities[`${vendorPrefix.appium}:tunnelIdentifier`] // Adding the code to connect to sauce labs via sauce tunnel
+      config.capabilities[`${vendorPrefix.appium}:deviceName`] = config[`${vendorPrefix.appium}:device`] || config.capabilities[`${vendorPrefix.appium}:deviceName`]
+      config.capabilities[`${vendorPrefix.appium}:browserName`] = config[`${vendorPrefix.appium}:browser`] || config.capabilities[`${vendorPrefix.appium}:browserName`]
+      config.capabilities[`${vendorPrefix.appium}:app`] = config[`${vendorPrefix.appium}:app`] || config.capabilities[`${vendorPrefix.appium}:app`]
+      config.capabilities[`${vendorPrefix.appium}:tunnelIdentifier`] = config[`${vendorPrefix.appium}:tunnelIdentifier`] || config.capabilities[`${vendorPrefix.appium}:tunnelIdentifier`] // Adding the code to connect to sauce labs via sauce tunnel
     } else {
       config.capabilities.deviceName = config.device || config.capabilities.deviceName
       config.capabilities.browserName = config.browser || config.capabilities.browserName
@@ -394,7 +384,7 @@ class Appium extends Webdriver {
   _buildAppiumEndpoint() {
     const { protocol, port, hostname, path } = this.browser.options
     // Build path to Appium REST API endpoint
-    return `${protocol}://${hostname}:${port}${path}`
+    return `${protocol}://${hostname}:${port}${path}/session/${this.browser.sessionId}`
   }
 
   /**
@@ -610,7 +600,7 @@ class Appium extends Webdriver {
 
     return this.axios({
       method: 'post',
-      url: `${this._buildAppiumEndpoint()}/session/${this.browser.sessionId}/appium/device/remove_app`,
+      url: `${this._buildAppiumEndpoint()}/appium/device/remove_app`,
       data: { appId, bundleId },
     })
   }
@@ -627,7 +617,7 @@ class Appium extends Webdriver {
     onlyForApps.call(this)
     return this.axios({
       method: 'post',
-      url: `${this._buildAppiumEndpoint()}/session/${this.browser.sessionId}/appium/app/reset`,
+      url: `${this._buildAppiumEndpoint()}/appium/app/reset`,
     })
   }
 
@@ -701,7 +691,7 @@ class Appium extends Webdriver {
 
     const res = await this.axios({
       method: 'get',
-      url: `${this._buildAppiumEndpoint()}/session/${this.browser.sessionId}/orientation`,
+      url: `${this._buildAppiumEndpoint()}/orientation`,
     })
 
     const currentOrientation = res.data.value
@@ -725,7 +715,7 @@ class Appium extends Webdriver {
 
     return this.axios({
       method: 'post',
-      url: `${this._buildAppiumEndpoint()}/session/${this.browser.sessionId}/orientation`,
+      url: `${this._buildAppiumEndpoint()}/orientation`,
       data: { orientation },
     })
   }
@@ -964,21 +954,19 @@ class Appium extends Webdriver {
    * ```js
    * // taps outside to hide keyboard per default
    * I.hideDeviceKeyboard();
-   * I.hideDeviceKeyboard('tapOutside');
-   *
-   * // or by pressing key
-   * I.hideDeviceKeyboard('pressKey', 'Done');
    * ```
    *
    * Appium: support Android and iOS
    *
-   * @param {'tapOutside' | 'pressKey'} [strategy] Desired strategy to close keyboard (‘tapOutside’ or ‘pressKey’)
-   * @param {string} [key] Optional key
    */
-  async hideDeviceKeyboard(strategy, key) {
+  async hideDeviceKeyboard() {
     onlyForApps.call(this)
-    strategy = strategy || 'tapOutside'
-    return this.browser.hideKeyboard(strategy, key)
+
+    return this.axios({
+      method: 'post',
+      url: `${this._buildAppiumEndpoint()}/appium/device/hide_keyboard`,
+      data: {},
+    })
   }
 
   /**
@@ -1054,7 +1042,13 @@ class Appium extends Webdriver {
    * @param {*} locator
    */
   async tap(locator) {
-    return this.makeTouchAction(locator, 'tap')
+    const { elementId } = await this.browser.$(parseLocator.call(this, locator))
+
+    return this.axios({
+      method: 'post',
+      url: `${this._buildAppiumEndpoint()}/element/${elementId}/click`,
+      data: {},
+    })
   }
 
   /**
@@ -1304,14 +1298,14 @@ class Appium extends Webdriver {
           }
           return browser
             .$$(parseLocator.call(this, searchableLocator))
-            .then((els) => els.length && els[0].isDisplayed())
-            .then((res) => {
+            .then(els => els.length && els[0].isDisplayed())
+            .then(res => {
               if (res) {
                 return true
               }
               return this[direction](scrollLocator, offset, speed)
                 .getSource()
-                .then((source) => {
+                .then(source => {
                   if (source === currentSource) {
                     err = true
                   } else {
@@ -1324,12 +1318,9 @@ class Appium extends Webdriver {
         timeout * 1000,
         errorMsg,
       )
-      .catch((e) => {
+      .catch(e => {
         if (e.message.indexOf('timeout') && e.type !== 'NoSuchElement') {
-          throw new AssertionFailedError(
-            { customMessage: `Scroll to the end and element ${searchableLocator} was not found` },
-            '',
-          )
+          throw new AssertionFailedError({ customMessage: `Scroll to the end and element ${searchableLocator} was not found` }, '')
         } else {
           throw e
         }
@@ -1386,8 +1377,8 @@ class Appium extends Webdriver {
    */
   async pullFile(path, dest) {
     onlyForApps.call(this)
-    return this.browser.pullFile(path).then((res) =>
-      fs.writeFile(dest, Buffer.from(res, 'base64'), (err) => {
+    return this.browser.pullFile(path).then(res =>
+      fs.writeFile(dest, Buffer.from(res, 'base64'), err => {
         if (err) {
           return false
         }
@@ -1553,7 +1544,14 @@ class Appium extends Webdriver {
    */
   async click(locator, context) {
     if (this.isWeb) return super.click(locator, context)
-    return super.click(parseLocator.call(this, locator), parseLocator.call(this, context))
+
+    const { elementId } = await this.browser.$(parseLocator.call(this, locator), parseLocator.call(this, context))
+
+    return this.axios({
+      method: 'post',
+      url: `${this._buildAppiumEndpoint()}/element/${elementId}/click`,
+      data: {},
+    })
   }
 
   /**
@@ -2044,12 +2042,8 @@ function parseLocator(locator) {
   }
 
   locator = new Locator(locator, 'xpath')
-  if (locator.type === 'css' && !this.isWeb)
-    throw new Error(
-      'Unable to use css locators in apps. Locator strategies for this request: xpath, id, class name or accessibility id',
-    )
-  if (locator.type === 'name' && !this.isWeb)
-    throw new Error("Can't locate element by name in Native context. Use either ID, class name or accessibility id")
+  if (locator.type === 'css' && !this.isWeb) throw new Error('Unable to use css locators in apps. Locator strategies for this request: xpath, id, class name or accessibility id')
+  if (locator.type === 'name' && !this.isWeb) throw new Error("Can't locate element by name in Native context. Use either ID, class name or accessibility id")
   if (locator.type === 'id' && !this.isWeb && this.platform === 'android') return `//*[@resource-id='${locator.value}']`
   return locator.simplify()
 }

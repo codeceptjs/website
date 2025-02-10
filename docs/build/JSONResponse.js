@@ -1,12 +1,5 @@
 const Helper = require('@codeceptjs/helper')
-
-let expect
-
-import('chai').then((chai) => {
-  expect = chai.expect
-  chai.use(require('chai-deep-match'))
-})
-
+const assert = require('assert')
 const joi = require('joi')
 
 /**
@@ -77,12 +70,10 @@ class JSONResponse extends Helper {
   _beforeSuite() {
     this.response = null
     if (!this.helpers[this.options.requestHelper]) {
-      throw new Error(
-        `Error setting JSONResponse, helper ${this.options.requestHelper} is not enabled in config, helpers: ${Object.keys(this.helpers)}`,
-      )
+      throw new Error(`Error setting JSONResponse, helper ${this.options.requestHelper} is not enabled in config, helpers: ${Object.keys(this.helpers)}`)
     }
     // connect to REST helper
-    this.helpers[this.options.requestHelper].config.onResponse = (response) => {
+    this.helpers[this.options.requestHelper].config.onResponse = response => {
       this.response = response
     }
   }
@@ -110,7 +101,7 @@ class JSONResponse extends Helper {
    */
   seeResponseCodeIs(code) {
     this._checkResponseReady()
-    expect(this.response.status).to.eql(code, 'Response code is not the same as expected')
+    assert.strictEqual(this.response.status, code, 'Response code is not the same as expected')
   }
 
   /**
@@ -124,7 +115,7 @@ class JSONResponse extends Helper {
    */
   dontSeeResponseCodeIs(code) {
     this._checkResponseReady()
-    expect(this.response.status).not.to.eql(code)
+    assert.notStrictEqual(this.response.status, code)
   }
 
   /**
@@ -132,8 +123,7 @@ class JSONResponse extends Helper {
    */
   seeResponseCodeIsClientError() {
     this._checkResponseReady()
-    expect(this.response.status).to.be.gte(400)
-    expect(this.response.status).to.be.lt(500)
+    assert(this.response.status >= 400 && this.response.status < 500)
   }
 
   /**
@@ -141,8 +131,7 @@ class JSONResponse extends Helper {
    */
   seeResponseCodeIsRedirection() {
     this._checkResponseReady()
-    expect(this.response.status).to.be.gte(300)
-    expect(this.response.status).to.be.lt(400)
+    assert(this.response.status >= 300 && this.response.status < 400)
   }
 
   /**
@@ -150,8 +139,7 @@ class JSONResponse extends Helper {
    */
   seeResponseCodeIsServerError() {
     this._checkResponseReady()
-    expect(this.response.status).to.be.gte(500)
-    expect(this.response.status).to.be.lt(600)
+    assert(this.response.status >= 500 && this.response.status < 600)
   }
 
   /**
@@ -164,8 +152,7 @@ class JSONResponse extends Helper {
    */
   seeResponseCodeIsSuccessful() {
     this._checkResponseReady()
-    expect(this.response.status).to.be.gte(200)
-    expect(this.response.status).to.be.lt(300)
+    assert(this.response.status >= 200 && this.response.status < 300)
   }
 
   /**
@@ -188,17 +175,19 @@ class JSONResponse extends Helper {
   seeResponseContainsJson(json = {}) {
     this._checkResponseReady()
     if (Array.isArray(this.response.data)) {
-      let fails = 0
+      let found = false
       for (const el of this.response.data) {
         try {
-          expect(el).to.deep.match(json)
+          this._assertContains(el, json)
+          found = true
+          break
         } catch (err) {
-          fails++
+          continue
         }
       }
-      expect(fails < this.response.data.length, `No elements in array matched ${JSON.stringify(json)}`).to.be.true
+      assert(found, `No elements in array matched ${JSON.stringify(json)}`)
     } else {
-      expect(this.response.data).to.deep.match(json)
+      this._assertContains(this.response.data, json)
     }
   }
 
@@ -222,9 +211,22 @@ class JSONResponse extends Helper {
   dontSeeResponseContainsJson(json = {}) {
     this._checkResponseReady()
     if (Array.isArray(this.response.data)) {
-      this.response.data.forEach((data) => expect(data).not.to.deep.match(json))
+      for (const data of this.response.data) {
+        try {
+          this._assertContains(data, json)
+          assert.fail(`Found matching element: ${JSON.stringify(data)}`)
+        } catch (err) {
+          // expected to fail
+          continue
+        }
+      }
     } else {
-      expect(this.response.data).not.to.deep.match(json)
+      try {
+        this._assertContains(this.response.data, json)
+        assert.fail('Response contains the JSON')
+      } catch (err) {
+        // expected to fail
+      }
     }
   }
 
@@ -250,20 +252,27 @@ class JSONResponse extends Helper {
   seeResponseContainsKeys(keys = []) {
     this._checkResponseReady()
     if (Array.isArray(this.response.data)) {
-      this.response.data.forEach((data) => expect(data).to.include.keys(keys))
+      for (const data of this.response.data) {
+        for (const key of keys) {
+          assert(key in data, `Key "${key}" is not found in ${JSON.stringify(data)}`)
+        }
+      }
     } else {
-      expect(this.response.data).to.include.keys(keys)
+      for (const key of keys) {
+        assert(key in this.response.data, `Key "${key}" is not found in ${JSON.stringify(this.response.data)}`)
+      }
     }
   }
 
   /**
-   * Executes a callback function passing in `response` object and chai assertions with `expect`
+   * Executes a callback function passing in `response` object and assert
    * Use it to perform custom checks of response data
    *
    * ```js
-   * I.seeResponseValidByCallback(({ data, status, expect }) => {
-   *   expect(status).to.eql(200);
-   *   expect(data).keys.to.include(['user', 'company']);
+   * I.seeResponseValidByCallback(({ data, status }) => {
+   *   assert.strictEqual(status, 200);
+   *   assert('user' in data);
+   *   assert('company' in data);
    * });
    * ```
    *
@@ -271,7 +280,7 @@ class JSONResponse extends Helper {
    */
   seeResponseValidByCallback(fn) {
     this._checkResponseReady()
-    fn({ ...this.response, expect })
+    fn({ ...this.response, assert })
     const body = fn.toString()
     fn.toString = () => `${body.split('\n')[1]}...`
   }
@@ -288,7 +297,7 @@ class JSONResponse extends Helper {
    */
   seeResponseEquals(resp) {
     this._checkResponseReady()
-    expect(this.response.data).to.deep.equal(resp)
+    assert.deepStrictEqual(this.response.data, resp)
   }
 
   /**
@@ -334,6 +343,17 @@ class JSONResponse extends Helper {
 
   _checkResponseReady() {
     if (!this.response) throw new Error('Response is not available')
+  }
+
+  _assertContains(actual, expected) {
+    for (const key in expected) {
+      assert(key in actual, `Key "${key}" not found in ${JSON.stringify(actual)}`)
+      if (typeof expected[key] === 'object' && expected[key] !== null) {
+        this._assertContains(actual[key], expected[key])
+      } else {
+        assert.deepStrictEqual(actual[key], expected[key], `Values for key "${key}" don't match`)
+      }
+    }
   }
 }
 
