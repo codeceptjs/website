@@ -7,6 +7,31 @@ layout: Section
 
 # Releases
 
+## 3.7.2
+
+❤️ Thanks all to those who contributed to make this release! ❤️
+
+🛩️ _Features_
+
+- feat(playwright): Clear cookie by name ([#4693](https://github.com/codeceptjs/CodeceptJS/issues/4693)) - by **[ngraf](https://github.com/ngraf)**
+
+🐛 _Bug Fixes_
+
+- fix(stepByStepReport): no records html is generated when running with run-workers ([#4638](https://github.com/codeceptjs/CodeceptJS/issues/4638))
+- fix(webdriver): bidi error in log with webdriver ([#4850](https://github.com/codeceptjs/CodeceptJS/issues/4850))
+- fix(types): TS types of methods (Feature|Scenario)Config.config ([#4851](https://github.com/codeceptjs/CodeceptJS/issues/4851))
+- fix: redundant popup log ([#4830](https://github.com/codeceptjs/CodeceptJS/issues/4830))
+- fix(webdriver): grab browser logs using bidi protocol ([#4754](https://github.com/codeceptjs/CodeceptJS/issues/4754))
+- fix(webdriver): screenshots for sessions ([#4748](https://github.com/codeceptjs/CodeceptJS/issues/4748))
+
+📖 _Documentation_
+
+- fix(docs): mask sensitive data ([#4636](https://github.com/codeceptjs/CodeceptJS/issues/4636)) - by **[gkushang](https://github.com/gkushang)**
+
+## 3.7.1
+
+- Fixed `reading charAt` error in `asyncWrapper.js`
+
 ## 3.7.0
 
 This release introduces major new features and internal refactoring. It is an important step toward the 4.0 release planned soon, which will remove all deprecations introduced in 3.7.

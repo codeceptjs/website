@@ -143,6 +143,3 @@ This is necessary if all integrations with TMS and CI/CD are already configured,
 * CI/CD with Github Actions
 * Page Object Model is applied
 * ReportPortal Integration
-
-## How to
-* Create a plugin with TS [link](https://github.com/reutenkoivan/codeceptjs-plugins/tree/main/packages/html-snapshot-on-fail)
