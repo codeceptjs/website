@@ -1,0 +1,16 @@
+---
+import Default from '@astrojs/starlight/components/Footer.astro';
+
+
+const isHomepage = Astro.props.id === '';
+---
+
+{
+    isHomepage ? (
+    <footer>Built with Starlight 🌟</footer>
+        ) : (
+    <Default>
+        <slot/>
+    </Default>
+        )
+    }

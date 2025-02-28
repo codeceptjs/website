@@ -1,0 +1,137 @@
+---
+import { Code } from '@astrojs/starlight/components';
+import {Image} from 'astro:assets';
+import pause from './images/_pause.gif'
+import test from './images/_test.gif'
+import edit from './images/_edit.gif'
+import ui from './images/_codeceptui.gif'
+import testNew from './images/_new-test.gif'
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
+const pauseCode =
+    `Scenario('Checkout test', ({ I }) => {
+  I.amOnPage('/checkout');
+  pause();
+})`
+
+const testCode =
+    `Scenario('Checkout test', ({ I }) => {
+  I.amOnPage('/checkout');
+  I.fillField('First name', 'davert');
+  I.fillField('#lastName', 'mik');
+  I.fillField('Promo code', '123345')
+  //...`
+
+---
+
+<div class="swiper swiper-demo">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide">
+            <Image src={pause} alt=""/>
+            <div class="content">
+                <h2>Write a Test with Interactive Pause</h2>
+                <p>Open a browser on an empty page and pause execution. Type in commands to complete the test scenario.</p>
+                <p>Successful commands will be saved into a file.</p>
+                <Code code={pauseCode} lang="js" />
+            </div>
+        </div>
+
+        <div class="swiper-slide">
+            <Image src={test} alt=""/>
+            <div class="content">
+                <h2>Print a Test</h2>
+                <p>Each executed step will be printed on screen when running with  <code>--steps</code></p>
+                <Code code={testCode} lang="js" />
+            </div>
+        </div>
+
+        <div class="swiper-slide">
+            <Image src={edit} alt=""/>
+            <div class="content">
+                <h2>Powered with IntelliSense</h2>
+                <p>Use auto-completion writing a test fast.</p>
+                <p>We use TypeScript type definitions that are automatically updated for custom steps and page objects.</p>
+                <p>Writing a test in Visual Studio Code is as easy as picking a correct action and putting a parameter. It's really that nice!</p>
+            </div>
+        </div>
+
+        <div class="swiper-slide">
+            <Image src={ui} alt=""/>
+            <div class="content">
+                <h2>Watch & Run Tests from UI</h2>
+                <p>We have a flexible interactive web runner which allows you to watch, debug, and write your tests in a web mode.</p>
+                <p>Features:</p>
+                <ul>
+                    <li>Toggle headless/window mode with one click</li>
+                    <li>See HTML snapshot of each step</li>
+                    <li>Works with WebDriver, Puppeteer, TestCafe</li>
+                    <li>Shows step-by-step execution</li>
+                    <li>Integrated with your local IDE</li>
+                </ul>
+                <a href="/ui">Try CodeceptUI →</a>
+            </div>
+        </div>
+
+        <div class="swiper-slide">
+            <Image src={testNew} alt=""/>
+            <div class="content">
+                <h2>Write Tests from UI</h2>
+                <p>With CodeceptUI you can write your tests without closing a browser at all.</p>
+                <p>Write initial commands and execute a test. An interactive pause will be started when test finishes.</p>
+                <p>Share one browser accross test runs to save time on opening a browser.</p>
+                <a href="/ui">Try CodeceptUI →</a>
+            </div>
+        </div>
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+</div>
+
+<style lang="scss">
+.swiper {
+    padding-bottom: 30px;
+    padding-left: 60px;
+    padding-right: 60px;
+}
+.swiper-slide {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 40px;
+}
+
+.content {
+    line-height: normal;
+    margin-top: 0 !important;
+    h2 {
+        font-size: 1.65rem;
+    }
+}
+
+</style>
+
+<script>
+    import Swiper from 'swiper';
+    import {Pagination, Autoplay, Navigation} from "swiper/modules";
+
+    const swiper = new Swiper('.swiper-demo', {
+        modules: [Pagination, Autoplay, Navigation],
+        slidesPerView: 1,
+        spaceBetween: 60,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            dynamicBullets: true,
+        },
+        autoplay: {
+            delay: 5000,
+        },
+    });
+
+
+</script>

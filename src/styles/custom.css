@@ -20,3 +20,15 @@ a:where(.astro-wkinvgav):is(.starlight-sidebar-topics-current,:hover,:focus-visi
 .hero img {
     max-width: 200px;
 }
+
+body:not(:has(#starlight__sidebar)) .content-panel:has(h1#_top) {
+    display: none;
+}
+
+body:not(:has(#starlight__sidebar)) .sl-container {
+    max-width: 100%;
+}
+
+body:not(:has(#starlight__sidebar)) .content-panel {
+    border: none;
+}

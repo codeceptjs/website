@@ -1,0 +1,96 @@
+---
+import {Image} from 'astro:assets';
+import kata from './images/_kala.jpg'
+import _mitko from './images/_mitko.jpg'
+---
+
+<h2>Loved By Teams</h2>
+<div class="card-container">
+    <div class="card">
+        <svg height="800" width="800" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310.284 310.284"
+             xml:space="preserve"><path d="M155.142 0C69.597 0 0 69.597 0 155.142s69.597 155.142 155.142 155.142 155.142-69.597 155.142-155.142S240.688 0 155.142 0zM79.171 231.401c-1.746 1.182-6.129 2.222-8.693-.625l-4.731-5.95c-2.288-3.869.483-7.457 2.277-8.945 8.529-7.075 14.731-12.548 18.601-16.419 7.589-7.981 13.199-15.97 16.903-23.935.847-1.821-1.315-2.977-2.438-3.345-27.967-9.166-41.955-25.325-41.955-48.474 0-13.639 4.53-24.722 13.585-33.242 9.059-8.525 20.407-12.785 34.041-12.785 12.146 0 22.909 5.539 32.283 16.621 9.165 10.438 13.744 21.735 13.744 33.881.001 35.597-24.537 70.002-73.617 103.218zm106.439 0c-1.746 1.182-6.129 2.222-8.693-.625l-4.731-5.95c-2.288-3.869.483-7.457 2.277-8.945 8.528-7.075 14.731-12.548 18.601-16.419 7.589-7.981 13.199-15.97 16.904-23.935.847-1.821-1.315-2.977-2.438-3.345-27.967-9.166-41.955-25.325-41.955-48.474 0-13.639 4.53-24.722 13.585-33.242 9.06-8.525 20.407-12.785 34.041-12.785 12.146 0 22.909 5.539 32.283 16.621 9.164 10.438 13.744 21.735 13.744 33.881 0 35.597-24.538 70.002-73.618 103.218z"/></svg>
+        <p>
+            We have been using CodeceptJS as our UI testing framework, and it has made writing tests so simp le for us,
+            the amount of options and features available in CodeceptJS just out of the box are perfect for us to
+            <strong>test an application like Percona Monitoring and Management</strong> (PMM), with so many dashboards &
+            Metric plots.
+            We would recommend CodeceptJS to anyone who is looking for a Javascript based testing framework.
+        </p>
+        <div class="signature">
+            <Image src={kata} alt=""/>
+            <div class="text">
+                <div class="title">
+                    Puneet Kala
+                </div>
+                Frontend QA Automation Engineer at <strong>Percona</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <svg height="800" width="800" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310.284 310.284"
+             xml:space="preserve"><path d="M155.142 0C69.597 0 0 69.597 0 155.142s69.597 155.142 155.142 155.142 155.142-69.597 155.142-155.142S240.688 0 155.142 0zM79.171 231.401c-1.746 1.182-6.129 2.222-8.693-.625l-4.731-5.95c-2.288-3.869.483-7.457 2.277-8.945 8.529-7.075 14.731-12.548 18.601-16.419 7.589-7.981 13.199-15.97 16.903-23.935.847-1.821-1.315-2.977-2.438-3.345-27.967-9.166-41.955-25.325-41.955-48.474 0-13.639 4.53-24.722 13.585-33.242 9.059-8.525 20.407-12.785 34.041-12.785 12.146 0 22.909 5.539 32.283 16.621 9.165 10.438 13.744 21.735 13.744 33.881.001 35.597-24.537 70.002-73.617 103.218zm106.439 0c-1.746 1.182-6.129 2.222-8.693-.625l-4.731-5.95c-2.288-3.869.483-7.457 2.277-8.945 8.528-7.075 14.731-12.548 18.601-16.419 7.589-7.981 13.199-15.97 16.904-23.935.847-1.821-1.315-2.977-2.438-3.345-27.967-9.166-41.955-25.325-41.955-48.474 0-13.639 4.53-24.722 13.585-33.242 9.06-8.525 20.407-12.785 34.041-12.785 12.146 0 22.909 5.539 32.283 16.621 9.164 10.438 13.744 21.735 13.744 33.881 0 35.597-24.538 70.002-73.618 103.218z"/></svg>
+        <p>
+            We were searching for a solution to write tests which are good to read and easy to write. It must be able to run on several browsers and understandable across different teams with different knowledge and different frameworks in usage. <strong>CodeceptJS helps us with all this and much more at Porsche</strong> and we are happy that we made that decision.
+        </p>
+        <div class="signature">
+            <Image src={_mitko} alt=""/>
+            <div class="text">
+                <div class="title">
+                    Mitko Tschimev
+                </div>
+                Frontend Tech Lead at <strong>My Porsche Core</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style lang="scss">
+    .card-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 90px 60px;
+        padding-top: 60px;
+    }
+
+    .card {
+        box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+        border-radius: 2rem;
+        padding: 30px;
+        line-height: normal;
+        background-color: #ffffff;
+        position: relative;
+        margin-top: 0 !important;
+
+        svg {
+            position: absolute;
+            left: -16px;
+            top: -16px;
+            fill: var(--sl-color-text-accent);
+            width: 36px;
+            height: 36px;
+            border-radius: 999rem;
+            background-color: #ffffff;
+        }
+    }
+
+    .signature {
+        display: flex;
+        align-items: center;
+
+        img {
+            width: 60px;
+            border-radius: 999rem;
+            margin-right: 1rem;
+        }
+    }
+
+    .text {
+        margin-top: 0 !important;
+    }
+
+    .title {
+        font-size: 1.2rem;
+    }
+
+</style>

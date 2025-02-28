@@ -41,6 +41,9 @@ importers:
       starlight-sidebar-topics:
         specifier: ^0.3.0
         version: 0.3.0(@astrojs/starlight@0.31.1(astro@5.1.10(rollup@4.32.1)(typescript@5.7.3)))
+      swiper:
+        specifier: ^11.2.4
+        version: 11.2.4
 
 packages:
 
@@ -1802,6 +1805,10 @@ packages:
 
   style-to-object@1.0.8:
     resolution: {integrity: sha512-xT47I/Eo0rwJmaXC4oilDGDWLohVhR6o/xAQcPQN8q6QBuZVL8qMYL85kLmST5cPjAorwvqIA4qXTRQoYHaL6g==}
+
+  swiper@11.2.4:
+    resolution: {integrity: sha512-DTtglrsFfMYytid+oNy4QI3t2N2+XhhwSYbnyOhlwBmvY8Bkoj3ombK1/b80w8vDpQ+Lqlnbm+0737+i32MrcA==}
+    engines: {node: '>= 4.7.0'}
 
   tar-fs@2.1.2:
     resolution: {integrity: sha512-EsaAXwxmx8UB7FRKqeozqEPop69DXcmYwTQwXvyAPF352HJsPdkVhvTaDPYqfNgruveJIJy3TA2l+2zj8LJIJA==}
@@ -4450,6 +4457,8 @@ snapshots:
   style-to-object@1.0.8:
     dependencies:
       inline-style-parser: 0.2.4
+
+  swiper@11.2.4: {}
 
   tar-fs@2.1.2:
     dependencies:

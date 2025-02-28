@@ -1,0 +1,77 @@
+---
+import {Image} from 'astro:assets';
+import BC_LogoScreen_C from "./images/_BC_LogoScreen_C.jpg"
+import doxyme from "./images/_doxyme.png"
+import gen3 from "./images/_gen3.png"
+import isotipo from "./images/_isotipo.png"
+import kiabi from "./images/_kiabi.png"
+import mynd from "./images/_mynd.png"
+import zenitech from "./images/_zenitech.png"
+
+import 'swiper/css';
+import 'swiper/css/pagination';
+---
+
+<div class="swiper swiper-trusted">
+    <div class="swiper-wrapper">
+        {
+            [BC_LogoScreen_C, doxyme, gen3, isotipo, kiabi, mynd, zenitech].map((data) =>
+                <div class="swiper-slide">
+                    <Image src={data} alt=""/>
+                </div>
+            )
+        }
+    </div>
+    <div class="swiper-pagination"></div>
+</div>
+
+<style lang="scss">
+
+    .swiper {
+        padding: 2rem 0;
+        margin-top: 0 !important;
+        img {
+            width: auto;
+            max-width: 180px;
+            height: 100%;
+            max-height: 100px;
+            filter: grayscale(.9);
+            transition: all .2s ease;
+            &:hover {
+                filter: grayscale(0);
+            }
+        }
+    }
+
+    .swiper-wrapper {
+        align-items: center;
+    }
+
+    .swiper-slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 0 !important;
+    }
+
+</style>
+
+<script>
+    import Swiper from 'swiper';
+    import {Pagination, Autoplay } from "swiper/modules";
+
+    const swiper = new Swiper('.swiper-trusted', {
+        modules: [Pagination, Autoplay],
+        slidesPerView: 3,
+        spaceBetween: 0,
+        loop: true,
+        pagination: {
+            el: ".swiper-pagination",
+            dynamicBullets: true,
+        },
+        autoplay: {
+          delay: 5000,
+        },
+    });
+
+</script>
