@@ -116,21 +116,23 @@ const testCode =
     import Swiper from 'swiper';
     import {Pagination, Autoplay, Navigation} from "swiper/modules";
 
-    const swiper = new Swiper('.swiper-demo', {
-        modules: [Pagination, Autoplay, Navigation],
-        slidesPerView: 1,
-        spaceBetween: 60,
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-        pagination: {
-            el: ".swiper-pagination",
-            dynamicBullets: true,
-        },
-        autoplay: {
-            delay: 5000,
-        },
+    document.addEventListener("astro:page-load", () => {
+        const swiper = new Swiper('.swiper-demo', {
+            modules: [Pagination, Autoplay, Navigation],
+            slidesPerView: 1,
+            spaceBetween: 60,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                dynamicBullets: true,
+            },
+            autoplay: {
+                delay: 5000,
+            },
+        });
     });
 
 

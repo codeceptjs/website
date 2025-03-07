@@ -21,6 +21,7 @@ export default defineConfig({
 			components: {
 				Head: "./src/components/Head.astro",
 				PageTitle: './src/components/PageTitle.astro',
+				Footer: './src/components/Footer.astro',
 			},
 			customCss: [
 				'./src/styles/custom.css',
@@ -81,6 +82,8 @@ export default defineConfig({
 									{ label: 'Testing React Applications', link: 'react' },
 									{ label: 'Testing with AI', link: 'ai' },
 									{ label: 'Self-Healing Tests', link: 'heal' },
+									{ label: 'Testing with Protractor', link: 'angular' },
+									{ label: 'Testing Vue Apps', link: 'vue' },
 								],
 							},
 						],

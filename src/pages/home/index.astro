@@ -1,27 +1,58 @@
 ---
 import {Image} from 'astro:assets';
-import runUiImg from "./images/_runui.gif"
+import Angular from './images/_angular.png';
+import Codecept from './images/_codecept.png';
+import Vue from './images/_vue.png';
+import React from './images/_react.png';
+import ai from './images/_ai.png';
 import TrustedCarousel from './components/trusted/index.astro';
 import Features from './components/features/index.astro'
 import Demos from './components/demos/index.astro'
 import Example from './components/example/index.astro'
 import Quotes from './components/quotes/index.astro'
 import Testomatio from './components/testomatio/index.astro'
+import _mitko from "./components/quotes/images/_mitko.jpg";
 ---
 
 <section class="hero">
-    <h1>
-        <span>CodeceptJS</span> ‐ supercharged <br>
-        <span>End 2 End</span> Testing
-    </h1>
-    <a class="link-button" href="/quickstart">Quickstart</a>
+    <div class="container">
+        <div class="hero-about">
+            <h1>
+                <span>CodeceptJS</span> ‐ supercharged <br>
+                <span>End 2 End</span> Testing
+            </h1>
+            <a class="link-button" href="/quickstart">Quickstart</a>
+        </div>
+        <div class="hero-image">
+            <div class="circe-wrapper">
+                <div class="circle">
+                    <div class="icon-block">
+                        <a href="/angular">
+                            <Image src={Angular} alt=""/>
+                        </a>
+                    </div>
+                    <div class="icon-block">
+                        <a href="/vue">
+                            <Image src={Vue} alt=""/>
+                        </a>
+                    </div>
+                    <div class="icon-block">
+                        <a href="/react">
+                            <Image src={React} alt=""/>
+                        </a>
+                    </div>
+                    <div class="icon-block">
+                        <a href="/ai">
+                            <Image src={ai} alt=""/>
+                        </a>
+                    </div>
+                </div>
+                <div class="center-logo">
+                    <Image src={Codecept} alt=""/>
+                </div>
+            </div>
 
-    <div class="hero-link">
-        First <a href="/ai">AI-powered</a> testing framework 🪄
-    </div>
-
-    <div class="hero-image">
-        <Image src={runUiImg} alt="Run UI"/>
+        </div>
     </div>
 </section>
 
@@ -65,9 +96,141 @@ import Testomatio from './components/testomatio/index.astro'
 </section>
 
 <style lang="scss">
+
+    .hero-image {
+       width: 40%;
+    }
+
+    .circe-wrapper {
+        display: flex;
+        align-items: center;
+        margin-top: 0 !important;
+        width: 400px;
+        height: 400px;
+        position: relative;
+    }
+
+    .icon-block {
+        width: 64px;
+        height: 64px;
+        position: absolute;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #ffffff;
+        border: 2px solid var(--sl-color-text-accent);
+        margin-top: 0 !important;
+
+        img {
+            margin: 0 auto;
+            width: 60%;
+        }
+
+        &:first-child {
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        &:nth-child(2) {
+            top: 50%;
+            right: 0;
+            transform: translate(50%, -50%);
+        }
+
+        &:nth-child(3) {
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, 50%);
+        }
+
+        &:nth-child(4) {
+            top: 50%;
+            left: 0;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    .circle {
+        animation: circle-rotate 60s linear infinite;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(45deg);
+        width: 75%;
+        height: 75%;
+        border: 2px solid var(--sl-color-text-accent);
+        border-radius: 50%;
+
+        .icon-block img {
+            animation: img-rotate 60s linear infinite;
+        }
+
+        &:hover {
+            animation-play-state: paused;
+            .icon-block img {
+                animation-play-state: paused;
+            }
+        }
+    }
+
+    .center-logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin-top: 0 !important;
+
+        img {
+            max-width: 120px;
+        }
+    }
+
+    @keyframes Rotate {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes Rotate-reverse {
+        from {
+            transform: rotate(360deg);
+        }
+
+        to {
+            transform: rotate(0deg);
+        }
+    }
+
+    @keyframes circle-rotate {
+        from {
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        to {
+            transform: translate(-50%, -50%) rotate(405deg);
+        }
+    }
+
+    @keyframes img-rotate {
+        from {
+            transform: rotate(-45deg);
+        }
+
+        to {
+            transform: rotate(-405deg);
+        }
+    }
+
     section {
         line-height: normal;
     }
+
     .link-button {
         font-size: var(--sl-text-base);
         padding: 1.2rem 4.25rem;
@@ -87,59 +250,37 @@ import Testomatio from './components/testomatio/index.astro'
 
     .hero {
         position: relative;
-        padding-top: 7rem;
-        padding-bottom: 6rem;
-        text-align: center;
-
-        &:before {
-            background-image: linear-gradient(#8065d569, #ffe68057);
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: -10;
-            border-radius: 30px;
-        }
+        padding-top: 4rem;
+        padding-bottom: 1rem;
+        text-align: left;
 
         h1 {
-            font-size: 56px;
+            font-size: 3rem;
             font-weight: 600;
-            line-height: 1.12;
+            line-height: 1.32;
             letter-spacing: -2px;
-            text-align: center;
         }
 
         span {
             display: inline-block;
         }
+        .container {
+            display: flex;
+            align-items: center;
+        }
 
-        img {
-            width: 100%;
-            max-width: 600px;
-            border: 1px solid #e2e2e2;
-            border-bottom: 0;
+        .hero-about {
+            width: 60%;
         }
 
         .hero-image {
-            position: relative;
-            margin: 5rem auto -6rem !important;
-            padding: 2.5rem 1.5rem 0 1.5rem;
-            background-color: var(--sl-color-bg-nav);
-            border-radius: 20px 20px 0 0;
-            border-bottom: 0;
-            max-width: 600px;
-            box-sizing: content-box;
-
-            &:before {
-                position: absolute;
-                content: '';
-                width: 0.7rem;
-                height: 0.7rem;
-                background-color: var(--sl-color-text-accent);
-                top: 1.1rem;
-                left: calc(50% - 0.35rem);
-                border-radius: 100%;
-            }
+            width: 40%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0 !important;
         }
+
     }
 
     .container {
@@ -214,6 +355,6 @@ import Testomatio from './components/testomatio/index.astro'
 
     .testomatio {
         text-align: center;
-        padding: 80px 0 40px;
+        padding: 80px 0 60px;
     }
 </style>

@@ -1,16 +1,102 @@
 ---
 import Default from '@astrojs/starlight/components/Footer.astro';
-
+import type { Props } from '@astrojs/starlight/props';
 
 const isHomepage = Astro.props.id === '';
 ---
 
 {
     isHomepage ? (
-    <footer>Built with Starlight 🌟</footer>
+    <footer class="footer">
+        <div class="container">
+            <div class="column">
+                <h4>Docs</h4>
+                <ul>
+                    <li>
+                        <a href="/quickstart">Quickstart</a>
+                    </li>
+                    <li>
+                        <a href="/basics">Getting Started</a>
+                    </li>
+                    <li>
+                        <a href="/playwright">CodeceptJS & Playwright</a>
+                    </li>
+                    <li>
+                        <a href="/puppeteer">CodeceptJS & WebDriver</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="column">
+                <h4>Community</h4>
+                <ul>
+                    <li><a href="https://github.com/codeceptjs/CodeceptJS">GitHub</a></li>
+                    <li><a href="https://github.com/codeceptjs/CodeceptJS/discussions">GitHub discussions</a></li>
+                    <li><a href="https://bit.ly/chat-codeceptjs">Slack Chat</a></li>
+                    <li><a href="https://codecept.discourse.group/">Forum</a></li>
+                    <li><a href="https://twitter.com/codeceptjs">Twitter</a></li>
+                </ul>
+            </div>
+            <div class="column">
+                <h4>Commercial Support</h4>
+                <ul>
+                    <li><a href="https://sdclabs.com/codeceptjs?utm_source=codecept.io&utm_medium=footer&utm_term=link&utm_campaign=reference">Consulting</a></li>
+                    <li><a href="https://sdclabs.com/trainings/web-automation-codeceptjs?utm_source=codecept.io&utm_medium=top_menu&utm_term=link&utm_campaign=reference">Trainings</a> </li>
+                    <li><a href="https://sdclabs.com/#services">Hire Engineers</a></li>
+                </ul>
+            </div>
+            <div class="column">
+                <a href="https://testomat.io">
+                    <h4>Try Testomat.io &rarr;</h4>
+                    <p>Powerful <strong>Test Case Management</strong> for CodeceptJS from its authors</p>
+                </a>
+            </div>
+        </div>
+        <div class="copyright">
+            <h5>CodeceptJS - supercharged end 2 end testing framework for NodeJS</h5>
+            © 2025
+        </div>
+    </footer>
         ) : (
-    <Default>
+    <Default {...Astro.props}>
         <slot/>
     </Default>
         )
     }
+
+<style lang="scss">
+    .container {
+        max-width: 67.5rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .footer {
+        .container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 90px 60px;
+            align-items: stretch;
+            h4 {
+                margin-bottom: 1rem;
+            }
+            ul {
+                padding-left: 0;
+            }
+            li {
+                list-style: none;
+            }
+            a {
+                text-decoration: none;
+                color: var(--sl-color-white);
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    .copyright {
+        text-align: center;
+        padding-top: 3rem;
+    }
+</style>

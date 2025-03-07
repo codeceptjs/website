@@ -1,11 +1,9 @@
 ---
-import {Image} from 'astro:assets';
-import checklist from './icons/_checklist.svg'
+
 ---
 
 <div class="card-container">
     <div class="card">
-        <Image class="icon" src={checklist} alt=""/>
         <div class="text">
             <h3>Scenario Driven</h3>
             <p>Write acceptance tests from user's perspective. Make tests readable and easy to follow.</p>
@@ -14,7 +12,6 @@ import checklist from './icons/_checklist.svg'
     </div>
 
     <div class="card">
-        <Image class="icon" src={checklist} alt=""/>
         <div class="text">
             <h3>Driver Agnostic</h3>
             <p>Run your tests via <strong>Playwright, WebDriver, Puppeteer, TestCafe, Protractor, Appium</strong>. The code is the same.</p>
@@ -25,7 +22,6 @@ import checklist from './icons/_checklist.svg'
     </div>
 
     <div class="card">
-        <Image class="icon" src={checklist} alt=""/>
         <div class="text">
             <h3>Interactive Debug</h3>
             <p>Control tests as they run. Pause tests at any point and execute commands to try locators.</p>
@@ -36,7 +32,6 @@ import checklist from './icons/_checklist.svg'
     </div>
 
     <div class="card">
-        <Image class="icon" src={checklist} alt=""/>
         <div class="text">
             <h3>Rich Locators</h3>
             <p>Use semantic locators, CSS, XPath to find elements on page</p>
@@ -47,7 +42,6 @@ import checklist from './icons/_checklist.svg'
     </div>
 
     <div class="card">
-        <Image class="icon" src={checklist} alt=""/>
         <div class="text">
             <h3>PageObjects</h3>
             <p>PageObjects are essential to write stable and reusable code!</p>
@@ -58,7 +52,6 @@ import checklist from './icons/_checklist.svg'
     </div>
 
     <div class="card">
-        <Image class="icon" src={checklist} alt=""/>
         <div class="text">
             <h3>Web & Mobile Testing</h3>
             <p>Test native mobile apps using <strong>Appium</strong> or <strong>Detox</strong></p>
@@ -69,7 +62,6 @@ import checklist from './icons/_checklist.svg'
     </div>
 
     <div class="card">
-        <Image class="icon" src={checklist} alt=""/>
         <div class="text">
             <h3>Cucumber-like BDD</h3>
             <p>Automate business scenarios as you do in CucumberJS</p>
@@ -80,7 +72,6 @@ import checklist from './icons/_checklist.svg'
     </div>
 
     <div class="card">
-        <Image class="icon" src={checklist} alt=""/>
         <div class="text">
             <h3>API Testing</h3>
             <p>Write tests for <strong>REST</strong> and <strong>GraphQL</strong> APIs </p>
@@ -91,7 +82,6 @@ import checklist from './icons/_checklist.svg'
     </div>
 
     <div class="card">
-        <Image class="icon" src={checklist} alt=""/>
         <div class="text">
             <h3>Data Management</h3>
             <p>Create fake data and clean it up via REST API</p>
@@ -102,7 +92,6 @@ import checklist from './icons/_checklist.svg'
     </div>
 
     <div class="card">
-        <Image class="icon" src={checklist} alt=""/>
         <div class="text">
             <h3>Parallel Testing</h3>
             <p>Tests are split into chunks and executed in multiple processes.</p>
@@ -113,7 +102,6 @@ import checklist from './icons/_checklist.svg'
     </div>
 
     <div class="card">
-        <Image class="icon" src={checklist} alt=""/>
         <div class="text">
             <h3>Reduced Flackiness</h3>
             <p>Automatically retry failed steps</p>
@@ -124,7 +112,6 @@ import checklist from './icons/_checklist.svg'
     </div>
 
     <div class="card">
-        <Image class="icon" src={checklist} alt=""/>
         <div class="text">
             <h3>AI-powered</h3>
             <p>Use OpenAI GPT to heal failing tests</p>
@@ -139,18 +126,18 @@ import checklist from './icons/_checklist.svg'
     .card-container {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        grid-gap: 90px 60px;
+        grid-gap: 0;
         align-items: stretch;
+        border: .5px solid #f0eded;
     }
 
     .card {
         background-color: var(--sl-color-bg-nav);
         margin-top: 0 !important;
-        padding: 16px 20px 30px;
-        border-radius: 2rem;
+        padding: 40px 25px 40px;
         display: flex;
         flex-direction: column;
-        box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+        border: .5px solid #f0eded;
 
         h3 {
             font-size: 1.6rem;
@@ -177,19 +164,6 @@ import checklist from './icons/_checklist.svg'
             text-decoration: none;
             margin-top: auto;
             width: 100%;
-        }
-
-        .icon {
-            height: 80px;
-            width: 80px;
-            border: 6px solid #ffffff;
-            border-radius: 50%;
-            background-color: var(--sl-color-text-accent);
-            text-align: center;
-            color: #ffffff;
-            margin-top: -50px;
-            margin-left: auto;
-            margin-right: auto;
         }
     }
 </style>

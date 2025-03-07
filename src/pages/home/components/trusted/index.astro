@@ -57,21 +57,22 @@ import 'swiper/css/pagination';
 </style>
 
 <script>
-    import Swiper from 'swiper';
-    import {Pagination, Autoplay } from "swiper/modules";
-
-    const swiper = new Swiper('.swiper-trusted', {
-        modules: [Pagination, Autoplay],
-        slidesPerView: 3,
-        spaceBetween: 0,
-        loop: true,
-        pagination: {
-            el: ".swiper-pagination",
-            dynamicBullets: true,
-        },
-        autoplay: {
-          delay: 5000,
-        },
+    import Swiper from "swiper";
+    import { Pagination, Autoplay } from "swiper/modules";
+    document.addEventListener("astro:page-load", () => {
+        const swiper = new Swiper(".swiper-trusted", {
+            modules: [Pagination, Autoplay],
+            slidesPerView: 3,
+            spaceBetween: 0,
+            loop: true,
+            pagination: {
+                el: ".swiper-pagination",
+                dynamicBullets: true,
+            },
+            autoplay: {
+                delay: 5000,
+            },
+        });
     });
 
 </script>
