@@ -7,6 +7,37 @@ layout: Section
 
 # Releases
 
+## 3.7.3
+
+❤️ Thanks all to those who contributed to make this release! ❤️
+
+🛩️ _Features_
+
+- feat(cli): improve info command to return installed browsers ([#4890](https://github.com/codeceptjs/CodeceptJS/issues/4890)) - by **[kobenguyent](https://github.com/kobenguyent)**
+
+```
+➜  helloworld npx codeceptjs info
+Environment information:
+
+codeceptVersion:  "3.7.2"
+nodeInfo:  18.19.0
+osInfo:  macOS 14.4
+cpuInfo:  (8) x64 Apple M1 Pro
+osBrowsers:  "chrome: 133.0.6943.143, edge: 133.0.3065.92, firefox: not installed, safari: 17.4"
+playwrightBrowsers:  "chromium: 133.0.6943.16, firefox: 134.0, webkit: 18.2"
+helpers:  {
+"Playwright": {
+"url": "http://localhost",
+...
+```
+
+🐛 _Bug Fixes_
+
+- fix: resolving path inconsistency in container.js and appium.js ([#4866](https://github.com/codeceptjs/CodeceptJS/issues/4866)) - by **[mjalav](https://github.com/mjalav)**
+- fix: broken screenshot links in mochawesome reports ([#4889](https://github.com/codeceptjs/CodeceptJS/issues/4889)) - by **[kobenguyent](https://github.com/kobenguyent)**
+- some internal fixes to make UTs more stable by **[thomashohn](https://github.com/thomashohn)**
+- dependencies upgrades by **[thomashohn](https://github.com/thomashohn)**
+
 ## 3.7.2
 
 ❤️ Thanks all to those who contributed to make this release! ❤️
