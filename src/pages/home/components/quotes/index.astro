@@ -46,21 +46,28 @@ import _mitko from './images/_mitko.jpg'
 </div>
 
 <style lang="scss">
+    h2 {
+        font-weight: 400 !important;
+        font-size: 3rem !important;
+        margin-bottom: 3rem;
+    }
+
     .card-container {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 90px 60px;
-        padding-top: 60px;
+        margin-top: 0 !important;
+        padding-top: 2rem;
     }
 
     .card {
-        box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
-        border-radius: 2rem;
-        padding: 30px;
+        border-radius: 1rem;
+        padding: 2rem 1rem 1.5rem;
         line-height: normal;
         background-color: #ffffff;
         position: relative;
         margin-top: 0 !important;
+        border: 2px solid rgba(120, 0, 124, 0.1);
 
         svg {
             position: absolute;
@@ -71,6 +78,10 @@ import _mitko from './images/_mitko.jpg'
             height: 36px;
             border-radius: 999rem;
             background-color: #ffffff;
+        }
+
+        p {
+            margin-top: 0 !important;
         }
     }
 

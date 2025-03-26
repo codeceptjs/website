@@ -1,6 +1,11 @@
 :root,
 ::backdrop {
     --sl-color-text-accent: #ffe680;
+    --swiper-theme-color: var(--sl-color-text-accent) !important;
+}
+
+:root {
+    --sl-font: IBM Plex Sans,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
 }
 
 a:where(.astro-wkinvgav):is(.starlight-sidebar-topics-current,:hover,:focus-visible) {
@@ -17,10 +22,6 @@ a:where(.astro-wkinvgav):is(.starlight-sidebar-topics-current,:hover,:focus-visi
     color: #7800b8;
 }
 
-.hero img {
-    max-width: 200px;
-}
-
 body:not(:has(#starlight__sidebar)) .content-panel:has(h1#_top) {
     display: none;
 }
@@ -31,4 +32,8 @@ body:not(:has(#starlight__sidebar)) .sl-container {
 
 body:not(:has(#starlight__sidebar)) .content-panel {
     border: none;
+    background-color: var(--sl-color-bg-nav);
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: -1.5rem;
 }
