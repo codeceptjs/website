@@ -1,0 +1,87 @@
+---
+
+---
+
+{/* Hero Section - Dark Theme with Animations */}
+<section class="relative pt-14 pb-20 overflow-hidden bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-900">
+  {/* Animated Background Elements */}
+  <div class="absolute inset-0">
+    {/* Floating Orbs */}
+    <div class="absolute top-20 left-10 w-72 h-72 bg-yellow-500/20 rounded-full blur-3xl animate-float-slow opacity-60"></div>
+    <div class="absolute top-40 right-10 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-float-delayed opacity-60"></div>
+    <div class="absolute bottom-20 left-1/2 w-80 h-80 bg-yellow-400/20 rounded-full blur-3xl animate-float opacity-60"></div>
+
+    {/* Animated Grid */}
+    <div class="absolute inset-0 bg-grid-pattern opacity-10 animate-grid-move"></div>
+
+    {/* Floating Particles */}
+    <div class="absolute inset-0">
+      {[...Array(20)].map((_, i) => (
+          <div
+              key={i}
+              class="absolute w-2 h-2 bg-yellow-400/30 rounded-full animate-float-particle"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 5}s`,
+                animationDuration: `${3 + Math.random() * 4}s`
+              }}
+          ></div>
+      ))}
+    </div>
+
+    {/* Gradient Overlay */}
+    <div class="!mt-0 absolute inset-0 bg-gradient-to-t from-gray-900/50 via-transparent to-gray-900/30"></div>
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="mb-8">
+            <span class="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-yellow-500/20 to-purple-500/20 border border-yellow-400/30 text-yellow-300 text-sm font-medium mb-8 backdrop-blur-sm animate-pulse-glow">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap w-4 h-4 mr-2 animate-bounce"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              Modern End-to-End Testing Framework
+            </span>
+    </div>
+
+    <h1 class="!mt-0 text-5xl md:text-7xl font-bold mb-8 leading-tight">
+            <span class="bg-gradient-to-r from-white via-yellow-200 to-purple-200 bg-clip-text text-transparent animate-text-shimmer">
+              Testing Made
+            </span>
+      <br />
+      <span class="bg-gradient-to-r from-yellow-400 via-purple-400 to-yellow-400 bg-clip-text text-transparent animate-gradient-x">
+              Simple & Powerful
+            </span>
+    </h1>
+
+    <p class="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed animate-fade-in-up">
+      Write tests that actually work. CodeceptJS combines the simplicity of human-readable scenarios
+      with the power of modern testing tools, AI assistance, and cross-platform compatibility.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16 animate-fade-in-up-delayed">
+      <button class="group bg-gradient-to-r from-yellow-600 to-purple-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:from-yellow-500 hover:to-purple-500 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-yellow-500/25 animate-pulse-button">
+        Start Testing Now
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right inline-block ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+      </button>
+    </div>
+
+    {/* Animated Stats */}
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+      <div class="!mt-0 text-center bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 shadow-xl hover:bg-white/15 transition-all duration-300 animate-fade-in-up group">
+        <div class="text-3xl md:text-4xl font-bold text-yellow-400 mb-2 group-hover:scale-110 transition-transform duration-300">500K+</div>
+        <div class="text-gray-300">Downloads</div>
+      </div>
+      <div class="!mt-0 text-center bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 shadow-xl hover:bg-white/15 transition-all duration-300 animate-fade-in-up group" style={{animationDelay: '0.1s'}}>
+        <div class="text-3xl md:text-4xl font-bold text-purple-400 mb-2 group-hover:scale-110 transition-transform duration-300">15K+</div>
+        <div class="text-gray-300">GitHub Stars</div>
+      </div>
+      <div class="!mt-0 text-center bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 shadow-xl hover:bg-white/15 transition-all duration-300 animate-fade-in-up group" style={{animationDelay: '0.2s'}}>
+        <div class="text-3xl md:text-4xl font-bold text-yellow-300 mb-2 group-hover:scale-110 transition-transform duration-300">2K+</div>
+        <div class="text-gray-300">Companies</div>
+      </div>
+      <div class="!mt-0 text-center bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 shadow-xl hover:bg-white/15 transition-all duration-300 animate-fade-in-up group" style={{animationDelay: '0.3s'}}>
+        <div class="text-3xl md:text-4xl font-bold text-purple-300 mb-2 group-hover:scale-110 transition-transform duration-300">99.9%</div>
+        <div class="text-gray-300">Uptime</div>
+      </div>
+    </div>
+  </div>
+</section>

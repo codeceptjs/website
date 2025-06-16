@@ -32,8 +32,6 @@ body:not(:has(#starlight__sidebar)) .sl-container {
 
 body:not(:has(#starlight__sidebar)) .content-panel {
     border: none;
-    background-color: var(--sl-color-bg-nav);
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0;
     margin-top: -1.5rem;
 }

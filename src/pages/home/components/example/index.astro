@@ -1,8 +1,8 @@
 ---
-import { Code } from '@astrojs/starlight/components';
+import { Code } from "@astrojs/starlight/components";
 
 const example =
-    `const { faker } = require('@faker-js/faker');                               // Use 3rd-party JS code
+  `const { faker } = require('@faker-js/faker');                               // Use 3rd-party JS code
 
 Feature('Store');
 
@@ -22,17 +22,86 @@ Scenario('Create a new store', async ({ I, login, SettingsPage }) => {
   const storeId = await I.grabTextFrom('#store-id');          // Use await to get information from browser
   I.say(\`Created a store with \${storeId}\');                   // Print custom comments
 }).tag('stores');\`;
-`
+`;
 ---
 
-<h2>Realworld Example</h2>
-<p>Can we use it for long scenarios? Sure!</p>
-<Code code={example} lang="js" />
+<section id="examples" class="!mt-0 py-20 relative">
+  <div class="absolute inset-0 bg-gradient-to-b from-purple-50/30 via-yellow-50/20 to-purple-50/30"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-6">
+              <span class="bg-gradient-to-r from-purple-600 to-yellow-600 bg-clip-text text-transparent">
+                Real-world Examples
+              </span>
+      </h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        See how CodeceptJS makes complex testing scenarios simple and readable
+      </p>
+    </div>
 
-<style lang="scss">
-    h2 {
-        font-weight: 400 !important;
-        font-size: 3rem !important;
-        margin-bottom: 3rem;
-    }
-</style>
+    {/* Mac Window Code Editor */}
+    <div class="max-w-5xl mx-auto">
+      <div class="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden border border-gray-700">
+        {/* Mac Window Header */}
+        <div class="bg-gray-800 px-6 py-4 flex items-center justify-between border-b border-gray-700">
+          <div class="flex items-center space-x-3">
+            <div class="flex space-x-2">
+              <div class="!mt-0 w-3 h-3 bg-red-500 rounded-full"></div>
+              <div class="!mt-0 w-3 h-3 bg-yellow-500 rounded-full"></div>
+              <div class="!mt-0 w-3 h-3 bg-green-500 rounded-full"></div>
+            </div>
+            <div class="!mt-0 flex items-center space-x-2 ml-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-terminal w-4 h-4 text-gray-400"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" x2="20" y1="19" y2="19"></line></svg>
+              <span class="text-gray-300 text-sm font-medium">CodeceptJS Tests</span>
+            </div>
+          </div>
+        </div>
+
+
+        {/* Code Content */}
+        <div class="relative">
+          <Code code={example} lang="js" />
+        </div>
+
+        {/* Status Bar */}
+        <div class="!mt-0 bg-gray-800 px-6 py-3 flex items-center justify-between border-t border-gray-700 text-xs">
+          <div class="flex items-center space-x-4">
+            <span class="text-gray-400">JavaScript</span>
+            <span class="text-gray-400">UTF-8</span>
+            <div class="flex items-center space-x-1">
+              <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+              <span class="text-green-400">Tests Passing</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Example Benefits */}
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+        <div class="bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300">
+          <div class="w-12 h-12 bg-gradient-to-r from-yellow-500 to-amber-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle w-6 h-6 text-white"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><path d="m9 11 3 3L22 4"></path></svg>
+          </div>
+          <h3 class="text-lg font-bold text-gray-800 mb-2">Human Readable</h3>
+          <p class="text-gray-600 text-sm">Tests read like plain English, making them easy to understand and maintain</p>
+        </div>
+
+        <div class="bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300">
+          <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-700 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap w-6 h-6 text-white"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          </div>
+          <h3 class="text-lg font-bold text-gray-800 mb-2">Quick Setup</h3>
+          <p class="text-gray-600 text-sm">Get started in minutes with minimal configuration and setup</p>
+        </div>
+
+        <div class="bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300">
+          <div class="w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-target w-6 h-6 text-white"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+          </div>
+          <h3 class="text-lg font-bold text-gray-800 mb-2">Real Scenarios</h3>
+          <p class="text-gray-600 text-sm">Test actual user workflows and business-critical functionality</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

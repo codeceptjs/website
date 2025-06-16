@@ -1,214 +1,24 @@
 ---
+import Hero  from './components/hero/index.astro';
 import Frameworks  from './components/frameworks/index.astro';
 import TrustedCarousel from './components/trusted/index.astro';
 import Features from './components/features/index.astro'
-import Demos from './components/demos/index.astro'
 import Example from './components/example/index.astro'
 import Quotes from './components/quotes/index.astro'
 import Testomatio from './components/testomatio/index.astro'
-import _mitko from "./components/quotes/images/_mitko.jpg";
+
 ---
 
-<section class="hero">
-    <div class="container">
-        <h1>
-            <span>CodeceptJS</span> ‐ supercharged <br>
-            <span>End 2 End</span> Testing
-        </h1>
-        <p>First <a href="/ai">AI-powered</a> testing framework 🪄</p>
-        <a class="link-button" href="/quickstart">
-            Quickstart
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <polygon points="11.293 4.707 17.586 11 4 11 4 13 17.586 13 11.293 19.293 12.707 20.707 21.414 12 12.707 3.293 11.293 4.707"/>
-            </svg>
-        </a>
-    </div>
-    <svg width="100%" height="100%" id="svg" viewBox="0 0 1440 390" xmlns="http://www.w3.org/2000/svg" class="transition duration-300 ease-in-out delay-150"><style>
-        .path-0{
-            animation:pathAnim-0 24s;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-        }
-        @keyframes pathAnim-0{
-            0%{
-                d: path("M 0,400 L 0,150 C 194.93333333333334,183.60000000000002 389.8666666666667,217.20000000000002 538,215 C 686.1333333333333,212.79999999999998 787.4666666666667,174.79999999999998 930,158 C 1072.5333333333333,141.20000000000002 1256.2666666666667,145.60000000000002 1440,150 L 1440,400 L 0,400 Z");
-            }
-            25%{
-                d: path("M 0,400 L 0,150 C 166.8,155.86666666666667 333.6,161.73333333333332 506,171 C 678.4,180.26666666666668 856.4000000000001,192.93333333333334 1013,190 C 1169.6,187.06666666666666 1304.8,168.53333333333333 1440,150 L 1440,400 L 0,400 Z");
-            }
-            50%{
-                d: path("M 0,400 L 0,150 C 140.13333333333333,137.73333333333335 280.26666666666665,125.46666666666667 443,142 C 605.7333333333333,158.53333333333333 791.0666666666666,203.86666666666665 961,210 C 1130.9333333333334,216.13333333333335 1285.4666666666667,183.06666666666666 1440,150 L 1440,400 L 0,400 Z");
-            }
-            75%{
-                d: path("M 0,400 L 0,150 C 190,119.06666666666666 380,88.13333333333334 557,86 C 734,83.86666666666666 898,110.53333333333333 1043,126 C 1188,141.46666666666667 1314,145.73333333333335 1440,150 L 1440,400 L 0,400 Z");
-            }
-            100%{
-                d: path("M 0,400 L 0,150 C 194.93333333333334,183.60000000000002 389.8666666666667,217.20000000000002 538,215 C 686.1333333333333,212.79999999999998 787.4666666666667,174.79999999999998 930,158 C 1072.5333333333333,141.20000000000002 1256.2666666666667,145.60000000000002 1440,150 L 1440,400 L 0,400 Z");
-            }
-        }</style><defs><linearGradient id="gradient" x1="50%" y1="100%" x2="50%" y2="0%"><stop offset="5%" stop-color="var(--sl-color-text-accent)"></stop><stop offset="95%" stop-color="var(--sl-color-text-accent)"></stop></linearGradient></defs><path d="M 0,400 L 0,150 C 194.93333333333334,183.60000000000002 389.8666666666667,217.20000000000002 538,215 C 686.1333333333333,212.79999999999998 787.4666666666667,174.79999999999998 930,158 C 1072.5333333333333,141.20000000000002 1256.2666666666667,145.60000000000002 1440,150 L 1440,400 L 0,400 Z" stroke="none" stroke-width="0" fill="url(#gradient)" fill-opacity="1" class="transition-all duration-300 ease-in-out delay-150 path-0"></path></svg>
-</section>
+<Hero />
 
-<section class="frameworks">
-    <div class="container">
-        <Frameworks/>
-    </div>
-</section>
+<Frameworks />
 
-<section class="trust">
-    <div class="container">
-        <TrustedCarousel/>
-    </div>
-</section>
+<TrustedCarousel />
 
-<section class="features">
-    <div class="container">
-        <Features/>
-    </div>
-</section>
+<Features />
 
-<section class="demos">
-    <div class="container">
-        <Demos/>
-    </div>
-</section>
+<Example />
 
-<section class="example">
-    <div class="container">
-        <Example/>
-    </div>
-</section>
+<Quotes />
 
-<section class="quotes">
-    <div class="container">
-        <Quotes/>
-    </div>
-</section>
-
-<section class="testomatio">
-    <div class="container">
-        <Testomatio/>
-    </div>
-</section>
-
-<style lang="scss">
-    .link-button {
-        font-size: var(--sl-text-base);
-        padding: 1.2rem 4.25rem;
-        background: var(--sl-color-text-accent);
-        border-color: var(--sl-color-text-accent);
-        color: var(--sl-color-black) !important;
-        align-items: center;
-        border-radius: 999rem;
-        display: inline-flex;
-        gap: .5em;
-        line-height: 1.1875;
-        outline-offset: .25rem;
-        text-decoration: none;
-        margin-top: 2rem;
-        margin-bottom: 1rem;
-        svg {
-            fill: #ffffff !important;
-            position: relative !important;
-            left: auto !important;
-            bottom: auto !important;
-            opacity: 1 !important;
-            right: -5px;
-            transition: right ease .3s;
-        }
-        &:hover {
-            svg {
-                right: -10px;
-            }
-        }
-    }
-
-    .hero {
-        position: relative;
-        padding-top: 8rem;
-        padding-bottom: 10rem;
-        text-align: center;
-        overflow-y: hidden;
-
-        h1 {
-            font-size: 4rem;
-            font-weight: 400;
-            line-height: 1.32;
-            letter-spacing: -2px;
-        }
-
-        span {
-            font-weight: 600;
-        }
-
-        svg {
-            position: absolute;
-            left: 0;
-            bottom: -10rem;
-            opacity: .5;
-            z-index: 1;
-            margin-top: 0 !important;
-        }
-
-    }
-
-    .container {
-        max-width: 67.5rem;
-        margin-left: auto;
-        margin-right: auto;
-        z-index: 2;
-        position: relative;
-    }
-
-    .frameworks {
-        background-color: #bb7fdb;
-        padding: 5rem 0 5rem;
-    }
-
-    .trust {
-        padding: 5rem 0 4rem;
-        .container {
-            max-width: 100%;
-            padding: 0 2rem;
-        }
-    }
-
-    section {
-        margin-top: 0 !important;
-        background-color: #ffffff;
-    }
-
-    .features {
-        padding: 1rem 0 5rem;
-        position: relative;
-    }
-
-    .demos {
-        padding: 5rem 0 4rem;
-        background-color: #f6f7f9;
-    }
-    .example {
-        padding: 5rem 0 4rem;
-    }
-    .quotes {
-        padding: 2rem 0 5rem;
-        position: relative;
-        &:before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(0deg, #5267ee 100%, #ffffff 0%);
-            filter: blur(30px);
-            opacity: 0.1;
-            z-index: -1;
-        }
-    }
-
-    .testomatio {
-        text-align: center;
-        padding: 4rem 0 4rem;
-    }
-</style>
+<Testomatio />

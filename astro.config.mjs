@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import tailwindcss from '@tailwindcss/vite';
 import starlightSidebarTopics from 'starlight-sidebar-topics';
 import starlightImageZoom from 'starlight-image-zoom';
 import rehypeAstroRelativeMarkdownLinks from "astro-rehype-relative-markdown-links";
@@ -15,9 +16,12 @@ export default defineConfig({
 		starlight({
 			title: 'CodeceptJS',
 			favicon: '/favicon.svg',
-			social: {
-				github: 'https://github.com/codeceptjs/CodeceptJS',
-			},
+      logo: {
+        src: './src/assets/logoNew.svg',
+      },
+      social: [
+        { icon: 'github', label: 'GitHub', href: 'https://github.com/codeceptjs/CodeceptJS' },
+      ],
 			components: {
 				Head: "./src/components/Head.astro",
 				PageTitle: './src/components/PageTitle.astro',
@@ -26,6 +30,7 @@ export default defineConfig({
 			customCss: [
 				'./src/styles/custom.css',
 				'./src/styles/headings.css',
+        './src/styles/global.css',
 			],
 			plugins: [
 				starlightImageZoom(),
@@ -143,6 +148,7 @@ export default defineConfig({
 			],
 		}),
 	],
+  vite: { plugins: [tailwindcss()] },
 	markdown: {
 		rehypePlugins: [
 			[rehypeAstroRelativeMarkdownLinks, options],
@@ -153,7 +159,6 @@ export default defineConfig({
 					behavior: 'wrap',
 				},
 			],
-
 		],
 	},
 });
