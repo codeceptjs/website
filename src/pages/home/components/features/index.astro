@@ -17,72 +17,84 @@ const features = [
         icon: scenario,
         title: 'Scenario Driven',
         description: 'Write tests that mirror real user scenarios and business workflows',
+        link: '',
         gradient: 'from-yellow-500 to-amber-600'
     },
     {
         icon: driver,
         title: 'Driver Agnostic',
         description: 'Switch between WebDriver, Playwright, Puppeteer without changing tests',
+        link: '/basics#architecture',
         gradient: 'from-purple-500 to-purple-700'
     },
     {
         icon: interactive,
         title: 'Interactive Debug',
         description: 'Pause tests and interact with the browser for real-time debugging',
+        link: '/basics#debug',
         gradient: 'from-yellow-400 to-orange-500'
     },
     {
         icon: rich,
         title: 'Rich Locators',
         description: 'Find elements using text, CSS, XPath, or semantic locators',
+        link: '/locators',
         gradient: 'from-purple-600 to-indigo-600'
     },
     {
         icon: pageObjects,
         title: 'PageObjects',
         description: 'Organize tests with reusable page object patterns',
+        link: '/pageobjects',
         gradient: 'from-yellow-500 to-yellow-700'
     },
     {
         icon: web,
         title: 'Web & Mobile Testing',
         description: 'Test across browsers, mobile devices, and native applications',
+        link: '/mobile',
         gradient: 'from-purple-500 to-purple-800'
     },
     {
         icon: cucumber,
         title: 'Cucumber-like BDD',
         description: 'Write tests in natural language with Gherkin syntax support',
+        link: '/bdd',
         gradient: 'from-amber-500 to-yellow-600'
     },
     {
         icon: api,
         title: 'API Testing',
         description: 'Combine UI and API testing in a single test suite',
+        link: '/api',
         gradient: 'from-purple-600 to-violet-600'
     },
     {
         icon: data,
         title: 'Data Management',
         description: 'Built-in data factories and database helpers for test data',
+        link: '/data',
         gradient: 'from-yellow-600 to-orange-600'
     },
     {
         icon: parallel,
         title: 'Parallel Testing',
         description: 'Run tests in parallel across multiple browsers and environments',
+        link: '/advanced#parallel-execution',
         gradient: 'from-purple-500 to-purple-700'
     },
     {
         icon: reduced,
         title: 'Reduced Flakiness',
         description: 'Smart waits and retry mechanisms for stable test execution',
+        link: '/basics#beforesuite',
         gradient: 'from-yellow-500 to-amber-600'
     },
     {
         icon: ai,
         title: 'AI-powered',
         description: 'Intelligent test generation and self-healing test capabilities',
+        link: '/ai',
         gradient: 'from-purple-600 to-indigo-700'
     }
 ];
@@ -141,7 +153,7 @@ const features = [
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-                <div
+                <a href={feature.link}
                     key={index}
                     class="!mt-0 group relative bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 hover:border-yellow-400/50 transition-all duration-500 hover:transform hover:scale-105 shadow-xl hover:shadow-2xl hover:shadow-yellow-500/10 animate-fade-in-up"
                     style={{animationDelay: `${index * 0.1}s`}}
@@ -182,7 +194,7 @@ const features = [
                             ></div>
                         ))}
                     </div>
-                </div>
+                </a>
             ))}
         </div>
     </div>
