@@ -10,7 +10,7 @@ const options = {
 };
 
 export default defineConfig({
-	site: 'https://codeceptjs.github.io',
+	site: 'https://codecept.io/website',
 	base: 'website',
 	integrations: [
 		starlight({
