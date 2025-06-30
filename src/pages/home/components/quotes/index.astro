@@ -24,8 +24,8 @@ const reviews = [
 ---
 
 {/* Reviews Section */}
-<section id="reviews" class="py-20 relative !mt-0">
-    <div class="absolute inset-0 bg-gradient-to-b from-blue-50/50 via-purple-50/30 to-pink-50/50"></div>
+<section id="reviews" class="py-20 relative">
+    <div class="absolute inset-0 bg-gradient-to-b from-yellow-50/50 via-purple-50/30 to-yellow-50/50"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-bold mb-6">
@@ -42,28 +42,21 @@ const reviews = [
             {reviews.map((review) => (
                 <div
                     key={review.id}
-                    class="!mt-0 group relative bg-white/90 backdrop-blur-lg border border-gray-200/50 rounded-2xl p-8 hover:border-blue-300/50 transition-all duration-300 hover:transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
+                    class="!mt-0 group relative bg-white/90 backdrop-blur-lg border border-gray-200/50 rounded-2xl p-8 hover:border-yellow-300/50 transition-all duration-300 hover:transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
                 >
                     {/* Header */}
                     <div class="flex items-center space-x-4 mb-6">
-                        <div
-                            class="text-4xl bg-gradient-to-br from-blue-100 to-purple-100 p-3 rounded-2xl border border-blue-200/50">
+                        <div class="text-4xl bg-gradient-to-br from-yellow-100 to-purple-100 p-3 rounded-2xl border border-yellow-200/50">
                             {review.avatar}
                         </div>
                         <div class="flex-1">
-                            <h3 class="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
+                            <h3 class="text-xl font-bold text-gray-800 group-hover:text-yellow-600 transition-colors">
                                 {review.name}
                             </h3>
-                            <p class="text-blue-600 font-medium">{review.role}</p>
+                            <p class="text-purple-600 font-medium">{review.role}</p>
                             <div class="flex text-yellow-500 mt-2">
                                 {[...Array(review.rating)].map((_, i) => (
-                                    <svg key={i} xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                         stroke-linecap="round" stroke-linejoin="round"
-                                         class="!mt-0 lucide lucide-star w-4 h-4 fill-current">
-                                        <polygon
-                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                    </svg>
+                                    <svg key={i} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="!mt-0 lucide lucide-star w-4 h-4 fill-current"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                                 ))}
                             </div>
                         </div>
@@ -71,20 +64,31 @@ const reviews = [
 
                     {/* Review Content */}
                     <div class="relative">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                             class="lucide lucide-quote w-6 h-6 text-blue-300 mb-3">
-                            <path
-                                d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path>
-                            <path
-                                d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"></path>
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-quote w-6 h-6 text-yellow-300 mb-3"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"></path></svg>
                         <p class="text-gray-700 leading-relaxed text-lg">
                             {review.review}
                         </p>
                     </div>
                 </div>
             ))}
+        </div>
+
+        {/* Call to Action */}
+        <div class="text-center mt-16">
+            <div class="bg-white/80 backdrop-blur-lg border border-gray-200/50 rounded-2xl p-8 max-w-2xl mx-auto shadow-lg">
+                <h3 class="text-2xl font-bold mb-4 text-gray-800">Ready to Transform Your Testing?</h3>
+                <p class="text-gray-600 mb-6">
+                    Join thousands of satisfied developers and QA professionals who've made the switch to CodeceptJS
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="!mt-0 bg-gradient-to-r from-yellow-600 to-purple-600 text-white px-8 py-3 rounded-full font-bold hover:from-yellow-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                        Start Your Free Trial
+                    </button>
+                    <button class="!mt-0 border-2 border-gray-300 text-gray-700 px-8 py-3 rounded-full font-bold hover:border-yellow-400 hover:text-yellow-600 transition-all duration-300 bg-white/70 backdrop-blur-sm shadow-lg">
+                        Read More Reviews
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </section>

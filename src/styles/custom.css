@@ -39,7 +39,3 @@ body:not(:has(#starlight__sidebar)) .content-panel {
 body:not(:has(#starlight__sidebar)) main {
     padding-bottom: 0;
 }
-
-.title-wrapper span {
-    margin-left: 0;
-}

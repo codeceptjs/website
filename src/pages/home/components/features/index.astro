@@ -141,7 +141,7 @@ const features = [
               </span>
             </div>
 
-            <h2 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+            <h2 class="!mt-0 text-4xl md:text-6xl font-bold mb-6 leading-tight">
               <span class="bg-gradient-to-r from-white via-yellow-200 to-purple-200 bg-clip-text text-transparent animate-text-shimmer">
                 Powerful Features
               </span>
@@ -155,7 +155,7 @@ const features = [
             {features.map((feature, index) => (
                 <a href={feature.link}
                     key={index}
-                    class="!mt-0 group relative bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 hover:border-yellow-400/50 transition-all duration-500 hover:transform hover:scale-105 shadow-xl hover:shadow-2xl hover:shadow-yellow-500/10 animate-fade-in-up"
+                    class="!mt-0 no-underline group relative bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 hover:border-yellow-400/50 transition-all duration-500 hover:transform hover:scale-105 shadow-xl hover:shadow-2xl hover:shadow-yellow-500/10 animate-fade-in-up"
                     style={{animationDelay: `${index * 0.1}s`}}
                 >
                     {/* Glow Effect */}

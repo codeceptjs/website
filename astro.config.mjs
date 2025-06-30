@@ -4,8 +4,6 @@ import tailwindcss from '@tailwindcss/vite';
 import starlightSidebarTopics from 'starlight-sidebar-topics';
 import starlightImageZoom from 'starlight-image-zoom';
 import rehypeAstroRelativeMarkdownLinks from "astro-rehype-relative-markdown-links";
-import { rehypeHeadingIds } from '@astrojs/markdown-remark';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
 const options = {
 	contentPath: 'src/content/docs',
@@ -14,11 +12,8 @@ const options = {
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: 'CodeceptJS',
+			title: '',
 			favicon: '/favicon.svg',
-      logo: {
-        src: './src/assets/logoNew.svg',
-      },
       social: [
         { icon: 'github', label: 'GitHub', href: 'https://github.com/codeceptjs/CodeceptJS' },
       ],
@@ -26,11 +21,11 @@ export default defineConfig({
 				Head: "./src/components/Head.astro",
 				PageTitle: './src/components/PageTitle.astro',
 				Footer: './src/components/Footer.astro',
+				SiteTitle: './src/components/SiteTitle.astro',
 			},
 			customCss: [
 				'./src/styles/custom.css',
-				'./src/styles/headings.css',
-        './src/styles/global.css',
+        		'./src/styles/global.css',
 			],
 			plugins: [
 				starlightImageZoom(),
@@ -152,13 +147,6 @@ export default defineConfig({
 	markdown: {
 		rehypePlugins: [
 			[rehypeAstroRelativeMarkdownLinks, options],
-			rehypeHeadingIds,
-			[
-				rehypeAutolinkHeadings,
-				{
-					behavior: 'wrap',
-				},
-			],
 		],
 	},
 });

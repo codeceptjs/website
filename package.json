@@ -13,18 +13,17 @@
     "@astrojs/markdown-remark": "^6.3.2",
     "@astrojs/starlight": "^0.34.4",
     "@astrojs/starlight-tailwind": "^4.0.1",
-    "@tailwindcss/vite": "^4.1.10",
-    "astro": "^5.9.3",
+    "@tailwindcss/vite": "^4.1.11",
+    "astro": "^5.10.1",
     "astro-breadcrumbs": "^3.3.1",
     "astro-rehype-relative-markdown-links": "0.15.0",
     "astro-vtbot": "^2.1.5",
-    "rehype-autolink-headings": "^7.1.0",
     "sass-embedded": "^1.89.2",
     "schema-dts": "^1.1.5",
     "sharp": "^0.34.2",
     "starlight-image-zoom": "^0.12.0",
     "starlight-sidebar-topics": "^0.6.0",
-    "swiper": "^11.2.8",
-    "tailwindcss": "^4.1.10"
+    "swiper": "^11.2.10",
+    "tailwindcss": "^4.1.11"
   }
 }
