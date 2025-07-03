@@ -26,8 +26,6 @@ CodeceptJS AI can do the following:
 * 🚑 **self-heal failing tests** (can be used on CI)
 * 💬 send arbitrary prompts to AI provider from any tested page attaching its HTML contents
 
-![](./images/fill_form.gif)
-
 ## How it works
 
 As we can't send a browser window with ChatGPT we are not be able to fully share the context. But we can chare HTML of the current page, which is quite enough to analyze and identify if a page contains an element which can be used in a test.

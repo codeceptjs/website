@@ -2,91 +2,59 @@
 
 ---
 
-{/* Test Management Section */}
-<section class="py-16 relative">
-    <div class="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-white/50"></div>
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div class="text-center">
-            <div class="bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-2xl p-12 shadow-lg">
-                {/* Logo */}
-                <div
-                    class="w-16 h-16 bg-gradient-to-r from-purple-500 to-yellow-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                         class="lucide lucide-test-tube w-8 h-8 text-white">
-                        <path d="M14.5 2v17.5c0 1.4-1.1 2.5-2.5 2.5h0c-1.4 0-2.5-1.1-2.5-2.5V2"></path>
-                        <path d="M8.5 2h7"></path>
-                        <path d="M14.5 16h-5"></path>
-                    </svg>
-                </div>
-
-                {/* Title */}
-                <h3 class="text-3xl font-bold text-gray-800 mb-4">Testomat.io</h3>
-                <p class="text-gray-600 mb-8 text-lg">Test Case Management for CodeceptJS</p>
-
-                {/* Features */}
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div class="!mt-0 text-center">
-                        <div
-                            class="w-10 h-10 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mx-auto mb-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round" class="lucide lucide-zap w-5 h-5 text-white">
-                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                            </svg>
-                        </div>
-                        <h4 class="!mt-0 text-lg font-semibold text-gray-800 mb-1">Native Integration</h4>
-                        <p class="!mt-0 text-sm text-gray-600">Built for CodeceptJS</p>
-                    </div>
-
-                    <div class="!mt-0 text-center">
-                        <div
-                            class="w-10 h-10 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg flex items-center justify-center mx-auto mb-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round" class="lucide lucide-users w-5 h-5 text-white">
-                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="9" cy="7" r="4"></circle>
-                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                            </svg>
-                        </div>
-                        <h4 class="!mt-0 text-lg font-semibold text-gray-800 mb-1">Team Collaboration</h4>
-                        <p class="!mt-0 text-sm text-gray-600">Organize test cases</p>
-                    </div>
-
-                    <div class="!mt-0 text-center">
-                        <div
-                            class="w-10 h-10 bg-gradient-to-r from-purple-600 to-yellow-500 rounded-lg flex items-center justify-center mx-auto mb-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round" class="lucide lucide-trending-up w-5 h-5 text-white">
-                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
-                                <polyline points="16 7 22 7 22 13"></polyline>
-                            </svg>
-                        </div>
-                        <h4 class="!mt-0 text-lg font-semibold text-gray-800 mb-1">Real-time Reports</h4>
-                        <p class="!mt-0 text-sm text-gray-600">Live test analytics</p>
-                    </div>
-                </div>
-
-                {/* CTA */}
-                <a
-                    href="https://testomat.io"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="no-underline inline-flex items-center space-x-2 bg-gradient-to-r from-purple-600 to-yellow-600 text-white px-8 py-3 rounded-full font-bold hover:from-purple-700 hover:to-yellow-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-                >
-                    <span>Try Testomat.io</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                         class="lucide lucide-external-link w-4 h-4">
-                        <path d="M15 3h6v6"></path>
-                        <path d="M10 14 21 3"></path>
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    </svg>
-                </a>
+<section id="test" class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="bg-gradient-to-br from-yellow-50 to-purple-50 rounded-3xl p-12 shadow-soft border border-gray-100">
+            {/* Testomat.io Logo */}
+            <div class="w-24 h-24 mx-auto mb-8 bg-gradient-to-r from-yellow-400 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-target w-12 h-12 text-white"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
             </div>
+
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Supercharge with <span class="gradient-text">Testomat.io</span>
+            </h2>
+
+            <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+                Take your CodeceptJS testing to the next level with professional test management,
+                real-time reporting, and team collaboration tools.
+            </p>
+
+            {/* Features Grid */}
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <div class="!mt-0 bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-white/50">
+                    <div class="w-12 h-12 mx-auto mb-4 bg-gradient-to-r from-blue-400 to-blue-500 rounded-lg flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-check w-6 h-6 text-white"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><polyline points="16 11 18 13 22 9"></polyline></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Native Integration</h3>
+                    <p class="text-sm text-gray-600">Built specifically for CodeceptJS</p>
+                </div>
+
+                <div class="!mt-0 bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-white/50">
+                    <div class="w-12 h-12 mx-auto mb-4 bg-gradient-to-r from-green-400 to-green-500 rounded-lg flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users w-6 h-6 text-white"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Team Collaboration</h3>
+                    <p class="text-sm text-gray-600">Organize and track test progress</p>
+                </div>
+
+                <div class="!mt-0 bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-white/50">
+                    <div class="w-12 h-12 mx-auto mb-4 bg-gradient-to-r from-purple-400 to-purple-500 rounded-lg flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart3 w-6 h-6 text-white"><path d="M3 3v18h18"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Real-time Reports</h3>
+                    <p class="text-sm text-gray-600">Live analytics and insights</p>
+                </div>
+            </div>
+
+            <a
+                href="https://testomat.io"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="no-underline inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-yellow-500 to-purple-500 text-white font-semibold rounded-full hover:from-yellow-400 hover:to-purple-400 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            >
+                Try Testomat.io
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link w-5 h-5"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+            </a>
         </div>
     </div>
 </section>
