@@ -546,3 +546,54 @@ html {
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
+
+[data-theme="dark"] #trusted,
+[data-theme="dark"] #examples,
+[data-theme="dark"] #test {
+    background: #111827;
+}
+
+[data-theme="dark"] #reviews {
+    background: #1d2735;
+}
+
+[data-theme="dark"] .swiper-pagination-bullet {
+    background: #ffffff;
+}
+
+#trusted {
+    background: linear-gradient(135deg, #fefce8 0%, #fff 50%, #faf5ff 100%);
+}
+.swiper {
+    margin-top: 0 !important;
+}
+.swiper img {
+    width: auto;
+    max-width: 180px !important;
+    max-height: 100px !important;
+    filter: grayscale(0.9);
+    transition: all 0.2s ease;
+}
+.swiper img:hover {
+    filter: grayscale(0);
+}
+.swiper .swiper-pagination-bullet-active {
+    background: var(--sl-color-text-accent) !important;
+}
+.swiper-wrapper {
+    align-items: center !important;
+    padding-bottom: 4rem;
+}
+.swiper-slide {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0 !important;
+    background-color: #f6f7f9;
+    border-radius: 1rem;
+    height: 120px !important;
+    padding: 1rem;
+}
+.swiper-pagination {
+    position: relative;
+}
