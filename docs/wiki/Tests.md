@@ -903,9 +903,9 @@ Created by [Testomat.io](https://testomat.io/)
 📝 [test/runner/bdd_test.js](https://github.com/codeceptjs/CodeceptJS/tree/d60dde173b5aecc06e45de0a6b86a43dec69f8ef/test/runner/bdd_test.js) <!-- check-tests: Add test docs below id=b2e5a0c5584228a863eae208c439de93a611e125 -->
 * 📎 **BDD Gherkin** <!-- check-tests: Add test docs below id=dd2caab1ebf40241c2f767c737e5d84ff386cd59 -->
   * ✔️ `should run feature files` <!-- check-tests: Add test docs below id=e38acd34d2d424e5af33363798304196a46a0cab -->
-  * ✔️ `should print substeps in logger mode` <!-- check-tests: Add test docs below id=ad20606e044981d120317f54ff832a018d6a4a0b -->
+  * ✔️ `should print substeps in debug mode` <!-- check-tests: Add test docs below id=ad20606e044981d120317f54ff832a018d6a4a0b -->
   * ✔️ `should print events in verbose mode` <!-- check-tests: Add test docs below id=b13693449dc9ad0b92c8bf69e63fa1b7aeff274f -->
-  * ✔️ `should obfuscate secret substeps in logger mode` <!-- check-tests: Add test docs below id=83ec881dbd308c9ca40bb393af9fe1abf6347e06 -->
+  * ✔️ `should obfuscate secret substeps in debug mode` <!-- check-tests: Add test docs below id=83ec881dbd308c9ca40bb393af9fe1abf6347e06 -->
   * ✔️ `should run feature with examples files` <!-- check-tests: Add test docs below id=59a422d3de5ef8d8863716e4d4b1c0826ceb51fd -->
   * ✔️ `should run feature with table and examples files` <!-- check-tests: Add test docs below id=3879a2c4f8fe024e872ae8f265c9dd4a4d9e0394 -->
   * ✔️ `should run feature with tables` <!-- check-tests: Add test docs below id=3cc3390622a086c16475bf67ff97b2e87b6d155b -->
@@ -1007,7 +1007,7 @@ Created by [Testomat.io](https://testomat.io/)
   * ✔️ `should not run helper hooks` <!-- check-tests: Add test docs below id=9dcc4f3a30512c61246b00356f5328e993a2b81e -->
   * ✔️ `should display meta steps and substeps` <!-- check-tests: Add test docs below id=0c47e5d95c54150fb3c77a9d4ac8e9455fc01cf8 -->
   * ✔️ `should run feature files` <!-- check-tests: Add test docs below id=7fbfab7d92d019e1b8209ee8d52a0d7ae38694b0 -->
-  * ✔️ `should print substeps in logger mode` <!-- check-tests: Add test docs below id=0c641e1f8d5d49b097812372411c6db75f6c05b9 -->
+  * ✔️ `should print substeps in debug mode` <!-- check-tests: Add test docs below id=0c641e1f8d5d49b097812372411c6db75f6c05b9 -->
   * ✔️ `should run tests with different data` <!-- check-tests: Add test docs below id=332288aa1bfd85ea18b7438c0f04e22c122aeb2e -->
   * ✔️ `should display meta steps and substeps` <!-- check-tests: Add test docs below id=0c47e5d95c54150fb3c77a9d4ac8e9455fc01cf8 -->
   * ✔️ `should work with inject() keyword` <!-- check-tests: Add test docs below id=c7ea10d895cdc02f5b9b4ec2d24f9fafcb9bf62c -->
@@ -1078,7 +1078,7 @@ Created by [Testomat.io](https://testomat.io/)
   * ✔️ `should print positive or zero failures with same name tests` <!-- check-tests: Add test docs below id=08a8262651dccba1e8cc6c3f58c3b6a6057d51e6 -->
   * ✔️ `should use grep` <!-- check-tests: Add test docs below id=db3816ab1a06367fa159720260fdd718ebd10bc1 -->
   * ✔️ `should show failures when suite is failing` <!-- check-tests: Add test docs below id=507a950522e98c073a47ef0b2b924cbceb2fa672 -->
-  * ✔️ `should print stdout in logger mode and load bootstrap` <!-- check-tests: Add test docs below id=d26c61813eeb32cfa8528bda850017e8684565ab -->
+  * ✔️ `should print stdout in debug mode and load bootstrap` <!-- check-tests: Add test docs below id=d26c61813eeb32cfa8528bda850017e8684565ab -->
   * ✔️ `should run tests with glob pattern` <!-- check-tests: Add test docs below id=10204144fb4ef65367a2a872aa823d64bbc71090 -->
   * ✔️ `should print empty results with incorrect glob pattern` <!-- check-tests: Add test docs below id=8c25ffc7cb4178cafc289e5f2720969ac351a3af -->
   * ✔️ `should retry test` <!-- check-tests: Add test docs below id=a4ad9e9729139af7de146f6c4a3d5261c8acb9a7 -->
@@ -1269,7 +1269,7 @@ Created by [Testomat.io](https://testomat.io/)
 * 📎 **Output** <!-- check-tests: Add test docs below id=78a00b66b2cf25365dd58f7437670dc28714ad6c -->
   * ✔️ `should allow the output level to be set` <!-- check-tests: Add test docs below id=bc2525529331e1c303fcd59afbb34300ec754e73 -->
   * ✔️ `should allow the process to be set` <!-- check-tests: Add test docs below id=63437ab6a49e5c6e5a8cbac558861d1b78268b90 -->
-  * ✔️ `should allow logger messages when output level >= 2` <!-- check-tests: Add test docs below id=33bab1ccd86b73dcdf0450b3376cc9f59265e141 -->
+  * ✔️ `should allow debug messages when output level >= 2` <!-- check-tests: Add test docs below id=33bab1ccd86b73dcdf0450b3376cc9f59265e141 -->
 
 📝 [test/unit/parser_test.js](https://github.com/codeceptjs/CodeceptJS/tree/d60dde173b5aecc06e45de0a6b86a43dec69f8ef/test/unit/parser_test.js) <!-- check-tests: Add test docs below id=95dc8e30930a221415ada70629b9e74de0fa4557 -->
 * 📎 **parser** <!-- check-tests: Add test docs below id=9c703d009940e2808f8410eab3f26919698def41 -->
@@ -1358,7 +1358,7 @@ Created by [Testomat.io](https://testomat.io/)
       * ✔️ `should inject custom opts to opts and without callback` <!-- check-tests: Add test docs below id=494969b1de1e2902517c3670b98a4b08e6e62cb8 -->
       * ✔️ `should inject custom opts to opts and with callback` <!-- check-tests: Add test docs below id=54a127615f2552b5cc4602f67a9c98d7fca76214 -->
 
-📝 [test/unit/utils.js_test.js](https://github.com/codeceptjs/CodeceptJS/tree/d60dde173b5aecc06e45de0a6b86a43dec69f8ef/test/unit/utils.js_test.js) <!-- check-tests: Add test docs below id=645ed189d4e3fa28e6795dcb1617ec2ada00f30d -->
+📝 [test/unit/utils_test.js](https://github.com/codeceptjs/CodeceptJS/tree/d60dde173b5aecc06e45de0a6b86a43dec69f8ef/test/unit/utils_test.js) <!-- check-tests: Add test docs below id=645ed189d4e3fa28e6795dcb1617ec2ada00f30d -->
 * 📎 **utils** <!-- check-tests: Add test docs below id=d83b5fd444b48193a438de0cd119a587385fadf0 -->
   * 📎 **#fileExists** <!-- check-tests: Add test docs below id=35580d7d8d1a4c9e88ec8ae8f6efc0b59a36fb74 -->
     * ✔️ `exists` <!-- check-tests: Add test docs below id=53b79a29cfa6bb80d18a10caa09be789503faeb1 -->
