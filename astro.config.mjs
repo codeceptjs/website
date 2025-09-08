@@ -5,7 +5,6 @@ import starlightSidebarTopics from 'starlight-sidebar-topics';
 import starlightImageZoom from 'starlight-image-zoom';
 import rehypeAstroRelativeMarkdownLinks from "astro-rehype-relative-markdown-links";
 import starlightScrollToTop from 'starlight-scroll-to-top';
-import react from '@astrojs/react';
 
 const options = {
     collectionBase: false,
@@ -13,7 +12,6 @@ const options = {
 
 export default defineConfig({
     integrations: [
-        react(),
         starlight({
             title: '',
             favicon: '/favicon.svg',
