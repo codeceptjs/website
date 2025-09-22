@@ -72,10 +72,11 @@ class JSONResponse extends Helper {
     if (!this.helpers[this.options.requestHelper]) {
       throw new Error(`Error setting JSONResponse, helper ${this.options.requestHelper} is not enabled in config, helpers: ${Object.keys(this.helpers)}`)
     }
-    // connect to REST helper
+    const origOnResponse = this.helpers[this.options.requestHelper].config.onResponse;
     this.helpers[this.options.requestHelper].config.onResponse = response => {
-      this.response = response
-    }
+      this.response = response;
+      if (typeof origOnResponse === 'function') origOnResponse(response);
+    };
   }
 
   _before() {
@@ -349,7 +350,25 @@ class JSONResponse extends Helper {
     for (const key in expected) {
       assert(key in actual, `Key "${key}" not found in ${JSON.stringify(actual)}`)
       if (typeof expected[key] === 'object' && expected[key] !== null) {
-        this._assertContains(actual[key], expected[key])
+        if (Array.isArray(expected[key])) {
+          // Handle array comparison: each expected element should have a match in actual array
+          assert(Array.isArray(actual[key]), `Expected array for key "${key}", but got ${typeof actual[key]}`)
+          for (const expectedItem of expected[key]) {
+            let found = false
+            for (const actualItem of actual[key]) {
+              try {
+                this._assertContains(actualItem, expectedItem)
+                found = true
+                break
+              } catch (err) {
+                continue
+              }
+            }
+            assert(found, `No matching element found in array for ${JSON.stringify(expectedItem)}`)
+          }
+        } else {
+          this._assertContains(actual[key], expected[key])
+        }
       } else {
         assert.deepStrictEqual(actual[key], expected[key], `Values for key "${key}" don't match`)
       }

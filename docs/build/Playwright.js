@@ -33,10 +33,13 @@ const RemoteBrowserConnectionRefused = require('./errors/RemoteBrowserConnection
 const Popup = require('./extras/Popup')
 const Console = require('./extras/Console')
 const { findReact, findVue, findByPlaywrightLocator } = require('./extras/PlaywrightReactVueLocator')
+const WebElement = require('../element/WebElement')
 
 let playwright
 let perfTiming
 let defaultSelectorEnginesInitialized = false
+let registeredCustomLocatorStrategies = new Set()
+let globalCustomLocatorStrategies = new Map()
 
 const popupStore = new Popup()
 const consoleLogStore = new Console()
@@ -95,6 +98,7 @@ const pathSeparator = path.sep
  * @prop {boolean} [highlightElement] - highlight the interacting elements. Default: false. Note: only activate under verbose mode (--verbose).
  * @prop {object} [recordHar] - record HAR and will be saved to `output/har`. See more of [HAR options](https://playwright.dev/docs/api/class-browser#browser-new-context-option-record-har).
  * @prop {string} [testIdAttribute=data-testid] - locate elements based on the testIdAttribute. See more of [locate by test id](https://playwright.dev/docs/locators#locate-by-test-id).
+ * @prop {object} [customLocatorStrategies] - custom locator strategies. An object with keys as strategy names and values as JavaScript functions. Example: `{ byRole: (selector, root) => { return root.querySelector(\`[role="\${selector}\"]\`) } }`
  */
 const config = {}
 
@@ -343,9 +347,23 @@ class Playwright extends Helper {
     this.recordingWebSocketMessages = false
     this.recordedWebSocketMessagesAtLeastOnce = false
     this.cdpSession = null
+    this.customLocatorStrategies = typeof config.customLocatorStrategies === 'object' && config.customLocatorStrategies !== null ? config.customLocatorStrategies : null
+    this._customLocatorsRegistered = false
+
+    // Add custom locator strategies to global registry for early registration
+    if (this.customLocatorStrategies) {
+      for (const [strategyName, strategyFunction] of Object.entries(this.customLocatorStrategies)) {
+        globalCustomLocatorStrategies.set(strategyName, strategyFunction)
+      }
+    }
 
     // override defaults with config
     this._setConfig(config)
+
+    // Call _init() to register selector engines - use setTimeout to avoid blocking constructor
+    setTimeout(() => {
+      this._init().catch(console.error)
+    }, 0)
   }
 
   _validateConfig(config) {
@@ -462,12 +480,61 @@ class Playwright extends Helper {
 
   async _init() {
     // register an internal selector engine for reading value property of elements in a selector
-    if (defaultSelectorEnginesInitialized) return
-    defaultSelectorEnginesInitialized = true
     try {
-      await playwright.selectors.register('__value', createValueEngine)
-      await playwright.selectors.register('__disabled', createDisabledEngine)
-      if (process.env.testIdAttribute) await playwright.selectors.setTestIdAttribute(process.env.testIdAttribute)
+      if (!defaultSelectorEnginesInitialized) {
+        await playwright.selectors.register('__value', createValueEngine)
+        await playwright.selectors.register('__disabled', createDisabledEngine)
+        if (process.env.testIdAttribute) await playwright.selectors.setTestIdAttribute(process.env.testIdAttribute)
+        defaultSelectorEnginesInitialized = true
+      }
+
+      // Register all custom locator strategies from the global registry
+      for (const [strategyName, strategyFunction] of globalCustomLocatorStrategies.entries()) {
+        if (!registeredCustomLocatorStrategies.has(strategyName)) {
+          try {
+            // Create a selector engine factory function exactly like createValueEngine pattern
+            // Capture variables in closure to avoid reference issues
+            const createCustomEngine = ((name, func) => {
+              return () => {
+                return {
+                  create() {
+                    return null
+                  },
+                  query(root, selector) {
+                    try {
+                      if (!root) return null
+                      const result = func(selector, root)
+                      return Array.isArray(result) ? result[0] : result
+                    } catch (error) {
+                      console.warn(`Error in custom locator "${name}":`, error)
+                      return null
+                    }
+                  },
+                  queryAll(root, selector) {
+                    try {
+                      if (!root) return []
+                      const result = func(selector, root)
+                      return Array.isArray(result) ? result : result ? [result] : []
+                    } catch (error) {
+                      console.warn(`Error in custom locator "${name}":`, error)
+                      return []
+                    }
+                  },
+                }
+              }
+            })(strategyName, strategyFunction)
+
+            await playwright.selectors.register(strategyName, createCustomEngine)
+            registeredCustomLocatorStrategies.add(strategyName)
+          } catch (error) {
+            if (!error.message.includes('already registered')) {
+              console.warn(`Failed to register custom locator strategy '${strategyName}':`, error)
+            } else {
+              console.log(`Custom locator strategy '${strategyName}' already registered`)
+            }
+          }
+        }
+      }
     } catch (e) {
       console.warn(e)
     }
@@ -574,6 +641,9 @@ class Playwright extends Helper {
 
   async _after() {
     if (!this.isRunning) return
+
+    // Clear popup state to prevent leakage between tests
+    popupStore.clear()
 
     if (this.isElectron) {
       this.browser.close()
@@ -834,6 +904,9 @@ class Playwright extends Helper {
   }
 
   async _startBrowser() {
+    // Ensure custom locator strategies are registered before browser launch
+    await this._init()
+
     if (this.isElectron) {
       this.browser = await playwright._electron.launch(this.playwrightOptions)
     } else if (this.isRemoteBrowser && this.isCDPConnection) {
@@ -869,6 +942,30 @@ class Playwright extends Helper {
     return this.browser
   }
 
+  _lookupCustomLocator(customStrategy) {
+    if (typeof this.customLocatorStrategies !== 'object' || this.customLocatorStrategies === null) {
+      return null
+    }
+    const strategy = this.customLocatorStrategies[customStrategy]
+    return typeof strategy === 'function' ? strategy : null
+  }
+
+  _isCustomLocator(locator) {
+    const locatorObj = new Locator(locator)
+    if (locatorObj.isCustom()) {
+      const customLocator = this._lookupCustomLocator(locatorObj.type)
+      if (customLocator) {
+        return true
+      }
+      throw new Error('Please define "customLocatorStrategies" as an Object and the Locator Strategy as a "function".')
+    }
+    return false
+  }
+
+  _isCustomLocatorStrategyDefined() {
+    return !!(this.customLocatorStrategies && Object.keys(this.customLocatorStrategies).length > 0)
+  }
+
   /**
    * Create a new browser context with a page. \
    * Usually it should be run from a custom helper after call of `_startBrowser()`
@@ -876,9 +973,62 @@ class Playwright extends Helper {
    */
   async _createContextPage(contextOptions) {
     this.browserContext = await this.browser.newContext(contextOptions)
+
+    // Register custom locator strategies for this context
+    await this._registerCustomLocatorStrategies()
+
     const page = await this.browserContext.newPage()
     targetCreatedHandler.call(this, page)
     await this._setPage(page)
+  }
+
+  async _registerCustomLocatorStrategies() {
+    if (!this.customLocatorStrategies) return
+
+    for (const [strategyName, strategyFunction] of Object.entries(this.customLocatorStrategies)) {
+      if (!registeredCustomLocatorStrategies.has(strategyName)) {
+        try {
+          const createCustomEngine = ((name, func) => {
+            return () => {
+              return {
+                create(root, target) {
+                  return null
+                },
+                query(root, selector) {
+                  try {
+                    if (!root) return null
+                    const result = func(selector, root)
+                    return Array.isArray(result) ? result[0] : result
+                  } catch (error) {
+                    console.warn(`Error in custom locator "${name}":`, error)
+                    return null
+                  }
+                },
+                queryAll(root, selector) {
+                  try {
+                    if (!root) return []
+                    const result = func(selector, root)
+                    return Array.isArray(result) ? result : result ? [result] : []
+                  } catch (error) {
+                    console.warn(`Error in custom locator "${name}":`, error)
+                    return []
+                  }
+                },
+              }
+            }
+          })(strategyName, strategyFunction)
+
+          await playwright.selectors.register(strategyName, createCustomEngine)
+          registeredCustomLocatorStrategies.add(strategyName)
+        } catch (error) {
+          if (!error.message.includes('already registered')) {
+            console.warn(`Failed to register custom locator strategy '${strategyName}':`, error)
+          } else {
+            console.log(`Custom locator strategy '${strategyName}' already registered`)
+          }
+        }
+      }
+    }
   }
 
   _getType() {
@@ -892,7 +1042,10 @@ class Playwright extends Helper {
     this.frame = null
     popupStore.clear()
     if (this.options.recordHar) await this.browserContext.close()
+    this.browserContext = null
     await this.browser.close()
+    this.browser = null
+    this.isRunning = false
   }
 
   async _evaluateHandeInContext(...args) {
@@ -1411,9 +1564,9 @@ class Playwright extends Helper {
   async _locate(locator) {
     const context = await this._getContext()
 
-    if (this.frame) return findElements(this.frame, locator)
+    if (this.frame) return findElements.call(this, this.frame, locator)
 
-    const els = await findElements(context, locator)
+    const els = await findElements.call(this, context, locator)
 
     if (store.debugMode) {
       const previewElements = els.slice(0, 3)
@@ -1496,7 +1649,8 @@ class Playwright extends Helper {
    *
    */
   async grabWebElements(locator) {
-    return this._locate(locator)
+    const elements = await this._locate(locator)
+    return elements.map(element => new WebElement(element, this))
   }
 
   /**
@@ -1513,7 +1667,8 @@ class Playwright extends Helper {
    *
    */
   async grabWebElement(locator) {
-    return this._locateElement(locator)
+    const element = await this._locateElement(locator)
+    return new WebElement(element, this)
   }
 
   /**
@@ -2753,11 +2908,25 @@ class Playwright extends Helper {
    * @param {*} locator
    */
   _contextLocator(locator) {
-    locator = buildLocatorString(new Locator(locator, 'css'))
+    const locatorObj = new Locator(locator, 'css')
+
+    // Handle custom locators differently
+    if (locatorObj.isCustom()) {
+      return buildCustomLocatorString(locatorObj)
+    }
+
+    locator = buildLocatorString(locatorObj)
 
     if (this.contextLocator) {
-      const contextLocator = buildLocatorString(new Locator(this.contextLocator, 'css'))
-      locator = `${contextLocator} >> ${locator}`
+      const contextLocatorObj = new Locator(this.contextLocator, 'css')
+      if (contextLocatorObj.isCustom()) {
+        // For custom context locators, we can't use the >> syntax
+        // Instead, we'll need to handle this differently in the calling methods
+        return locator
+      } else {
+        const contextLocator = buildLocatorString(contextLocatorObj)
+        locator = `${contextLocator} >> ${locator}`
+      }
     }
 
     return locator
@@ -2778,11 +2947,25 @@ class Playwright extends Helper {
    *
    */
   async grabTextFrom(locator) {
-    locator = this._contextLocator(locator)
-    const text = await this.page.textContent(locator)
-    assertElementExists(text, locator)
-    this.debugSection('Text', text)
-    return text
+    const locatorObj = new Locator(locator, 'css')
+
+    if (locatorObj.isCustom()) {
+      // For custom locators, find the element first
+      const elements = await findCustomElements.call(this, this.page, locatorObj)
+      if (elements.length === 0) {
+        throw new Error(`Element not found: ${locatorObj.toString()}`)
+      }
+      const text = await elements[0].textContent()
+      assertElementExists(text, locatorObj.toString())
+      this.debugSection('Text', text)
+      return text
+    } else {
+      locator = this._contextLocator(locator)
+      const text = await this.page.textContent(locator)
+      assertElementExists(text, locator)
+      this.debugSection('Text', text)
+      return text
+    }
   }
 
   /**
@@ -2804,7 +2987,6 @@ class Playwright extends Helper {
     for (const el of els) {
       texts.push(await el.innerText())
     }
-    this.debug(`Matched ${els.length} elements`)
     return texts
   }
 
@@ -2840,7 +3022,6 @@ class Playwright extends Helper {
    */
   async grabValueFromAll(locator) {
     const els = await findFields.call(this, locator)
-    this.debug(`Matched ${els.length} elements`)
     return Promise.all(els.map(el => el.inputValue()))
   }
 
@@ -2878,7 +3059,6 @@ class Playwright extends Helper {
    */
   async grabHTMLFromAll(locator) {
     const els = await this._locate(locator)
-    this.debug(`Matched ${els.length} elements`)
     return Promise.all(els.map(el => el.innerHTML()))
   }
 
@@ -2920,7 +3100,6 @@ class Playwright extends Helper {
    */
   async grabCssPropertyFromAll(locator, cssProperty) {
     const els = await this._locate(locator)
-    this.debug(`Matched ${els.length} elements`)
     const cssValues = await Promise.all(els.map(el => el.evaluate((el, cssProperty) => getComputedStyle(el).getPropertyValue(cssProperty), cssProperty)))
 
     return cssValues
@@ -3079,7 +3258,6 @@ class Playwright extends Helper {
    */
   async grabAttributeFromAll(locator, attr) {
     const els = await this._locate(locator)
-    this.debug(`Matched ${els.length} elements`)
     const array = []
 
     for (let index = 0; index < els.length; index++) {
@@ -3109,7 +3287,6 @@ class Playwright extends Helper {
     const res = await this._locateElement(locator)
     assertElementExists(res, locator)
     const elem = res
-    this.debug(`Screenshot of ${new Locator(locator)} element has been saved to ${outputFile}`)
     return elem.screenshot({ path: outputFile, type: 'png' })
   }
 
@@ -3478,7 +3655,16 @@ class Playwright extends Helper {
 
     const context = await this._getContext()
     try {
-      await context.locator(buildLocatorString(locator)).first().waitFor({ timeout: waitTimeout, state: 'attached' })
+      if (locator.isCustom()) {
+        // For custom locators, we need to use our custom element finding logic
+        const elements = await findCustomElements.call(this, context, locator)
+        if (elements.length === 0) {
+          throw new Error(`Custom locator ${locator.type}=${locator.value} not found`)
+        }
+        await elements[0].waitFor({ timeout: waitTimeout, state: 'attached' })
+      } else {
+        await context.locator(buildLocatorString(locator)).first().waitFor({ timeout: waitTimeout, state: 'attached' })
+      }
     } catch (e) {
       throw new Error(`element (${locator.toString()}) still not present on page after ${waitTimeout / 1000} sec\n${e.message}`)
     }
@@ -3502,8 +3688,29 @@ class Playwright extends Helper {
   async waitForVisible(locator, sec) {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
     locator = new Locator(locator, 'css')
+
     const context = await this._getContext()
     let count = 0
+
+    // Handle custom locators
+    if (locator.isCustom()) {
+      let waiter
+      do {
+        const elements = await findCustomElements.call(this, context, locator)
+        if (elements.length > 0) {
+          waiter = await elements[0].isVisible()
+        } else {
+          waiter = false
+        }
+        if (!waiter) {
+          await this.wait(1)
+          count += 1000
+        }
+      } while (!waiter && count <= waitTimeout)
+
+      if (!waiter) throw new Error(`element (${locator.toString()}) still not visible after ${waitTimeout / 1000} sec.`)
+      return
+    }
 
     // we have this as https://github.com/microsoft/playwright/issues/26829 is not yet implemented
     let waiter
@@ -3541,6 +3748,7 @@ class Playwright extends Helper {
   async waitForInvisible(locator, sec) {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
     locator = new Locator(locator, 'css')
+
     const context = await this._getContext()
     let waiter
     let count = 0
@@ -3581,6 +3789,7 @@ class Playwright extends Helper {
   async waitToHide(locator, sec) {
     const waitTimeout = sec ? sec * 1000 : this.options.waitForTimeout
     locator = new Locator(locator, 'css')
+
     const context = await this._getContext()
     let waiter
     let count = 0
@@ -3743,52 +3952,77 @@ class Playwright extends Helper {
     if (context) {
       const locator = new Locator(context, 'css')
       try {
+        if (locator.isCustom()) {
+          // For custom locators, find the elements first then check for text within them
+          const elements = await findCustomElements.call(this, contextObject, locator)
+          if (elements.length === 0) {
+            throw new Error(`Context element not found: ${locator.toString()}`)
+          }
+          return elements[0].locator(`text=${text}`).first().waitFor({ timeout: waitTimeout, state: 'visible' })
+        }
+
         if (!locator.isXPath()) {
           return contextObject
-            .locator(`${locator.isCustom() ? `${locator.type}=${locator.value}` : locator.simplify()} >> text=${text}`)
+            .locator(`${locator.simplify()} >> text=${text}`)
             .first()
             .waitFor({ timeout: waitTimeout, state: 'visible' })
+            .catch(e => {
+              throw new Error(errorMessage)
+            })
         }
 
         if (locator.isXPath()) {
-          return contextObject.waitForFunction(
-            ([locator, text, $XPath]) => {
-              eval($XPath)
-              const el = $XPath(null, locator)
-              if (!el.length) return false
-              return el[0].innerText.indexOf(text) > -1
-            },
-            [locator.value, text, $XPath.toString()],
-            { timeout: waitTimeout },
-          )
+          return contextObject
+            .waitForFunction(
+              ([locator, text, $XPath]) => {
+                eval($XPath)
+                const el = $XPath(null, locator)
+                if (!el.length) return false
+                return el[0].innerText.indexOf(text) > -1
+              },
+              [locator.value, text, $XPath.toString()],
+              { timeout: waitTimeout },
+            )
+            .catch(e => {
+              throw new Error(errorMessage)
+            })
         }
       } catch (e) {
         throw new Error(`${errorMessage}\n${e.message}`)
       }
     }
 
+    // Based on original implementation but fixed to check title text and remove problematic promiseRetry
+    // Original used timeoutGap for waitForFunction to give it slightly more time than the locator
     const timeoutGap = waitTimeout + 1000
 
-    // We add basic timeout to make sure we don't wait forever
-    // We apply 2 strategies here: wait for text as innert text on page (wide strategy) - older
-    // or we use native Playwright matcher to wait for text in element (narrow strategy) - newer
-    // If a user waits for text on a page they are mostly expect it to be there, so wide strategy can be helpful even PW strategy is available
     return Promise.race([
-      new Promise((_, reject) => {
-        setTimeout(() => reject(errorMessage), waitTimeout)
-      }),
-      this.page.waitForFunction(text => document.body && document.body.innerText.indexOf(text) > -1, text, { timeout: timeoutGap }),
-      promiseRetry(
-        async retry => {
-          const textPresent = await contextObject
-            .locator(`:has-text(${JSON.stringify(text)})`)
-            .first()
-            .isVisible()
-          if (!textPresent) retry(errorMessage)
+      // Strategy 1: waitForFunction that checks both body AND title text
+      // Use this.page instead of contextObject because FrameLocator doesn't have waitForFunction
+      // Original only checked document.body.innerText, missing title text like "TestEd"
+      this.page.waitForFunction(
+        function (text) {
+          // Check body text (original behavior)
+          if (document.body && document.body.innerText && document.body.innerText.indexOf(text) > -1) {
+            return true
+          }
+          // Check document title (fixes the TestEd in title issue)
+          if (document.title && document.title.indexOf(text) > -1) {
+            return true
+          }
+          return false
         },
-        { retries: 1000, minTimeout: 500, maxTimeout: 500, factor: 1 },
+        text,
+        { timeout: timeoutGap },
       ),
-    ])
+      // Strategy 2: Native Playwright text locator (replaces problematic promiseRetry)
+      contextObject
+        .locator(`:has-text(${JSON.stringify(text)})`)
+        .first()
+        .waitFor({ timeout: waitTimeout }),
+    ]).catch(err => {
+      throw new Error(errorMessage)
+    })
   }
 
   /**
@@ -4551,9 +4785,15 @@ class Playwright extends Helper {
 
 module.exports = Playwright
 
+function buildCustomLocatorString(locator) {
+  // Note: this.debug not available in standalone function, using console.log
+  console.log(`Building custom locator string: ${locator.type}=${locator.value}`)
+  return `${locator.type}=${locator.value}`
+}
+
 function buildLocatorString(locator) {
   if (locator.isCustom()) {
-    return `${locator.type}=${locator.value}`
+    return buildCustomLocatorString(locator)
   }
   if (locator.isXPath()) {
     return `xpath=${locator.value}`
@@ -4565,15 +4805,119 @@ async function findElements(matcher, locator) {
   if (locator.react) return findReact(matcher, locator)
   if (locator.vue) return findVue(matcher, locator)
   if (locator.pw) return findByPlaywrightLocator.call(this, matcher, locator)
+
   locator = new Locator(locator, 'css')
 
-  return matcher.locator(buildLocatorString(locator)).all()
+  // Handle custom locators directly instead of relying on Playwright selector engines
+  if (locator.isCustom()) {
+    return findCustomElements.call(this, matcher, locator)
+  }
+
+  // Check if we have a custom context locator and need to search within it
+  if (this.contextLocator) {
+    const contextLocatorObj = new Locator(this.contextLocator, 'css')
+    if (contextLocatorObj.isCustom()) {
+      // Find the context elements first
+      const contextElements = await findCustomElements.call(this, matcher, contextLocatorObj)
+      if (contextElements.length === 0) {
+        return []
+      }
+
+      // Search within the first context element
+      const locatorString = buildLocatorString(locator)
+      return contextElements[0].locator(locatorString).all()
+    }
+  }
+
+  const locatorString = buildLocatorString(locator)
+
+  return matcher.locator(locatorString).all()
+}
+
+async function findCustomElements(matcher, locator) {
+  const customLocatorStrategies = this.customLocatorStrategies || globalCustomLocatorStrategies
+  const strategyFunction = customLocatorStrategies.get ? customLocatorStrategies.get(locator.type) : customLocatorStrategies[locator.type]
+
+  if (!strategyFunction) {
+    throw new Error(`Custom locator strategy "${locator.type}" is not defined. Please define "customLocatorStrategies" in your configuration.`)
+  }
+
+  // Execute the custom locator function in the browser context using page.evaluate
+  const page = matcher.constructor.name === 'Page' ? matcher : await matcher.page()
+
+  const elements = await page.evaluate(
+    ({ strategyCode, selector }) => {
+      const strategy = new Function('return ' + strategyCode)()
+      const result = strategy(selector, document)
+
+      // Convert NodeList or single element to array
+      if (result && result.nodeType) {
+        return [result]
+      } else if (result && result.length !== undefined) {
+        return Array.from(result)
+      } else if (Array.isArray(result)) {
+        return result
+      }
+
+      return []
+    },
+    {
+      strategyCode: strategyFunction.toString(),
+      selector: locator.value,
+    },
+  )
+
+  // Convert the found elements back to Playwright locators
+  if (elements.length === 0) {
+    return []
+  }
+
+  // Create CSS selectors for the found elements and return as locators
+  const locators = []
+  const timestamp = Date.now()
+
+  for (let i = 0; i < elements.length; i++) {
+    // Use a unique attribute approach to target specific elements
+    const uniqueAttr = `data-codecept-custom-${timestamp}-${i}`
+
+    await page.evaluate(
+      ({ index, uniqueAttr, strategyCode, selector }) => {
+        // Re-execute the strategy to find elements and mark the specific one
+        const strategy = new Function('return ' + strategyCode)()
+        const result = strategy(selector, document)
+
+        let elementsArray = []
+        if (result && result.nodeType) {
+          elementsArray = [result]
+        } else if (result && result.length !== undefined) {
+          elementsArray = Array.from(result)
+        } else if (Array.isArray(result)) {
+          elementsArray = result
+        }
+
+        if (elementsArray[index]) {
+          elementsArray[index].setAttribute(uniqueAttr, 'true')
+        }
+      },
+      {
+        index: i,
+        uniqueAttr,
+        strategyCode: strategyFunction.toString(),
+        selector: locator.value,
+      },
+    )
+
+    locators.push(page.locator(`[${uniqueAttr}="true"]`))
+  }
+
+  return locators
 }
 
 async function findElement(matcher, locator) {
   if (locator.react) return findReact(matcher, locator)
   if (locator.vue) return findVue(matcher, locator)
   if (locator.pw) return findByPlaywrightLocator.call(this, matcher, locator)
+
   locator = new Locator(locator, 'css')
 
   return matcher.locator(buildLocatorString(locator)).first()
@@ -4894,9 +5238,7 @@ async function targetCreatedHandler(page) {
   if (this.options.windowSize && this.options.windowSize.indexOf('x') > 0 && this._getType() === 'Browser') {
     try {
       await page.setViewportSize(parseWindowSize(this.options.windowSize))
-    } catch (err) {
-      this.debug('Target can be already closed, ignoring...')
-    }
+    } catch (err) {}
   }
 }
 

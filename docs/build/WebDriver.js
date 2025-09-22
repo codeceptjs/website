@@ -21,6 +21,7 @@ const { focusElement } = require('./scripts/focusElement')
 const { blurElement } = require('./scripts/blurElement')
 const { dontSeeElementError, seeElementError, seeElementInDOMError, dontSeeElementInDOMError } = require('./errors/ElementAssertion')
 const { dontSeeTraffic, seeTraffic, grabRecordedNetworkTraffics, stopRecordingTraffic, flushNetworkTraffics } = require('./network/actions')
+const WebElement = require('../element/WebElement')
 
 const SHADOW = 'shadow'
 const webRoot = 'body'
@@ -490,7 +491,7 @@ class WebDriver extends Helper {
     }
     config.capabilities.browserName = config.browser || config.capabilities.browserName
 
-    // WebDriver Bidi Protocol. Default: false
+    // WebDriver Bidi Protocol. Default: true
     config.capabilities.webSocketUrl = config.bidiProtocol ?? config.capabilities.webSocketUrl ?? true
 
     config.capabilities.browserVersion = config.browserVersion || config.capabilities.browserVersion
@@ -628,8 +629,11 @@ class WebDriver extends Helper {
 
     this.browser.on('dialog', () => {})
 
-    await this.browser.sessionSubscribe({ events: ['log.entryAdded'] })
-    this.browser.on('log.entryAdded', logEvents)
+    // Check for Bidi, because "sessionSubscribe" is an exclusive Bidi protocol feature. Otherwise, error will be thrown.
+    if (this.browser.capabilities && this.browser.capabilities.webSocketUrl) {
+      await this.browser.sessionSubscribe({ events: ['log.entryAdded'] })
+      this.browser.on('log.entryAdded', logEvents)
+    }
 
     return this.browser
   }
@@ -945,7 +949,29 @@ class WebDriver extends Helper {
    *
    */
   async grabWebElements(locator) {
-    return this._locate(locator)
+    const elements = await this._locate(locator)
+    return elements.map(element => new WebElement(element, this))
+  }
+
+  /**
+   * Grab WebElement for given locator
+   * Resumes test execution, so **should be used inside an async function with `await`** operator.
+   * 
+   * ```js
+   * const webElement = await I.grabWebElement('#button');
+   * ```
+   * 
+   * @param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
+   * @returns {Promise<*>} WebElement of being used Web helper
+   * 
+   *
+   */
+  async grabWebElement(locator) {
+    const elements = await this._locate(locator)
+    if (elements.length === 0) {
+      throw new ElementNotFound(locator, 'Element')
+    }
+    return new WebElement(elements[0], this)
   }
 
   /**
@@ -1026,7 +1052,7 @@ class WebDriver extends Helper {
    * {{ react }}
    */
   async click(locator, context = null) {
-    const clickMethod = this.browser.isMobile && !this.browser.isW3C ? 'touchClick' : 'elementClick'
+  const clickMethod = this.browser.isMobile && this.browser.capabilities.platformName !== 'android' ? 'touchClick' : 'elementClick'
     const locateFn = prepareLocateFn.call(this, context)
 
     const res = await findClickable.call(this, locator, locateFn)
@@ -1400,7 +1426,7 @@ class WebDriver extends Helper {
    * 
    */
   async checkOption(field, context = null) {
-    const clickMethod = this.browser.isMobile && !this.browser.isW3C ? 'touchClick' : 'elementClick'
+  const clickMethod = this.browser.isMobile && this.browser.capabilities.platformName !== 'android' ? 'touchClick' : 'elementClick'
     const locateFn = prepareLocateFn.call(this, context)
 
     const res = await findCheckable.call(this, field, locateFn)
@@ -1433,7 +1459,7 @@ class WebDriver extends Helper {
    * 
    */
   async uncheckOption(field, context = null) {
-    const clickMethod = this.browser.isMobile && !this.browser.isW3C ? 'touchClick' : 'elementClick'
+  const clickMethod = this.browser.isMobile && this.browser.capabilities.platformName !== 'android' ? 'touchClick' : 'elementClick'
     const locateFn = prepareLocateFn.call(this, context)
 
     const res = await findCheckable.call(this, field, locateFn)
