@@ -10,23 +10,24 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "^6.3.6",
-    "@astrojs/react": "^4.3.0",
-    "@astrojs/starlight": "^0.35.2",
-    "@astrojs/starlight-tailwind": "^4.0.1",
-    "@tailwindcss/vite": "^4.1.13",
-    "astro": "^5.13.5",
+    "@astrojs/markdown-remark": "^6.3.9",
+    "@astrojs/starlight": "^0.36.3",
+    "@astrojs/starlight-tailwind": "^4.0.2",
+    "@tailwindcss/vite": "^4.1.17",
+    "astro": "^5.16.0",
     "astro-breadcrumbs": "^3.3.1",
+    "astro-expressive-code": "^0.41.3",
     "astro-rehype-relative-markdown-links": "0.18.1",
-    "astro-vtbot": "^2.1.8",
+    "astro-vtbot": "^2.1.9",
     "meilisearch-docsearch": "^0.8.0",
     "schema-dts": "^1.1.5",
-    "sharp": "^0.34.3",
-    "starlight-image-zoom": "^0.13.0",
-    "starlight-scroll-to-top": "^0.3.1",
-    "starlight-sidebar-topics": "^0.6.0",
-    "swiper": "^11.2.10",
-    "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^4.1.13"
+    "sharp": "^0.34.5",
+    "starlight-blog": "^0.25.1",
+    "starlight-image-zoom": "^0.13.2",
+    "starlight-scroll-to-top": "^0.4.0",
+    "starlight-sidebar-topics": "^0.6.2",
+    "swiper": "^12.0.3",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss": "^4.1.17"
   }
 }

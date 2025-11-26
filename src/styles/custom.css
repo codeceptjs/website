@@ -1,9 +1,3 @@
-:root,
-::backdrop {
-    --sl-color-text-accent: #ffe680;
-    --swiper-theme-color: var(--sl-color-text-accent) !important;
-}
-
 .docsearch-modal-footer-logo {
     display: none!important;
 }
@@ -38,6 +32,7 @@
     --docsearch-footer-background: #fff;
     --docsearch-footer-shadow: 0 -1px 0 0 rgb(224, 227, 232), 0 -3px 6px 0 rgba(69, 98, 155, 0.12);
     --docsearch-icon-color: rgb(21, 21, 21);
+    --sl-content-width: 58rem !important;
 }
 
 html[data-theme=dark] .docsearch-modal-btn-icon,
@@ -49,19 +44,19 @@ html[data-theme=dark] .docsearch-btn-placeholder {
     --sl-font: IBM Plex Sans,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
 }
 
-a:where(.astro-wkinvgav):is(.starlight-sidebar-topics-current,:hover,:focus-visible) {
-    color: #ffe680;
-}
+/*a:where(.astro-wkinvgav):is(.starlight-sidebar-topics-current,:hover,:focus-visible) {*/
+/*    color: #ffe680;*/
+/*}*/
 
-:root[data-theme='light'],
-[data-theme='light'] ::backdrop {
-    --sl-color-text-accent: #7800b8;
-}
+/*:root[data-theme='light'],*/
+/*[data-theme='light'] ::backdrop {*/
+/*    --sl-color-text-accent: #7800b8;*/
+/*}*/
 
-[data-theme="light"] a:where(.astro-wkinvgav).starlight-sidebar-topics-current,
-[data-theme="light"] a:where(.astro-wkinvgav):is(.starlight-sidebar-topics-current,:hover,:focus-visible) {
-    color: #7800b8;
-}
+/*[data-theme="light"] a:where(.astro-wkinvgav).starlight-sidebar-topics-current,*/
+/*[data-theme="light"] a:where(.astro-wkinvgav):is(.starlight-sidebar-topics-current,:hover,:focus-visible) {*/
+/*    color: #7800b8;*/
+/*}*/
 
 body:not(:has(#starlight__sidebar)) .content-panel:has(h1#_top) {
     display: none;
@@ -79,4 +74,27 @@ body:not(:has(#starlight__sidebar)) .content-panel {
 
 body:not(:has(#starlight__sidebar)) main {
     padding-bottom: 0;
+}
+
+html[data-theme=dark] .right-group a {
+    color: #d8d3d4 !important;
+}
+
+.right-group a {
+    color: #3f3f47 !important;
+    font-weight: 400;
+}
+
+.scroll-to-top-button {
+    background-color: #ffffff !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.scroll-to-top-button:hover svg {
+    stroke: #ffffff !important;
+}
+
+[data-theme="light"] .scroll-to-top-button svg {
+    stroke: #3f3f47 !important;
 }

@@ -5,6 +5,8 @@ import starlightSidebarTopics from 'starlight-sidebar-topics';
 import starlightImageZoom from 'starlight-image-zoom';
 import rehypeAstroRelativeMarkdownLinks from "astro-rehype-relative-markdown-links";
 import starlightScrollToTop from 'starlight-scroll-to-top';
+import starlightBlog from 'starlight-blog';
+import astroExpressiveCode from 'astro-expressive-code';
 
 const options = {
     collectionBase: false,
@@ -12,6 +14,9 @@ const options = {
 
 export default defineConfig({
     integrations: [
+        astroExpressiveCode({
+            themes: ['material-theme'],
+        }),
         starlight({
             title: '',
             favicon: '/favicon.svg',
@@ -31,6 +36,9 @@ export default defineConfig({
                 './src/styles/global.css',
             ],
             plugins: [
+                starlightBlog({
+
+                }),
                 starlightImageZoom(),
                 starlightSidebarTopics([
                     {
@@ -140,6 +148,13 @@ export default defineConfig({
                         link: '/wiki/home/',
                         items: [
                             {label: 'Wiki', autogenerate: {directory: 'wiki/'}},
+                        ],
+                    },
+                    {
+                        label: 'blog',
+                        link: '/blog',
+                        items: [
+                            {label: 'blog', autogenerate: {directory: 'blog/'}},
                         ],
                     },
                 ]),
