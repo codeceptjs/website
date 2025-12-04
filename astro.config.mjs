@@ -36,10 +36,8 @@ export default defineConfig({
                 './src/styles/global.css',
             ],
             plugins: [
-                starlightBlog({
-
-                }),
                 starlightImageZoom(),
+                starlightBlog(),
                 starlightSidebarTopics([
                     {
                         label: 'Documentation',
@@ -163,7 +161,7 @@ export default defineConfig({
                     tooltipText: 'Back to top',
                     showTooltip: true,
                     smoothScroll: true,
-                    threshold: 5,
+                    threshold: 30,
                     svgPath: 'M12 5V19M7 10L12 5L17 10',
                     svgStrokeWidth: 1,
                     borderRadius: '100',

@@ -20,7 +20,7 @@ Scenario('Create a new store', async ({ I, login, SettingsPage }) => {
   I.waitInUrl('/settings/setup/stores');                      // Explicit waiter
   I.see(storeName, '.settings');                              // Assert text present inside an element (located by CSS)
   const storeId = await I.grabTextFrom('#store-id');          // Use await to get information from browser
-  I.say(\`Created a store with \${storeId}\');                   // Print custom comments
+  I.say(\`Created a store with \${storeId}\`);                   // Print custom comments
 }).tag('stores');\`;
 `;
 ---
@@ -29,9 +29,10 @@ Scenario('Create a new store', async ({ I, login, SettingsPage }) => {
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
     <div class="text-center mb-16">
       <h2 class="text-4xl md:text-5xl font-bold mb-6">
-              <span class="bg-gradient-to-r from-purple-600 to-yellow-600 bg-clip-text text-transparent">
-                Real-world Examples
-              </span>
+          Real-world
+          <span class="bg-gradient-to-r from-purple-600 to-yellow-600 bg-clip-text text-transparent">
+            Examples
+          </span>
       </h2>
       <p class="text-xl text-gray-600 dark:text-gray-300  max-w-3xl mx-auto">
         See how CodeceptJS makes complex testing scenarios simple and readable

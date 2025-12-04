@@ -98,3 +98,118 @@ html[data-theme=dark] .right-group a {
 [data-theme="light"] .scroll-to-top-button svg {
     stroke: #3f3f47 !important;
 }
+
+html[data-theme=dark] .scroll-to-top-button {
+    background-color: #2a2627 !important;
+}
+
+[data-slug="index"] header {
+    background-color: red !important;
+}
+
+.right-sidebar-panel ul ul {
+    margin-left: 0.5rem;
+    border-left: 1px solid #E0E0E0;
+    padding-left: 0.5rem;
+}
+
+.right-sidebar-panel a {
+    transition: all 0.2s ease;
+    padding: 0.5rem 0;
+    border-radius: 0.25rem;
+    margin: 2px 0;
+}
+
+.right-sidebar-panel a:hover {
+    color: #212121;
+    background: #F5F5F5;
+    padding-left: 0.5rem;
+}
+
+.right-sidebar-panel a[aria-current="true"] {
+    color: #212121;
+    font-weight: 500;
+    background: #F5F5F5;
+    padding-left: 0.5rem;
+}
+
+html[data-theme=dark] .right-sidebar-panel a[aria-current="true"] {
+    background: #27272a;
+}
+
+html[data-theme=dark] .right-sidebar-panel ul ul {
+    border-left: 1px solid #2a2a2a;
+}
+
+html[data-theme=dark] .right-sidebar-panel a:hover {
+    background: #27272a;
+}
+
+html[data-theme=dark] .right-sidebar-panel a {
+    color: #c1c3c8;
+}
+
+.sidebar-content ul a {
+    margin: 2px 0;
+    transition: all 0.2s ease;
+    border-radius: 0.25rem;
+}
+
+.sidebar-content ul a:hover {
+    background: #F5F5F5;
+}
+
+.sidebar-content ul a[aria-current="page"] {
+    background: #F5F5F5;
+    color: #212121;
+    border-radius: 0.25rem;
+}
+
+.starlight-sidebar-topics .starlight-sidebar-topics-current {
+    border-radius: 0.25rem;
+    background: #F5F5F5;
+    color: #212121 !important;
+    transition: all 0.2s ease;
+}
+
+.starlight-sidebar-topics a {
+    color: #212121 !important;
+}
+
+html[data-theme=dark] ul a[aria-current="page"] {
+    background: #656c761a;
+}
+
+html[data-theme=dark] .starlight-sidebar-topics .starlight-sidebar-topics-current {
+    background: #656c761a;
+    color: #d8d3d4 !important;
+}
+
+html[data-theme=dark] .starlight-sidebar-topics a {
+    color: #d8d3d4 !important;
+}
+
+html[data-theme=dark] .sidebar-content ul a:hover {
+    background: #656c761a;
+    color: #d8d3d4;
+}
+
+html[data-theme=dark] .starlight-sidebar-topics a:hover {
+    color: #d8d3d4 !important;
+}
+
+html[data-theme=dark] .sidebar-content ul a[aria-current="page"] {
+    color: #d8d3d4;
+}
+
+html[data-theme=dark] .starlight-sidebar-topics .starlight-sidebar-topics-current {
+    color: #d8d3d4 !important;
+}
+
+html[data-theme=dark] .sidebar-pane {
+    background-color: #212830;
+}
+
+html[data-theme=dark] header.header {
+    background-color: #212830;
+}
