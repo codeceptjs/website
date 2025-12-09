@@ -26,9 +26,6 @@ importers:
       astro-breadcrumbs:
         specifier: ^3.3.1
         version: 3.3.1(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))
-      astro-expressive-code:
-        specifier: ^0.41.3
-        version: 0.41.3(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))
       astro-rehype-relative-markdown-links:
         specifier: 0.18.1
         version: 0.18.1(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))

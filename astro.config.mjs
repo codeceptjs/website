@@ -6,7 +6,6 @@ import starlightImageZoom from 'starlight-image-zoom';
 import rehypeAstroRelativeMarkdownLinks from "astro-rehype-relative-markdown-links";
 import starlightScrollToTop from 'starlight-scroll-to-top';
 import starlightBlog from 'starlight-blog';
-import astroExpressiveCode from 'astro-expressive-code';
 
 const options = {
     collectionBase: false,
@@ -14,10 +13,10 @@ const options = {
 
 export default defineConfig({
     integrations: [
-        astroExpressiveCode({
-            themes: ['material-theme'],
-        }),
         starlight({
+            expressiveCode: {
+                themes: ['github-dark', 'dracula'],
+            },
             title: '',
             favicon: '/favicon.svg',
             social: [
@@ -25,6 +24,7 @@ export default defineConfig({
             ],
             components: {
                 Head: "./src/components/Head.astro",
+                PageFrame: "./src/components/PageFrame.astro",
                 PageTitle: './src/components/PageTitle.astro',
                 Footer: './src/components/Footer.astro',
                 SiteTitle: './src/components/SiteTitle.astro',
@@ -171,7 +171,12 @@ export default defineConfig({
             ],
         }),
     ],
-    vite: {plugins: [tailwindcss()]},
+    vite: {
+        plugins: [tailwindcss()],
+        build: {
+            assetsInlineLimit: 0,
+        },
+    },
     markdown: {
         rehypePlugins: [
             [rehypeAstroRelativeMarkdownLinks, options],

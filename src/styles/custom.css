@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 .docsearch-modal-footer-logo {
     display: none!important;
 }
 
 :root {
+    --sl-color-text-accent: #805ad5 !important;
     --docsearch-primary-color: #ffe680 !important;
     --docsearch-text-color: rgb(28, 30, 33);
     --docsearch-spacing: 12px;
@@ -35,13 +38,17 @@
     --sl-content-width: 58rem !important;
 }
 
+:root[data-theme="dark"] {
+    --sl-color-text-accent: #ffe680 !important;
+}
+
 html[data-theme=dark] .docsearch-modal-btn-icon,
 html[data-theme=dark] .docsearch-btn-placeholder {
     color: #edeef3;
 }
 
 :root {
-    --sl-font: IBM Plex Sans,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+    --sl-font: "Inter","Inter Fallback",-apple-system,BlinkMacSystemFont,Segoe UI,system-ui,sans-serif;
 }
 
 /*a:where(.astro-wkinvgav):is(.starlight-sidebar-topics-current,:hover,:focus-visible) {*/
@@ -103,38 +110,43 @@ html[data-theme=dark] .scroll-to-top-button {
     background-color: #2a2627 !important;
 }
 
-[data-slug="index"] header {
-    background-color: red !important;
-}
-
 .right-sidebar-panel ul ul {
-    margin-left: 0.5rem;
+    margin-left: 0.75rem;
     border-left: 1px solid #E0E0E0;
     padding-left: 0.5rem;
 }
 
 .right-sidebar-panel a {
-    transition: all 0.2s ease;
     padding: 0.5rem 0;
     border-radius: 0.25rem;
     margin: 2px 0;
+    padding-left: 0.5rem;
 }
 
 .right-sidebar-panel a:hover {
     color: #212121;
     background: #F5F5F5;
-    padding-left: 0.5rem;
 }
 
 .right-sidebar-panel a[aria-current="true"] {
-    color: #212121;
-    font-weight: 500;
-    background: #F5F5F5;
+    background: rgb(128,90,213,.1);
+    color: #805ad5;
+    text-shadow: -.2px 0 0 #805ad5, .2px 0 0 #805ad5;
     padding-left: 0.5rem;
 }
 
+.right-sidebar-panel a[aria-current="true"]:hover {
+    background: rgb(128,90,213,.2);
+}
+
 html[data-theme=dark] .right-sidebar-panel a[aria-current="true"] {
-    background: #27272a;
+    background: rgb(255,230,128,.1);
+    color: #ffe680;
+    text-shadow: -.2px 0 0 #ffe680, .2px 0 0 #ffe680;
+}
+
+html[data-theme=dark] .right-sidebar-panel a[aria-current="true"]:hover {
+    background: rgb(255,230,128,.2);
 }
 
 html[data-theme=dark] .right-sidebar-panel ul ul {
@@ -151,7 +163,6 @@ html[data-theme=dark] .right-sidebar-panel a {
 
 .sidebar-content ul a {
     margin: 2px 0;
-    transition: all 0.2s ease;
     border-radius: 0.25rem;
 }
 
@@ -160,16 +171,25 @@ html[data-theme=dark] .right-sidebar-panel a {
 }
 
 .sidebar-content ul a[aria-current="page"] {
-    background: #F5F5F5;
-    color: #212121;
+    background: rgb(128,90,213,.1);
+    color: #805ad5;
+    text-shadow: -.2px 0 0 #805ad5, .2px 0 0 #805ad5;
     border-radius: 0.25rem;
+}
+
+.sidebar-content ul a[aria-current="page"]:hover {
+    background: rgb(128,90,213,.2);
 }
 
 .starlight-sidebar-topics .starlight-sidebar-topics-current {
     border-radius: 0.25rem;
-    background: #F5F5F5;
-    color: #212121 !important;
-    transition: all 0.2s ease;
+    background: rgb(128,90,213,.1);
+    color: #805ad5 !important;
+    text-shadow: -.2px 0 0 #805ad5, .2px 0 0 #805ad5;
+}
+
+.starlight-sidebar-topics .starlight-sidebar-topics-current:hover {
+    background: rgb(128,90,213,.2);
 }
 
 .starlight-sidebar-topics a {
@@ -178,11 +198,6 @@ html[data-theme=dark] .right-sidebar-panel a {
 
 html[data-theme=dark] ul a[aria-current="page"] {
     background: #656c761a;
-}
-
-html[data-theme=dark] .starlight-sidebar-topics .starlight-sidebar-topics-current {
-    background: #656c761a;
-    color: #d8d3d4 !important;
 }
 
 html[data-theme=dark] .starlight-sidebar-topics a {
@@ -199,17 +214,39 @@ html[data-theme=dark] .starlight-sidebar-topics a:hover {
 }
 
 html[data-theme=dark] .sidebar-content ul a[aria-current="page"] {
-    color: #d8d3d4;
+    background: rgb(255,230,128,.1);
+    color: #ffe680;
+    text-shadow: -.2px 0 0 #ffe680, .2px 0 0 #ffe680;
+}
+
+html[data-theme=dark] .sidebar-content ul a[aria-current="page"]:hover {
+    background: rgb(255,230,128,.2);
 }
 
 html[data-theme=dark] .starlight-sidebar-topics .starlight-sidebar-topics-current {
-    color: #d8d3d4 !important;
+    background: rgb(255,230,128,.1);
+    color: #ffe680 !important;
+    text-shadow: -.2px 0 0 #ffe680, .2px 0 0 #ffe680;
+}
+
+html[data-theme=dark] .starlight-sidebar-topics .starlight-sidebar-topics-current:hover {
+    background: rgb(255,230,128,.2);
+    color: #ffe680 !important;
 }
 
 html[data-theme=dark] .sidebar-pane {
-    background-color: #212830;
+    background-color: #171b26;
 }
 
 html[data-theme=dark] header.header {
-    background-color: #212830;
+    background-color: #171b26;
+}
+
+html[data-theme=dark] body {
+    background-color: #18181c;
+}
+
+.home-header {
+    background-color: transparent !important;
+    backdrop-filter: blur(16px);
 }
