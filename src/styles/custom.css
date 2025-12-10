@@ -235,11 +235,17 @@ html[data-theme=dark] .starlight-sidebar-topics .starlight-sidebar-topics-curren
 }
 
 html[data-theme=dark] .sidebar-pane {
-    background-color: #171b26;
+    background-color: transparent;
 }
 
 html[data-theme=dark] header.header {
-    background-color: #171b26;
+    background-color: transparent;
+    backdrop-filter: blur(16px);
+    transition: all .2s ease;
+}
+
+html[data-theme=dark] header.scrolled {
+    background-color: #1a003b;
 }
 
 html[data-theme=dark] body {
@@ -249,4 +255,21 @@ html[data-theme=dark] body {
 .home-header {
     background-color: transparent !important;
     backdrop-filter: blur(16px);
+}
+
+html[data-theme=dark] .bg-background-dark {
+    background-color: #1a003b;
+}
+
+html[data-theme=dark] .fill-primary {
+    fill: #ff5cb2;
+}
+
+.fill-primary {
+    fill: #000000;
+}
+
+
+.bg-background-light {
+    background-color: #f7f7f7;
 }

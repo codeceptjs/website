@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^6.3.9",
-    "@astrojs/starlight": "^0.37.0",
+    "@astrojs/starlight": "^0.37.1",
     "@astrojs/starlight-tailwind": "^4.0.2",
     "@tailwindcss/vite": "^4.1.17",
     "astro": "^5.16.4",

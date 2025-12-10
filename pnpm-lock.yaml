@@ -12,11 +12,11 @@ importers:
         specifier: ^6.3.9
         version: 6.3.9
       '@astrojs/starlight':
-        specifier: ^0.37.0
-        version: 0.37.0(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))
+        specifier: ^0.37.1
+        version: 0.37.1(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))
       '@astrojs/starlight-tailwind':
         specifier: ^4.0.2
-        version: 4.0.2(@astrojs/starlight@0.37.0(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3)))(tailwindcss@4.1.17)
+        version: 4.0.2(@astrojs/starlight@0.37.1(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3)))(tailwindcss@4.1.17)
       '@tailwindcss/vite':
         specifier: ^4.1.17
         version: 4.1.17(vite@6.4.1(jiti@2.6.1)(lightningcss@1.30.2)(sass-embedded@1.89.2))
@@ -43,16 +43,16 @@ importers:
         version: 0.34.5
       starlight-blog:
         specifier: ^0.25.2
-        version: 0.25.2(@astrojs/starlight@0.37.0(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3)))(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))
+        version: 0.25.2(@astrojs/starlight@0.37.1(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3)))(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))
       starlight-image-zoom:
         specifier: ^0.13.2
-        version: 0.13.2(@astrojs/starlight@0.37.0(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3)))
+        version: 0.13.2(@astrojs/starlight@0.37.1(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3)))
       starlight-scroll-to-top:
         specifier: ^0.4.0
-        version: 0.4.0(@astrojs/starlight@0.37.0(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3)))
+        version: 0.4.0(@astrojs/starlight@0.37.1(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3)))
       starlight-sidebar-topics:
         specifier: ^0.6.2
-        version: 0.6.2(@astrojs/starlight@0.37.0(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3)))
+        version: 0.6.2(@astrojs/starlight@0.37.1(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3)))
       swiper:
         specifier: ^12.0.3
         version: 12.0.3
@@ -102,8 +102,8 @@ packages:
       '@astrojs/starlight': '>=0.34.0'
       tailwindcss: ^4.0.0
 
-  '@astrojs/starlight@0.37.0':
-    resolution: {integrity: sha512-1AlaEjYYRO+5o6P5maPUBQZr6Q3wtuhMQTmsDQExI07wJVwe7EC2wGhXnFo+jpCjwHv/Bdg33PQheY4UhMj01g==}
+  '@astrojs/starlight@0.37.1':
+    resolution: {integrity: sha512-STNsR5PaDoiW4IgcX17Fp42FfyqwuweWPts/EWEMcFPAeg9Nvpu3UvVCorasYrgfJgaJTeydsOV++0ACA1KYDA==}
     peerDependencies:
       astro: ^5.5.0
 
@@ -2508,12 +2508,12 @@ snapshots:
       stream-replace-string: 2.0.0
       zod: 3.25.76
 
-  '@astrojs/starlight-tailwind@4.0.2(@astrojs/starlight@0.37.0(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3)))(tailwindcss@4.1.17)':
+  '@astrojs/starlight-tailwind@4.0.2(@astrojs/starlight@0.37.1(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3)))(tailwindcss@4.1.17)':
     dependencies:
-      '@astrojs/starlight': 0.37.0(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))
+      '@astrojs/starlight': 0.37.1(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))
       tailwindcss: 4.1.17
 
-  '@astrojs/starlight@0.37.0(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))':
+  '@astrojs/starlight@0.37.1(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))':
     dependencies:
       '@astrojs/markdown-remark': 6.3.9
       '@astrojs/mdx': 4.3.0(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))
@@ -4948,12 +4948,12 @@ snapshots:
 
   sprintf-js@1.0.3: {}
 
-  starlight-blog@0.25.2(@astrojs/starlight@0.37.0(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3)))(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3)):
+  starlight-blog@0.25.2(@astrojs/starlight@0.37.1(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3)))(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3)):
     dependencies:
       '@astrojs/markdown-remark': 6.3.9
       '@astrojs/mdx': 4.3.0(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))
       '@astrojs/rss': 4.0.14
-      '@astrojs/starlight': 0.37.0(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))
+      '@astrojs/starlight': 0.37.1(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))
       astro-remote: 0.3.4
       github-slugger: 2.0.0
       hast-util-from-html: 2.0.3
@@ -4969,9 +4969,9 @@ snapshots:
       - astro
       - supports-color
 
-  starlight-image-zoom@0.13.2(@astrojs/starlight@0.37.0(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))):
+  starlight-image-zoom@0.13.2(@astrojs/starlight@0.37.1(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))):
     dependencies:
-      '@astrojs/starlight': 0.37.0(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))
+      '@astrojs/starlight': 0.37.1(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))
       mdast-util-mdx-jsx: 3.2.0
       rehype-raw: 7.0.0
       unist-util-visit: 5.0.0
@@ -4979,13 +4979,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  starlight-scroll-to-top@0.4.0(@astrojs/starlight@0.37.0(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))):
+  starlight-scroll-to-top@0.4.0(@astrojs/starlight@0.37.1(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))):
     dependencies:
-      '@astrojs/starlight': 0.37.0(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))
+      '@astrojs/starlight': 0.37.1(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))
 
-  starlight-sidebar-topics@0.6.2(@astrojs/starlight@0.37.0(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))):
+  starlight-sidebar-topics@0.6.2(@astrojs/starlight@0.37.1(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))):
     dependencies:
-      '@astrojs/starlight': 0.37.0(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))
+      '@astrojs/starlight': 0.37.1(astro@5.16.4(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.42.0)(sass-embedded@1.89.2)(typescript@5.7.3))
       picomatch: 4.0.3
 
   stream-replace-string@2.0.0: {}
