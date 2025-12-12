@@ -125,7 +125,7 @@ html[data-theme=dark] .scroll-to-top-button {
 
 .right-sidebar-panel a:hover {
     color: #212121;
-    background: #F5F5F5;
+    background: rgb(128,90,213,.1);
 }
 
 .right-sidebar-panel a[aria-current="true"] {
@@ -154,7 +154,7 @@ html[data-theme=dark] .right-sidebar-panel ul ul {
 }
 
 html[data-theme=dark] .right-sidebar-panel a:hover {
-    background: #27272a;
+    background: rgb(255,230,128,.1);
 }
 
 html[data-theme=dark] .right-sidebar-panel a {
@@ -167,7 +167,7 @@ html[data-theme=dark] .right-sidebar-panel a {
 }
 
 .sidebar-content ul a:hover {
-    background: #F5F5F5;
+    background: rgb(128, 90, 213, .1)
 }
 
 .sidebar-content ul a[aria-current="page"] {
@@ -205,7 +205,7 @@ html[data-theme=dark] .starlight-sidebar-topics a {
 }
 
 html[data-theme=dark] .sidebar-content ul a:hover {
-    background: #656c761a;
+    background: rgb(255,230,128,.1);
     color: #d8d3d4;
 }
 
@@ -242,19 +242,28 @@ html[data-theme=dark] header.header {
     background-color: transparent;
     backdrop-filter: blur(16px);
     transition: all .2s ease;
+    border-bottom: none !important;
+}
+
+header.header {
+    background-color: #ffffff;
 }
 
 html[data-theme=dark] header.scrolled {
     background-color: #1a003b;
+    background-image: linear-gradient(to bottom right, #111827, /* from-gray-900 */ #581c87);
 }
 
 html[data-theme=dark] body {
     background-color: #18181c;
 }
 
-.home-header {
-    background-color: transparent !important;
-    backdrop-filter: blur(16px);
+html[data-theme=dark] .home-page {
+    background-image: linear-gradient(
+        to bottom right,
+        #111827,   /* from-gray-900 */
+        #581c87
+    );
 }
 
 html[data-theme=dark] .bg-background-dark {
