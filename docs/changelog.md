@@ -7,6 +7,49 @@ layout: Section
 
 # Releases
 
+## 3.7.6
+
+❤️ Thanks all to those who contributed to make this release! ❤️
+
+## ✨ Features
+
+- feat(bdd): add support for the `But` keyword ([#5291](https://github.com/codeceptjs/CodeceptJS/issues/5291)) - by **[mozillalives](https://github.com/mozillalives)**
+- feat(playwright): add support for `storageState` configuration ([#5192](https://github.com/codeceptjs/CodeceptJS/issues/5192)) - by **[Samuel-StO](https://github.com/Samuel-StO)**
+- feat(rest): add support for `HEAD` request ([#5212](https://github.com/codeceptjs/CodeceptJS/issues/5212)) - by **[kobenguyent](https://github.com/kobenguyent)**
+
+## 🐛 Bug Fixes
+
+- fix(runner): test files are not executed in alphabetical order ([#5386](https://github.com/codeceptjs/CodeceptJS/issues/5386)) - by DenysKuchma
+- fix(html-reporter): handle edgeInfo properly ([#5327](https://github.com/codeceptjs/CodeceptJS/issues/5327))
+- fix(html-reporter): improvements and stability fixes ([#5242](https://github.com/codeceptjs/CodeceptJS/issues/5242)) - by **[kobenguyent](https://github.com/kobenguyent)**
+- fix(html-reporter): address multiple rendering issues ([#5240](https://github.com/codeceptjs/CodeceptJS/issues/5240)) - by **[kobenguyent](https://github.com/kobenguyent)**
+- fix(screenshots): prevent filename collisions using unique names ([#5299](https://github.com/codeceptjs/CodeceptJS/issues/5299)) - by **[mirao](https://github.com/mirao)**
+- fix(playwright): always use `keyboard.type` for strings and add national characters test ([#5280](https://github.com/codeceptjs/CodeceptJS/issues/5280)) - by **[mirao](https://github.com/mirao)**
+- fix(playwright): remove redundant async initialization of selector engines ([#5206](https://github.com/codeceptjs/CodeceptJS/issues/5206)) - by **[Samuel-StO](https://github.com/Samuel-StO)**
+- fix(timeout): apply global timeout before suite execution ([#5275](https://github.com/codeceptjs/CodeceptJS/issues/5275)) - by **[mirao](https://github.com/mirao)**
+- fix(retryFailedStep): handle missing options to prevent promise chaining error ([#5276](https://github.com/codeceptjs/CodeceptJS/issues/5276)) - by **[mirao](https://github.com/mirao)**
+- fix(workers): correct stats when running with workers ([#5215](https://github.com/codeceptjs/CodeceptJS/issues/5215)) - by **[kobenguyent](https://github.com/kobenguyent)**
+- fix(appium): resolve `platformName` handling issue ([#5214](https://github.com/codeceptjs/CodeceptJS/issues/5214)) - by **[mirao](https://github.com/mirao)**
+- fix(appium): avoid overriding `sauce:options` on iOS 17+ ([#5202](https://github.com/codeceptjs/CodeceptJS/issues/5202)) - by **[mikhail-yesipchuk-zenitech](https://github.com/mikhail-yesipchuk-zenitech)**
+- fix(types): add and correct typings for Result class ([#5236](https://github.com/codeceptjs/CodeceptJS/issues/5236), [#5252](https://github.com/codeceptjs/CodeceptJS/issues/5252)) - by **[danielrentz](https://github.com/danielrentz)**
+- fix(types): fix TS typings for Codecept and MainConfig ([#5216](https://github.com/codeceptjs/CodeceptJS/issues/5216)) - by **[danielrentz](https://github.com/danielrentz)**
+- fix(types): add correct signatures for package exports ([#5204](https://github.com/codeceptjs/CodeceptJS/issues/5204)) - by **[epszaw](https://github.com/epszaw)**
+- fix(fs): remove deprecated `fs.rmdirSync` recursive usage ([#5218](https://github.com/codeceptjs/CodeceptJS/issues/5218)) - by **[danielrentz](https://github.com/danielrentz)**
+- fix(effects): correct typo in `retryTo` example ([#5203](https://github.com/codeceptjs/CodeceptJS/issues/5203)) - by **[danielrentz](https://github.com/danielrentz)**
+
+## 📖 Documentation
+
+- docs(reports): use reporter config option instead of CLI flag ([#5211](https://github.com/codeceptjs/CodeceptJS/issues/5211)) - by **[danielrentz](https://github.com/danielrentz)**
+- docs(events): update example for `event.all.result` handler ([#5233](https://github.com/codeceptjs/CodeceptJS/issues/5233)) - by **[danielrentz](https://github.com/danielrentz)**
+- docs(playwright): update deprecated Puppeteer and Playwright links ([#5222](https://github.com/codeceptjs/CodeceptJS/issues/5222)) - by **[danielrentz](https://github.com/danielrentz)**
+
+## 🧹 Chores & Maintenance
+
+- chore(deps): keep dependencies in sync ([#5346](https://github.com/codeceptjs/CodeceptJS/issues/5346), [#5220](https://github.com/codeceptjs/CodeceptJS/issues/5220), [#5388](https://github.com/codeceptjs/CodeceptJS/issues/5388), [#5303](https://github.com/codeceptjs/CodeceptJS/issues/5303), [#5210](https://github.com/codeceptjs/CodeceptJS/issues/5210)) - by **[thomashohn](https://github.com/thomashohn)**
+- chore(deps): remove `lodash.shuffle` and use internal implementation ([#5301](https://github.com/codeceptjs/CodeceptJS/issues/5301)) - by **[thomashohn](https://github.com/thomashohn)**
+- chore(cleanup): clean up unused files ([#5281](https://github.com/codeceptjs/CodeceptJS/issues/5281)) - by **[kobenguyent](https://github.com/kobenguyent)**
+- chore(cli): improve workers CLI logging ([#5235](https://github.com/codeceptjs/CodeceptJS/issues/5235)) - by **[kobenguyent](https://github.com/kobenguyent)**
+
 ## 3.7.5
 
 ❤️ Thanks all to those who contributed to make this release! ❤️
@@ -2442,7 +2485,7 @@ npx codeceptjs run-workers 2 all
 - Support `--grep` in dry-run command ([#3673](https://github.com/codeceptjs/CodeceptJS/issues/3673)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
 - Fix typings improvements in playwright ([#3650](https://github.com/codeceptjs/CodeceptJS/issues/3650)) - by **[KobeNguyenT](https://github.com/KobeNguyenT)**
 - Fixed global retry [#3667](https://github.com/codeceptjs/CodeceptJS/issues/3667) by **[KobeNguyenT](https://github.com/KobeNguyenT)**
-- Fixed creating JavaScript test using "codeceptjs gt" ([#3611](https://github.com/codeceptjs/CodeceptJS/issues/3611)) - by Jaromir Obr
+- Fixed creating JavaScript test using "codeceptjs gt" ([#3611](https://github.com/codeceptjs/CodeceptJS/issues/3611)) - by mirao
 
 ## 3.4.1
 
@@ -4005,7 +4048,7 @@ This change allows using auto-completion when running a specific test.
 - PageObjects simplified to remove `_init()` extra method. Try updated generators and see [updated guide](https://codecept.io/pageobjects/#pageobject).
 - **[Puppeteer]** [Multiple sessions](https://codecept.io/acceptance/#multiple-sessions) enabled. Requires Puppeteer >= 1.5
 - **[Puppeteer]** Stability improvement. Waits for for `load` event on page load. This strategy can be changed in config:
-  - `waitForNavigation` config option introduced. Possible options: `load`, `domcontentloaded`, `networkidle0`, `networkidle2`. See [Puppeteer API](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagewaitfornavigationoptions)
+  - `waitForNavigation` config option introduced. Possible options: `load`, `domcontentloaded`, `networkidle0`, `networkidle2`. See [Puppeteer API](https://github.com/puppeteer/puppeteer/blob/main/docs/api/puppeteer.waitforoptions.md)
   - `getPageTimeout` config option to set maximum navigation time in milliseconds. Default is 30 seconds.
   - `waitForNavigation` method added. Explicitly waits for navigation to be finished.
 - [WebDriverIO][Protractor][Puppeteer][Nightmare] **Possible BC** `grabTextFrom` unified. Return a text for single matched element and an array of texts for multiple elements.
@@ -4089,7 +4132,7 @@ Scenario('this test should throw error', I => {
 - Added Chinese translation ("zh-CN" and "zh-TW") by **[TechQuery](https://github.com/TechQuery)**.
 - Fixed running tests from a different folder specified by `-c` option.
 - **[Puppeteer]** Added support for hash handling in URL by **[gavoja](https://github.com/gavoja)**.
-- **[Puppeteer]** Fixed setting viewport size by **[gavoja](https://github.com/gavoja)**. See [Puppeteer issue](https://github.com/GoogleChrome/puppeteer/issues/1183)
+- **[Puppeteer]** Fixed setting viewport size by **[gavoja](https://github.com/gavoja)**. See [Puppeteer issue](https://github.com/puppeteer/puppeteer/issues/1183)
 
 ## 1.1.7
 

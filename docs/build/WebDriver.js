@@ -1052,7 +1052,7 @@ class WebDriver extends Helper {
    * {{ react }}
    */
   async click(locator, context = null) {
-  const clickMethod = this.browser.isMobile && this.browser.capabilities.platformName !== 'android' ? 'touchClick' : 'elementClick'
+    const clickMethod = this.browser.isMobile && this.browser.capabilities.platformName !== 'android' ? 'touchClick' : 'elementClick'
     const locateFn = prepareLocateFn.call(this, context)
 
     const res = await findClickable.call(this, locator, locateFn)
@@ -1426,7 +1426,7 @@ class WebDriver extends Helper {
    * 
    */
   async checkOption(field, context = null) {
-  const clickMethod = this.browser.isMobile && this.browser.capabilities.platformName !== 'android' ? 'touchClick' : 'elementClick'
+    const clickMethod = this.browser.isMobile && this.browser.capabilities.platformName !== 'android' ? 'touchClick' : 'elementClick'
     const locateFn = prepareLocateFn.call(this, context)
 
     const res = await findCheckable.call(this, field, locateFn)
@@ -1459,7 +1459,7 @@ class WebDriver extends Helper {
    * 
    */
   async uncheckOption(field, context = null) {
-  const clickMethod = this.browser.isMobile && this.browser.capabilities.platformName !== 'android' ? 'touchClick' : 'elementClick'
+    const clickMethod = this.browser.isMobile && this.browser.capabilities.platformName !== 'android' ? 'touchClick' : 'elementClick'
     const locateFn = prepareLocateFn.call(this, context)
 
     const res = await findCheckable.call(this, field, locateFn)

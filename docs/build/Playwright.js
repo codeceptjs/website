@@ -98,7 +98,13 @@ const pathSeparator = path.sep
  * @prop {boolean} [highlightElement] - highlight the interacting elements. Default: false. Note: only activate under verbose mode (--verbose).
  * @prop {object} [recordHar] - record HAR and will be saved to `output/har`. See more of [HAR options](https://playwright.dev/docs/api/class-browser#browser-new-context-option-record-har).
  * @prop {string} [testIdAttribute=data-testid] - locate elements based on the testIdAttribute. See more of [locate by test id](https://playwright.dev/docs/locators#locate-by-test-id).
- * @prop {object} [customLocatorStrategies] - custom locator strategies. An object with keys as strategy names and values as JavaScript functions. Example: `{ byRole: (selector, root) => { return root.querySelector(\`[role="\${selector}\"]\`) } }`
+ * @prop {object} [customLocatorStrategies] - custom locator strategies. An object with keys as strategy names and values as JavaScript functions. Example: `{ byRole: (selector, root) => { return root.querySelector(`[role="${selector}"]`) } }`
+ * @prop {string|object} [storageState] - Playwright storage state (path to JSON file or object)
+ *   passed directly to `browser.newContext`.
+ *   If a Scenario is declared with a `cookies` option (e.g. `Scenario('name', { cookies: [...] }, fn)`),
+ *   those cookies are used instead and the configured `storageState` is ignored (no merge).
+ *   May include session cookies, auth tokens, localStorage and (if captured with
+ *   `grabStorageState({ indexedDB: true })`) IndexedDB data; treat as sensitive and do not commit.
  */
 const config = {}
 
@@ -360,10 +366,10 @@ class Playwright extends Helper {
     // override defaults with config
     this._setConfig(config)
 
-    // Call _init() to register selector engines - use setTimeout to avoid blocking constructor
-    setTimeout(() => {
-      this._init().catch(console.error)
-    }, 0)
+    // pass storageState directly (string path or object) and let Playwright handle errors/missing file
+    if (typeof config.storageState !== 'undefined') {
+      this.storageState = config.storageState
+    }
   }
 
   _validateConfig(config) {
@@ -390,6 +396,7 @@ class Playwright extends Helper {
       use: { actionTimeout: 0 },
       ignoreHTTPSErrors: false, // Adding it here o that context can be set up to ignore the SSL errors,
       highlightElement: false,
+      storageState: undefined,
     }
 
     process.env.testIdAttribute = 'data-testid'
@@ -593,8 +600,7 @@ class Playwright extends Helper {
 
       // load pre-saved cookies
       if (test?.opts?.cookies) contextOptions.storageState = { cookies: test.opts.cookies }
-
-      if (this.storageState) contextOptions.storageState = this.storageState
+      else if (this.storageState) contextOptions.storageState = this.storageState
       if (this.options.userAgent) contextOptions.userAgent = this.options.userAgent
       if (this.options.locale) contextOptions.locale = this.options.locale
       if (this.options.colorScheme) contextOptions.colorScheme = this.options.colorScheme
@@ -2191,7 +2197,7 @@ class Playwright extends Helper {
 
   /**
    *
-   * _Note:_ Shortcuts like `'Meta'` + `'A'` do not work on macOS ([GoogleChrome/Puppeteer#1313](https://github.com/GoogleChrome/puppeteer/issues/1313)).
+   * _Note:_ Shortcuts like `'Meta'` + `'A'` do not work on macOS ([puppeteer/puppeteer#1313](https://github.com/puppeteer/puppeteer/issues/1313)).
    *
    * Presses a key in the browser (on a focused element).
    * 
@@ -2305,11 +2311,15 @@ class Playwright extends Helper {
    * 
    */
   async type(keys, delay = null) {
+    // Always use page.keyboard.type for any string (including single character and national characters).
     if (!Array.isArray(keys)) {
       keys = keys.toString()
-      keys = keys.split('')
+      const typeDelay = typeof delay === 'number' ? delay : this.options.pressKeyDelay
+      await this.page.keyboard.type(keys, { delay: typeDelay })
+      return
     }
 
+    // For array input, treat each as a key press to keep working combinations such as ['Control', 'A'] or ['T', 'e', 's', 't'].
     for (const key of keys) {
       await this.page.keyboard.press(key)
       if (delay) await this.wait(delay / 1000)
@@ -2848,6 +2858,30 @@ class Playwright extends Helper {
     if (!name) return cookies
     const cookie = cookies.filter(c => c.name === name)
     if (cookie[0]) return cookie[0]
+  }
+
+  /**
+   * Grab the current storage state (cookies, localStorage, etc.) via Playwright's `browserContext.storageState()`.
+   * Returns the raw object that Playwright provides.
+   *
+   * Security: The returned object can contain authentication tokens, session cookies
+   * and (when `indexedDB: true` is used) data that may include user PII. Treat it as a secret.
+   * Avoid committing it to source control and prefer storing it in a protected secrets store / CI artifact vault.
+   *
+   * @param {object} [options]
+   * @param {boolean} [options.indexedDB] set to true to include IndexedDB in snapshot (Playwright >=1.51)
+   *
+   * ```js
+   * // basic usage
+   * const state = await I.grabStorageState();
+   * require('fs').writeFileSync('authState.json', JSON.stringify(state));
+   *
+   * // include IndexedDB when using Firebase Auth, etc.
+   * const stateWithIDB = await I.grabStorageState({ indexedDB: true });
+   * ```
+   */
+  async grabStorageState(options = {}) {
+    return this.browserContext.storageState(options)
   }
 
   /**
@@ -4158,7 +4192,7 @@ class Playwright extends Helper {
   /**
    * Waits for navigation to finish. By default, it takes configured `waitForNavigation` option.
    *
-   * See [Playwright's reference](https://playwright.dev/docs/api/class-page?_highlight=waitfornavi#pagewaitfornavigationoptions)
+   * See [Playwright's reference](https://playwright.dev/docs/api/class-page#page-wait-for-navigation)
    *
    * @param {*} options
    */

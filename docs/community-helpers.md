@@ -35,6 +35,7 @@ Please **add your own** by editing this page.
 * [codeceptjs-resemblehelper](https://github.com/puneet0191/codeceptjs-resemblehelper) - a helper which helps with visual testing using resemble.js. 
 * [codeceptjs-applitoolshelper](https://www.npmjs.com/package/codeceptjs-applitoolshelper) - a helper which helps interaction with [Applitools](https://applitools.com)
 * [codeceptjs-pixelmatchhelper](https://github.com/stracker-phil/codeceptjs-pixelmatchhelper) - a helper that integrates pixelmatch for visual testing. 
+* [codeceptjs-visual-helper](https://www.npmjs.com/package/@digital-commons-official/codeceptjs-visual-helper) - A robust, well tested helper that evolves automatically with package versions.
 
 ## Reporters
 * [codeceptjs-rphelper](https://github.com/reportportal/agent-js-codecept) is a CodeceptJS helper which can publish tests results on ReportPortal after execution.
