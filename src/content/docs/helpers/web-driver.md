@@ -13,7 +13,7 @@ manipulate browser using Selenium WebDriver or PhantomJS.
 
 WebDriver requires Selenium Server and ChromeDriver/GeckoDriver to be installed. Those tools can be easily installed via NPM. Please check [Testing with WebDriver][2] for more details.
 
-With the release of WebdriverIO version v8.14.0, and onwards, all driver management hassles are now a thing of the past 🙌. Read more [here][3].
+With the release of WebdriverIO version v8.14.0, and onwards, all driver management hassles are now a thing of the past РЎР‚РЎСџРІвЂћСћР Р‰. Read more [here][3].
 One of the significant advantages of this update is that you can now get rid of any driver services you previously had to manage, such as
 `wdio-chromedriver-service`, `wdio-geckodriver-service`, `wdio-edgedriver-service`, `wdio-safaridriver-service`, and even `@wdio/selenium-standalone-service`.
 
@@ -521,7 +521,7 @@ I.appendField('password', secret('123456'));
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### attachFile
@@ -657,7 +657,7 @@ I.click({css: 'nav a.login'});
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### closeCurrentTab
@@ -713,7 +713,7 @@ I.dontSee('Login', '.nav'); // no login inside .nav element
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### dontSeeCheckboxIsChecked
@@ -778,7 +778,7 @@ I.dontSeeElement('.modal'); // modal is not shown
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### dontSeeElementInDOM
@@ -871,7 +871,7 @@ I.doubleClick('.btn.edit');
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### dragAndDrop
@@ -996,7 +996,7 @@ I.fillField({css: 'form#login input[name=username]'}, 'John');
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 {{ custom }}
 
@@ -1054,7 +1054,7 @@ I.forceClick({css: 'nav a.login'});
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### forceRightClick
@@ -1082,7 +1082,7 @@ I.forceRightClick('Menu');
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### grabAllWindowHandles
@@ -1607,7 +1607,7 @@ I.rightClick('Click me', '.context');
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### runInWeb
@@ -1744,7 +1744,7 @@ I.see('Register', {css: 'form.register'}); // use strict locator
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### seeAttributesOnElements
@@ -1841,7 +1841,7 @@ I.seeElement('#modal');
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### seeElementInDOM
@@ -1946,7 +1946,7 @@ I.seeNumberOfElements('#submitBtn', 1);
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### seeNumberOfVisibleElements
@@ -1966,7 +1966,7 @@ I.seeNumberOfVisibleElements('.buttons', 3);
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### seeTextEquals
@@ -2446,7 +2446,7 @@ Returns **void** automatically synchronized promise through #recorder
 
 [1]: http://webdriver.io/
 
-[2]: https://codecept.io/webdriver/#testing-with-webdriver
+[2]: /webdriver#testing-with-webdriver
 
 [3]: https://webdriver.io/blog/2023/07/31/driver-management/
 
@@ -2516,7 +2516,7 @@ Returns **void** automatically synchronized promise through #recorder
 
 [36]: https://webdriver.io/docs/api.html
 
-[37]: http://codecept.io/acceptance/#smartwait
+[37]: /webdriver#smartwait
 
 [38]: http://webdriver.io/docs/timeouts.html
 

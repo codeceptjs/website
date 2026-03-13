@@ -8,7 +8,7 @@ How does one test if the UI being rendered appears correctly to the users or how
 
 Visual testing with help of CodeceptJS will help in improving such use cases for the QA folks.
 
-By default CodeceptJS uses [WebDriver](/helpers/WebDriver/) helper and **Selenium** to automate browser. It is also capable of taking screenshots of the application and this could be used for visual testing.
+By default CodeceptJS uses [WebDriver](/helpers/web-driver) helper and **Selenium** to automate browser. It is also capable of taking screenshots of the application and this could be used for visual testing.
 
 Currently there are two helpers available for Visual testing with CodeceptJS
 
@@ -57,7 +57,7 @@ Base Image is compared with the screenshot image and test results are derived ba
 
 ### Example
 
-Lets consider visual testing for [CodeceptJS Home](https://codecept.io)
+Let's consider visual testing for [CodeceptJS Home](/)
 
 ```js
 Feature('To test screen comparison with resemble Js Example test');
@@ -182,7 +182,7 @@ The first time you run this test a new baseline will be created, and subsequent 
 
 ### Example
 
-Lets consider visual testing for [CodeceptJS Home](https://codecept.io).
+Let's consider visual testing for [CodeceptJS Home](/).
 You can also find example repo here: https://github.com/PeterNgTr/codeceptjs-applitoolshelper
 
 ```js

@@ -30,7 +30,7 @@ To start you need CodeceptJS with Playwright packages installed
 npm install codeceptjs playwright --save
 ```
 
-Or see [alternative installation options](https://codecept.io/installation/)
+Or see [alternative installation options](/quickstart)
 
 > If you already have CodeceptJS project, just install `playwright` package and enable a helper it in config.
 
@@ -83,7 +83,7 @@ When to consider navigation succeeded, defaults to `load`. Given an array of eve
 When a test runs faster than application it is recommended to increase `waitForAction` config value.
 It will wait for a small amount of time (100ms) by default after each user action is taken.
 
-> ▶ More options are listed in [helper reference](https://codecept.io/helpers/Playwright/).
+> ▶ More options are listed in [helper reference](/helpers/playwright).
 
 ## Writing Tests
 
@@ -108,9 +108,9 @@ Tests consist with a scenario of user's action taken on a page. The most widely 
 * `see`, `dontSee` - to check for a text on a page
 * `seeElement`, `dontSeeElement` - to check for elements on a page
 
-> ℹ  All actions are listed in [Playwright helper reference](https://codecept.io/helpers/Playwright/).*
+> ℹ  All actions are listed in [Playwright helper reference](/helpers/playwright).*
 
-All actions which interact with elements can use **[CSS or XPath locators](https://codecept.io/locators/#css-and-xpath)**. Actions like `click` or `fillField` can locate elements by their name or value on a page:
+All actions which interact with elements can use **[CSS or XPath locators](/locators#css-and-xpath)**. Actions like `click` or `fillField` can locate elements by their name or value on a page:
 
 ```js
 // search for link or button
@@ -201,7 +201,7 @@ I.see('0 items left', '.todo-count');
 ### Each Element <Badge text="Since 3.3" type="warning"/>
 
 Usually, CodeceptJS performs an action on the first matched element. 
-In case you want to do an action on each element found, use the special function `eachElement` which comes from [eachElement](https://codecept.io/plugins/#eachelement) plugin. 
+In case you want to do an action on each element found, use the special function `eachElement` which comes from [eachElement](/els#eachelement) plugin. 
 
 `eachElement` function matches all elements by locator and performs a callback on each of those element. A callback function receives [ElementHandle instance](https://playwright.dev/docs/api/class-elementhandle) from Playwright API. `eachElement` may perform arbitrary actions on a page, so the first argument should by a description of the actions performed. This description will be used for logging purposes.
 
@@ -217,7 +217,7 @@ await eachElement(
 );
 ```
 
-> ℹ Learn more about [eachElement plugin](/plugins/#eachelement)
+> ℹ Learn more about [eachElement plugin](/els#eachelement)
 
 ## Multi Session Testing
 
@@ -351,15 +351,15 @@ Scenario('website looks nice on iPhone', () => {
 
 ## API Requests
 
-CodeceptJS has [REST](/helpers/REST) and [GraphQL]((/helpers/GraphQL)) helpers to perform requests to external APIs. This may be helpful to implement [data management](https://codecept.io/data/) strategy. 
+CodeceptJS has [REST](/helpers/rest) and [GraphQL](/helpers/graph-ql) helpers to perform requests to external APIs. This may be helpful to implement [data management](/data) strategy. 
 
-However, Playwright since 1.18 has its own [API for making request](https://playwright.dev/docs/api/class-apirequestcontext#api-request-context-get). It uses cookies from browser session to authenticate requests. So you can use it via [`makeApiRequest`](/helpers/Playwright#makeApiRequest) method:
+However, Playwright since 1.18 has its own [API for making request](https://playwright.dev/docs/api/class-apirequestcontext#api-request-context-get). It uses cookies from browser session to authenticate requests. So you can use it via [`makeApiRequest`](/helpers/playwright#makeapirequest) method:
 
 ```js
 I.makeApiRequest('GET', '/users')
 ```
 
-It is also possible to test JSON responses by adding [`JSONResponse`](/helpers/JSONResponse) and connecting it to Playwright:
+It is also possible to test JSON responses by adding [`JSONResponse`](/helpers/json-response) and connecting it to Playwright:
 
 ```js
 // inside codecept.conf.js
@@ -468,7 +468,7 @@ When a test fails and video was enabled a video file is shown under the `artifac
 
 Open video and use it to debug a failed test case. Video helps when running tests on CI. Configure your CI system to enable artifacts storage for `output/video` and review videos of failed test case to understand failures. 
 
-It is recommended to enable [subtitles](https://codecept.io/plugins/#subtitles) plugin which will generate subtitles from steps in `.srt` format. Subtitles file will be saved into after a video file so video player (like VLC) would load them automatically:
+It is recommended to enable [subtitles](/plugins#subtitles) plugin which will generate subtitles from steps in `.srt` format. Subtitles file will be saved into after a video file so video player (like VLC) would load them automatically:
 
 ![](https://user-images.githubusercontent.com/220264/131644090-38d1ca55-1ba1-41fa-8fd1-7dea2b7ae995.png)
 
@@ -588,7 +588,7 @@ async setPermissions() {
 
 > [▶ Learn more about BrowserContext](https://github.com/microsoft/playwright/blob/master/docs/src/api/class-browsercontext.md)
 
-> [▶ Learn more about Helpers](https://codecept.io/helpers/)
+> [▶ Learn more about Helpers](/custom-helpers)
 
 ## Timezone change
 
@@ -617,3 +617,5 @@ Playwright can be added to GitHub Actions using [official action](https://github
 - name: run CodeceptJS tests
   run: npx codeceptjs run
 ```
+
+

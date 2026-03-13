@@ -7,7 +7,7 @@ title: Testing with Protractor
 ## Introduction
 
 CodeceptJS is an acceptance testing framework. In the diversified world of JavaScript testing libraries, it aims to create a unified high-level API for end-to-end testing, powered by a variety of backends.
-CodeceptJS allows you to write a test and switch the execution driver via config: whether it's *wedriverio*, *puppeteer*, or *protractor* depends on you.
+CodeceptJS allows you to write a test and switch the execution driver via config: whether it's *webdriverio*, *puppeteer*, or *protractor* depends on you.
 This way you aren't bound to a specific implementation, and your acceptance tests will work no matter what framework is running them.
 
 [Protractor](http://www.protractortest.org/#/) is an official tool for testing AngularJS applications.
@@ -62,18 +62,18 @@ In this way, CodeceptJS is similar to Cucumber. If you run a test with `--steps`
 ```bash
 TodoMvc --
  create todo item
- • I am on page "/"
- • I dont see element "#todo-count"
- • I fill field {"model":"newTodo"}, "Write a guide"
- • I press key "Enter"
- • I see "Write a guide", {"repeater":"todo in todos"}
- • I see "1 item left", "#todo-count"
- ✓ OK in 968ms
+ - I am on page "/"
+ - I dont see element "#todo-count"
+ - I fill field {"model":"newTodo"}, "Write a guide"
+ - I press key "Enter"
+ - I see "Write a guide", {"repeater":"todo in todos"}
+ - I see "1 item left", "#todo-count"
+   OK in 968ms
 ```
 
 Unlike Cucumber, CodeceptJS is not about writing test scenarios to satisfy business rules or requirements.
 Instead, its **goal is to provide standard action steps you can use for testing applications**.
-Although it can't cover 100% of use cases, CodeceptJS aims for 90%. For the remainder, you can write your own steps inside a [custom Helper](http://codecept.io/helpers/) using Protractor's API.
+Although it can't cover 100% of use cases, CodeceptJS aims for 90%. For the remainder, you can write your own steps inside a [custom Helper](/custom-helpers) using Protractor's API.
 
 ### Setting up CodeceptJS with Protractor
 
@@ -114,7 +114,7 @@ npx codeceptjs gt
 ```
 
 After that, you can start writing your first CodeceptJS/Angular tests.
-Please refer to the [Protractor helper](http://codecept.io/helpers/Protractor/) documentation for a list of all available actions.
+Please refer to the [Protractor helper](/helpers/protractor) documentation for a list of all available actions.
 You can also run the `list` command to see methods of I:
 
 ```bash
@@ -196,8 +196,8 @@ Using the selenium server at http://localhost:4444/wd/hub
 
 TodoMvc --
  create todo item
- • I am on page "/"
- • I dont see element "#todo-count"
+ - I am on page "/"
+ - I dont see element "#todo-count"
 ```
 
 ## Running Several Scenarios
@@ -298,7 +298,7 @@ Scenario('create todo item', ({ I }) => {
 });
 ```
 
-To learn more about refactoring options in CodeceptJS read [PageObjects guide](http://codecept.io/pageobjects/).
+To learn more about refactoring options in CodeceptJS read [PageObjects guide](/pageobjects/).
 
 
 ## Extending
@@ -319,6 +319,6 @@ element.all(by.repeater('result in memory'));
 ```
 
 This is the recommended way to implement all custom logic using low-level Protractor syntax in order to reuse it inside of test scenarios.
-For more information, see an [example of such a helper](http://codecept.io/helpers/#protractor-example).
+For more information, see an [example of such a helper](/custom-helpers#helper-examples).
 
 

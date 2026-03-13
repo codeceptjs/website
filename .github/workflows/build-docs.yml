@@ -13,6 +13,8 @@ on:
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
+    env:
+      PUBLIC_MEILISEARCH_KEY: ${{ secrets.PUBLIC_MEILISEARCH_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -23,6 +25,8 @@ jobs:
       - run: git config --global user.email "github-cd-bot@example.com"
       - name: Install deps
         run: npm i
+      - name: Generate unified API docs
+        run: npm run generate:unified-api
       - name: Build docs
         run: npm run build
         env:

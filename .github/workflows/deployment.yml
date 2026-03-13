@@ -3,6 +3,8 @@ name: Publish website
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
+    env:
+      PUBLIC_MEILISEARCH_KEY: ${{ secrets.PUBLIC_MEILISEARCH_KEY }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -13,6 +15,8 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - name: Install deps
         run: npm i
+      - name: Generate unified API docs
+        run: npm run generate:unified-api
       - name: deployment
         run: ./runok.js publish
         env:

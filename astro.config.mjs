@@ -1,11 +1,10 @@
-import {defineConfig} from 'astro/config';
+﻿import {defineConfig} from 'astro/config';
 import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
 import starlightSidebarTopics from 'starlight-sidebar-topics';
 import starlightImageZoom from 'starlight-image-zoom';
 import rehypeAstroRelativeMarkdownLinks from "astro-rehype-relative-markdown-links";
 import starlightScrollToTop from 'starlight-scroll-to-top';
-import starlightBlog from 'starlight-blog';
 
 const options = {
     collectionBase: false,
@@ -17,6 +16,7 @@ export default defineConfig({
             expressiveCode: {
                 themes: ['github-dark', 'dracula'],
             },
+            disable404Route: true,
             title: '',
             favicon: '/favicon.svg',
             social: [
@@ -26,6 +26,7 @@ export default defineConfig({
                 Head: "./src/components/Head.astro",
                 PageFrame: "./src/components/PageFrame.astro",
                 PageTitle: './src/components/PageTitle.astro',
+                PageSidebar: './src/components/PageSidebar.astro',
                 Footer: './src/components/Footer.astro',
                 SiteTitle: './src/components/SiteTitle.astro',
                 Search: './src/components/Search.astro',
@@ -37,21 +38,19 @@ export default defineConfig({
             ],
             plugins: [
                 starlightImageZoom(),
-                starlightBlog(),
                 starlightSidebarTopics([
                     {
+                        id: 'documentation',
                         label: 'Documentation',
                         link: 'quickstart',
                         items: [
                             {
                                 label: 'Web Testing',
                                 items: [
-                                    {label: 'Getting Started', link: 'basics'},
-                                    {label: 'CodeceptUI', link: 'ui'},
+                                    {label: 'Web Basics', link: 'basics'},
                                     {label: 'Testing with Playwright', link: 'playwright'},
                                     {label: 'Testing with WebDriver', link: 'webdriver'},
                                     {label: 'Testing with Puppeteer', link: 'puppeteer'},
-                                    {label: 'API Testing', link: 'api'},
                                     {label: 'Testing with TestCafe', link: 'testcafe'},
                                 ],
                             },
@@ -71,14 +70,28 @@ export default defineConfig({
                                     {label: 'Behavior Driven Development', link: 'bdd'},
                                     {label: 'Locators', link: 'locators'},
                                     {label: 'Translation', link: 'translation'},
-                                    {label: 'Custom Helpers', link: 'custom-helpers'},
                                     {label: 'Best Practices', link: 'best'},
+                                ],
+                            },
+                            {
+                                label: 'API Reference',
+                                items: [
+                                    {label: 'Web API (Unified)', link: 'web-api'},
+                                    {label: 'Mobile API (Unified)', link: 'mobile-api'},
+                                    {label: 'API Testing', link: 'api'},
+                                    {label: 'Commands', link: 'commands'},
+                                    {label: 'Configuration', link: 'configuration'},
+                                    {label: 'Plugins', link: 'plugins'},
+                                    {label: 'Effects', link: 'effects'},
+                                    {label: 'Element Access (els)', link: 'els'},
+                                    {label: 'Shadow DOM', link: 'shadow'},
                                 ],
                             },
                             {
                                 label: 'Advanced Usage',
                                 items: [
                                     {label: 'Advanced Usage', link: 'advanced'},
+                                    {label: 'CodeceptUI', link: 'ui'},
                                     {label: 'Bootstrap', link: 'bootstrap'},
                                     {label: 'Reporters', link: 'reports'},
                                     {label: 'Continuous Integration', link: 'continuous-integration'},
@@ -107,7 +120,9 @@ export default defineConfig({
                                 items: [
                                     {label: 'WebDriver', link: 'helpers/web-driver'},
                                     {label: 'Puppeteer', link: 'helpers/puppeteer'},
+                                    {label: 'Puppeteer Firefox', link: 'helpers/puppeteer-firefox'},
                                     {label: 'TestCafe', link: 'helpers/test-cafe'},
+                                    {label: 'Protractor (Legacy)', link: 'helpers/protractor'},
                                 ],
                             },
                             {
@@ -136,7 +151,8 @@ export default defineConfig({
                                     {label: 'Expect', link: 'helpers/expect'},
                                     {label: 'SoftExpectHelper', link: 'helpers/soft-expect-helper'},
                                     {label: 'MockServer', link: 'helpers/mock-server'},
-                                    {label: 'Community Helpers', link: 'community-helpers'},
+                                    {label: 'Custom Helpers', link: 'custom-helpers'},
+                                    {label: 'Community Helpers', link: 'helpers/community-helpers'},
                                 ],
                             },
                         ]
@@ -155,7 +171,12 @@ export default defineConfig({
                             {label: 'blog', autogenerate: {directory: 'blog/'}},
                         ],
                     },
-                ]),
+                ], {
+                    exclude: ['/404'],
+                    topics: {
+                        documentation: ['/mobile-react-native-locators'],
+                    },
+                }),
                 starlightScrollToTop({
                     position: 'right',
                     tooltipText: 'Back to top',
@@ -183,3 +204,4 @@ export default defineConfig({
         ],
     },
 });
+

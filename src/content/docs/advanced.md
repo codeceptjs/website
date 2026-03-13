@@ -40,14 +40,14 @@ Data(accounts).only.Scenario('Test Login', ({ I, current }) => {
 });
 ```
 
-*Important: you can't use name `current` for pageObjects or helpers in data scenarios*
+*Important: you can't use the name `current` for page objects or helpers in data scenarios.*
 
 This will produce 2 tests with different data sets.
 Current data set is appended to a test name in output:
 
 ```sh
-✓ Test Login | {"login":"davert","password":"123456"}
-✓ Test Login | {"login":"admin","password":"123456"}
+- Test Login | {"login":"davert","password":"123456"}
+- Test Login | {"login":"admin","password":"123456"}
 S Test Login | {"login":"admin","password":"23456"}
 ```
 
@@ -62,10 +62,10 @@ Data(accounts.filter(account => account.login == 'admin')
 });
 ```
 
-This will limit data sets accoring passed function:
+This will limit data sets according to the passed function:
 
 ```sh
-✓ Test Login | {"login":"admin","password":"123456"}
+- Test Login | {"login":"admin","password":"123456"}
 S Test Login | {"login":"admin","password":"23456"}
 ```
 
@@ -78,7 +78,7 @@ Data(function*() {
 }).Scenario() // ...
 ```
 
-*HINT: If you don't use DataTable. add `toString()` method to each object added to data set, so the data could be pretty printed in a test name*
+*Hint: If you don't use DataTable, add `toString()` method to each object added to the data set, so data can be printed nicely in a test name.*
 
 ## Tags
 
@@ -88,7 +88,7 @@ Append `@tag` to your test name, so
 Scenario('update user profile @slow')
 ```
 
-Alternativly, use `tag` method of Scenario to set additional tags:
+Alternatively, use `tag` method of Scenario to set additional tags:
 
 ```js
 Scenario('update user profile', ({  }) => {
@@ -164,7 +164,7 @@ Feature('My feature', {key: val});
 Scenario('My scenario', {key: val},({ I }) => {});
 ```
 
-You can use this options for build your own [plugins](https://codecept.io/hooks/#plugins) with [event listners](https://codecept.io/hooks/#api). Example: 
+You can use these options to build your own [plugins](/hooks/#plugins) with [event listeners](/hooks/#api). Example:
 
 ```js
   // for test
@@ -265,7 +265,7 @@ timeout: [
 ]
 ```
 
-> ℹ️ `grep` value can be string or regexp
+> `grep` value can be string or regexp
 
 It is possible to set a timeout for Scenario or Feature:
 
@@ -344,7 +344,7 @@ Config changes can be applied to all tests in suite:
 Feature('Admin Panel').config({ url: 'https://mysite.com/admin' });
 ```
 
-Please note that some config changes can't be applied on the fly. For instance, if you set `restart: false` in your config and then changing value `browser` won't take an effect as browser is already started and won't be closed untill all tests finish.
+Please note that some config changes can't be applied on the fly. For instance, if you set `restart: false` in your config and then change value `browser`, it won't take effect as browser is already started and won't be closed until all tests finish.
 
 Configuration changes will be reverted after a test or a suite.
 

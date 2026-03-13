@@ -515,7 +515,7 @@ Examples:
 I.checkOption('Agree', '.signup', { position: { x: 5, y: 5 } })
 ```
 
-> ⚠️ To avoid flakiness, option `force: true` is set by default
+> РІС™В РїС‘РЏ To avoid flakiness, option `force: true` is set by default
 
 Selects a checkbox or radio button.
 Element is located by label or name or CSS or XPath.
@@ -2341,7 +2341,7 @@ Examples:
 I.uncheckOption('Agree', '.signup', { position: { x: 5, y: 5 } })
 ```
 
-> ⚠️ To avoid flakiness, option `force: true` is set by default
+> РІС™В РїС‘РЏ To avoid flakiness, option `force: true` is set by default
 
 Unselects a checkbox or radio button.
 Element is located by label or name or CSS or XPath.
@@ -2759,7 +2759,7 @@ Returns **void** automatically synchronized promise through #recorder
 
 [27]: https://playwright.dev/docs/api/class-locator#locator-is-disabled
 
-[28]: https://codecept.io/helpers/FileSystem
+[28]: /helpers/file-system
 
 [29]: https://playwright.dev/docs/api/class-apirequestcontext#api-request-context-get
 
@@ -2789,7 +2789,7 @@ Returns **void** automatically synchronized promise through #recorder
 
 [42]: https://playwright.dev/docs/api/class-page#page-wait-for-url
 
-[43]: https://codecept.io/react
+[43]: /react
 
 [44]: https://playwright.dev/docs/api/class-browsercontext
 

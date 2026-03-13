@@ -64,7 +64,7 @@ const Helper = require('@codeceptjs/helper');
 class MyHelper extends Helper {
 
   doAwesomeThings() {
-    console.log('Hello from MyHelpr');
+    console.log('Hello from MyHelper');
   }
 
 }
@@ -76,10 +76,10 @@ We can call a new method from within `I`:
 I.doAwesomeThings();
 ```
 
-> Methods starting with `_` are considered special and won't available in `I` object.
+> Methods starting with `_` are considered special and won't be available in `I` object.
 
 
-Please note, `I` object can't be used helper class. As `I` object delegates its calls to helper classes, you can't make a circular dependency on it. Instead of calling `I` inside a helper, you can get access to other helpers by using `helpers` property of a helper. This allows you to access any other enabled helper by its name. 
+Please note, `I` object can't be used inside a helper class. As `I` object delegates its calls to helper classes, you can't make a circular dependency on it. Instead of calling `I` inside a helper, you can get access to other helpers by using the `helpers` property of a helper. This allows you to access any other enabled helper by its name.
 
 For instance, to perform a click with Playwright helper, do it like this:
 
@@ -101,8 +101,8 @@ This way, if your tests are written with TypeScript, your IDE will be able to le
 
 ## Accessing Elements
 
-WebDriver, Puppeteer and Playwright drivers provide API for web elements.
-However, CodeceptJS do not expose them to tests by design, keeping test to be action focused.
+WebDriver, Puppeteer and Playwright drivers provide APIs for web elements.
+However, CodeceptJS does not expose them to tests by design, keeping tests action-focused.
 If you need to get access to web elements, it is recommended to implement operations for web elements in a custom helper.
 
 To get access for elements, connect to a corresponding helper and use `_locate` function to match web elements by CSS or XPath, like you usually do:
@@ -121,7 +121,7 @@ async clickOnEveryElement(locator) {
 }
 ```
 
-In this case an an instance of webdriverio element is used.
+In this case, an instance of a WebdriverIO element is used.
 To get a [complete API of an element](https://webdriver.io/docs/api/) refer to webdriverio docs.
 
 ### Accessing Elements in Playwright & Puppeteer
@@ -199,7 +199,7 @@ Each implemented method should return a value as they will be added to global pr
 
 ## Conditional Retries
 
-It is possible to execute global conditional retries to handle unforseen errors.
+It is possible to execute global conditional retries to handle unforeseen errors.
 Lost connections and network issues are good candidates to be retried whenever they appear.
 
 This can be done inside a helper using the global [promise recorder](/hooks/#api):
@@ -220,9 +220,9 @@ _before() {
 
 Retry rules are available in array `recorder.retries`. The last retry rule can be disabled by running `recorder.retries.pop()`;
 
-## Using Typescript
+## Using TypeScript
 
-With Typescript, just simply replacing `module.exports` with `export` for autocompletion.
+With TypeScript, replace `module.exports` with `export` to improve autocompletion.
 
 
 ## Helper Examples

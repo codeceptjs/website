@@ -15,9 +15,7 @@ const apiKey = import.meta.env.PUBLIC_MEILISEARCH_KEY;
         apiKey: apiKey,
         indexUid: "docs",
     });
-</script>
 
-<script>
     document.addEventListener("astro:before-preparation", () => {
         document.querySelector<HTMLButtonElement>(".docsearch-modal-search-cancel-btn")?.click();
     });

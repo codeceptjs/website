@@ -45,7 +45,7 @@ Refer to following guides to more information on:
 To list all available commands for the current configuration run `codeceptjs list`
 or enable [auto-completion by generating TypeScript definitions](#intellisense).
 
-> 🤔 It is possible to access API of a backend you use inside a test or a [custom helper](/helpers/). For instance, to use Puppeteer API inside a test use [`I.usePuppeteerTo`](/helpers/Puppeteer/#usepuppeteerto) inside a test. Similar methods exist for each helper.
+> 🤔 It is possible to access API of a backend you use inside a test or a [custom helper](/custom-helpers). For instance, to use Puppeteer API inside a test use [`I.usePuppeteerTo`](/helpers/puppeteer#usepuppeteerto) inside a test. Similar methods exist for each helper.
 
 
 ## Writing Tests
@@ -103,7 +103,7 @@ I.seeElement({name: 'password'});
 I.seeElement({react: 'user-profile', props: {name: 'davert'}});
 ```
 
-In [mobile testing](https://codecept.io/mobile/#locating-elements) you can use `~` to specify the accessibility id to locate an element. In web application you can locate elements by their `aria-label` value.
+In [mobile testing](/mobile#locating-elements) you can use `~` to specify the accessibility id to locate an element. In web application you can locate elements by their `aria-label` value.
 
 ```js
 // locate element by [aria-label] attribute in web
@@ -341,7 +341,7 @@ If you face that error please make sure that all async functions are called with
 
 ## Running Tests
 
-To launch tests use the `run` command, and to execute tests in [multiple threads](/advanced/parallel) using `run-workers` command.
+To launch tests use the `run` command, and to execute tests in [multiple threads](/parallel) using `run-workers` command.
 
 ### Level of Detail
 
@@ -386,7 +386,7 @@ npx codeceptjs run --grep "slow"
 It is recommended to [filter tests by tags](/advanced/#tags).
 
 
-> For more options see [full reference of `run` command](/commands/#run).
+> For more options see [full reference of `run` command](/commands#run).
 
 ### Parallel Run
 
@@ -503,10 +503,10 @@ I.=> 2 + 5
 
 ### Pause on Fail
 
-To start interactive pause automatically for a failing test you can run tests with [pauseOnFail Plugin](/plugins/#pauseonfail).
+To start interactive pause automatically for a failing test you can run tests with [pauseOnFail Plugin](/plugins#pauseonfail).
 When a test fails, the pause mode will be activated, so you can inspect current browser session before it is closed.
 
-> **[pauseOnFail plugin](/plugins/#pauseOnFail) can be used** for new setups
+> **[pauseOnFail plugin](/plugins#pauseonfail) can be used** for new setups
 
 To run tests with pause on fail enabled use `-p pauseOnFail` option
 
@@ -520,13 +520,13 @@ npx codeceptjs run -p pauseOnFail
 ### Screenshot on Failure
 
 By default CodeceptJS saves a screenshot of a failed test.
-This can be configured in [screenshotOnFail Plugin](/plugins/#screenshotonfail)
+This can be configured in [screenshotOnFail Plugin](/plugins#screenshotonfail)
 
-> **[screenshotOnFail plugin](/plugins/#screenshotonfail) is enabled by default** for new setups
+> **[screenshotOnFail plugin](/plugins#screenshotonfail) is enabled by default** for new setups
 
 ### Step By Step Report
 
-To see how the test was executed, use [stepByStepReport Plugin](/plugins/#stepbystepreport). It saves a screenshot of each passed step and shows them in a nice slideshow.
+To see how the test was executed, use [stepByStepReport Plugin](/plugins#stepbystepreport). It saves a screenshot of each passed step and shows them in a nice slideshow.
 
 ## Before
 
@@ -573,10 +573,10 @@ AfterSuite(({ I }) => {
 
 ### Auto Retry
 
-Each failed step is auto-retried by default via [retryFailedStep Plugin](/plugins/#retryfailedstep).
+Each failed step is auto-retried by default via [retryFailedStep Plugin](/plugins#retryfailedstep).
 If this is not expected, this plugin can be disabled in a config. 
 
-> **[retryFailedStep plugin](/plugins/#retryfailedstep) is enabled by default** incide global configuration
+> **[retryFailedStep plugin](/plugins#retryfailedstep) is enabled by default** incide global configuration
 
 ### Retry Step
 
@@ -616,7 +616,7 @@ Pass a function to the `when` option to retry only when an error matches the exp
 
 ### Retry Multiple Steps
 
-To retry a group of steps enable [retryTo plugin](/plugins/#retryto):
+To retry a group of steps enable [retryTo plugin](/effects#retryto):
 
 ```js
 // retry these steps 5 times before failing
@@ -736,7 +736,7 @@ Rules are applied in the order of array element, so the last option will overrid
 On the highest level of the "retry pyramid" there is an option to retry a complete run multiple times.
 Even this is the slowest option of all, it can be helpful to detect flaky tests. 
 
-[`run-rerun`](https://codecept.io/commands/#run-rerun) command will restart the run multiple times to values you provide. You can set minimal and maximal number of restarts in configuration file.
+[`run-rerun`](/commands#run-rerun) command will restart the run multiple times to values you provide. You can set minimal and maximal number of restarts in configuration file.
 
 ```
 npx codeceptjs run-rerun
@@ -817,7 +817,7 @@ You may also use `tryTo` for cases when you deal with uncertainty on page:
 * soft assertions
 * cookies & gdpr
 
-`tryTo` function is enabled by default via [tryTo plugin](/plugins/#tryto)
+`tryTo` function is enabled by default via [tryTo plugin](/effects#tryto)
 
 ## Comments
 
@@ -974,3 +974,5 @@ Or even without a test body:
 ```js
 Scenario.todo('Test');
 ```
+
+

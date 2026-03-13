@@ -3,11 +3,15 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "predev": "npm run generate:unified-api",
     "dev": "astro dev",
     "start": "astro dev",
+    "prebuild": "npm run generate:unified-api",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate:unified-api": "node scripts/generate-unified-api.mjs",
+    "generate:unified-api:check": "node scripts/generate-unified-api.mjs --check"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^6.3.10",

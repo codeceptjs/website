@@ -31,7 +31,7 @@ In this code we checked API request for:
 
 These are the things you should generally test your APIs for.
 
-> 🤓 It is recommended to check only invariable parts of responses. Check for required fields and only values you control. For instance, it is not recommended to check id fields, date fields, as they can be frequently changed.
+> 🤓 It is recommended to check only invariant parts of responses. Check required fields and only values you control. For instance, it is not recommended to check ID fields or date fields, as they can change frequently.
 
 ## Installation
 
@@ -81,9 +81,9 @@ Ensure that inside `codecept.conf.js` in helpers section `REST` or `GraphQL` hel
 Originally, REST and GraphQL helpers were not designed for API testing. 
 They were used to perform API requests for browser tests. As so, they lack assertion methods to API responses.
 
-[`JSONResponse`](/helpers/JSONResponse/) helper adds response assertions. 
+[`JSONResponse`](/helpers/json-response) helper adds response assertions.
 
-> 💡 In CodeceptJS assertions start with `see` prefix. Learn more about assertions by [opening reference for JSONResponse](/helpers/JSONResponse/) helper.
+> 💡 In CodeceptJS assertions start with the `see` prefix. Learn more in the [JSONResponse helper reference](/helpers/json-response).
 
 Generate TypeScript definitions to get auto-completions for JSONResponse:
 
@@ -97,7 +97,7 @@ After helpers were configured and typings were generated, you can start writing 
 
 ## Requests
 
-[REST](/helpers/REST/) or [GraphQL](/helpers/GraphQL/) helpers implement methods for making API requests.
+[REST](/helpers/rest) or [GraphQL](/helpers/graph-ql) helpers implement methods for making API requests.
 Both helpers send requests via HTTP protocol from CodeceptJS process. 
 For most cases, you will need to have authentication. It can be passed via headers, which can be added to helper's configuration in `codecept.conf.js`. 
 
@@ -142,15 +142,15 @@ exports.config = {
 
 REST helper can send GET/POST/PATCH/etc requests to REST API endpoint:
 
-* [`I.sendGetRequest()`](/helpers/REST#sendGetRequest)
-* [`I.sendPostRequest()`](/helpers/REST#sendPostRequest)
-* [`I.sendPutRequest()`](/helpers/REST#sendPutRequest)
-* [`I.sendPatchRequest()`](/helpers/REST#sendPatchRequest)
-* [`I.sendDeleteRequest()`](/helpers/REST#sendDeleteRequest)
-* [`I.sendDeleteRequestWithPayload()`](/helpers/REST#sendDeleteRequestWithPayload)
+* [`I.sendGetRequest()`](/helpers/rest#sendGetRequest)
+* [`I.sendPostRequest()`](/helpers/rest#sendPostRequest)
+* [`I.sendPutRequest()`](/helpers/rest#sendPutRequest)
+* [`I.sendPatchRequest()`](/helpers/rest#sendPatchRequest)
+* [`I.sendDeleteRequest()`](/helpers/rest#sendDeleteRequest)
+* [`I.sendDeleteRequestWithPayload()`](/helpers/rest#sendDeleteRequestWithPayload)
 * ...
 
-Authentication headers can be set in [helper's config](https://codecept.io/helpers/REST/#configuration) or per test with headers or special methods like `I.amBearerAuthenticated`.
+Authentication headers can be set in [helper configuration](/helpers/rest#configuration) or per test with headers or special methods like `I.amBearerAuthenticated`.
 
 Example:
 
@@ -179,7 +179,7 @@ Scenario('create user', ({ I }) => {
 
 ### GraphQL
 
-GraphQL have request format different then in REST API, but the response format is the same.
+GraphQL has a request format different from REST API, but the response format is the same.
 It's plain old JSON. This why `JSONResponse` helper works for both API types.
 Configure authorization headers in `codecept.conf.js` and make your first query:  
 
@@ -208,14 +208,14 @@ Scenario('get user by query', ({ I }) => {
 
 GraphQL helper has two methods available:
 
-* [`I.sendQuery()`](/helpers/GraphQL#sendQuery)
-* [`I.sendMutation()`](/helpers/GraphQL#sendMutation)
+* [`I.sendQuery()`](/helpers/graph-ql#sendQuery)
+* [`I.sendMutation()`](/helpers/graph-ql#sendMutation)
 
 ## Assertions
 
 `JSONResponse` provides set of assertions for responses in JSON format. These assertions were designed to check only invariable parts of responses. So instead of checking that response equals to the one provided, we will check for data inclusion and structure matching.
 
-For most of cases, you won't need to perform assertions by accessing `response` object directly. All assretions are performed under hood inside `JSONResponse` module. It is recommended to keep it that way, to keep tests readable and make test log to contain all assertions.
+For most cases, you won't need to perform assertions by accessing the `response` object directly. All assertions are performed under the hood inside the `JSONResponse` module. It is recommended to keep it that way to maintain readability and keep test logs clear.
 
 ```js
 Scenario('I make API call', ({ I }) => {
@@ -256,14 +256,14 @@ I.seeResponseCodeIsServerError();
 
 ### Structure
 
-The most basic thing to check in response is existence of keys in JSON object. Use [`I.seeResponseContainsKeys()`](/helpers/JSONResponse#seeResponseContainsKeys) method for it:
+The most basic thing to check in a response is the existence of keys in a JSON object. Use [`I.seeResponseContainsKeys()`](/helpers/json-response#seeResponseContainsKeys) method for it:
 
 ```js
 // response is { "name": "joe", "email": "joe@joe.com" }
 I.seeResponseContainsKeys(['name', 'email']);
 ```
 
-> ℹ️ If response is an array, it will check that every element in array have provided keys
+> ℹ️ If response is an array, it checks that every element in the array has the provided keys.
 
 However, this is a very naive approach. It won't work for arrays or nested objects.
 To check complex JSON structures `JSONResponse` helper uses [`joi`](https://joi.dev) library. 
@@ -298,7 +298,7 @@ I.seeResponseContainsJson({
 })
 ```
 
-> ℹ️ If response is an array, it will check that at least one element in array matches JSON
+> ℹ️ If response is an array, it checks that at least one element in the array matches JSON.
 
 To perform arbitrary assertions on a response object use `seeResponseValidByCallback`. 
 It allows you to do any kind of assertions by using `expect` from [`chai`](https://www.chaijs.com) library.

@@ -1,10 +1,12 @@
 ---
 import MobileMenuToggle from 'virtual:starlight/components/MobileMenuToggle';
 
-const { hasSidebar } = Astro.locals.starlightRoute;
+const { hasSidebar, entry } = Astro.locals.starlightRoute;
+const is404Page = entry.slug === '404' || entry.slug.endsWith('/404');
+const shouldRenderSidebar = hasSidebar && !is404Page;
 ---
 
-<div class="page sl-flex">
+<div class="page sl-flex" data-page-slug={entry.slug}>
     <span class="fixed w-full h-full bg-gradient-to-br from-gray-50 via-purple-50 to-blue-50 dark:from-gray-900 dark:via-purple-900 dark:to-blue-950 overflow-hidden"></span>
     <span class="fixed top-10 left-10 w-64 h-64 bg-yellow-500/10 rounded-full blur-3xl animate-float-slow"></span>
     <span class="fixed bottom-10 right-10 w-80 h-80 rounded-full blur-3xl animate-float-delayed" style={{backgroundColor: 'rgba(194, 122, 255, 0.2)'}}></span>
@@ -17,7 +19,7 @@ const { hasSidebar } = Astro.locals.starlightRoute;
         <slot name="header" />
     </header>
     {
-    hasSidebar && (
+    shouldRenderSidebar && (
     <nav class="sidebar print:hidden" aria-label={Astro.locals.t('sidebarNav.accessibleLabel')}>
         <MobileMenuToggle />
         <div id="starlight__sidebar" class="sidebar-pane">
@@ -28,7 +30,7 @@ const { hasSidebar } = Astro.locals.starlightRoute;
     </nav>
     )
     }
-    <div class="main-frame"><slot /></div>
+    <div class:list={['main-frame', { 'is-404': is404Page }]}><slot /></div>
 </div>
 
 <style>
@@ -90,6 +92,25 @@ const { hasSidebar } = Astro.locals.starlightRoute;
         .main-frame {
             padding-top: calc(var(--sl-nav-height) + var(--sl-mobile-toc-height));
             padding-inline-start: var(--sl-content-inline-start);
+        }
+
+        .main-frame.is-404 {
+            padding-top: 0;
+            padding-inline-start: 0;
+        }
+
+        .page[data-page-slug='404'] :global(main) {
+            padding: 0;
+        }
+
+        .page[data-page-slug='404'] :global(main > .content-panel:first-of-type) {
+            display: none;
+        }
+
+        .page[data-page-slug='404'] :global(main > .content-panel) {
+            margin: 0;
+            border: none;
+            padding: 0;
         }
 
         @media (min-width: 50rem) {

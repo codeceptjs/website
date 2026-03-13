@@ -646,7 +646,7 @@ I.waitToHide('#message', 2); // wait for 2 seconds
 
 [3]: https://wix.github.io/Detox/docs/introduction/project-setup#step-5-build-the-app
 
-[4]: https://codecept.io
+[4]: /quickstart
 
 [5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 

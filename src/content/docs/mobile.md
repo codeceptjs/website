@@ -28,7 +28,7 @@ Doesn't it sound cool?
 
 ## Setting Up
 
-Ensure that you have [CodeceptJS installed](https://codecept.io/installation/).
+Ensure that you have [CodeceptJS installed](/quickstart).
 You will also need to install [Appium](https://appium.io/docs/en/2.1/).
 We suggest to use [appium-doctor](https://www.npmjs.com/package/appium-doctor) to check if your system is ready for mobile testing.
 
@@ -44,9 +44,9 @@ To install Appium use npm:
 npm i -g appium
 ```
 
-Appium 2x reenvisions Appium as a platform where “drivers” and “plugins” can be easily created and shared independently.
+Appium 2.x re-envisions Appium as a platform where drivers and plugins can be created and shared independently.
 
-** Note: ** Appium v1 is no longer maintained, so it's advised to migrate to Appium v2.
+**Note:** Appium v1 is no longer maintained, so it's advised to migrate to Appium v2.
 
 Install an Appium driver and its dependencies
 To install the Appium driver and its dependencies, we'll be using the `uiautomator2` (Android), `XCUITest` (iOS) drivers.
@@ -60,8 +60,8 @@ To make sure that all the drivers are installed successfully, run the following 
 ```
 appium driver list
 
-tth~$appium driver list            
-✔ Listing available drivers
+tth~$appium driver list
+* Listing available drivers
 - espresso@2.17.0 [installed (NPM)]
 - uiautomator2@2.12.6 [installed (NPM)]
 - xcuitest@4.19.1 [installed (NPM)]
@@ -95,7 +95,7 @@ tth~$npx appium --base-path=/wd/hub
 [Appium] No plugins have been installed. Use the "appium plugin" command to install the one(s) you want to use.
 ```
 
-** Note: ** Appium v2 doesn't use the same base path as Appium v1, hence if you want to use the same base path you should pass `--base-path=/wd/hub` when launching the Appium server.
+**Note:** Appium v2 doesn't use the same base path as Appium v1, so if you want to keep the same base path, pass `--base-path=/wd/hub` when launching the Appium server.
 
 To run mobile test you need either a device emulator (available with Android SDK or iOS) or real device connected for mobile testing. Alternatively, you may execute Appium with device emulator inside Docker container.
 
@@ -113,14 +113,14 @@ Initialize CodeceptJS with `init` command:
 npx codeceptjs init
 ```
 
-Select [Appium helper](https://codecept.io/helpers/Appium/) when asked.
+Select [Appium helper](/helpers/appium) when asked.
 
 ```sh
 ? What helpers do you want to use?
- ◯ WebDriver
- ◯ Puppeteer
-❯◉ Appium
- ◯ REST
+ - WebDriver
+ - Puppeteer
+ > Appium
+ - REST
 ```
 
 You will also be asked for the platform and the application package.
@@ -206,7 +206,7 @@ There are mobile-only methods like:
 * `hideDeviceKeyboard`,
 * `seeAppIsInstalled`, `installApp`, `removeApp`, `seeAppIsNotInstalled` - Android only
 
-and [others](https://codecept.io/helpers/Appium/).
+and [others](/helpers/appium).
 
 ## Locating Elements
 
@@ -335,3 +335,4 @@ Just as you can specify android, and ios-specific locators, you can do so for we
 ```js
 I.click({web: '#login', ios: '//UIAApplication[1]/UIAWindow[1]/UIAButton[1]'});
 ```
+

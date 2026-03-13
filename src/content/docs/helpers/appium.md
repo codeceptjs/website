@@ -1339,11 +1339,11 @@ I.waitForText('Thank you, form has been submitted', 5, '#modal');
 
 Returns **void** automatically synchronized promise through #recorder
 
-[1]: http://codecept.io/helpers/WebDriver/
+[1]: /helpers/web-driver
 
 [2]: https://appium.io/docs/en/2.1/
 
-[3]: https://codecept.io/mobile/#setting-up
+[3]: /mobile#setting-up
 
 [4]: https://github.com/appium/appium/blob/master/packages/appium/docs/en/guides/caps.md
 
@@ -1363,12 +1363,12 @@ Returns **void** automatically synchronized promise through #recorder
 
 [12]: https://developer.android.com/reference/android/view/KeyEvent.html
 
-[13]: http://webdriver.io/api/mobile/touchAction.html
+[13]: https://webdriver.io/docs/api/mobile/touchAction
 
-[14]: http://webdriver.io/api/mobile/swipe.html
+[14]: https://webdriver.io/docs/api/mobile/swipe
 
-[15]: http://webdriver.io/api/mobile/rotate.html
+[15]: https://webdriver.io/docs/api/mobile/rotate
 
-[16]: http://webdriver.io/api/mobile/setImmediateValue.html
+[16]: https://webdriver.io/docs/api/mobile/setImmediateValue
 
 [17]: https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView

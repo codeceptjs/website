@@ -69,7 +69,7 @@ Scenario('create todo item', ({ I }) => {
 
 Same syntax is the same for all helpers in CodeceptJS so to learn more about available commands learn [CodeceptJS Basics](/basics).
 
-> [▶ Complete list of TestCafe actions](/helpers/TestCafe)
+> [▶ Complete list of TestCafe actions](/helpers/test-cafe)
 
 ## Page Objects
 
@@ -132,7 +132,7 @@ module.exports = {
 
 ## Accessing TestCafe API
 
-To get [testController](https://devexpress.github.io/testcafe/documentation/test-api/test-code-structure.html#test-controller))) inside a test use [`I.useTestCafeTo`](/helpers/TestCafe/#usetestcafeto) method with a callback.
+To get [testController](https://devexpress.github.io/testcafe/documentation/test-api/test-code-structure.html#test-controller) inside a test use [`I.useTestCafeTo`](/helpers/test-cafe#usetestcafeto) method with a callback.
 To keep test readable provide a description of a callback inside the first parameter.
 
 ```js
@@ -171,3 +171,5 @@ class MyTestCafe extends Helper {
 
 }
 ```
+
+

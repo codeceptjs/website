@@ -6,7 +6,7 @@ title: TypeScript
 
 CodeceptJS supports [type declaration](https://github.com/codeceptjs/CodeceptJS/tree/master/typings) for [TypeScript](https://www.typescriptlang.org/). It means that you can write your tests in TS. Also, all of your custom steps can be written in TS
 
-# Why TypeScript?
+## Why TypeScript?
 
 With the TypeScript writing CodeceptJS tests becomes much easier. If you configure TS properly in your project as well as your IDE, you will get the following features:
 - [Autocomplete (with IntelliSense)](https://code.visualstudio.com/docs/editor/intellisense) - a tool that streamlines your work by suggesting when you typing what function or property which exists in a class, what arguments can be passed to that method, what it returns, etc.
@@ -86,7 +86,7 @@ npx codeceptjs def
 
 ## Types for custom helper or page object
 
-If you want to get types for your [custom helper](https://codecept.io/helpers/#configuration), you can add their automatically with CodeceptJS command `npx codeceptjs def`.
+If you want to get types for your [custom helper](/custom-helpers#configuration), you can add them automatically with CodeceptJS command `npx codeceptjs def`.
 
 For example, if you add the new step `printMessage` for your custom helper like this:
 ```js
@@ -99,7 +99,7 @@ export class CustomHelper extends Helper {
 
 ```
 
-Then you need to add this helper to your `codecept.conf.js` like in this [docs](https://codecept.io/helpers/#configuration).
+Then you need to add this helper to your `codecept.conf.js` like in this [docs](/custom-helpers#configuration).
 And then run the command `npx codeceptjs def`.
 
 As result our `steps.d.ts` file will be updated like this:
@@ -138,7 +138,7 @@ declare namespace CodeceptJS {
 
 ## Types for custom strict locators
 
-You can define [custom strict locators](https://codecept.io/locators/#custom-strict-locators) that can be used in all methods taking a locator (parameter type `LocatorOrString`).
+You can define [custom strict locators](/locators#custom-strict-locators) that can be used in all methods taking a locator (parameter type `LocatorOrString`).
 
 Example: A custom strict locator with a `data` property, which can be used like this:
 

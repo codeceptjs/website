@@ -118,7 +118,7 @@ There are also common assertions:
 * `seeElement` - to check visibility of element
 * `seeElementExists` - to check that element exists
 
-> For more details on actions refer to the [API reference of Detox helper](https://github.com/codeceptjs/detox-helper#api).
+> For more details on actions refer to the [API reference of Detox helper](/helpers/detox#api).
 
 ## Locators
 

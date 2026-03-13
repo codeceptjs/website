@@ -199,7 +199,7 @@ const elements = await this.helpers['Puppeteer']._locate({name: 'password'});
 
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 #### Parameters
@@ -316,12 +316,12 @@ I.appendField('password', secret('123456'));
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### attachFile
 
-> ⚠ There is an [issue with file upload in Puppeteer 2.1.0 & 2.1.1][7], downgrade to 2.0.0 if you face it.
+> Р Р†РЎв„ўР’В  There is an [issue with file upload in Puppeteer 2.1.0 & 2.1.1][7], downgrade to 2.0.0 if you face it.
 
 Attaches a file to element located by label, name, CSS or XPath
 Path to file is relative current codecept directory (where codecept.conf.ts or codecept.conf.js is located).
@@ -452,7 +452,7 @@ I.click({css: 'nav a.login'});
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### clickLink
@@ -471,7 +471,7 @@ I.clickLink('Logout', '#nav');
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### closeCurrentTab
@@ -508,7 +508,7 @@ I.dontSee('Login', '.nav'); // no login inside .nav element
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### dontSeeCheckboxIsChecked
@@ -572,7 +572,7 @@ I.dontSeeElement('.modal'); // modal is not shown
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### dontSeeElementInDOM
@@ -685,7 +685,7 @@ I.doubleClick('.btn.edit');
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### downloadFile
@@ -732,7 +732,7 @@ I.dragSlider('#slider', -70);
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### executeAsyncScript
@@ -825,7 +825,7 @@ I.fillField({css: 'form#login input[name=username]'}, 'John');
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### flushNetworkTraffics
@@ -894,7 +894,7 @@ I.forceClick({css: 'nav a.login'});
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### grabAttributeFrom
@@ -915,7 +915,7 @@ let hint = await I.grabAttributeFrom('#tooltip', 'title');
 Returns **[Promise][14]<[string][6]>** attribute value
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### grabAttributeFromAll
@@ -935,7 +935,7 @@ let hints = await I.grabAttributeFromAll('.tooltip', 'title');
 Returns **[Promise][14]<[Array][16]<[string][6]>>** attribute value
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### grabBrowserLogs
@@ -984,7 +984,7 @@ const value = await I.grabCssPropertyFrom('h3', 'font-weight');
 Returns **[Promise][14]<[string][6]>** CSS value
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### grabCssPropertyFromAll
@@ -1004,7 +1004,7 @@ const values = await I.grabCssPropertyFromAll('h3', 'font-weight');
 Returns **[Promise][14]<[Array][16]<[string][6]>>** CSS value
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### grabCurrentUrl
@@ -1133,7 +1133,7 @@ Returns **[Promise][14]<[number][11]>** number of visible elements
 
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### grabPageScrollPosition
@@ -1199,7 +1199,7 @@ If multiple elements found returns first element.
 Returns **[Promise][14]<[string][6]>** attribute value
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### grabTextFromAll
@@ -1218,7 +1218,7 @@ let pins = await I.grabTextFromAll('#pin li');
 Returns **[Promise][14]<[Array][16]<[string][6]>>** attribute value
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### grabTitle
@@ -1338,7 +1338,7 @@ I.moveCursorTo('#submit', 5,5);
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### openNewTab
@@ -1501,7 +1501,7 @@ I.rightClick('Click me', '.context');
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### saveElementScreenshot
@@ -1595,7 +1595,7 @@ I.see('Register', {css: 'form.register'}); // use strict locator
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### seeAttributesOnElements
@@ -1614,7 +1614,7 @@ I.seeAttributesOnElements('//form', { method: "post"});
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### seeCheckboxIsChecked
@@ -1663,7 +1663,7 @@ I.seeCssPropertiesOnElements('h3', { 'font-weight': "bold"});
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### seeCurrentUrlEquals
@@ -1699,7 +1699,7 @@ I.seeElement('#modal');
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### seeElementInDOM
@@ -1810,7 +1810,7 @@ I.seeNumberOfElements('#submitBtn', 1);
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### seeNumberOfVisibleElements
@@ -1830,7 +1830,7 @@ I.seeNumberOfVisibleElements('.buttons', 3);
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### seeTextEquals
@@ -2211,7 +2211,7 @@ I.waitForElement('.btn.continue', 5); // wait for 5 secs
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### waitForEnabled
@@ -2370,7 +2370,7 @@ I.waitForVisible('#popup');
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### waitInUrl
@@ -2405,7 +2405,7 @@ I.waitNumberOfVisibleElements('a', 3);
 Returns **void** automatically synchronized promise through #recorder
 
 
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports [React locators](/react#locators)
 
 
 ### waitToHide
@@ -2442,7 +2442,7 @@ Returns **void** automatically synchronized promise through #recorder
 
 [1]: https://github.com/GoogleChrome/puppeteer
 
-[2]: https://codecept.io/helpers/Puppeteer-firefox
+[2]: /helpers/puppeteer-firefox
 
 [3]: https://chromedevtools.github.io/devtools-protocol/#how-do-i-access-the-browser-target
 
@@ -2474,7 +2474,7 @@ Returns **void** automatically synchronized promise through #recorder
 
 [17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
 
-[18]: https://codecept.io/helpers/FileSystem
+[18]: /helpers/file-system
 
 [19]: https://pptr.dev/guides/network-interception
 
