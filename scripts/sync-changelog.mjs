@@ -42,7 +42,7 @@ function normalizeFrontmatter(content) {
     if (titleMatch) title = titleMatch[1].trim();
   }
 
-  const frontmatter = ['---', `title: ${title}`, 'slug: changelog', '---', ''].join('\n');
+  const frontmatter = ['---', `title: ${title}`, '---', ''].join('\n');
   return `${frontmatter}${trimToLatestReleases(body).trimStart()}`;
 }
 

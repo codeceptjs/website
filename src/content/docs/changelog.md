@@ -1,13 +1,13 @@
-﻿---
-title: Releases
-slug: changelog
 ---
+title: Releases
+---
+# Releases
 
 ## 3.7.4
 
-вќ¤пёЏ Thanks all to those who contributed to make this release! вќ¤пёЏ
+❤️ Thanks all to those who contributed to make this release! ❤️
 
-рџ›©пёЏ _Features_
+🛩️ _Features_
 
 - **Test Suite Shuffling**: Randomize test execution order to discover test dependencies and improve test isolation ([#5051](https://github.com/codeceptjs/CodeceptJS/issues/5051)) - by **[NivYarmus](https://github.com/NivYarmus)**
 
@@ -31,7 +31,7 @@ slug: changelog
   {"value":"user@example.com"}  // Structured JSON response
   ```
 
-  рџђ› _Bug Fixes_
+  🐛 _Bug Fixes_
 
 - **Playwright Session Traces**: Fixed trace file naming convention and improved error handling for multi-session test scenarios ([#5073](https://github.com/codeceptjs/CodeceptJS/issues/5073)) - by **[julien-ft-64](https://github.com/julien-ft-64)** **[kobenguyent](https://github.com/kobenguyent)**
 
@@ -119,7 +119,7 @@ slug: changelog
 
   _Ensures every failed test keeps its own screenshot for easier debugging_
 
-рџ“– _Documentation_
+📖 _Documentation_
 
 - Fixed Docker build issues and improved container deployment process ([#4980](https://github.com/codeceptjs/CodeceptJS/issues/4980)) - by **[thomashohn](https://github.com/thomashohn)**
 - Updated dependency versions to maintain security and compatibility ([#4957](https://github.com/codeceptjs/CodeceptJS/issues/4957), [#4950](https://github.com/codeceptjs/CodeceptJS/issues/4950), [#4943](https://github.com/codeceptjs/CodeceptJS/issues/4943)) - by **[thomashohn](https://github.com/thomashohn)**
@@ -127,14 +127,14 @@ slug: changelog
 
 ## 3.7.3
 
-вќ¤пёЏ Thanks all to those who contributed to make this release! вќ¤пёЏ
+❤️ Thanks all to those who contributed to make this release! ❤️
 
-рџ›©пёЏ _Features_
+🛩️ _Features_
 
 - feat(cli): improve info command to return installed browsers ([#4890](https://github.com/codeceptjs/CodeceptJS/issues/4890)) - by **[kobenguyent](https://github.com/kobenguyent)**
 
 ```
-вћњ  helloworld npx codeceptjs info
+➜  helloworld npx codeceptjs info
 Environment information:
 
 codeceptVersion:  "3.7.2"
@@ -149,7 +149,7 @@ helpers:  {
 ...
 ```
 
-рџђ› _Bug Fixes_
+🐛 _Bug Fixes_
 
 - fix: resolving path inconsistency in container.js and appium.js ([#4866](https://github.com/codeceptjs/CodeceptJS/issues/4866)) - by **[mjalav](https://github.com/mjalav)**
 - fix: broken screenshot links in mochawesome reports ([#4889](https://github.com/codeceptjs/CodeceptJS/issues/4889)) - by **[kobenguyent](https://github.com/kobenguyent)**
@@ -158,13 +158,13 @@ helpers:  {
 
 ## 3.7.2
 
-вќ¤пёЏ Thanks all to those who contributed to make this release! вќ¤пёЏ
+❤️ Thanks all to those who contributed to make this release! ❤️
 
-рџ›©пёЏ _Features_
+🛩️ _Features_
 
 - feat(playwright): Clear cookie by name ([#4693](https://github.com/codeceptjs/CodeceptJS/issues/4693)) - by **[ngraf](https://github.com/ngraf)**
 
-рџђ› _Bug Fixes_
+🐛 _Bug Fixes_
 
 - fix(stepByStepReport): no records html is generated when running with run-workers ([#4638](https://github.com/codeceptjs/CodeceptJS/issues/4638))
 - fix(webdriver): bidi error in log with webdriver ([#4850](https://github.com/codeceptjs/CodeceptJS/issues/4850))
@@ -173,7 +173,7 @@ helpers:  {
 - fix(webdriver): grab browser logs using bidi protocol ([#4754](https://github.com/codeceptjs/CodeceptJS/issues/4754))
 - fix(webdriver): screenshots for sessions ([#4748](https://github.com/codeceptjs/CodeceptJS/issues/4748))
 
-рџ“– _Documentation_
+📖 _Documentation_
 
 - fix(docs): mask sensitive data ([#4636](https://github.com/codeceptjs/CodeceptJS/issues/4636)) - by **[gkushang](https://github.com/gkushang)**
 
@@ -185,9 +185,9 @@ helpers:  {
 
 This release introduces major new features and internal refactoring. It is an important step toward the 4.0 release planned soon, which will remove all deprecations introduced in 3.7.
 
-рџ›©пёЏ _Features_
+🛩️ _Features_
 
-### рџ”Ґ **Native Element Functions**
+### 🔥 **Native Element Functions**
 
 A new [Els API](/els) for direct element interactions has been introduced. This API provides low-level element manipulation functions for more granular control over element interactions and assertions:
 
@@ -230,7 +230,7 @@ Scenario('element functions demo', async ({ I }) => {
 
 [Els](/els) functions expose the native API of Playwright, WebDriver, and Puppeteer helpers. The actual `el` API will differ depending on which helper is used, which affects test code interoperability.
 
-### рџ”® **Effects introduced**
+### 🔮 **Effects introduced**
 
 [Effects](/effects) is a new concept that encompasses all functions that can modify scenario flow. These functions are now part of a single module. Previously, they were used via plugins like `tryTo` and `retryTo`. Now, it is recommended to import them directly:
 
@@ -254,7 +254,7 @@ Scenario(..., ({ I }) => {
 
 Previously `tryTo` and `retryTo` were available globally via plugins. This behavior is deprecated as of 3.7 and will be removed in 4.0. Import these functions via effects instead. Similarly, `within` will be moved to `effects` in 4.0.
 
-### вњ… `check` command added
+### ✅ `check` command added
 
 ```
 npx codeceptjs check
@@ -282,22 +282,22 @@ steps:
     run: npx codeceptjs run-workers 4
 ```
 
-### рџ‘ЁвЂЌрџ”¬ **analyze plugin introduced**
+### 👨‍🔬 **analyze plugin introduced**
 
-This [AI plugin](/plugins#analyze) analyzes failures in test runs and provides brief summaries. For more than 5 failures, it performs cluster analysis and aggregates failures into groups, attempting to find common causes. It is recommended to use Deepseek R1 model or OpenAI o3 for better reasoning on clustering:
+This [AI plugin](./plugins#analyze) analyzes failures in test runs and provides brief summaries. For more than 5 failures, it performs cluster analysis and aggregates failures into groups, attempting to find common causes. It is recommended to use Deepseek R1 model or OpenAI o3 for better reasoning on clustering:
 
 ```js
-вЂў SUMMARY The test failed because the expected text "Sign in" was not found on the page, indicating a possible issue with HTML elements or their visibility.
-вЂў ERROR expected web application to include "Sign in"
-вЂў CATEGORY HTML / page elements (not found, not visible, etc)
-вЂў URL http://127.0.0.1:3000/users/sign_in
+• SUMMARY The test failed because the expected text "Sign in" was not found on the page, indicating a possible issue with HTML elements or their visibility.
+• ERROR expected web application to include "Sign in"
+• CATEGORY HTML / page elements (not found, not visible, etc)
+• URL http://127.0.0.1:3000/users/sign_in
 ```
 
 For fewer than 5 failures, they are analyzed individually. If a visual recognition model is connected, AI will also scan screenshots to suggest potential failure causes (missing button, missing text, etc).
 
-This plugin should be paired with the newly added [`pageInfo` plugin](/plugins#pageinfo) which stores important information like URL, console logs, and error classes for further analysis.
+This plugin should be paired with the newly added [`pageInfo` plugin](./plugins/#pageInfo) which stores important information like URL, console logs, and error classes for further analysis.
 
-### рџ‘ЁвЂЌрџ’ј **autoLogin plugin** renamed to **auth plugin**
+### 👨‍💼 **autoLogin plugin** renamed to **auth plugin**
 
 [`auth`](/plugins#auth) is the new name for the autoLogin plugin and aims to solve common authorization issues. In 3.7 it can use Playwright's storage state to load authorization cookies in a browser on start. So if a user is already authorized, a browser session starts with cookies already loaded for this user. If you use Playwright, you can enable this behavior using the `loginAs` method inside a `BeforeSuite` hook:
 
@@ -325,7 +325,7 @@ Scenario('my test linked to Jira', meta: { issue: 'TST-123' }, () => {
 
 By default, Playwright helpers add browser and window size as meta information to tests.
 
-### рџ‘ў Custom Steps API
+### 👢 Custom Steps API
 
 Custom Steps or Sections API introduced to group steps into sections:
 
@@ -396,7 +396,7 @@ Scenario(..., ({ I }) =>  // ...
   //....
 ```
 
-### рџҐѕ Step Options
+### 🥾 Step Options
 
 Better syntax to set general step options for specific tests.
 
@@ -466,19 +466,19 @@ Object for `suite` is also injected for all Scenario and hooks.
 ### Notable changes
 
 - Load official Gherkin translations into CodeceptJS. See [#4784](https://github.com/codeceptjs/CodeceptJS/issues/4784) by **[ebo-zig](https://github.com/ebo-zig)**
-- рџ‡ірџ‡± `NL` translation introduced by **[ebo-zig](https://github.com/ebo-zig)** in [#4784](https://github.com/codeceptjs/CodeceptJS/issues/4784):
+- 🇳🇱 `NL` translation introduced by **[ebo-zig](https://github.com/ebo-zig)** in [#4784](https://github.com/codeceptjs/CodeceptJS/issues/4784):
 - **[Playwright]** Improved experience to highlight and print elements in debug mode
 - `codeceptjs run` fails on CI if no tests were executed. This helps to avoid false positive checks. Use `DONT_FAIL_ON_EMPTY_RUN` env variable to disable this behavior
 - Various console output improvements
 - AI suggested fixes from `heal` plugin (which heals failing tests on the fly) shown in `run-workers` command
 - `plugin/standatdActingHelpers` replaced with `Container.STANDARD_ACTING_HELPERS`
 
-### рџђ› _Bug Fixes_
+### 🐛 _Bug Fixes_
 
 - Fixed timeouts for `BeforeSuite` and `AfterSuite`
 - Fixed stucking process on session switch
 
-### рџЋ‡ Internal Refactoring
+### 🎇 Internal Refactoring
 
 This section is listed briefly. A new dedicated page for internal API concepts will be added to documentation
 
@@ -509,23 +509,23 @@ This section is listed briefly. A new dedicated page for internal API concepts w
 
 ## 3.6.10
 
-вќ¤пёЏ Thanks all to those who contributed to make this release! вќ¤пёЏ
+❤️ Thanks all to those who contributed to make this release! ❤️
 
-рџђ› _Bug Fixes_
+🐛 _Bug Fixes_
 fix(cli): missing failure counts when there is failedHooks ([#4633](https://github.com/codeceptjs/CodeceptJS/issues/4633)) - by **[kobenguyent](https://github.com/kobenguyent)**
 
 ## 3.6.9
 
-вќ¤пёЏ Thanks all to those who contributed to make this release! вќ¤пёЏ
+❤️ Thanks all to those who contributed to make this release! ❤️
 
-рџђ› _Hot Fixes_
+🐛 _Hot Fixes_
 fix: could not run tests due to missing `invisi-data` lib - by **[kobenguyent](https://github.com/kobenguyent)**
 
 ## 3.6.8
 
-вќ¤пёЏ Thanks all to those who contributed to make this release! вќ¤пёЏ
+❤️ Thanks all to those who contributed to make this release! ❤️
 
-рџ›©пёЏ _Features_
+🛩️ _Features_
 
 - feat(cli): mask sensitive data in logs ([#4630](https://github.com/codeceptjs/CodeceptJS/issues/4630)) - by **[kobenguyent](https://github.com/kobenguyent)**
 
@@ -540,8 +540,8 @@ export const config: CodeceptJS.MainConfig = {
 
     I login {"username":"helloworld@test.com","password": "****"}
       I send post request "https://localhost:8000/login", {"username":"helloworld@test.com","password": "****"}
-      вЂє **[Request]** {"baseURL":"https://localhost:8000/login","method":"POST","data":{"username":"helloworld@test.com","password": "****"},"headers":{}}
-      вЂє **[Response]** {"access-token": "****"}
+      › **[Request]** {"baseURL":"https://localhost:8000/login","method":"POST","data":{"username":"helloworld@test.com","password": "****"},"headers":{}}
+      › **[Response]** {"access-token": "****"}
 ```
 
 - feat(REST): DELETE request supports payload ([#4493](https://github.com/codeceptjs/CodeceptJS/issues/4493)) - by **[schaudhary111](https://github.com/schaudhary111)**
@@ -550,7 +550,7 @@ export const config: CodeceptJS.MainConfig = {
 I.sendDeleteRequestWithPayload('/api/users/1', { author: 'john' })
 ```
 
-рџђ› _Bug Fixes_
+🐛 _Bug Fixes_
 
 - fix(playwright): Different behavior of see* and waitFor* when used in within ([#4557](https://github.com/codeceptjs/CodeceptJS/issues/4557)) - by **[kobenguyent](https://github.com/kobenguyent)**
 - fix(cli): dry run returns no tests when using a regex grep ([#4608](https://github.com/codeceptjs/CodeceptJS/issues/4608)) - by **[kobenguyent](https://github.com/kobenguyent)**
@@ -575,15 +575,15 @@ When you don't know it, it can cause a lot of pain, wondering why your test fail
 - fix(appium): issue with async on runOnIos and runOnAndroid ([#4525](https://github.com/codeceptjs/CodeceptJS/issues/4525)) - by **[kobenguyent](https://github.com/kobenguyent)**
 - fix: push ws messages to array ([#4513](https://github.com/codeceptjs/CodeceptJS/issues/4513)) - by **[kobenguyent](https://github.com/kobenguyent)**
 
-рџ“– _Documentation_
+📖 _Documentation_
 
 - fix(docs): typo in ai.md ([#4501](https://github.com/codeceptjs/CodeceptJS/issues/4501)) - by **[tomaculum](https://github.com/tomaculum)**
 
 ## 3.6.6
 
-вќ¤пёЏ Thanks all to those who contributed to make this release! вќ¤пёЏ
+❤️ Thanks all to those who contributed to make this release! ❤️
 
-рџ›©пёЏ _Features_
+🛩️ _Features_
 
 - feat(locator): add withAttrEndsWith, withAttrStartsWith, withAttrContains ([#4334](https://github.com/codeceptjs/CodeceptJS/issues/4334)) - by **[Maksym-Artemenko](https://github.com/Maksym-Artemenko)**
 - feat: soft assert ([#4473](https://github.com/codeceptjs/CodeceptJS/issues/4473)) - by **[kobenguyent](https://github.com/kobenguyent)**
@@ -614,7 +614,7 @@ I.flushSoftAssertions() // Throws an error if any soft assertions have failed. T
   - run workers command
     ![Screenshot 2024-09-02 at 15 24 53](https://github.com/user-attachments/assets/efff0312-1229-44b6-a94f-c9b9370b9a64)
 
-рџђ› _Bug Fixes_
+🐛 _Bug Fixes_
 
 - fix(AI): minor AI improvements - by **[DavertMik](https://github.com/DavertMik)**
 - fix(AI): add missing await in AI.js ([#4486](https://github.com/codeceptjs/CodeceptJS/issues/4486)) - by **[tomaculum](https://github.com/tomaculum)**
@@ -640,15 +640,15 @@ I.flushSoftAssertions() // Throws an error if any soft assertions have failed. T
 }
 ```
 
-рџ“– _Documentation_
+📖 _Documentation_
 
 - doc(AI): minor AI improvements - by **[DavertMik](https://github.com/DavertMik)**
 
 ## 3.6.5
 
-вќ¤пёЏ Thanks all to those who contributed to make this release! вќ¤пёЏ
+❤️ Thanks all to those who contributed to make this release! ❤️
 
-рџ›©пёЏ _Features_
+🛩️ _Features_
 
 - feat(helper): playwright > wait for disabled ([#4412](https://github.com/codeceptjs/CodeceptJS/issues/4412)) - by **[kobenguyent](https://github.com/kobenguyent)**
 
@@ -667,12 +667,12 @@ Element can be located by CSS or XPath.
  **[param](https://github.com/param)** {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator. **[param](https://github.com/param)** {number} [sec=1] (optional) time in seconds to wait, 1 by default. **[returns](https://github.com/returns)** {void} automatically synchronized promise through #recorder
 ```
 
-рџђ› _Bug Fixes_
+🐛 _Bug Fixes_
 
 - fix(AI): AI is not triggered ([#4422](https://github.com/codeceptjs/CodeceptJS/issues/4422)) - by **[kobenguyent](https://github.com/kobenguyent)**
 - fix(plugin): stepByStep > report doesn't sync properly ([#4413](https://github.com/codeceptjs/CodeceptJS/issues/4413)) - by **[kobenguyent](https://github.com/kobenguyent)**
 - fix: Locator > Unsupported pseudo selector 'has' ([#4448](https://github.com/codeceptjs/CodeceptJS/issues/4448)) - by **[anils92](https://github.com/anils92)**
 
-рџ“– _Documentation_
+📖 _Documentation_
 
 - docs: setup azure open ai using bearer token ([#4434](https://github.com/codeceptjs/CodeceptJS/issues/4434)) - by **[kobenguyent](https://github.com/kobenguyent)**
