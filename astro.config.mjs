@@ -11,6 +11,7 @@ const options = {
 };
 
 export default defineConfig({
+    site: 'https://codecept.io',
     integrations: [
         starlight({
             expressiveCode: {
@@ -51,7 +52,8 @@ export default defineConfig({
                                     {label: 'Testing with Playwright', link: 'playwright'},
                                     {label: 'Testing with WebDriver', link: 'webdriver'},
                                     {label: 'Testing with Puppeteer', link: 'puppeteer'},
-                                    {label: 'Testing with TestCafe', link: 'testcafe'},
+                                    {label: 'Testing React Applications', link: 'react'},
+                                    {label: 'Testing Vue Apps', link: 'vue'},
                                 ],
                             },
                             {
@@ -65,10 +67,10 @@ export default defineConfig({
                                 label: 'Organizing Tests',
                                 items: [
                                     {label: 'Page Objects', link: 'pageobjects'},
-                                    {label: 'TypeScript', link: 'typescript'},
                                     {label: 'Data Management', link: 'data'},
                                     {label: 'Behavior Driven Development', link: 'bdd'},
                                     {label: 'Locators', link: 'locators'},
+                                    {label: 'Shadow DOM', link: 'shadow'},
                                     {label: 'Translation', link: 'translation'},
                                     {label: 'Best Practices', link: 'best'},
                                 ],
@@ -84,45 +86,56 @@ export default defineConfig({
                                     {label: 'Plugins', link: 'plugins'},
                                     {label: 'Effects', link: 'effects'},
                                     {label: 'Element Access (els)', link: 'els'},
-                                    {label: 'Shadow DOM', link: 'shadow'},
+                                    {label: 'WebElement API', link: 'web-element'},
                                 ],
                             },
                             {
                                 label: 'Advanced Usage',
                                 items: [
                                     {label: 'Advanced Usage', link: 'advanced'},
+                                    {label: 'TypeScript', link: 'typescript'},
+                                    {label: 'ESM Migration', link: 'esm-migration'},
                                     {label: 'CodeceptUI', link: 'ui'},
                                     {label: 'Bootstrap', link: 'bootstrap'},
                                     {label: 'Reporters', link: 'reports'},
-                                    {label: 'Continuous Integration', link: 'continuous-integration'},
+                                    {label: 'Docker', link: 'docker'},
                                     {label: 'Parallel Execution', link: 'parallel'},
+                                    {label: 'Retry Mechanisms', link: 'retry'},
                                     {label: 'Visual Testing', link: 'visual'},
                                     {label: 'Email Testing', link: 'email'},
                                     {label: 'Secrets', link: 'secrets'},
                                     {label: 'Extending', link: 'hooks'},
                                     {label: 'Concepts', link: 'internal-api'},
-                                    {label: 'Testing React Applications', link: 'react'},
                                     {label: 'Testing with AI', link: 'ai'},
+                                    {label: 'MCP Server', link: 'mcp'},
                                     {label: 'Self-Healing Tests', link: 'heal'},
-                                    {label: 'Testing with Protractor', link: 'angular'},
-                                    {label: 'Testing Vue Apps', link: 'vue'},
+                                ],
+                            },
+                            {
+                                label: 'Resources',
+                                items: [
+                                    {label: 'Tutorial', link: 'tutorial'},
+                                    {label: 'Examples', link: 'examples'},
+                                    {label: 'Videos', link: 'videos'},
+                                    {label: 'Books & Posts', link: 'books'},
+                                    {label: 'Community Helpers', link: 'helpers/community-helpers'},
+                                    {label: 'Changelog', link: 'changelog'},
                                 ],
                             },
                         ],
                     },
 
                     {
+                        id: 'helpers',
                         label: 'Helpers',
                         link: '/helpers/playwright/',
                         items: [
                             {
                                 label: 'Web Testing',
                                 items: [
+                                    {label: 'Playwright', link: 'helpers/playwright'},
                                     {label: 'WebDriver', link: 'helpers/web-driver'},
                                     {label: 'Puppeteer', link: 'helpers/puppeteer'},
-                                    {label: 'Puppeteer Firefox', link: 'helpers/puppeteer-firefox'},
-                                    {label: 'TestCafe', link: 'helpers/test-cafe'},
-                                    {label: 'Protractor (Legacy)', link: 'helpers/protractor'},
                                 ],
                             },
                             {
@@ -140,41 +153,38 @@ export default defineConfig({
                                     {label: 'GraphQL', link: 'helpers/graph-ql'},
                                     {label: 'GraphQLDataFactory', link: 'helpers/graph-ql-data-factory'},
                                     {label: 'JSONResponse', link: 'helpers/json-response'},
-                                    {label: 'MockRequest', link: 'helpers/mock-request'},
                                 ],
                             },
                             {
                                 label: 'Other Helpers',
                                 items: [
                                     {label: 'OpenAI', link: 'helpers/open-ai'},
+                                    {label: 'AI', link: 'helpers/ai'},
                                     {label: 'FileSystem', link: 'helpers/file-system'},
                                     {label: 'Expect', link: 'helpers/expect'},
                                     {label: 'SoftExpectHelper', link: 'helpers/soft-expect-helper'},
+                                    {label: 'MockRequest', link: 'helpers/mock-request'},
                                     {label: 'MockServer', link: 'helpers/mock-server'},
+                                    {label: 'Polly', link: 'helpers/polly'},
+                                    {label: 'Mochawesome', link: 'helpers/mochawesome'},
                                     {label: 'Custom Helpers', link: 'custom-helpers'},
-                                    {label: 'Community Helpers', link: 'helpers/community-helpers'},
                                 ],
                             },
                         ]
                     },
                     {
-                        label: 'Wiki',
-                        link: '/wiki/home/',
+                        id: 'blog',
+                        label: 'Blog',
+                        link: '/blog/my-first-blog-post/',
                         items: [
-                            {label: 'Wiki', autogenerate: {directory: 'wiki/'}},
-                        ],
-                    },
-                    {
-                        label: 'blog',
-                        link: '/blog',
-                        items: [
-                            {label: 'blog', autogenerate: {directory: 'blog/'}},
+                            {label: 'Blog', autogenerate: {directory: 'blog/'}},
                         ],
                     },
                 ], {
                     exclude: ['/404'],
                     topics: {
-                        documentation: ['/mobile-react-native-locators'],
+                        documentation: ['/mobile-react-native-locators', '/installation', '/continuous-integration', '/internal-test-server'],
+                        helpers: ['/helpers/puppeteer-firefox', '/helpers/protractor'],
                     },
                 }),
                 starlightScrollToTop({
@@ -204,4 +214,5 @@ export default defineConfig({
         ],
     },
 });
+
 

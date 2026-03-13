@@ -1,4 +1,4 @@
-Performs a double-click on an element matched by link|button|label|CSS or XPath.
+﻿Performs a double-click on an element matched by link|button|label|CSS or XPath.
 Context can be specified as second parameter to narrow search.
 
 ```js
@@ -6,8 +6,11 @@ I.doubleClick('Edit');
 I.doubleClick('Edit', '.actions');
 I.doubleClick({css: 'button.accept'});
 I.doubleClick('.btn.edit');
+// by ARIA locator
+I.doubleClick({ aria: 'Submit' });
 ```
 
-@param {CodeceptJS.LocatorOrString} locator clickable link or button located by text, or any element located by CSS|XPath|strict locator.
+@param {CodeceptJS.LocatorOrString} locator clickable link or button located by text, or any element located by CSS|XPath|ARIA|strict locator.
 @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element to search in CSS|XPath|Strict locator.
 @returns {void} automatically synchronized promise through #recorder
+

@@ -1,8 +1,7 @@
----
+﻿---
 title: Self-Healing Tests
 ---
 
-# Self-Healing Tests
 
 Browser and Mobile tests can fail for vareity of reasons. However, on a big projects there are about 5-10 causes of flaky tests. The more you work and understand your end-to-end tests the more you learn patterns of failure. And after the research you understand how a test could have been fixed: to reload a page, to click that button once again, restart API request. If by looking into a failure you understand what, as a user, you would do to fix that error, then maybe you could teach your tests to heal themselves.
 
@@ -65,7 +64,7 @@ or
 npx codeceptjs gr
 ```
 
-this will generate `recipes.js` (or `recipes.ts`) in the root directory. Provided default recipe include [AI healing](#ai-healing) and `clickAndType` recipe that replaces `fillField` with `click`+`type`. Use them as examples to write your own heal recipes that will fit for application you are testing.
+this will generate `recipes.js` (or `recipes.ts`) in the root directory. Provided default recipe include [AI healing](#ai-healing-recipe) and `clickAndType` recipe that replaces `fillField` with `click`+`type`. Use them as examples to write your own heal recipes that will fit for application you are testing.
 
 Require `recipes` file and add `heal` plugin to `codecept.conf` file:
 
@@ -153,7 +152,7 @@ Let's briefly sum up the properties of a recipe:
 * `fn` - a function to be applied for healing. It takes all context params: `test`, `step`, `error`, `prevSteps` and returns return either a function or a markdown text with recipes (used by AI healers). If no recipes match the context should not return anything;
 
 
-## AI Healing
+## AI Healing Recipe
 
 AI can be used to heal failed tests. Large Language Models can analyze HTML of a failed test and provide a suggestion what actions should be performed instead. This can be helpful when running tests on CI as AI can make basic decisions to stabilize failing tests. 
 
@@ -185,6 +184,6 @@ heal.addRecipe('ai', {
 
 As you use, it will be activated on failed steps and will use HTML of a page as additional information. The prompt, error, and the HTML will be sent to AI provider you configured. 
 
-Learn more how you can [configure AI provider](./ai).
+Provider setup is documented in [Testing with AI](/ai#set-up-ai-provider).
 
 To activate the AI healer don't forget to run tests with `--ai` flag.

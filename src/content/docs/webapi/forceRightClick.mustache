@@ -1,4 +1,4 @@
-Emulates right click on an element.
+﻿Emulates right click on an element.
 Unlike normal click instead of sending native event, emulates a click with JavaScript.
 This works on hidden, animated or inactive elements as well.
 
@@ -11,8 +11,11 @@ The second parameter is a context (CSS or XPath locator) to narrow the search.
 ```js
 // simple link
 I.forceRightClick('Menu');
+// by ARIA locator
+I.forceRightClick({ aria: 'Submit' });
 ```
 
-@param {CodeceptJS.LocatorOrString} locator clickable link or button located by text, or any element located by CSS|XPath|strict locator.
+@param {CodeceptJS.LocatorOrString} locator clickable link or button located by text, or any element located by CSS|XPath|ARIA|strict locator.
 @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element to search in CSS|XPath|Strict locator.
 @returns {void} automatically synchronized promise through #recorder
+

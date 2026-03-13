@@ -1,8 +1,7 @@
----
+﻿---
 title: Testing with WebDriver
 ---
 
-# Testing with WebDriver
 
 How does your client, manager, or tester, or any other non-technical person, know your web application is working? By opening the browser, accessing a site, clicking on links, filling in the forms, and actually seeing the content on a web page.
 
@@ -20,7 +19,7 @@ Let's clarify the terms:
 
 We use [webdriverio](https://webdriver.io) library to run tests over WebDriver.
 
-To proceed you need to have [CodeceptJS installed](/quickstart#use-webdriver-for-classical-selenium-setup) and `WebDriver` helper selected.
+To proceed you need to have [CodeceptJS installed](/quickstart#init) and `WebDriver` helper selected.
 
 Selenium WebDriver may be complicated from start, as it requires following tools to be installed and started.
 
@@ -50,9 +49,9 @@ exports.config = {
 }
 ```
 
-> ⚠ It is not recommended to use wdio plugin & selenium-standalone when running tests in parallel. Consider **switching to Selenoid** if you need parallel run or using cloud services.
+> Warning: It is not recommended to use wdio plugin & selenium-standalone when running tests in parallel. Consider **switching to Selenoid** if you need parallel run or using cloud services.
 
-🛩️ With the release of WebdriverIO version v8.14.0, and onwards, all driver management hassles are now a thing of the past 🙌. Read more [here](https://webdriver.io/blog/2023/07/31/driver-management/).
+With the release of WebdriverIO version v8.14.0 and onwards, most driver-management hassles are now a thing of the past. Read more [here](https://webdriver.io/blog/2023/07/31/driver-management/).
 One of the significant advantages of this update is that you can now get rid of any driver services you previously had to manage, such as
 `wdio-chromedriver-service`, `wdio-geckodriver-service`, `wdio-edgedriver-service`, `wdio-safaridriver-service`, and even `@wdio/selenium-standalone-service`.
 
@@ -135,7 +134,7 @@ keepBrowserState: true,
 keepCookies: true,
 ```
 
-> ▶ More config options available on [WebDriver helper reference](/helpers/web-driver#configuration)
+> More config options available on [WebDriver helper reference](/helpers/web-driver#configuration)
 
 ### ChromeDriver without Selenium
 
@@ -154,7 +153,7 @@ path: '/',
 Browsers can be executed in Docker containers. This is useful when testing on Continous Integration server.
 We recommend using [Selenoid](https://aerokube.com/selenoid/) to run browsers in container.
 
-CodeceptJS has [Selenoid plugin](/helpers/web-driver#selenoid) which can automagically load browser container setup.
+CodeceptJS has [Selenoid plugin](/helpers/web-driver#selenoid-options) which can automagically load browser container setup.
 
 
 ### Headless Mode
@@ -199,7 +198,7 @@ WebDriver protocol works over HTTP, so you need to have a Selenium Server to be 
 
 By default, those parameters are set to connect to local Selenium Server, but they should be changed if you want to run tests via [Cloud Providers](/helpers/web-driver#cloud-providers). You may also need `user` and `key` parameters to authenticate on cloud service.
 
-There are also [browser and platform specific capabilities](https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities). Services like SauceLabs, BrowserStack or browser vendors can provide their own specific capabilities for more tuning.
+There are also [browser and platform specific capabilities](https://www.selenium.dev/documentation/webdriver/drivers/options/). Services like SauceLabs, BrowserStack or browser vendors can provide their own specific capabilities for more tuning.
 
 Here is a sample BrowserStack config for running tests on iOS mobile browser:
 
@@ -267,9 +266,9 @@ Tests consist with a scenario of user's action taken on a page. The most widely 
 * `see`, `dontSee` - to check for a text on a page
 * `seeElement`, `dontSeeElement` - to check for elements on a page
 
-> ℹ  All actions are listed in [WebDriver helper reference](/helpers/web-driver/).*
+> Note: All actions are listed in [WebDriver helper reference](/helpers/web-driver/).*
 
-All actions which interact with elements **support CSS and XPath locators**. Actions like `click` or `fillField` by locate elements by their name or value on a page:
+All actions which interact with elements **support CSS, XPath, and ARIA locators**. Actions like `click` or `fillField` by locate elements by their name or value on a page:
 
 ```js
 // search for link or button
@@ -278,6 +277,8 @@ I.click('Login');
 I.fillField('Name', 'Miles');
 // we can use input name
 I.fillField('user[email]','miles@davis.com');
+// or locate by aria-label
+I.click({ aria: 'Sign in' });
 ```
 
 You can also specify the exact locator type with strict locators:
@@ -311,7 +312,7 @@ npx codeceptjs run --steps
 
 After a page is opened a full control of a browser is given to a terminal. Type in different commands such as `click`, `see`, `fillField` to write the test. A successful commands will be saved to `./output/cli-history` file and can be copied into a test.
 
-> ℹ  All actions are listed in [WebDriver helper reference](/helpers/web-driver).
+> Note: All actions are listed in [WebDriver helper reference](/helpers/web-driver).
 
 An interactive shell output may look like this:
 
@@ -342,7 +343,7 @@ Scenario('create todo item', ({ I }) => {
 });
 ```
 
-> [▶ Working example of CodeceptJS WebDriver tests](https://github.com/DavertMik/codeceptjs-webdriver-example) for TodoMVC application.
+> [Working example of CodeceptJS WebDriver tests](https://github.com/DavertMik/codeceptjs-webdriver-example) for TodoMVC application.
 
 WebDriver helper supports standard [CSS/XPath and text locators](/locators) as well as non-trivial [React locators](/react) and [Shadow DOM](/shadow).
 
@@ -396,7 +397,7 @@ await eachElement(
 );
 ```
 
-> ℹ Learn more about [eachElement plugin](/els#eachelement)
+> Note: Learn more about [eachElement plugin](/els#eachelement)
 
 
 ## Waiting
@@ -478,12 +479,12 @@ To develop tests it's fine to use local Selenium Server and window mode. Setting
 There are following options available:
 
 * Use headless Chrome or Firefox.
-* Use [Selenoid](/helpers/web-driver#selenoid) to run browsers inside Docker containers.
+* Use [Selenoid](/helpers/web-driver#selenoid-options) to run browsers inside Docker containers.
 * Use paid [cloud services (SauceLabs, BrowserStack, TestingBot)](/helpers/web-driver#cloud-providers).
 
 ## Video Recording
 
-When [Selenoid Plugin](/helpers/web-driver#selenoid) is enabled video can be automatically recorded for each test.
+When [Selenoid Plugin](/helpers/web-driver#selenoid-options) is enabled video can be automatically recorded for each test.
 
 ## Auto Login
 
@@ -500,7 +501,7 @@ Scenario('do something with logged in user', ({ I, login }) => {
 
 With `autoLogin` plugin you can save cookies into a file and reuse same session on different runs.
 
-> [▶ How to set up autoLogin plugin](/plugins#auth)
+> [How to set up autoLogin plugin](/plugins#auth)
 
 
 ## Multiple Windows
@@ -647,7 +648,7 @@ exports.config = {
 }
 ```
 
-> ℹ  See [Custom Helper](/custom-helpers) guide to see more examples.
+> Note: See [Custom Helper](/custom-helpers) guide to see more examples.
 
 While implementing custom actions using WebDriver API please note that, there is two versions of protocol: WebDriver and JSON Wire. Depending on a browser version one of those protocols can be used. We can't know for sure which protocol is going to used, so we will need to implement an action using both APIs.
 

@@ -1,8 +1,7 @@
----
+﻿---
 title: Parallel Execution
 ---
 
-# Parallel Execution
 
 CodeceptJS has two engines for running tests in parallel:
 
@@ -10,6 +9,9 @@ CodeceptJS has two engines for running tests in parallel:
 * `run-multiple` - which spawns a subprocess with CodeceptJS. Tests are split by files and configured in `codecept.conf.js`.
 
 Workers are faster and simpler to start, while `run-multiple` requires additional configuration and can be used to run tests in different browsers at once.
+
+Use this page for architecture, strategies, and worker-level patterns.  
+Use [Commands](/commands#run-workers) for CLI syntax reference.
 
 ## Parallel Execution by Workers
 
@@ -19,7 +21,7 @@ It is easy to run tests in parallel if you have a lots of tests and free CPU cor
 npx codeceptjs run-workers 2
 ```
 
-> ℹ Workers require NodeJS >= 11.7
+> Note: Workers require NodeJS >= 11.7
 
 This command is similar to `run`, however, steps output can't be shown in workers mode, as it is impossible to synchronize steps output from different processes.
 

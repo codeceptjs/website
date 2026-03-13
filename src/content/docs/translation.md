@@ -2,7 +2,6 @@
 title: Translation
 ---
 
-# Translation 
 
 *Unique feature of CodeceptJS: write tests in your language!*
 

@@ -21,12 +21,3 @@ import Ai from './components/ai/index.astro'
 <Testomatio />
 
 <TrustedCarousel />
-
-<script>
-    document.addEventListener('astro:before-swap', e=>{
-        const classList = document.querySelector("div.page > header")!.classList;
-        const isHome = e.to.pathname === "/";
-        classList.toggle("home-header", isHome);
-        classList.toggle("header", !isHome);
-    })
-</script>

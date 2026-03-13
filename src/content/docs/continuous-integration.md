@@ -1,10 +1,9 @@
----
+﻿---
 title: Continuous Integration
 ---
 
 <!-- this file is auto generated from CI category https://codecept.discourse.group/c/CodeceptJS-issues-in-general/ci/9 -->
 
-# Continuous Integration
 
 > Help us improve this article. [Write how did you set up CodeceptJS for CI](https://codecept.discourse.group/c/CodeceptJS-issues-in-general/ci/9) and see your post listed here!
 

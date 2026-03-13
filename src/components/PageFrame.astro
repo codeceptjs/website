@@ -132,6 +132,29 @@ const shouldRenderSidebar = hasSidebar && !is404Page;
     const activeClass = 'scrolled';
     const homeClass = 'home-page';
     let header;
+    const sidebarSelector = '#starlight__sidebar .sidebar-content a';
+
+    function normalizePath(pathname) {
+        if (!pathname || pathname === '/') return '/';
+        return pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
+    }
+
+    function syncSidebarCurrentLink() {
+        const links = document.querySelectorAll(sidebarSelector);
+        if (!links.length) return;
+
+        const currentPath = normalizePath(window.location.pathname);
+        let matched = null;
+
+        links.forEach((link) => {
+            if (!(link instanceof HTMLAnchorElement)) return;
+            link.removeAttribute('aria-current');
+            const linkPath = normalizePath(new URL(link.href, window.location.origin).pathname);
+            if (linkPath === currentPath) matched = link;
+        });
+
+        if (matched) matched.setAttribute('aria-current', 'page');
+    }
 
     function update() {
         if (!header) return;
@@ -160,6 +183,7 @@ const shouldRenderSidebar = hasSidebar && !is404Page;
 
         // Non-home pages
         update();
+        syncSidebarCurrentLink();
 
         // Prevent duplicate listeners
         window.removeEventListener('scroll', update);

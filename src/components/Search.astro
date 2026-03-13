@@ -1,23 +1,115 @@
 ---
 import "meilisearch-docsearch/css";
 const apiKey = import.meta.env.PUBLIC_MEILISEARCH_KEY;
+const searchHost = import.meta.env.PUBLIC_MEILISEARCH_HOST || 'https://search.testomat.io';
+const indexUid = import.meta.env.PUBLIC_MEILISEARCH_INDEX || 'codeceptjs';
 ---
 
 <div id="docsearch"></div>
 
-<script is:inline type="module" async define:vars={{ apiKey }}>
+<script is:inline type="module" async define:vars={{ apiKey, searchHost, indexUid }}>
 
     import { docsearch } from "https://cdn.jsdelivr.net/npm/meilisearch-docsearch@latest/dist/index.bundled.esm.js"
 
     docsearch({
         container: "#docsearch",
-        host: 'https://search.codecept.io',
+        host: searchHost,
         apiKey: apiKey,
-        indexUid: "docs",
+        indexUid: indexUid,
+    });
+
+    const PRIORITY_PATHS = ["/web-api", "/mobile-api"];
+    let rafId = 0;
+
+    const isMethodQuery = (query) => {
+        const value = query.trim();
+        if (value.length < 3 || value.includes(" ")) return false;
+        return /^(?:I\.)?[a-z][A-Za-z0-9_]*$/.test(value);
+    };
+
+    const extractMethodName = (query) => query.trim().replace(/^I\./i, "");
+
+    const buildMethodAnchorCandidates = (methodName) => {
+        const base = String(methodName || "")
+            .toLowerCase()
+            .replace(/[^a-z0-9_]/g, "");
+        if (!base) return [];
+        return [`i${base}`, base];
+    };
+
+    const getPriority = (url, methodName) => {
+        try {
+            const parsed = new URL(url, window.location.origin);
+            const pathname = parsed.pathname.toLowerCase();
+            const idx = PRIORITY_PATHS.findIndex((prefix) => pathname.startsWith(prefix));
+            if (idx !== -1) {
+                const hash = (parsed.hash || "").replace(/^#/, "").toLowerCase();
+                const anchors = buildMethodAnchorCandidates(methodName);
+                if (hash && anchors.some((anchor) => hash.includes(anchor))) {
+                    return idx * 10;
+                }
+                return idx * 10 + 5;
+            }
+        } catch {}
+        return 1000;
+    };
+
+    const reorderHits = () => {
+        const input = document.querySelector(".docsearch-modal-search-input");
+        const query = input instanceof HTMLInputElement ? input.value : "";
+        const hits = Array.from(document.querySelectorAll(".docsearch-modal-search-hits-item"));
+        if (!hits.length) return;
+        const methodName = isMethodQuery(query) ? extractMethodName(query) : "";
+
+        if (!methodName) {
+            hits.forEach((item) => item.style.removeProperty("order"));
+            return;
+        }
+
+        let hasPriorityHits = false;
+        for (const item of hits) {
+            const link = item.querySelector("a[href]");
+            if (link instanceof HTMLAnchorElement && getPriority(link.href, methodName) < 1000) {
+                hasPriorityHits = true;
+                break;
+            }
+        }
+
+        if (!hasPriorityHits) {
+            hits.forEach((item) => item.style.removeProperty("order"));
+            return;
+        }
+
+        hits.forEach((item, index) => {
+            const link = item.querySelector("a[href]");
+            const priority = link instanceof HTMLAnchorElement ? getPriority(link.href, methodName) : 1000;
+            item.style.order = String(priority * 10000 + index);
+        });
+    };
+
+    const scheduleReorder = () => {
+        if (rafId) return;
+        rafId = window.requestAnimationFrame(() => {
+            rafId = 0;
+            reorderHits();
+        });
+    };
+
+    const observer = new MutationObserver(scheduleReorder);
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    document.addEventListener("input", (event) => {
+        const target = event.target;
+        if (
+            target instanceof HTMLInputElement &&
+            target.classList.contains("docsearch-modal-search-input")
+        ) {
+            scheduleReorder();
+        }
     });
 
     document.addEventListener("astro:before-preparation", () => {
-        document.querySelector<HTMLButtonElement>(".docsearch-modal-search-cancel-btn")?.click();
+        document.querySelector(".docsearch-modal-search-cancel-btn")?.click();
     });
 </script>
 

@@ -1,8 +1,14 @@
----
+﻿---
 title: Advanced Usage
 ---
 
-# Advanced Usage
+
+This page collects advanced runtime patterns.
+
+For command syntax and flags, use [Commands](/commands).  
+For retry policy and precedence, use [Retry Mechanisms](/retry).  
+For config structure and profiles, use [Configuration](/configuration).  
+For plugin extension internals, use [Extending](/hooks) and [Concepts](/internal-api).
 
 ## Data Driven Tests
 
@@ -235,7 +241,7 @@ A timeout for a group of tests can be set on Feature level via options.
 Feature('flaky tests', { timeout: 30 })
 ```
 
-### Timeout Confguration 
+### Timeout Configuration
 
 <Badge text="Updated in 3.4" type="warning"/>
 
@@ -308,6 +314,7 @@ npx codeceptjs run --no-timeouts
 Helpers can be reconfigured per scenario or per feature.
 This might be useful when some tests should be executed with different settings than others.
 In order to reconfigure tests use `.config()` method of `Scenario` or `Feature`.
+For base config structure and profile-level patterns, see [Configuration](/configuration).
 
 ```js
 Scenario('should be executed in firefox', ({ I }) => {

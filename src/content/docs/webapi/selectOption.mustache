@@ -1,4 +1,4 @@
-Selects an option in a drop-down select.
+﻿Selects an option in a drop-down select.
 Field is searched by label | name | CSS | XPath.
 Option is selected by visible text or by value.
 
@@ -9,6 +9,8 @@ I.selectOption('subscription', '0'); // or by value
 I.selectOption('//form/select[@name=account]','Premium');
 I.selectOption('form select[name=account]', 'Premium');
 I.selectOption({css: 'form select[name=account]'}, 'Premium');
+// by ARIA locator
+I.selectOption({ aria: 'Choose Plan' }, 'Monthly');
 ```
 
 Provide an array for the second argument to select multiple options.
@@ -16,6 +18,7 @@ Provide an array for the second argument to select multiple options.
 ```js
 I.selectOption('Which OS do you use?', ['Android', 'iOS']);
 ```
-@param {LocatorOrString} select field located by label|name|CSS|XPath|strict locator.
+@param {LocatorOrString} select field located by label|name|CSS|XPath|ARIA|strict locator.
 @param {string|Array<*>} option visible text or value of option.
 @returns {void} automatically synchronized promise through #recorder
+

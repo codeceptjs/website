@@ -1,8 +1,8 @@
----
+﻿---
 title: Quickstart
 ---
 
-#### Use WebDriver for classical Selenium setup
+**Use WebDriver for classical Selenium setup**
 
 <small>
 This gives you access to rich Selenium ecosystem and cross-browser support for majority of browsers and devices.
@@ -14,19 +14,8 @@ This gives you access to rich Selenium ecosystem and cross-browser support for m
 
 ---
 
-#### Use TestCafe for cross-browser testing without Selenium
+* [Mobile Testing with Appium »](/mobile)
 
-<small>
-TestCafe provides cross-browser support without Selenium. TestCafe tests are faster, require no extra tooling and faster than regular Selenium. However, can be less stable.
-</small>
-
-<a href="/testcafe" class="button green extended" >Start with TestCafe &raquo;</a>
-
----
-
-* [Mobile Testing with Appium В»](/mobile)
-
-# Quickstart
 
 Use [CodeceptJS all-in-one installer](https://github.com/codeceptjs/create-codeceptjs) to get CodeceptJS, a demo project, and Playwright.
 
@@ -34,7 +23,7 @@ Use [CodeceptJS all-in-one installer](https://github.com/codeceptjs/create-codec
 npx create-codeceptjs .
 ```
 
-If you prefer not to use Playwright see other [installation options](/quickstart).
+If you prefer not to use Playwright see other [installation options](/installation/).
 
 ![Installation](./images/codeceptinstall.gif)
 
@@ -52,7 +41,7 @@ After CodeceptJS is installed, try running **demo tests** using these commands:
 
 ---
 
-### Init
+## Init
 
 To start a new project initialize CodeceptJS to create main config file: `codecept.conf.js`.
 
@@ -115,6 +104,7 @@ Feature('My First Test');
 Scenario('test something', ({ I }) => {
   I.amOnPage('https://github.com');
   I.see('GitHub');
+  I.click({ aria: 'Sign in' });
 });
 ```
 
@@ -131,7 +121,7 @@ My First Test --
   test something
      I am on page "https://github.com"
      I see "GitHub"
- ✔ OK
+ вњ” OK
 ```
 
 To quickly execute tests use following npm scripts:
@@ -142,6 +132,6 @@ To quickly execute tests use following npm scripts:
 
 More commands available in [CodeceptJS CLI runner](/commands).
 
-> [▶ Next: CodeceptJS Basics](/basics/)
+> [Next: CodeceptJS Basics](/basics/)
 
-> [▶ Next: CodeceptJS with Playwright](/playwright/)
+> [Next: CodeceptJS with Playwright](/playwright/)

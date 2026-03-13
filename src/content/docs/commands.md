@@ -1,9 +1,8 @@
----
+﻿---
 title: Commands
 slug: commands
 ---
 
-# Commands
 
 ## Run
 
@@ -80,7 +79,7 @@ npx codeceptjs run --reporter xunit
 
 Use any of [Mocha reporters](https://github.com/mochajs/mocha/tree/master/lib/reporters) used.
 
-#### Debugging 
+### Debugging 
 
 Run single test in debug mode
 
@@ -198,10 +197,10 @@ npx codeceptjs dry-run --steps --bootstrap
 
 ## Run Multiple
 
-> ⚠️ Prefer using `run-workers` instead.
+> Warning: prefer using `run-workers` instead.
 
 Run multiple suites. Unlike `run-workers` spawns processes to execute tests.
-[Requires additional configuration](/advanced#multiple-browsers-execution) and can be used to execute tests in multiple browsers.
+[Requires additional configuration](/parallel#parallel-execution-by-workers-on-multiple-browsers) and can be used to execute tests in multiple browsers.
 
 ```sh
 npx codeceptjs run-multiple smoke:chrome regression:firefox

@@ -1,8 +1,7 @@
----
+﻿---
 title: Best Practices
 ---
 
-# Best Practices
 
 ## Focus on Readability
 
@@ -16,6 +15,8 @@ Take a look into the next example:
 I.click({css: 'nav.user .user-login'});
 // can be better
 I.click('Login', 'nav.user');
+// or by ARIA label
+I.click({ aria: 'Login' });
 ```
 
 If we replace raw CSS selector with a button title we can improve readability of such test.
@@ -37,7 +38,7 @@ To write simpler and effective tests we encourage to use short cuts.
 Make test be focused on one feature and try to simplify everything that is not related directly to test.
 
 * If data is required for a test, try to create that data via API. See how to do it in [Data Management](/data) chapter.
-* If user login is required, use [autoLogin plugin](/plugins#autoLogin) instead of putting login steps inside a test.
+* If user login is required, use [auth plugin](/plugins#auth) instead of putting login steps inside a test.
 * Break a long test into few. Long test can be fragile and complicated to follow and update.
 * Use [custom steps and page objects](/pageobjects) to hide steps which are not relevant to current test.
 
@@ -45,7 +46,7 @@ Make test as simple as:
 
 ```js
 Scenario('editing a metric', async ({ I, loginAs, metricPage }) => {
-  // login via autoLogin
+  // login via auth plugin
   loginAs('admin');
   // create data with ApiDataFactory
   const metric = await I.have('metric', { type: 'memory', duration: 'day' })
@@ -61,94 +62,36 @@ Scenario('editing a metric', async ({ I, loginAs, metricPage }) => {
 ```
 ## Locators
 
-* If you don't use multi-lingual website or you don't update texts often it is OK to click on links by their texts or match fields by their placeholders.
-* If you don't want to rely on guessing locators, specify them manually with `{ css: 'button' }` or `{ xpath: '//button' }`.  We call them strict locators. Those locators will be faster but less readable.
-* Even better if you have a convention on active elements with special attributes like `data-test` or `data-qa`. Use `customLocator` plugin to easily add them to tests.
-* Keep tests readable which will make them maintainable.
+Keep this section as a checklist and use [Locators](/locators) as a full reference:
+
+* Prefer readable semantic locators first (text, labels, ARIA).
+* Use strict locators (`{ css: '...' }`, `{ xpath: '...' }`) when you need precision and speed.
+* For accessibility-aware UIs, prefer ARIA locators, e.g. `{ aria: 'Submit' }`.
+* If your app uses stable test attributes (`data-test`, `data-qa`), configure [customLocator plugin](/plugins#customlocator).
+* Keep locator strategy consistent across the project.
 
 ## Page Objects
 
-When a project is growing and more and more tests are required, it's time to think about reusing test code across the tests. Some common actions should be moved from tests to other files so to be accessible from different tests.
+When a project grows, move reusable actions out of scenarios.
+This page keeps only the rules of thumb. Full patterns and examples are in [Page Objects](/pageobjects).
 
-Here is a recommended strategy what to store where:
+Recommended split:
 
-* Move site-wide actions into an **Actor** file (`custom_steps.js` file). Such actions like `login`, using site-wide common controls, like drop-downs, rich text editors, calendars.
-* Move page-based actions and selectors into **Page Object**. All activities made on that page can go into methods of page object. If you test Single Page Application a PageObject should represent a screen of your application.
-* When site-wide widgets are used, interactions with them should be placed in **Page Fragments**. This should be applied to global navigation, modals, widgets.
-* A custom action that requires some low-level driver access, should be placed into a **Helper**. For instance, database connections, complex mouse actions, email testing, filesystem, services access.
+* Move site-wide actions into Actor (`custom_steps.*`), e.g. login or common widgets.
+* Move page-level actions and selectors into page objects.
+* Move reusable widgets (modals, nav, dropdowns) into page fragments/components.
+* Keep low-level driver/service operations in custom helpers.
 
-> [Learn more](/pageobjects) about different refactoring options
+Practical rules:
 
-However, it's recommended to not overengineer and keep tests simple. If a test code doesn't require reusage at this point it should not be transformed to use page objects.
-
-
-* use page objects to store common actions
-* don't make page objects for every page! Only for pages shared across different tests and suites.
-* use classes for page objects, this allows inheritace. Export instance of that classes.
-* if a page object is focused around a form with multiple fields in it, use a flexible set of arguments in it:
-
-```js
-class CheckoutForm {
-
-  fillBillingInformation(data = {}) {
-    // take data in a flexible format
-    // iterate over fields to fill them all
-    for (let key of Object.keys(data)) {
-      I.fillField(key, data[key]); // like this one
-    }
-  }
-
-}
-module.exports = new CheckoutForm();
-module.exports.CheckoutForm = CheckoutForm; // for inheritance
-```
-
-* for components that are repeated accross a website (widgets) but don't belong to any page, use component objects. They are the same as page objects but focused only aroung one element:
-
-```js
-class DropDownComponent {
-
-  selectFirstItem(locator) {
-    I.click(locator);
-    I.click('#dropdown-items li');
-  }
-
-  selectItemByName(locator, name) {
-    I.click(locator);
-    I.click(locate('li').withText(name), '#dropdown-items');
-  }
-}
-```
-* another good example is datepicker component:
-```js
-const { I } = inject();
-
-/**
- * Calendar works
- */
-class DatePicker {
-
-  selectToday(locator) {
-    I.click(locator);
-    I.click('.currentDate', '.date-picker');
-  }
-
-  selectInNextMonth(locator, date = '15') {
-    I.click(locator);
-    I.click('show next month', '.date-picker')
-    I.click(date, '.date-picker')
-  }
-
-}
-
-
-module.exports = new DatePicker();
-module.exports.DatePicker = DatePicker; // for inheritance
-```
+* Use page objects to store common actions only.
+* Do not create page objects for every page by default.
+* Prefer classes for page objects/fragments when inheritance is needed.
+* Avoid overengineering: if a flow is used once, keep it in the test.
 
 ## Configuration
 
-* create multiple config files for different setups/enrionments:
+* create multiple config files for different setups/environments:
   * `codecept.conf.js` - default one
   * `codecept.ci.conf.js` - for CI
   * `codecept.windows.conf.js` - for Windows, etc
@@ -180,7 +123,6 @@ include them like this:
 ```
 
 * move long helpers configuration into `config/plugins.js` and export them
-* move long configuration into `config/plugins.js` and export them
 * inside config files import the exact helpers or plugins needed for this setup & environment
 * to pass in data from config to a test use a container:
 

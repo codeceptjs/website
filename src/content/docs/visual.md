@@ -1,14 +1,14 @@
----
+﻿---
 title: Visual Testing
 ---
 
-# Visual Testing
 
 How does one test if the UI being rendered appears correctly to the users or how to test if each UI element appears in the right position and size? The traditional way to test the UI of the application has always been manually, which is time consuming.
 
 Visual testing with help of CodeceptJS will help in improving such use cases for the QA folks.
 
-By default CodeceptJS uses [WebDriver](/helpers/web-driver) helper and **Selenium** to automate browser. It is also capable of taking screenshots of the application and this could be used for visual testing.
+Examples on this page focus on [WebDriver](/helpers/web-driver) and screenshot-based comparison patterns.
+Most visual integrations here are community-maintained packages, so check package maintenance status before adopting in production.
 
 Currently there are two helpers available for Visual testing with CodeceptJS
 
@@ -64,6 +64,7 @@ Feature('To test screen comparison with resemble Js Example test');
 
 Scenario('Compare CodeceptIO Home Page @visual-test', async ({ I }) => {
     I.amOnPage("/");
+    I.seeElement({ aria: 'Get Started' });
     I.saveScreenshot("Codecept_IO_Screenshot_Image.png");
     I.seeVisualDiff("Codecept_IO_Screenshot_Image.png", {tolerance: 2, prepareBaseImage: false});
 });
@@ -91,7 +92,7 @@ To test screen comparison with resemble Js Example test --
   Compare CodeceptIO Home Page @visual-test
     I see Visual Diff "Codecept_IO_Screenshot_Image.png", {tolerance: 2, prepareBaseImage: false}
 MisMatch Percentage Calculated is 2.85
-  ✖ FAILED in 418ms
+  вњ– FAILED in 418ms
 
 
 -- FAILURES:
@@ -117,11 +118,11 @@ Applitools helps Test Automation engineers, DevOps, and FrontEnd Developers cont
 
 ### Setup
 
-Create an account at [Applitools](https://applitools.com/users/register) and install the npm packages
+Create an account at [Applitools](https://applitools.com/users/register) and install the npm packages:
 
 ```
 npm i codeceptjs-applitoolshelper --save
-npm i webdriverio@5 --save
+npm i webdriverio --save
 ```
 
 ### Configuring
@@ -178,7 +179,7 @@ The first time you run this test a new baseline will be created, and subsequent 
      Test 'Applitools functionality' of 'Application Under Test' detected differences!. See details at: https://eyes.applitools.com/app/batches/00000251831777088983/00000251831777088717?accountId=KO-Oh9tXI0e8VF8Ha_GLVA~~
 ```
 
-> You can find the latest documentation here [Applitools Docs](https://applitools.com/tutorials/webdriverio5.html#run-your-first-test)
+> You can find the latest documentation in [Applitools Docs](https://applitools.com/docs/).
 
 ### Example
 

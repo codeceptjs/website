@@ -7,7 +7,7 @@ slug: els
 
 The `els` module provides low-level element manipulation functions for CodeceptJS tests, allowing more granular control over element interactions and assertions. However, because element representation differs between frameworks, tests using element functions are not portable between helpers. So if you choose Playwright, you won't be able to switch to WebDriver with one config change in CodeceptJS.
 
-### Usage
+## Usage
 
 Import the els functions in your test file:
 
@@ -153,6 +153,10 @@ Returns a promise that resolves when the assertion is complete. Throws an assert
 // Check if a button is enabled
 await expectElement('.submit-button', async el => {
   return await el.isEnabled();
+});
+
+await expectElement({ aria: 'Submit' }, async el => {
+  return await el.isVisible();
 });
 
 // Verify element has specific text content

@@ -1,8 +1,7 @@
----
+﻿---
 title: Mobile Testing with Appium
 ---
 
-# Mobile Testing with Appium
 
 CodeceptJS allows to test mobile and hybrid apps in a similar manner web applications are tested.
 Such tests are executed using [Appium](https://appium.io) on emulated or physical devices. Also, Appium allows to test web application on mobile devices.
@@ -29,7 +28,7 @@ Doesn't it sound cool?
 ## Setting Up
 
 Ensure that you have [CodeceptJS installed](/quickstart).
-You will also need to install [Appium](https://appium.io/docs/en/2.1/).
+You will also need to install [Appium](https://appium.io/docs/en/latest/).
 We suggest to use [appium-doctor](https://www.npmjs.com/package/appium-doctor) to check if your system is ready for mobile testing.
 
 ```sh
@@ -130,7 +129,7 @@ You will also be asked for the platform and the application package.
 ```
 
 Check the newly created `codecept.conf.js` configuration file.
-You may want to set some additional Appium settings via [desiredCapabilities](https://appium.io/docs/en/2.1/guides/caps/)
+You may want to set some additional Appium settings via [desiredCapabilities](https://appium.io/docs/en/latest/guides/caps/)
 
 ```js
 helpers: {
@@ -227,7 +226,7 @@ Accessibility id is recommended to use for locating element, as it rarely change
 * iOS uses [UIAccessibilityIdentification](https://developer.apple.com/documentation/uikit/uiaccessibilityidentification)
 * Android `accessibility id` matches the content-description
 * Web view uses `[aria-label]` attribute as accessibility id
-* For [React Native for Android see our special guide](mobile-react-native-locators.md).
+* For React Native on Android, see our [special guide](/mobile-react-native-locators).
 
 > If you test React Native application, consider using [Detox helper](/detox) for faster tests.
 
@@ -251,7 +250,7 @@ I.tap('Click me!');
 I.click('Click me!');
 ```
 
-Native iOS/Android locators can be used with `android=` and `ios=` prefixes. [Learn more](https://webdriver.io/guide/usage/selectors.html#Mobile-Selectors).
+Native iOS/Android locators can be used with `android=` and `ios=` prefixes. [Learn more](https://webdriver.io/docs/selectors#mobile-selectors).
 
 But how to get all those locators? We recommend to use [Appium Inspector](https://github.com/appium/appium-inspector).
 

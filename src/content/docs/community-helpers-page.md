@@ -3,8 +3,7 @@ title: Community Helpers
 slug: helpers/community-helpers
 ---
 
-# Community Helpers
-> Share your helpers at our [Wiki Page](https://github.com/codeceptjs/CodeceptJS/wiki/Community-Helpers)
+> Share your helpers by opening a PR to this page.
 
 Here is the list of helpers created by our community.
 Please **add your own** by editing this page.

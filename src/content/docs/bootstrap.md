@@ -1,18 +1,17 @@
----
+﻿---
 title: Bootstrap
 ---
 
-# Bootstrap
 
 In case you need to execute arbitrary code before or after the tests,
 you can use the `bootstrap` and `teardown` config. Use it to start and stop a webserver, Selenium, etc.
 
-When using the [parallel execution](/parallel) mode, there are two additional hooks available; `bootstrapAll` and `teardownAll`. See [bootstrapAll & teardownAll](#bootstrapall-teardownall) for more information.
+When using the [parallel execution](/parallel) mode, there are two additional hooks available; `bootstrapAll` and `teardownAll`. See [bootstrapAll & teardownAll](#bootstrapall--teardownall) for more information.
 
 
 > Note: In CodeceptJS 2, `bootstrap` could be set as a function with `done` parameter. This async pattern was replaced with native async functions in CodeceptJS 3.
 
-### Example: Bootstrap & Teardown
+## Example: Bootstrap & Teardown
 
 If you are using JavaScript-style config `codecept.conf.js`, bootstrap and teardown functions can be placed inside of it:
 

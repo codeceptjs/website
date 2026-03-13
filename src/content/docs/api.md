@@ -2,9 +2,10 @@
 title: API Testing
 ---
 
-## API Testing
-
 CodeceptJS provides a way to write tests in declarative manner for REST and GraphQL APIs. 
+
+> Use this page when your goal is to **test API behavior** (status, payload, schema, assertions).  
+> If your goal is to **prepare test data** for UI/e2e scenarios, use [Data Management](/data).
 
 Take a look:
 
@@ -31,7 +32,7 @@ In this code we checked API request for:
 
 These are the things you should generally test your APIs for.
 
-> 🤓 It is recommended to check only invariant parts of responses. Check required fields and only values you control. For instance, it is not recommended to check ID fields or date fields, as they can change frequently.
+> Note: It is recommended to check only invariant parts of responses. Check required fields and only values you control. For instance, it is not recommended to check ID fields or date fields, as they can change frequently.
 
 ## Installation
 
@@ -83,7 +84,7 @@ They were used to perform API requests for browser tests. As so, they lack asser
 
 [`JSONResponse`](/helpers/json-response) helper adds response assertions.
 
-> 💡 In CodeceptJS assertions start with the `see` prefix. Learn more in the [JSONResponse helper reference](/helpers/json-response).
+> Note: In CodeceptJS assertions start with the `see` prefix. Learn more in the [JSONResponse helper reference](/helpers/json-response).
 
 Generate TypeScript definitions to get auto-completions for JSONResponse:
 
@@ -142,12 +143,12 @@ exports.config = {
 
 REST helper can send GET/POST/PATCH/etc requests to REST API endpoint:
 
-* [`I.sendGetRequest()`](/helpers/rest#sendGetRequest)
-* [`I.sendPostRequest()`](/helpers/rest#sendPostRequest)
-* [`I.sendPutRequest()`](/helpers/rest#sendPutRequest)
-* [`I.sendPatchRequest()`](/helpers/rest#sendPatchRequest)
-* [`I.sendDeleteRequest()`](/helpers/rest#sendDeleteRequest)
-* [`I.sendDeleteRequestWithPayload()`](/helpers/rest#sendDeleteRequestWithPayload)
+* [`I.sendGetRequest()`](/helpers/rest#sendgetrequest)
+* [`I.sendPostRequest()`](/helpers/rest#sendpostrequest)
+* [`I.sendPutRequest()`](/helpers/rest#sendputrequest)
+* [`I.sendPatchRequest()`](/helpers/rest#sendpatchrequest)
+* [`I.sendDeleteRequest()`](/helpers/rest#senddeleterequest)
+* [`I.sendDeleteRequestWithPayload()`](/helpers/rest#senddeleterequestwithpayload)
 * ...
 
 Authentication headers can be set in [helper configuration](/helpers/rest#configuration) or per test with headers or special methods like `I.amBearerAuthenticated`.
@@ -208,8 +209,8 @@ Scenario('get user by query', ({ I }) => {
 
 GraphQL helper has two methods available:
 
-* [`I.sendQuery()`](/helpers/graph-ql#sendQuery)
-* [`I.sendMutation()`](/helpers/graph-ql#sendMutation)
+* [`I.sendQuery()`](/helpers/graph-ql#sendquery)
+* [`I.sendMutation()`](/helpers/graph-ql#sendmutation)
 
 ## Assertions
 
@@ -256,14 +257,14 @@ I.seeResponseCodeIsServerError();
 
 ### Structure
 
-The most basic thing to check in a response is the existence of keys in a JSON object. Use [`I.seeResponseContainsKeys()`](/helpers/json-response#seeResponseContainsKeys) method for it:
+The most basic thing to check in a response is the existence of keys in a JSON object. Use [`I.seeResponseContainsKeys()`](/helpers/json-response#seeresponsecontainskeys) method for it:
 
 ```js
 // response is { "name": "joe", "email": "joe@joe.com" }
 I.seeResponseContainsKeys(['name', 'email']);
 ```
 
-> ℹ️ If response is an array, it checks that every element in the array has the provided keys.
+> Note: If response is an array, it checks that every element in the array has the provided keys.
 
 However, this is a very naive approach. It won't work for arrays or nested objects.
 To check complex JSON structures `JSONResponse` helper uses [`joi`](https://joi.dev) library. 
@@ -298,7 +299,7 @@ I.seeResponseContainsJson({
 })
 ```
 
-> ℹ️ If response is an array, it checks that at least one element in the array matches JSON.
+> Note: If response is an array, it checks that at least one element in the array matches JSON.
 
 To perform arbitrary assertions on a response object use `seeResponseValidByCallback`. 
 It allows you to do any kind of assertions by using `expect` from [`chai`](https://www.chaijs.com) library.
@@ -321,3 +322,5 @@ makeSomeCustomAssertion() {
   const response = this.helpers.JSONResponse.response;
 }
 ```
+
+> For factory-based data setup and automatic cleanup (`have`, `haveMultiple`, `mutateData`, `mutateMultiple`), see [Data Management](/data).

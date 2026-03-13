@@ -1,10 +1,9 @@
----
+﻿---
 title: TypeScript
 ---
 
-# TypeScript
 
-CodeceptJS supports [type declaration](https://github.com/codeceptjs/CodeceptJS/tree/master/typings) for [TypeScript](https://www.typescriptlang.org/). It means that you can write your tests in TS. Also, all of your custom steps can be written in TS
+CodeceptJS supports [type declaration](https://github.com/codeceptjs/CodeceptJS/tree/4.x/typings) for [TypeScript](https://www.typescriptlang.org/). It means that you can write your tests in TS. Also, all of your custom steps can be written in TS.
 
 ## Why TypeScript?
 
@@ -41,6 +40,8 @@ Then select TypeScript as the first question:
 Then a config file and new tests will be created in TypeScript format.
 
 If a config file is set in TypeScript format (`codecept.conf.ts`) package `ts-node` will be used to run tests. 
+
+If you are migrating module format (CommonJS to ESM) in v4.x, follow the dedicated [ESM Migration Guide](/esm-migration).
 
 ## Promise-Based Typings
 

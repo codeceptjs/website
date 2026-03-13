@@ -10,6 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "sync:changelog": "node scripts/sync-changelog.mjs",
     "generate:unified-api": "node scripts/generate-unified-api.mjs",
     "generate:unified-api:check": "node scripts/generate-unified-api.mjs --check"
   },

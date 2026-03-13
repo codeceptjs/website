@@ -1,8 +1,7 @@
----
+﻿---
 title: Locators
 ---
 
-# Locators
 
 CodeceptJS provides flexible strategies for locating elements:
 
@@ -43,7 +42,7 @@ For example, here's the heuristic used for the `fillField` method:
 5. If nothing found, check if there is a label with specified text for input element.
 6. If nothing found, throw an `ElementNotFound` exception.
 
-> ⚠ Be warned that fuzzy locators can be significantly slower than strict locators. If speed is a concern, it's recommended you stick with explicitly specifying the locator type via object syntax.
+> Warning: fuzzy locators can be significantly slower than strict locators. If speed is a concern, it's recommended you stick with explicitly specifying the locator type via object syntax.
 
 It is recommended to avoid using implicit CSS locators in methods like `fillField` or `click`, where semantic locators are allowed.
 Use locator type to speed up search by various locator strategies.
@@ -78,7 +77,7 @@ I.seeElement({ css: 'button' });
 I.seeElement({ xpath: 'descendant::table/tr' });
 ```
 
-> ℹ Use [Locator Advicer](https://davertmik.github.io/locator/) to check quality of your locators.
+> Note: Use [Locator Advicer](https://davertmik.github.io/locator/) to check quality of your locators.
 
 ## Semantic Locators
 
@@ -124,7 +123,7 @@ locate('//table')
 
 `locate` has following methods:
 
-#### find
+### find
 
 Finds an element inside a located.
 
@@ -135,7 +134,7 @@ locate('table').find('td');
 Switches current element to found one.
 Can accept another `locate` call or strict locator.
 
-#### withAttr
+### withAttr
 
 Find an element with provided attributes
 
@@ -144,7 +143,7 @@ Find an element with provided attributes
 locate('input').withAttr({ placeholder: 'Type in name' });
 ```
 
-#### withClassAttr
+### withClassAttr
 
 Find an element with class attribute
 
@@ -153,7 +152,7 @@ Find an element with class attribute
 locate('div').withClassAttr('text');
 ```
 
-#### withChild
+### withChild
 
 Finds an element which contains a child element provided:
 
@@ -162,7 +161,7 @@ Finds an element which contains a child element provided:
 locate('form').withChild('select');
 ```
 
-#### withDescendant
+### withDescendant
 
 Finds an element which contains a descendant element provided:
 
@@ -171,7 +170,7 @@ Finds an element which contains a descendant element provided:
 locate('form').withDescendant('select');
 ```
 
-#### withText
+### withText
 
 Find an element containing a text
 
@@ -179,7 +178,7 @@ Find an element containing a text
 locate('span').withText('Warning');
 ```
 
-#### withTextEquals
+### withTextEquals
 
 Find an element with exact text
 
@@ -187,7 +186,7 @@ Find an element with exact text
 locate('button').withTextEquals('Add');
 ```
 
-#### first
+### first
 
 Get first element:
 
@@ -195,7 +194,7 @@ Get first element:
 locate('#table td').first();
 ```
 
-#### last
+### last
 
 Get last element:
 
@@ -203,7 +202,7 @@ Get last element:
 locate('#table td').last();
 ```
 
-#### at
+### at
 
 Get element at position:
 
@@ -216,7 +215,7 @@ locate('#table td').at(2);
 locate('#table td').at(-2);
 ```
 
-#### inside
+### inside
 
 Finds an element which contains an provided ancestor:
 
@@ -225,7 +224,7 @@ Finds an element which contains an provided ancestor:
 locate('select').inside('form#user_profile');
 ```
 
-#### before
+### before
 
 Finds element located before the provided one
 
@@ -234,7 +233,7 @@ Finds element located before the provided one
 locate('button').before('.btn-cancel');
 ```
 
-#### after
+### after
 
 Finds element located after the provided one
 
@@ -268,11 +267,11 @@ I.click('$register_button');
 
 This plugin requires two options: locator prefix and actual attribute to match.
 
-> ℹ See [customLocator Plugin](/plugins#customlocator) reference to learn how to set it up.
+> Note: See [customLocator Plugin](/plugins#customlocator) reference to learn how to set it up.
 
 If you need more control over custom locators see how declare them manually without using a customLocator plugin.
 
-#### Custom Strict Locators
+### Custom Strict Locators
 
 If use locators of `data-element` attribute you can implement a strategy, which will allow you to use `{ data: 'my-element' }` as a valid locator.
 
@@ -296,7 +295,7 @@ That's all. New locator type is ready to use:
 I.click({ data: 'user-login' });
 ```
 
-#### Custom String Locators
+### Custom String Locators
 
 What if we want to locators prefixed with `=` to match elements with exact text value.
 We can do that too:
@@ -320,7 +319,7 @@ New locator strategy is ready to use:
 I.click('=Login');
 ```
 
-#### Custom Strategy Locators
+### Custom Strategy Locators
 
 CodeceptJS provides the option to specify custom locators that uses Custom Locator Strategies defined in the WebDriver configuration. It uses the WebDriverIO's [custom$](https://webdriver.io/docs/api/browser/custom$.html) locators internally to locate the elements on page.
 To use the defined Custom Locator Strategy add your custom strategy to your configuration.

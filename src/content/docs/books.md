@@ -2,6 +2,7 @@
 title: Books & Posts
 ---
 
+> Add your own books or posts by opening a PR to this page.
 ### [Practical End 2 End Testing with CodeceptJS](https://leanpub.com/codeceptjs/)
 
 A book by **Paul Vincent Beigang**
@@ -16,7 +17,7 @@ A book by **Paul Vincent Beigang**
 1. Run Your First CodeceptJS Test Locally
 1. Run Test on BrowserStack Against with the Safari Browser
 1. How to Debug & Fix a Failing E2E Test
-1. Run a CodeceptJS Test in GitLab´s Continuous Integration (CI) Environment
+1. Run a CodeceptJS Test in GitLab's Continuous Integration (CI) Environment
 1. Delicious Test Reports With Allure
 
 ### Posts

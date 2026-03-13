@@ -6,6 +6,7 @@ title: Internal API
 
 In this guide we will overview the internal API of CodeceptJS.
 This knowledge is required for customization, writing plugins, etc.
+Use [Extending](/hooks) for plugin quick-start patterns and examples.
 
 CodeceptJS provides an API which can be loaded via `require('codeceptjs')` when CodeceptJS is installed locally. Otherwise, you can load codeceptjs API via global `codeceptjs` object:
 
@@ -18,16 +19,16 @@ const { recorder, event, output } = codeceptjs;
 
 These internal objects are available:
 
-* [`codecept`](https://github.com/Codeception/CodeceptJS/blob/master/lib/codecept.js): test runner class
-* [`config`](https://github.com/Codeception/CodeceptJS/blob/master/lib/config.js): current codecept config
-* [`event`](https://github.com/Codeception/CodeceptJS/blob/master/lib/event.js): event listener
-* [`recorder`](https://github.com/Codeception/CodeceptJS/blob/master/lib/recorder.js): global promise chain
-* [`output`](https://github.com/Codeception/CodeceptJS/blob/master/lib/output.js): internal printer
-* [`container`](https://github.com/Codeception/CodeceptJS/blob/master/lib/container.js): dependency injection container for tests, includes current helpers and support objects
-* [`helper`](https://github.com/Codeception/CodeceptJS/blob/master/lib/helper.js): basic helper class
-* [`actor`](https://github.com/Codeception/CodeceptJS/blob/master/lib/actor.js): basic actor (I) class
+* [`codecept`](https://github.com/codeceptjs/CodeceptJS/blob/4.x/lib/codecept.js): test runner class
+* [`config`](https://github.com/codeceptjs/CodeceptJS/blob/4.x/lib/config.js): current codecept config
+* [`event`](https://github.com/codeceptjs/CodeceptJS/blob/4.x/lib/event.js): event listener
+* [`recorder`](https://github.com/codeceptjs/CodeceptJS/blob/4.x/lib/recorder.js): global promise chain
+* [`output`](https://github.com/codeceptjs/CodeceptJS/blob/4.x/lib/output.js): internal printer
+* [`container`](https://github.com/codeceptjs/CodeceptJS/blob/4.x/lib/container.js): dependency injection container for tests, includes current helpers and support objects
+* [`helper`](https://github.com/codeceptjs/CodeceptJS/blob/4.x/lib/helper.js): basic helper class
+* [`actor`](https://github.com/codeceptjs/CodeceptJS/blob/4.x/lib/actor.js): basic actor (I) class
 
-[API reference](https://github.com/Codeception/CodeceptJS/tree/master/docs/api) is available on GitHub.
+[API reference](https://github.com/codeceptjs/CodeceptJS/tree/4.x/docs/api) is available on GitHub.
 Also please check the source code of corresponding modules.
 
 ### Container
@@ -79,7 +80,7 @@ const mocha = container.mocha();
 
 ### Event Listeners
 
-CodeceptJS provides a module with an [event dispatcher and set of predefined events](https://github.com/Codeception/CodeceptJS/blob/master/lib/event.js).
+CodeceptJS provides a module with an [event dispatcher and set of predefined events](https://github.com/codeceptjs/CodeceptJS/blob/4.x/lib/event.js).
 
 It can be required from codeceptjs package if it is installed locally.
 
@@ -124,12 +125,12 @@ Available events:
 > *sync* - means that event is fired in the moment of the action happening.
  *async* - means that event is fired when an action is scheduled. Use `recorder` to schedule your actions.
 
-For further reference look for [currently available listeners](https://github.com/Codeception/CodeceptJS/tree/master/lib/listener) using the event system.
+For further reference look for [currently available listeners](https://github.com/codeceptjs/CodeceptJS/tree/4.x/lib/listener) using the event system.
 
 
 ### Recorder
 
-To inject asynchronous functions in a test or before/after a test you can subscribe to corresponding event and register a function inside a recorder object. [Recorder](https://github.com/Codeception/CodeceptJS/blob/master/lib/recorder.js) represents a global promises chain.
+To inject asynchronous functions in a test or before/after a test you can subscribe to corresponding event and register a function inside a recorder object. [Recorder](https://github.com/codeceptjs/CodeceptJS/blob/4.x/lib/recorder.js) represents a global promises chain.
 
 Provide a function in the first parameter, a function must be async or must return a promise:
 

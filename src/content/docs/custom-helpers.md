@@ -1,4 +1,4 @@
----
+﻿---
 title: Custom Helpers
 ---
 
@@ -29,7 +29,7 @@ helpers: {
 }
 ```
 
-Helpers are classes inherited from [corresponding abstract class](https://github.com/codeceptjs/helper).
+Helpers are classes inherited from [corresponding abstract class](https://github.com/codeceptjs/CodeceptJS/blob/4.x/lib/helper.js).
 Created helper file should look like this:
 
 ```js
@@ -86,7 +86,8 @@ For instance, to perform a click with Playwright helper, do it like this:
 ```js
 doAwesomeThingsWithPlaywright() {
   const { Playwright } = this.helpers;
-  Playwright.click('Awesome');    
+  Playwright.click('Awesome');
+  Playwright.click({ aria: 'Awesome' });
 }
 ```
 
@@ -140,9 +141,9 @@ async clickOnEveryElement(locator) {
 }
 ```
 
-In this case `el` will be an instance of [ElementHandle](https://playwright.dev/#version=master&path=docs%2Fapi.md&q=class-elementhandle) which is similar for Playwright & [Puppeteer](https://pptr.dev/#?product=Puppeteer&version=master&show=api-class-elementhandle).
+In this case `el` will be an instance of [ElementHandle](https://playwright.dev/docs/api/class-elementhandle), which is similar for Playwright and [Puppeteer](https://pptr.dev/api/puppeteer.elementhandle).
 
-> ℹ There are more `_locate*` methods in each helper. Take a look on documentation of a helper you use to see which exact method it exposes.
+> Note: There are more `_locate*` methods in each helper. Take a look at the documentation of a helper you use to see which exact method it exposes.
 
 ## Configuration
 
@@ -283,9 +284,9 @@ module.exports = MyHelper;
 
 ### Puppeteer Example
 
-Puppeteer has [nice and elegant API](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md) which you can use inside helpers. Accessing `page` instance via `this.helpers.Puppeteer.page` from inside a helper.
+Puppeteer has a [well-documented API](https://pptr.dev/api) that you can use inside helpers. Access `page` instance via `this.helpers.Puppeteer.page` from inside a helper.
 
-Let's see how we can use [emulate](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pageemulateoptions) function to emulate iPhone browser in a test.
+Let's see how we can use [emulate](https://pptr.dev/api/puppeteer.page.emulate) function to emulate iPhone browser in a test.
 
 ```js
 const Helper = require('@codeceptjs/helper');
@@ -303,3 +304,4 @@ class MyHelper extends Helper {
 
 module.exports = MyHelper;
 ```
+

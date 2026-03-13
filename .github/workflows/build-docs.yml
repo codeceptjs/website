@@ -25,6 +25,8 @@ jobs:
       - run: git config --global user.email "github-cd-bot@example.com"
       - name: Install deps
         run: npm i
+      - name: Sync changelog from CodeceptJS 4.x
+        run: npm run sync:changelog
       - name: Generate unified API docs
         run: npm run generate:unified-api
       - name: Build docs

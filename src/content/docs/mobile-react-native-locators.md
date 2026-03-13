@@ -75,3 +75,9 @@ Now tests are cleaner:
 ```js
 I.tap(tid('someButton'));
 ```
+
+If your React Native app includes a WebView, web locators are available inside that context, including ARIA locators such as:
+
+```js
+I.click({ aria: 'Sign in' });
+```

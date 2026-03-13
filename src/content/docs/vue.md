@@ -1,109 +1,65 @@
----
+﻿---
 title: Testing Vue Apps
 ---
 
-# vue-cli-plugin-e2e-codeceptjs
+Vue applications can be tested with CodeceptJS web helpers and semantic locators.
 
-*Hey, how about some end-to-end testing for your Vue apps?*
+Use this page for Vue-specific locator patterns.
+For general setup and test workflow, start with [Quickstart](/quickstart), [Web Basics](/basics), and helper docs for [Playwright](/playwright), [WebDriver](/webdriver), or [Puppeteer](/puppeteer).
 
-*Let's do it together: Vue, [CodeceptJS](/quickstart), and [Puppeteer](https://pptr.dev).*
+## Recommended Setup
 
-```js
-I.amOnPage('/');
-I.click('My Component Button');
-I.see('My Component');
-I.say('I am happy!');
-```
-
-## How to try it
-
-**Requirements:**
-
-* NodeJS >= 8.9
-* NPM / Yarn
-* Vue CLI installed globally
+For new projects on 4.x, use Playwright by default:
 
 ```sh
-npm i vue-cli-plugin-codeceptjs-puppeteer --save-dev
+npx create-codeceptjs .
 ```
 
-This installs CodeceptJS, CodeceptUI and Puppeteer with Chrome.
-
-To add CodeceptJS to your project:
+Or initialize in an existing project:
 
 ```sh
-vue invoke vue-cli-plugin-codeceptjs-puppeteer
+npx codeceptjs init
 ```
 
-## Running Tests
-
-* `test:e2e` runs tests with browser opened.
-  * Use `--headless` to run headlessly
-  * Use `--serve` to start dev server before tests
-* `test:e2e:parallel` runs tests in parallel workers.
-  * Use an argument to set worker count
-  * Use `--serve` to start dev server before tests
-* `test:e2e:open` opens interactive web test runner
-
-Examples:
+Then run tests:
 
 ```sh
-npm run test:e2e
-npm run test:e2e -- --headless
-npm run test:e2e -- --serve
-
-npm run test:e2e:parallel
-npm run test:e2e:parallel -- 3
-npm run test:e2e:parallel -- 3 --serve
-
-npm run test:e2e:open
+npx codeceptjs run
 ```
 
-> `test:e2e` wraps `codecept run --steps`. See [run options](/commands#run).
-> `test:e2e:parallel` wraps `codecept run-workers 2`. See [run-workers options](/commands#run-workers).
+## Vue Locators
 
-## Directory Structure
-
-Generator creates files like:
-
-```text
-codecept.conf.js          - CodeceptJS config
-jsconfig.json             - type definitions support
-tests
-|- e2e
-|  |- app_test.js         - demo test
-|  |- output              - screenshots/reports folder
-|  |- support
-|     |- steps_file.js    - common steps
-|- steps.d.ts             - generated type definitions
-```
-
-## Locators
-
-For Vue apps a special `vue` locator is available:
+CodeceptJS supports a strict `vue` locator object:
 
 ```js
 { vue: 'MyComponent' }
 { vue: 'Button', props: { title: 'Click Me' } }
 ```
 
-With Playwright, use Vue locators in any method where locator is supported:
+Examples:
 
 ```js
-I.click({ vue: 'Tab', props: { title: 'Click Me!' } });
-I.seeElement({ vue: 't', props: { title: 'Clicked' } });
+I.click({ vue: 'Tab', props: { title: 'Profile' } });
+I.seeElement({ vue: 'UserCard', props: { state: 'active' } });
 ```
 
-Vue locators work via [Playwright Vue Locator](https://playwright.dev/docs/other-locators#vue-locator).
+## Vue + ARIA/Semantic Locators
 
-## How to write tests
+Prefer accessible locators first (`aria`, labels, text), then use `vue` locator when needed:
 
-* Open `tests/e2e/app_test.js` and inspect demo test
-* [Learn CodeceptJS basics](/basics)
-* [Learn CodeceptJS with Puppeteer](/puppeteer)
-* [See Puppeteer helper reference](/helpers/puppeteer)
-* Ask questions in [Slack](https://bit.ly/chat-codeceptjs) and [Forum](https://codecept.discourse.group/)
+```js
+I.click({ aria: 'Save profile' });
+I.fillField({ aria: 'Email' }, 'user@example.com');
+I.click({ vue: 'SubmitButton', props: { variant: 'primary' } });
+```
 
-## Enjoy testing
+## Notes
 
-With love, [CodeceptJS Team](/)
+- With Playwright, Vue locators work through [Playwright Vue Locator](https://playwright.dev/docs/other-locators#vue-locator).
+- Keep component names meaningful and avoid excessive minification in test builds when you rely on component-based locators.
+
+## Related
+
+- [Locators](/locators)
+- [Web API (Unified)](/web-api)
+- [Retry Mechanisms](/retry)

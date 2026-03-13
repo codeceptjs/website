@@ -1,9 +1,12 @@
-Checks that all elements with given locator have given CSS properties.
+﻿Checks that all elements with given locator have given CSS properties.
 
 ```js
 I.seeCssPropertiesOnElements('h3', { 'font-weight': "bold"});
+// by ARIA locator
+I.seeCssPropertiesOnElements({ aria: 'Heading' }, { 'font-weight': 'bold' });
 ```
 
-@param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|strict locator.
+@param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|ARIA|strict locator.
 @param {object} cssProperties object with CSS properties and their values to check.
 @returns {void} automatically synchronized promise through #recorder
+

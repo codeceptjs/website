@@ -1,9 +1,8 @@
----
+﻿---
 title: Locating Shadow Dom Elements
 slug: shadow
 ---
 
-# Locating Shadow Dom Elements
 
 > Note: Shadow DOM locators are supported only in WebDriver helper.
 
@@ -44,6 +43,7 @@ For example, to fill value in `input` field or to click the `Click Me!` button, 
 ```js
 I.fillField({ shadow: ['my-app', 'recipe-hello-binding', 'ui-input', 'input.input'] }, 'value');
 I.click({ shadow: ['my-app', 'recipe-hello', 'button'] });
+I.click({ aria: 'Click Me!' });
 ```
 
 ## Example

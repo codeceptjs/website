@@ -38,7 +38,6 @@ Refer to following guides to more information on:
 * [▶ Playwright](/playwright)
 * [▶ WebDriver](/webdriver)
 * [▶ Puppeteer](/puppeteer)
-* [▶ TestCafe](/testcafe)
 
 > ℹ Depending on a helper selected a list of available actions may change.
 
@@ -293,7 +292,7 @@ Tests are written in a synchronous way. This improves the readability and mainta
 While writing tests you should not think about promises, and instead should focus on the test scenario.
 
 However, behind the scenes **all actions are wrapped in promises**, inside of the `I` object.
-[Global promise](https://github.com/codeceptjs/CodeceptJS/blob/master/lib/recorder.js) chain is initialized before each test and all `I.*` calls will be appended to it, as well as setup and teardown.
+[Global promise](https://github.com/codeceptjs/CodeceptJS/blob/4.x/lib/recorder.js) chain is initialized before each test and all `I.*` calls will be appended to it, as well as setup and teardown.
 
 > 📺 [Learn how CodeceptJS](https://www.youtube.com/watch?v=MDLLpHAwy_s) works with promises by watching video on YouTube
 
@@ -434,7 +433,7 @@ const { setHeadlessWhen, setWindowSize } = require('@codeceptjs/configure');
 
 // run headless when CI environment variable set
 setHeadlessWhen(process.env.CI);
-// set window size for any helper: Puppeteer, WebDriver, TestCafe
+// set window size for any helper: Puppeteer, WebDriver, Playwright
 setWindowSize(1600, 1200);
 
 exports.config = {

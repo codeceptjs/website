@@ -1,8 +1,7 @@
----
+﻿---
 title: Testing with Playwright
 ---
 
-# Testing with Playwright
 
 Playwright is a Node library to automate the [Chromium](https://www.chromium.org/Home), [WebKit](https://webkit.org/) and [Firefox](https://www.mozilla.org/en-US/firefox/new/) browsers as well as [Electron](https://www.electronjs.org/) apps with a single API. It enables **cross-browser** web automation that is **ever-green**, **capable**, **reliable** and **fast**.
 
@@ -83,7 +82,7 @@ When to consider navigation succeeded, defaults to `load`. Given an array of eve
 When a test runs faster than application it is recommended to increase `waitForAction` config value.
 It will wait for a small amount of time (100ms) by default after each user action is taken.
 
-> ▶ More options are listed in [helper reference](/helpers/playwright).
+> More options are listed in [helper reference](/helpers/playwright).
 
 ## Writing Tests
 
@@ -108,9 +107,9 @@ Tests consist with a scenario of user's action taken on a page. The most widely 
 * `see`, `dontSee` - to check for a text on a page
 * `seeElement`, `dontSeeElement` - to check for elements on a page
 
-> ℹ  All actions are listed in [Playwright helper reference](/helpers/playwright).*
+> Note: All actions are listed in [Playwright helper reference](/helpers/playwright).*
 
-All actions which interact with elements can use **[CSS or XPath locators](/locators#css-and-xpath)**. Actions like `click` or `fillField` can locate elements by their name or value on a page:
+All actions which interact with elements can use **[CSS, XPath, or ARIA locators](/locators#css-and-xpath)**. Actions like `click` or `fillField` can locate elements by their name or value on a page:
 
 ```js
 // search for link or button
@@ -119,6 +118,8 @@ I.click('Login');
 I.fillField('Name', 'Miles');
 // we can use input name
 I.fillField('user[email]','miles@davis.com');
+// or locate by aria-label
+I.click({ aria: 'Sign in' });
 ```
 
 You can also specify the exact locator type with strict locators:
@@ -217,7 +218,7 @@ await eachElement(
 );
 ```
 
-> ℹ Learn more about [eachElement plugin](/els#eachelement)
+> Note: Learn more about [eachElement plugin](/els#eachelement)
 
 ## Multi Session Testing
 
@@ -234,11 +235,11 @@ Scenario('I try to open this site as anonymous user', ({ I }) => {
 })
 ```
 
-> ℹ Learn more about [multi-session testing](/basics/#multiple-sessions)
+> Note: Learn more about [multi-session testing](/basics/#multiple-sessions)
 
 ## Electron Testing
 
-CodeceptJS allows you to make use of [Playwright's Electron flavor](https://github.com/microsoft/playwright/blob/master/packages/playwright-electron/README.md).
+CodeceptJS allows you to make use of [Playwright's Electron flavor](https://playwright.dev/docs/api/class-electron).
 To use this functionality, all you need to do is set the browser to `electron` in the CodeceptJS configuration file and, according to the [Playwright BrowserType API](https://playwright.dev/docs/api/class-browsertype/#browsertypelaunchoptions), set the launch options to point to your Electron application.
 
 `main.js` - main Electron application file
@@ -312,7 +313,7 @@ Playwright can emulate browsers of mobile devices. Instead of paying for expensi
 
 Device emulation can be enabled in CodeceptJS globally in a config or per session.
 
-Playwright contains a [list of predefined devices](https://github.com/microsoft/playwright/blob/master/src/server/deviceDescriptors.js) to emulate, for instance this is how you can enable iPhone 6 emulation for all tests:
+Playwright contains a [list of predefined devices](https://playwright.dev/docs/emulation#devices) to emulate, for instance this is how you can enable iPhone 6 emulation for all tests:
 
 ```js
 const { devices } = require('playwright');
@@ -324,7 +325,7 @@ helpers: {
   }
 }
 ```
-To adjust browser settings you can pass [custom options](https://github.com/microsoft/playwright/blob/master/docs/src/api/class-browsercontext.md)
+To adjust browser settings you can pass [custom options](https://playwright.dev/docs/api/class-browsercontext)
 
 ```js
 helpers: {
@@ -539,7 +540,7 @@ Code coverage can be captured, by enabling the `coverage` plugin in `codecept.co
 
 Once all the tests are completed, `codecept` will create and store coverage in `output/coverage` folder, as shown below.
 
-![]((https://github.com/codeceptjs/CodeceptJS/assets/7845001/3b8b81a3-7c85-470c-992d-ecdc7d5b4a1e))
+![](https://github.com/codeceptjs/CodeceptJS/assets/7845001/3b8b81a3-7c85-470c-992d-ecdc7d5b4a1e)
 
 Open `index.html` in your browser to view the full interactive coverage report.
 
@@ -586,9 +587,9 @@ async setPermissions() {
 }
 ```
 
-> [▶ Learn more about BrowserContext](https://github.com/microsoft/playwright/blob/master/docs/src/api/class-browsercontext.md)
+> [Learn more about BrowserContext](https://playwright.dev/docs/api/class-browsercontext)
 
-> [▶ Learn more about Helpers](/custom-helpers)
+> [Learn more about Helpers](/custom-helpers)
 
 ## Timezone change
 

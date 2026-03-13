@@ -1,9 +1,8 @@
----
+﻿---
 title: Effects
 slug: effects
 ---
 
-# Effects
 
 Effects are functions that can modify scenario flow. They provide ways to handle conditional steps, retries, and test flow control.
 
@@ -15,7 +14,7 @@ Effects can be imported directly from CodeceptJS:
 const { tryTo, retryTo, within } = require('codeceptjs/effects')
 ```
 
-> Note: Prior to v3.7, `tryTo` and `retryTo` were available globally via plugins. This behavior is deprecated and will be removed in v4.0.
+> Note: Prior to v3.7, `tryTo` and `retryTo` were available globally via plugins. In v4.x, import them from `codeceptjs/effects`.
 
 ## tryTo
 
@@ -29,6 +28,7 @@ const success = await tryTo(() => {
   // These steps may fail but won't stop the test
   I.see('Cookie banner')
   I.click('Accept cookies')
+  I.click({ aria: 'Accept cookies' })
 })
 
 if (!success) {
@@ -90,6 +90,8 @@ within('.modal', () => {
   I.click('Close')
 })
 ```
+
+For classic `within` usage details (including frames and session interaction notes), see [Basics: Within](/basics#within).
 
 ## Usage with TypeScript
 

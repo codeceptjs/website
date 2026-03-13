@@ -1,4 +1,4 @@
-Performs right click on a clickable element matched by semantic locator, CSS or XPath.
+﻿Performs right click on a clickable element matched by semantic locator, CSS or XPath.
 
 ```js
 // right click element with id el
@@ -7,8 +7,11 @@ I.rightClick('#el');
 I.rightClick('Click me');
 // right click button with text "Click me" inside .context
 I.rightClick('Click me', '.context');
+// by ARIA locator
+I.rightClick({ aria: 'Submit' });
 ```
 
-@param {CodeceptJS.LocatorOrString} locator clickable element located by CSS|XPath|strict locator.
-@param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS|XPath|strict locator.
+@param {CodeceptJS.LocatorOrString} locator clickable element located by CSS|XPath|ARIA|strict locator.
+@param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS|XPath|ARIA|strict locator.
 @returns {void} automatically synchronized promise through #recorder
+

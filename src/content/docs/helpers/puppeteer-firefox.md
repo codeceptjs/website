@@ -1,15 +1,14 @@
----
-title: Puppeteer-firefox
+﻿---
+title: Puppeteer Firefox
 slug: helpers/puppeteer-firefox
 ---
 
-# Puppeteer-firefox
 
 Now you can use Puppeteer for Firefox (min version: Firefox/63.0.4)
 
-[Repository](https://github.com/GoogleChrome/puppeteer/tree/master/experimental/puppeteer-firefox)
+[Repository](https://github.com/puppeteer/puppeteer)
 
-Some of Puppeteer API methods has not supported in firefox yet. You could check status of them at [Puppeteer API coverage status](https://aslushnikov.github.io/ispuppeteerfirefoxready/)
+Some Puppeteer API methods are not supported in Firefox yet. You can check status at [Puppeteer API coverage status](https://aslushnikov.github.io/ispuppeteerfirefoxready/).
 
 ## Installation
 
@@ -62,13 +61,13 @@ Example multiple section in codecept.conf.js:
 
 ## Puppeteer v2.1.0 onwards
 
-Historically, Puppeteer supported Firefox indirectly through puppeteer-firefox, which relied on a custom, patched version of Firefox. This approach was also known as вЂњJugglerвЂќ. After discussions with Mozilla, we collectively concluded that relying on custom patches was infeasible. Since then, we have been collaborating with Mozilla on supporting Puppeteer on вЂњstockвЂќ Firefox. From Puppeteer v2.1.0 onwards, as an experimental feature, you can specify puppeteer.launch({product: 'firefox'}) to run your Puppeteer scripts in Firefox Nightly, without any additional custom patches.
+Historically, Puppeteer supported Firefox indirectly through puppeteer-firefox, which relied on a custom patched version of Firefox. This approach was also known as "Juggler". After discussions with Mozilla, this model was dropped in favor of supporting stock Firefox. Since Puppeteer v2.1.0, you can specify `puppeteer.launch({ product: 'firefox' })` to run Puppeteer scripts in Firefox Nightly.
 
 ```sh
 npm i puppeteer@v2.1.0
 ```
 
-If you want to try this expirement within CodeceptJS, you should add it in Puppeteer section in codecept.conf.js.
+If you want to try this experiment in CodeceptJS, add it to the Puppeteer section in codecept.conf.js.
 
 - browser: 'chrome' OR 'firefox', 'chrome' is default value
 
@@ -89,5 +88,6 @@ helpers: {
             },
         },
 ```
+
 
 

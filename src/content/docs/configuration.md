@@ -1,9 +1,8 @@
----
+﻿---
 title: Configuration
 slug: configuration
 ---
 
-# Configuration
 
 CodeceptJS configuration is set in `codecept.conf.js` file.
 
@@ -12,7 +11,7 @@ After running `codeceptjs init` it should be saved in test root.
 | Name                 | Type                                                         | Description                                                                                                                                                                                                                                                                                                                                                                          |
 | :------------------- | :----------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `bootstrap?`         | (() => `Promise`<`void`\>) \| `boolean` \| `string`          | [Execute code before](/bootstrap/) tests are run. Can be either JS module file or async function: `bootstrap: async () => server.launch(), ` or `bootstrap: 'bootstrap.js', `                                                                                                                                                                                     |
-| `bootstrapAll?`      | (() => `Promise`<`void`\>) \| `boolean` \| `string`          | [Execute code before launching tests in parallel mode](/bootstrap/#bootstrapall-teardownall)                                                                                                                                                                                                                                                                      |
+| `bootstrapAll?`      | (() => `Promise`<`void`\>) \| `boolean` \| `string`          | [Execute code before launching tests in parallel mode](/bootstrap/#bootstrapall--teardownall)                                                                                                                                                                                                                                                                      |
 | `gherkin?`           | { `features`: `string` \| `string`[] ; `steps`: `string`[] } | Enable [BDD features](/bdd/#configuration). Sample configuration: `gherkin: {   features: "./features/*.feature",   steps: ["./step_definitions/steps.js"] } `                                                                                                                                                                                                    |
 | `gherkin.features`   | `string` \| `string`[]                                       | load feature files by pattern. Multiple patterns can be specified as array                                                                                                                                                                                                                                                                                                           |
 | `gherkin.steps`      | `string`[]                                                   | load step definitions from JS files                                                                                                                                                                                                                                                                                                                                                  |
@@ -25,7 +24,7 @@ After running `codeceptjs init` it should be saved in test root.
 | `plugins?`           | `any`                                                        | Enable CodeceptJS plugins. Example: `plugins: {   autoDelay: {     enabled: true   }  } `                                                                                                                                                                                                                                                                                            |
 | `require?`           | `string`[]                                                   | [Require additional JS modules](/configuration/#require) Example: `require: ["should"]`                                                                                                                                                                                                                                                                           |
 | `teardown?`          | (() => `Promise`<`void`\>) \| `boolean` \| `string`          | [Execute code after tests](/bootstrap/) finished. Can be either JS module file or async function: `teardown: async () => server.stop(), ` or `teardown: 'teardown.js', `                                                                                                                                                                                          |
-| `teardownAll?`       | (() => `Promise`<`void`\>) \| `boolean` \| `string`          | [Execute JS code after finishing tests in parallel mode](/bootstrap/#bootstrapall-teardownall)                                                                                                                                                                                                                                                                    |
+| `teardownAll?`       | (() => `Promise`<`void`\>) \| `boolean` \| `string`          | [Execute JS code after finishing tests in parallel mode](/bootstrap/#bootstrapall--teardownall)                                                                                                                                                                                                                                                                    |
 | `tests`              | `string`                                                     | Pattern to locate CodeceptJS tests. Allows to enter glob pattern or an Array<string> of patterns to match tests / test file names. For tests in JavaScript: `tests: 'tests/**.test.js' ` For tests in TypeScript: `tests: 'tests/**.test.ts' `                                                                                                                                       |
 | `timeout?`           | `number`                                                     | Set default tests timeout in seconds. Tests will be killed on no response after timeout. `timeout: 20, `                                                                                                                                                                                                                                                                             |
 | `translation?`       | `string`                                                     | Enable [localized test commands](/translation/)                                                                                                                                                                                                                                                                                                                   |
@@ -51,7 +50,7 @@ Use modern loaders that support ES Modules:
 // codecept.conf.ts
 export const config = {
   tests: './**/*_test.ts',
-  require: ['tsx/cjs'],  // ← Modern TypeScript loader
+  require: ['tsx/cjs'],  // <- Modern TypeScript loader
   helpers: {},
   include: {},
 }
@@ -63,7 +62,7 @@ export const config = {
 // codecept.conf.ts
 export const config = {
   tests: './**/*_test.ts',
-  require: ['ts-node/esm'],  // ← Established TypeScript loader
+  require: ['ts-node/esm'],  // <- Established TypeScript loader
   helpers: {},
   include: {},
 }
@@ -71,7 +70,7 @@ export const config = {
 
 > **Note:** For ts-node/esm, you need a tsconfig.json with ESM configuration. See [TypeScript documentation](/typescript) for details.
 
-#### For CommonJS Projects (CodeceptJS 3.x)
+#### For CommonJS Projects
 
 Use the CommonJS loader:
 
@@ -79,7 +78,7 @@ Use the CommonJS loader:
 // codecept.conf.js
 exports.config = {
   tests: './*_test.ts',
-  require: ['ts-node/register'],  // ← CommonJS TypeScript loader
+  require: ['ts-node/register'],  // <- CommonJS TypeScript loader
   helpers: {},
   include: {},
 }
@@ -156,7 +155,7 @@ codeceptjs run --config=./path/to/my/config.js
 
 ## Common Configuration Patterns
 
-> 📺 [Watch this material](https://www.youtube.com/watch?v=onBnfo_rJa4&t=4s) on YouTube
+> [Watch this material](https://www.youtube.com/watch?v=onBnfo_rJa4&t=4s) on YouTube
 
 [`@codeceptjs/configure` package](https://github.com/codeceptjs/configure) contains shared recipes for common configuration patterns. This allows to set meta-configuration, independent from a current helper enabled.
 

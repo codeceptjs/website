@@ -1,15 +1,14 @@
----
+﻿---
 title: Page Objects
 ---
 
-# Page Objects
 
 The UI of your web application has interaction areas which can be shared across different tests.
 To avoid code duplication you can put common locators and methods in one place.
 
 ## Dependency Injection
 
-All objects described here are injected via Dependency Injection, in a similar way AngularJS does. If you want an object to be injected in a scenario by its name, you can add it to the configuration:
+All objects described here are injected via Dependency Injection. If you want an object to be injected in a scenario by its name, you can add it to the configuration:
 
 ```js
   include: {
@@ -51,11 +50,11 @@ module.exports = function() {
 }
 ```
 
-> ℹ Instead of `I` you should use `this` in the current context.
+> Note: Instead of `I` you should use `this` in the current context.
 
 ## PageObject
 
-> ✨ CodeceptJS can [generate PageObjects using AI](/ai#generate-pageobjects). It fetches all interactive elements from a page, generates locators and methods page and writes JS code. Generated page object can be tested on the fly within the same browser session.
+> вњЁ CodeceptJS can [generate PageObjects using AI](/ai#generate-pageobjects). It fetches all interactive elements from a page, generates locators and methods page and writes JS code. Generated page object can be tested on the fly within the same browser session.
 
 If an application has different pages (login, admin, etc) you should use a page object.
 CodeceptJS can generate a template for it with the following command:
@@ -89,7 +88,7 @@ module.exports = {
     email: '#user_basic_email',
     password: '#user_basic_password'
   },
-  submitButton: {css: '#new_user_basic input[type=submit]'},
+  submitButton: { aria: 'Sign in' },
 
   // introducing methods
   sendForm(email, password) {
@@ -192,7 +191,7 @@ module.exports = new AttachFile();
 module.exports.AttachFile = AttachFile;
 ```
 
-> ⚠ While building complex page objects it is important to keep all `async` functions to be called with `await`. While CodeceptJS allows to run commands synchronously if async function has `I.grab*` or any custom function that returns a promise it must be called with `await`. If you see `UnhandledPromiseRejectionWarning` it might be caused by async page object function that was called without `await`.
+> Warning: while building complex page objects it is important to call all `async` functions with `await`. While CodeceptJS allows running commands synchronously, if an async function has `I.grab*` or any custom function that returns a promise it must be called with `await`. If you see `UnhandledPromiseRejectionWarning` it might be caused by an async page object function that was called without `await`.
 
 ## Page Fragments
 
