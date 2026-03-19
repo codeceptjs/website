@@ -2,6 +2,9 @@
   "name": "CodeceptJS",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=18.20.8"
+  },
   "scripts": {
     "predev": "npm run generate:unified-api",
     "dev": "astro dev",
