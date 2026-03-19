@@ -18,10 +18,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           registry-url: https://registry.npmjs.org/
       - name: Install deps
-        run: npm i
+        run: npm ci
       - name: Sync changelog from CodeceptJS 4.x
         run: npm run sync:changelog
       - name: Generate unified API docs
