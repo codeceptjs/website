@@ -1,4 +1,4 @@
-﻿import {defineConfig} from 'astro/config';
+import {defineConfig} from 'astro/config';
 import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
 import starlightSidebarTopics from 'starlight-sidebar-topics';
@@ -203,6 +203,11 @@ export default defineConfig({
         }),
     ],
     vite: {
+        resolve: {
+            alias: {
+                zod: 'zod/v3',
+            },
+        },
         plugins: [tailwindcss()],
         build: {
             assetsInlineLimit: 0,
