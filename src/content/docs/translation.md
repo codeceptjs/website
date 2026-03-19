@@ -1,17 +1,16 @@
----
+﻿---
 title: Translation
 ---
 
-# Translation 
 
 *Unique feature of CodeceptJS: write tests in your language!*
 
-🇩🇪🇯🇵🇫🇷🇹🇼🇨🇳🇵🇱🇧🇷🇮🇹
+Built-in locales include: `de-DE`, `it-IT`, `fr-FR`, `ja-JP`, `pl-PL`, `pt-BR`, `zh-CN`, `zh-TW`.
 
 Test output and the way tests are written can be localized. This way scenarios can be written in almost native language using UTF support of JavaScript.
 
 If you have non-English team and you work on non-English project consider enabling translation
-by setting translation to [one of available languages](https://github.com/codeceptjs/CodeceptJS/blob/3.x/translations) or writing vocabulary for your language.
+by setting translation to [one of available languages](https://github.com/codeceptjs/CodeceptJS/tree/4.x/translations) or writing vocabulary for your language.
 
 ## How it works
 
@@ -22,7 +21,7 @@ It is possible to add aliases for all CodeceptJS keywords and methods. So if all
 
 You can enable translation if your team is not from English-speaking country developing non-English product.
 
-> ⚠️ It's important to note that default translations are far from being complete. So there are still lots of methods and keywords not translated to your language yet. We recommend to [extend a vocabulary](#extending-vocabulary) to add aliases for non-translated methods and submit a pull request with improvements to a [corresponding language file](https://github.com/codeceptjs/CodeceptJS/blob/3.x/translations).
+> ⚠️ It's important to note that default translations are far from being complete. So there are still lots of methods and keywords not translated to your language yet. We recommend to [extend a vocabulary](#extending-vocabulary) to add aliases for non-translated methods and submit a pull request with improvements to a [corresponding language file](https://github.com/codeceptjs/CodeceptJS/tree/4.x/translations).
 
 To enable translition create a new project with 
 
@@ -33,7 +32,7 @@ npx codeceptjs init
 And select a language of your choice from a list:
 
 ```
-? Do you want localization for tests? (See https://codecept.io/translation/)
+? Do you want localization for tests? (See /translation)
 ❯ English (no localization) 
   de-DE 
   it-IT 

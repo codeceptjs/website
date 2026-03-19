@@ -30,9 +30,17 @@ import "swiper/css/pagination";
     <div class="swiper swiper-trusted">
       <div class="swiper-wrapper">
         {
-          [BC_LogoScreen_C, doxyme, gen3, isotipo, kiabi, mynd, zenitech].map((data) =>
+          [
+            { image: BC_LogoScreen_C, alt: "BC logo" },
+            { image: doxyme, alt: "Doxy.me logo" },
+            { image: gen3, alt: "Gen3 logo" },
+            { image: isotipo, alt: "Isotipo logo" },
+            { image: kiabi, alt: "Kiabi logo" },
+            { image: mynd, alt: "Mynd logo" },
+            { image: zenitech, alt: "Zenitech logo" },
+          ].map((item) =>
               <div class="swiper-slide group flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-2xl p-6 hover:border-purple-300/50 transition-all duration-300">
-                <Image class="text-4xl mb-2 group-hover:scale-110 transition-transform duration-300" src={data} alt="" />
+                <Image class="text-4xl mb-2 group-hover:scale-110 transition-transform duration-300" src={item.image} alt={item.alt} />
               </div>
           )
         }

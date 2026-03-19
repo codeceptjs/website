@@ -1,10 +1,12 @@
----
+﻿---
 title: Data Management
 ---
 
-# Data Management
 
-> This chapter describes data management for external sources. If you are looking for using Data Sets in tests, see [Data Driven Tests](https://codecept.io/advanced/#data-drivern-tests) section*
+> This chapter describes data management for external sources. If you are looking for using Data Sets in tests, see [Data Driven Tests](/advanced#data-driven-tests) section.
+>
+> Use this page when your goal is to **prepare and clean up test data** for scenarios.  
+> If your goal is to **validate API responses** (codes, JSON structure, schema assertions), use [API Testing](/api).
 
 Managing data for tests is always a tricky issue. How isolate data between tests, how to prepare data for different tests, etc.
 There are different approaches to solve it:
@@ -21,8 +23,8 @@ API is supposed to be a stable interface and it can be used by acceptance tests.
 
 ## REST
 
-[REST helper](https://codecept.io/helpers/REST/) allows sending raw HTTP requests to application.
-This is a tool to make shortcuts and create your data pragmatically via API. However, it doesn't provide tools for testing APIs, so it should be paired with Playwright or WebDriver helper for browser testing.
+[REST helper](/helpers/rest) allows sending raw HTTP requests to application.
+This is a tool to make shortcuts and create your data pragmatically via API. However, it doesn't provide response assertion tools out of the box, so it should be paired with Playwright or WebDriver helper for browser testing.
 
 Enable REST helper in the config. It is recommended to set `endpoint`, a base URL for all API requests. If you need some authorization you can optionally set default headers too.
 
@@ -87,13 +89,15 @@ This can also be used to emulate Ajax requests:
 I.sendPostRequest('/update-status', {}, { http_x_requested_with: 'xmlhttprequest' });
 ```
 
-> See complete reference on [REST](https://codecept.io/helpers/REST) helper
+> See complete reference on [REST](/helpers/rest) helper
+>
+> For API response assertions, see [API Testing](/api) and [JSONResponse](/helpers/json-response).
 
 ## GraphQL
 
-[GraphQL helper](https://codecept.io/helpers/GraphQL/) allows sending GraphQL queries and mutations to application, over Http.
+[GraphQL helper](/helpers/graph-ql) allows sending GraphQL queries and mutations to application, over HTTP.
 
-This tool allows you to create shortcuts and manage your data pragmatically via a GraphQL endpoint. However, it does not include tools for testing the endpoint, so it should be used in conjunction with WebDriver helpers for browser testing.
+This tool allows you to create shortcuts and manage your data pragmatically via a GraphQL endpoint. However, it does not include response assertion tools by default, so it should be used in conjunction with WebDriver helpers for browser testing.
 
 Enable GraphQL helper in the config. It is recommended to set `endpoint`, the URL to which the requests go to. If you need some authorization you can optionally set default headers too.
 
@@ -161,13 +165,15 @@ After(({ I }) => {
 });
 ```
 
-> See complete reference on [GraphQL](https://codecept.io/helpers/GraphQL) helper
+> See complete reference on [GraphQL](/helpers/graph-ql) helper
+>
+> For API response assertions, see [API Testing](/api) and [JSONResponse](/helpers/json-response).
 
 ## Data Generation with Factories
 
 This concept is extended by:
-- [ApiDataFactory](https://codecept.io/helpers/ApiDataFactory/) helper, and,
-- [GraphQLDataFactory](https://codecept.io/helpers/GraphQLDataFactory/) helper.
+- [ApiDataFactory](/helpers/api-data-factory) helper, and
+- [GraphQLDataFactory](/helpers/graph-ql-data-factory) helper.
 
 These helpers build data according to defined rules and use REST API or GraphQL mutations to store them and automatically clean them up after a test.
 
@@ -175,13 +181,13 @@ Just define how many items of any kind you need and the data factory helper will
 
 To make this work some preparations are required.
 
-At first, you need data generation libraries which are [Rosie](https://github.com/rosiejs/rosie) and [Faker](https://www.npmjs.com/package/faker). Faker can generate random names, emails, texts, and Rosie uses them
+At first, you need data generation libraries which are [Rosie](https://github.com/rosiejs/rosie) and [@faker-js/faker](https://www.npmjs.com/package/@faker-js/faker). Faker can generate random names, emails, texts, and Rosie uses them
 to generate objects using factories.
 
 Install rosie and faker to create a first factory:
 
 ```js
-npm i rosie faker --save-dev
+npm i rosie @faker-js/faker --save-dev
 ```
 
 Then create a module which will export a factory for an entity.
@@ -206,11 +212,11 @@ See the example providing a factory for User generation:
 
 ```js
 // factories/post.js
-var Factory = require('rosie').Factory;
-var faker = require('@faker-js/faker');
+const { Factory } = require('rosie');
+const { faker } = require('@faker-js/faker');
 
 module.exports = new Factory()
-  .attr('name', () => faker.person.findName())
+  .attr('name', () => faker.person.fullName())
   .attr('email', () => faker.internet.email());
 ```
 
@@ -236,10 +242,10 @@ Then, calling `I.have('user')` inside a test will create a new user for you.
 This is done by sending POST request to `/api/users` URL. Response is returned and can be used in tests.
 
 At the end of a test ApiDataFactory will clean up created record for you. This is done by collecting
-ids from crated records and running `DELETE /api/users/{id}` requests at the end of a test.
+ids from created records and running `DELETE /api/users/{id}` requests at the end of a test.
 This rules can be customized in helper configuration.
 
-> See complete reference on [ApiDataFactory](https://codecept.io/helpers/ApiDataFactory) helper
+> See complete reference on [ApiDataFactory](/helpers/api-data-factory) helper
 
 ### GraphQL Data Factory
 
@@ -262,15 +268,15 @@ See the example providing a factory for User generation:
 
 ```js
 // factories/post.js
-var Factory = require('rosie').Factory;
-var faker = require('@faker-js/faker');
+const { Factory } = require('rosie');
+const { faker } = require('@faker-js/faker');
 
 module.exports = new Factory((buildObj) => {
   return {
     input: { ...buildObj },
   }
 })
-  .attr('name', () => faker.person.findName())
+  .attr('name', () => faker.person.fullName())
   .attr('email', () => faker.internet.email());
 ```
 
@@ -300,11 +306,11 @@ Then, calling `I.mutateData('createUser')` inside a test will create a new user 
 This is done by sending a GraphQL mutation request over Http to `/graphql` endpoint. Response is returned and can be used in tests.
 
 At the end of a test GraphQLDataFactory will clean up created record for you. This is done by collecting
-data from crated records, creating deletion mutation objects by passing the data to the `revert` function provided, and sending deletion mutation objects as requests at the end of a test.
+data from created records, creating deletion mutation objects by passing the data to the `revert` function provided, and sending deletion mutation objects as requests at the end of a test.
 This behavior is according the `revert` function be customized in helper configuration.
 The revert function returns an object, that contains the query for deletion, and the variables object to go along with it.
 
-> See complete reference on [GraphQLDataFactory](https://codecept.io/helpers/GraphQLDataFactory) helper
+> See complete reference on [GraphQLDataFactory](/helpers/graph-ql-data-factory) helper
 
 ## Requests Using Browser Session
 

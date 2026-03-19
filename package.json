@@ -2,12 +2,20 @@
   "name": "CodeceptJS",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=18.20.8"
+  },
   "scripts": {
+    "predev": "npm run generate:unified-api",
     "dev": "astro dev",
     "start": "astro dev",
+    "prebuild": "npm run generate:unified-api",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "sync:changelog": "node scripts/sync-changelog.mjs",
+    "generate:unified-api": "node scripts/generate-unified-api.mjs",
+    "generate:unified-api:check": "node scripts/generate-unified-api.mjs --check"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^6.3.10",

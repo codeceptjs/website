@@ -1,14 +1,13 @@
----
-title: Testing with AI 🪄
+﻿---
+title: Testing with AI
 ---
 
-# 🪄 Testing with AI
 
 **CodeceptJS is the first open-source test automation framework with AI** features to improve the testing experience. CodeceptJS uses AI provider like OpenAI or Anthropic to auto-heal failing tests, assist in writing tests, and more...
 
 Think of it as your testing co-pilot built into the testing framework
 
-> 🪄 **AI features for testing are experimental**. AI works only for web based testing with Playwright, WebDriver, etc. Those features will be improved based on user's experience.
+> **AI features for testing are experimental**. AI works only for web-based testing with Playwright, WebDriver, etc. These features will improve based on user feedback.
 
 
 ## How AI Improves Automated Testing
@@ -21,20 +20,20 @@ So, instead of asking "write me a test" it can ask "write a test for **this** pa
 
 CodeceptJS AI can do the following:
 
-* 🏋️‍♀️ **assist writing tests** in `pause()` or interactive shell mode
-* 📃 **generate page objects** in `pause()` or interactive shell mode
-* 🚑 **self-heal failing tests** (can be used on CI)
-* 💬 send arbitrary prompts to AI provider from any tested page attaching its HTML contents
+* **assist writing tests** in `pause()` or interactive shell mode
+* **generate page objects** in `pause()` or interactive shell mode
+* **self-heal failing tests** (can be used on CI)
+* send arbitrary prompts to AI provider from any tested page with attached HTML content
 
 ## How it works
 
-As we can't send a browser window with ChatGPT we are not be able to fully share the context. But we can chare HTML of the current page, which is quite enough to analyze and identify if a page contains an element which can be used in a test.
+As we cannot send a browser window with ChatGPT, we cannot fully share context. But we can share HTML of the current page, which is enough to analyze and identify elements that can be used in a test.
 
 AI providers have limits on input tokens but HTML pages can be huge. However, some information from a web page may be irrelevant for testing. For instance, if you test a blog, you won't need text contents of a post, as it can't be used in locators. That's why CodeceptJS sends HTML with **all non-interactive HTML elements removed**. So, only links, buttons, fields, etc will be sent to AI as a context. In case you have clickable `<div>` but with no `role="button"` it will be ignored. Also, we minify HTML before sending.
 
 Even though, the HTML is still quite big and may exceed the token limit. So we recommend using models with at least 16K input tokens, (approx. 50K of HTML text), which should be enough for most web pages. It is possible to strictly limit the size of HTML to not exceed tokens limit.
 
-> ❗AI features require sending HTML contents to AI provider. Choosing one may depend on the descurity policy of your company. Ask your security department which AI providers you can use.
+> AI features require sending HTML content to AI providers. Provider choice may depend on your company security policy.
 
 
 
@@ -68,7 +67,7 @@ npx codeceptjs run --ai
 
 Below we list sample configuration for popular AI providers
 
-#### OpenAI GPT
+### OpenAI GPT
 
 Prerequisite:
 
@@ -94,7 +93,7 @@ ai: {
 }
 ```
 
-#### Mixtral
+### Mixtral
 
 Mixtral is opensource and can be used via Cloudflare, Google Cloud, Azure or installed locally.
 
@@ -122,7 +121,7 @@ ai: {
 
 > Groq also provides access to other opensource models like llama or gemma
 
-#### Anthropic Claude
+### Anthropic Claude
 
 Prerequisite:
 
@@ -149,7 +148,7 @@ ai: {
 }
 ```
 
-#### Azure OpenAI
+### Azure OpenAI
 
 When your setup using Azure API key
 
@@ -301,59 +300,14 @@ This AI copilot works best with long static forms. In the case of complex and dy
 
 Please keep in mind that GPT can't react to page changes and operates with static text only. This is why it is not ready yet to write the test completely. However, if you are new to CodeceptJS and automated testing AI copilot may help you write tests more efficiently.
 
-> 👶 Enable AI copilot for junior test automation engineers. It may help them to get started with CodeceptJS and to write good semantic locators.
+> Enable AI copilot for junior test automation engineers. It may help them get started with CodeceptJS and write better semantic locators.
 
 ## Self-Healing Tests
 
-In large test suites, the cost of maintaining tests goes exponentially. That's why any effort that can improve the stability of tests pays itself. That's why CodeceptJS has concept of [heal recipes](./heal), functions that can be executed on a test failure. Those functions can try to revive the test and continue execution. When combined with AI, heal recipe can ask AI provider how to fix the test. It will provide error message, step being executed and HTML context of a page. Based on this information AI can suggest the code to be executed to fix the failing test.
+Self-healing is documented in [Self-Healing Tests](/heal).
 
-
-AI healing can solve exactly one problem: if a locator of an element has changed, and an action can't be performed, **it matches a new locator, tries a command again, and continues executing a test**. For instance, if the "Sign in" button was renamed to "Login" or changed its class, it will detect a new locator of the button and will retry execution.
-
-> You can define your own [heal recipes](./heal) that won't use AI to revive failing tests.
-
-Heal actions **work only on actions like `click`, `fillField`, etc, and won't work on assertions, waiters, grabbers, etc. Assertions can't be guessed by AI, the same way as grabbers, as this may lead to unpredictable results.
-
-If Heal plugin successfully fixes the step, it will print a suggested change at the end of execution. Take it as actionable advice and use it to update the codebase. Heal plugin is supposed to be used on CI, and works automatically without human assistance.
-
-
-To start, make sure [AI provider is connected](#set-up-ai-provider), and [heal recipes were created](/heal#how-to-start-healing) by running this command:
-
-```
-npx codeceptjs generate:heal
-```
-
-Heal recipes should be included into `codecept.conf.js` or `codecept.conf.ts` config file:
-
-```js
-
-require('./heal')
-
-exports.config = {
-  // ... your codeceptjs config
-```
-
-Then enable `heal` plugin:
-
-```js
-plugins: {
-  heal: {
-    enabled: true
-  }
-}
-```
-
-If you run tests in AI mode and a test fails, a request to AI provider will be sent
-
-```
-npx codeceptjs run --ai
-```
-
-![](./images/heal.png)
-
-When execution finishes, you will receive information on token usage and code suggestions proposed by AI.
-By evaluating this information you will be able to check how effective AI can be for your case.
-
+Use this page as canonical for AI provider setup and copilot workflows.
+Use `/heal` as canonical for healing concepts, recipe structure (`heal.addRecipe`), and `heal` plugin configuration.
 
 ## Arbitrary Prompts
 
@@ -559,7 +513,7 @@ console.log(result);
 ```
 
 Tune the options until you are satisfied with the results and use this as `html` config for `ai` section inside `codecept.conf` file.
-It is also recommended to check the source of [removeNonInteractiveElements](https://github.com/codeceptjs/CodeceptJS/blob/3.x/lib/html.js) and if needed propose improvements to it.
+It is also recommended to check the source of [removeNonInteractiveElements](https://github.com/codeceptjs/CodeceptJS/blob/4.x/lib/html.js) and if needed propose improvements to it.
 
 For instance, if you use `data-qa` attributes to specify locators and you want to include them in HTML, use the following config:
 
@@ -589,3 +543,4 @@ or if you run it in shell mode:
 ```
 DEBUG="codeceptjs:ai" npx codeceptjs shell --ai
 ```
+

@@ -1,11 +1,14 @@
-Appends text to a input field or textarea.
+﻿Appends text to a input field or textarea.
 Field is located by name, label, CSS or XPath
 
 ```js
 I.appendField('#myTextField', 'appended');
 // typing secret
 I.appendField('password', secret('123456'));
+// by ARIA locator
+I.appendField({ aria: 'My Text Field' }, 'appended');
 ```
-@param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator
+@param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|ARIA|strict locator
 @param {string} value text value to append.
 @returns {void} automatically synchronized promise through #recorder
+

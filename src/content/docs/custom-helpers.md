@@ -1,4 +1,4 @@
----
+﻿---
 title: Custom Helpers
 ---
 
@@ -29,7 +29,7 @@ helpers: {
 }
 ```
 
-Helpers are classes inherited from [corresponding abstract class](https://github.com/codeceptjs/helper).
+Helpers are classes inherited from [corresponding abstract class](https://github.com/codeceptjs/CodeceptJS/blob/4.x/lib/helper.js).
 Created helper file should look like this:
 
 ```js
@@ -64,7 +64,7 @@ const Helper = require('@codeceptjs/helper');
 class MyHelper extends Helper {
 
   doAwesomeThings() {
-    console.log('Hello from MyHelpr');
+    console.log('Hello from MyHelper');
   }
 
 }
@@ -76,17 +76,18 @@ We can call a new method from within `I`:
 I.doAwesomeThings();
 ```
 
-> Methods starting with `_` are considered special and won't available in `I` object.
+> Methods starting with `_` are considered special and won't be available in `I` object.
 
 
-Please note, `I` object can't be used helper class. As `I` object delegates its calls to helper classes, you can't make a circular dependency on it. Instead of calling `I` inside a helper, you can get access to other helpers by using `helpers` property of a helper. This allows you to access any other enabled helper by its name. 
+Please note, `I` object can't be used inside a helper class. As `I` object delegates its calls to helper classes, you can't make a circular dependency on it. Instead of calling `I` inside a helper, you can get access to other helpers by using the `helpers` property of a helper. This allows you to access any other enabled helper by its name.
 
 For instance, to perform a click with Playwright helper, do it like this:
 
 ```js
 doAwesomeThingsWithPlaywright() {
   const { Playwright } = this.helpers;
-  Playwright.click('Awesome');    
+  Playwright.click('Awesome');
+  Playwright.click({ aria: 'Awesome' });
 }
 ```
 
@@ -101,8 +102,8 @@ This way, if your tests are written with TypeScript, your IDE will be able to le
 
 ## Accessing Elements
 
-WebDriver, Puppeteer and Playwright drivers provide API for web elements.
-However, CodeceptJS do not expose them to tests by design, keeping test to be action focused.
+WebDriver, Puppeteer and Playwright drivers provide APIs for web elements.
+However, CodeceptJS does not expose them to tests by design, keeping tests action-focused.
 If you need to get access to web elements, it is recommended to implement operations for web elements in a custom helper.
 
 To get access for elements, connect to a corresponding helper and use `_locate` function to match web elements by CSS or XPath, like you usually do:
@@ -121,7 +122,7 @@ async clickOnEveryElement(locator) {
 }
 ```
 
-In this case an an instance of webdriverio element is used.
+In this case, an instance of a WebdriverIO element is used.
 To get a [complete API of an element](https://webdriver.io/docs/api/) refer to webdriverio docs.
 
 ### Accessing Elements in Playwright & Puppeteer
@@ -140,9 +141,9 @@ async clickOnEveryElement(locator) {
 }
 ```
 
-In this case `el` will be an instance of [ElementHandle](https://playwright.dev/#version=master&path=docs%2Fapi.md&q=class-elementhandle) which is similar for Playwright & [Puppeteer](https://pptr.dev/#?product=Puppeteer&version=master&show=api-class-elementhandle).
+In this case `el` will be an instance of [ElementHandle](https://playwright.dev/docs/api/class-elementhandle), which is similar for Playwright and [Puppeteer](https://pptr.dev/api/puppeteer.elementhandle).
 
-> ℹ There are more `_locate*` methods in each helper. Take a look on documentation of a helper you use to see which exact method it exposes.
+> Note: There are more `_locate*` methods in each helper. Take a look at the documentation of a helper you use to see which exact method it exposes.
 
 ## Configuration
 
@@ -199,7 +200,7 @@ Each implemented method should return a value as they will be added to global pr
 
 ## Conditional Retries
 
-It is possible to execute global conditional retries to handle unforseen errors.
+It is possible to execute global conditional retries to handle unforeseen errors.
 Lost connections and network issues are good candidates to be retried whenever they appear.
 
 This can be done inside a helper using the global [promise recorder](/hooks/#api):
@@ -220,9 +221,9 @@ _before() {
 
 Retry rules are available in array `recorder.retries`. The last retry rule can be disabled by running `recorder.retries.pop()`;
 
-## Using Typescript
+## Using TypeScript
 
-With Typescript, just simply replacing `module.exports` with `export` for autocompletion.
+With TypeScript, replace `module.exports` with `export` to improve autocompletion.
 
 
 ## Helper Examples
@@ -283,9 +284,9 @@ module.exports = MyHelper;
 
 ### Puppeteer Example
 
-Puppeteer has [nice and elegant API](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md) which you can use inside helpers. Accessing `page` instance via `this.helpers.Puppeteer.page` from inside a helper.
+Puppeteer has a [well-documented API](https://pptr.dev/api) that you can use inside helpers. Access `page` instance via `this.helpers.Puppeteer.page` from inside a helper.
 
-Let's see how we can use [emulate](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pageemulateoptions) function to emulate iPhone browser in a test.
+Let's see how we can use [emulate](https://pptr.dev/api/puppeteer.page.emulate) function to emulate iPhone browser in a test.
 
 ```js
 const Helper = require('@codeceptjs/helper');
@@ -303,3 +304,4 @@ class MyHelper extends Helper {
 
 module.exports = MyHelper;
 ```
+

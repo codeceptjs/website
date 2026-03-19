@@ -1,10 +1,10 @@
----
+﻿---
 title: CodeceptUI
 ---
 
+
 ![CodeceptUI](./images/codeceptui.png)
 
-## CodeceptUI
 
 CodeceptJS has an interactive, graphical test runner. We call it CodeceptUI. It works in your browser and helps you to manage your tests.
 
@@ -54,3 +54,4 @@ To start CodeceptUI in server mode:
 ```
 npx codecept-ui
 ```
+

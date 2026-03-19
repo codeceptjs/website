@@ -1,6 +1,9 @@
+﻿---
+title: Community Helpers
+slug: helpers/community-helpers
 ---
-title: Community Helpers & Plugins
----
+
+> Share your helpers by opening a PR to this page.
 
 Here is the list of helpers created by our community.
 Please **add your own** by editing this page.
@@ -56,3 +59,5 @@ Please **add your own** by editing this page.
 * [codeceptjs-lighthouse-helper](https://github.com/kobenguyent/codeceptjs-lighthouse-helper) lighthouse audit integrated with CodeceptJS - Playwright
 * [Snowplow Data analytics](https://www.npmjs.com/package/@viasat/codeceptjs-snowplow-helper) - Test your Snowplow events implementations with CodeceptJS and Snowplow Micro.
 * [codeceptjs-failure-logger](https://github.com/kobenguyent/codeceptjs-failure-logger) - Log failed CodeceptJS tests to file
+
+

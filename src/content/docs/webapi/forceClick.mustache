@@ -1,4 +1,4 @@
-Perform an emulated click on a link or a button, given by a locator.
+﻿Perform an emulated click on a link or a button, given by a locator.
 Unlike normal click instead of sending native event, emulates a click with JavaScript.
 This works on hidden, animated or inactive elements as well.
 
@@ -21,8 +21,11 @@ I.forceClick('//form/*[@type=submit]');
 I.forceClick('Logout', '#nav');
 // using strict locator
 I.forceClick({css: 'nav a.login'});
+// ARIA locator
+I.forceClick({ aria: 'Select' });
 ```
 
-@param {CodeceptJS.LocatorOrString} locator clickable link or button located by text, or any element located by CSS|XPath|strict locator.
+@param {CodeceptJS.LocatorOrString} locator clickable link or button located by text, or any element located by CSS|XPath|ARIA|strict locator.
 @param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element to search in CSS|XPath|Strict locator.
 @returns {void} automatically synchronized promise through #recorder
+

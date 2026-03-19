@@ -2,6 +2,8 @@ Waits for the specified value to be in value attribute.
 
 ```js
 I.waitForValue('//input', "GoodValue");
+// by ARIA locator
+I.waitForValue({ aria: 'Email' }, 'GoodValue');
 ```
 
 @param {LocatorOrString} field input field.

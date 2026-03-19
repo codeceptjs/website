@@ -2,7 +2,7 @@
   "start_urls": [
     "https://codecept.io/"
   ],
-  "index_uid": "docs",
+  "index_uid": "codeceptjs",
   "selectors": {
     "default": {
       "lvl0": "main h1",

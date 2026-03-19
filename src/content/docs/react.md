@@ -1,8 +1,7 @@
----
+﻿---
 title: Testing React Applications
 ---
 
-# Testing React Applications
 
 React applications require some additional love for end to end testing.
 At first, it is very hard to test an application which was never designed to be tested!

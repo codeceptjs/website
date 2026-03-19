@@ -1,8 +1,7 @@
----
+﻿---
 title: Testing with Puppeteer
 ---
 
-# Testing with Puppeteer
 
 Among all Selenium alternatives the most interesting emerging ones are tools developed around Google Chrome [DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/). And the most prominent one is [Puppeteer](https://github.com/GoogleChrome/puppeteer). It operates over Google Chrome directly without requiring additional tools like ChromeDriver. So tests setup with Puppeteer can be started with npm install only. If you want get faster and simpler to setup tests, Puppeteer would be your choice.
 
@@ -30,7 +29,7 @@ To start you need CodeceptJS with Puppeteer packages installed
 npm install codeceptjs puppeteer --save
 ```
 
-Or see [alternative installation options](https://codecept.io/installation/)
+Or see [alternative installation options](/quickstart)
 
 > If you already have CodeceptJS project, just install `puppeteer` package and enable a helper it in config.
 
@@ -42,7 +41,7 @@ npx codeceptjs init
 
 You will be asked for a Helper to use, you should select Puppeteer and provide url of a website you are testing.
 
-> Puppeteer can also work with Firefox. [Learn how to set it up](/helpers/Puppeteer-firefox)
+> Puppeteer can also work with Firefox. [Learn how to set it up](/helpers/puppeteer-firefox)
 
 ## Configuring
 
@@ -79,7 +78,7 @@ By default it is set to `domcontentloaded` which waits for `DOMContentLoaded` ev
 When a test runs faster than application it is recommended to increase `waitForAction` config value.
 It will wait for a small amount of time (100ms) by default after each user action is taken.
 
-> ▶ More options are listed in [helper reference](https://codecept.io/helpers/Puppeteer/).
+> More options are listed in [helper reference](/helpers/puppeteer).
 
 ## Writing Tests
 
@@ -104,9 +103,9 @@ Tests consist with a scenario of user's action taken on a page. The most widely 
 * `see`, `dontSee` - to check for a text on a page
 * `seeElement`, `dontSeeElement` - to check for elements on a page
 
-> ℹ  All actions are listed in [Puppeteer helper reference](https://codecept.io/helpers/Puppeteer/).*
+> Note: All actions are listed in [Puppeteer helper reference](/helpers/puppeteer).*
 
-All actions which interact with elements **support CSS and XPath locators**. Actions like `click` or `fillField` by locate elements by their name or value on a page:
+All actions which interact with elements **support CSS, XPath, and ARIA locators**. Actions like `click` or `fillField` by locate elements by their name or value on a page:
 
 ```js
 // search for link or button
@@ -115,6 +114,8 @@ I.click('Login');
 I.fillField('Name', 'Miles');
 // we can use input name
 I.fillField('user[email]','miles@davis.com');
+// or locate by aria-label
+I.click({ aria: 'Sign in' });
 ```
 
 You can also specify the exact locator type with strict locators:
@@ -197,7 +198,7 @@ I.see('0 items left', '.todo-count');
 ### Each Element <Badge text="Since 3.3" type="warning"/>
 
 Usually, CodeceptJS performs an action on the first matched element. 
-In case you want to do an action on each element found, use the special function `eachElement` which comes from [eachElement](https://codecept.io/plugins/#eachelement) plugin. 
+In case you want to do an action on each element found, use the special function `eachElement` which comes from [eachElement](/els#eachelement) plugin. 
 
 `eachElement` function matches all elements by locator and performs a callback on each of those element. A callback function receives [ElementHandle instance](https://pptr.dev/#?product=Puppeteer&show=api-class-elementhandle) from Puppeteer API. `eachElement` may perform arbitrary actions on a page, so the first argument should by a description of the actions performed. This description will be used for logging purposes.
 
@@ -213,7 +214,7 @@ await eachElement(
 );
 ```
 
-> ℹ Learn more about [eachElement plugin](/plugins/#eachelement)
+> Note: Learn more about [eachElement plugin](/els#eachelement)
 
 ## Mocking Network Requests <Badge text="Since 3.5.16" type="warning"/>
 
@@ -241,7 +242,7 @@ To master request intercepting [use `HTTPRequest` object](https://pptr.dev/next/
 
 ## Accessing Puppeteer API
 
-To get Puppeteer API inside a test use [`I.usePupepteerTo`](/helpers/Puppeteer/#usepuppeteerto) method with a callback.
+To get Puppeteer API inside a test use [`I.usePuppeteerTo`](/helpers/puppeteer#usepuppeteerto) method with a callback.
 To keep test readable provide a description of a callback inside the first parameter.
 
 ```js
@@ -279,7 +280,7 @@ Code coverage can be captured, by enabling the `coverage` plugin in `codecept.co
 
 Once all the tests are completed, `codecept` will create and store coverage in `output/coverage` folder, as shown below.
 
-![]((https://github.com/codeceptjs/CodeceptJS/assets/7845001/3b8b81a3-7c85-470c-992d-ecdc7d5b4a1e))
+![](https://github.com/codeceptjs/CodeceptJS/assets/7845001/3b8b81a3-7c85-470c-992d-ecdc7d5b4a1e)
 
 Open `index.html` in your browser to view the full interactive coverage report.
 
@@ -311,4 +312,6 @@ async renderPageToPdf() {
 
 The same way you can also access `browser` object to implement more actions or handle events.
 
-> [▶ Learn more about Helpers](https://codecept.io/helpers/)
+> [Learn more about Helpers](/custom-helpers)
+
+

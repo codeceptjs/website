@@ -2,7 +2,8 @@
 title: Reporters
 ---
 
-# Reporters
+Use this page for reporter setup and integrations.  
+Use [Commands](/commands#run) for run flags (`--reporter`, `--steps`, `--debug`, `--verbose`).
 
 ## Cli
 
@@ -135,7 +136,7 @@ GitHub -- /home/davert/projects/codeceptjs/examples/github_test.js
 Pass `--steps` or `--debug` option as in `run` command to also get steps and substeps to be printed. In this mode **tests will be executed** but all helpers and plugins disabled, so no real actions will be performed.
 
 ```
-npx codecepjs dry-run --debug
+npx codeceptjs dry-run --debug
 ```
 
 > ℹ If you use custom JavaScript code inside tests, or rely on values from `grab*` commands, dry-run may produce error output.
@@ -185,7 +186,7 @@ plugins: {
 
 ## ReportPortal
 
-For enterprise grade we reporting we recommend using [ReportPortal](https://reportportal.io).
+For enterprise-grade reporting we recommend using [ReportPortal](https://reportportal.io).
 
 ![](https://camo.githubusercontent.com/6550c0365f1d0ce1e29c53f1860b12957d1fc529/68747470733a2f2f692e6962622e636f2f516d353247306e2f53637265656e73686f742d323031392d30342d31312d61742d31352d35372d34302e706e67)
 
@@ -313,7 +314,7 @@ I.addMochawesomeContext({title: 'expected output',
 
 - `context`  string, url, path to screenshot, object. See [this](https://www.npmjs.com/package/mochawesome#adding-test-context)
 
-## Multi Reports
+## Multiple Reporters
 
 Want to use several reporters in the same time? Try to use [mocha-multi](https://www.npmjs.com/package/mocha-multi) reporter
 
@@ -373,12 +374,6 @@ Install it via NPM:
 ```sh
 npm i codeceptjs-testrail --save
 ```
-
-![Attachemnt for failed case](http://g.recordit.co/ajaa2QRlnW.gif)
-
-Now there is new feature, add the configuration to test run of test plan
-![Attachemnt for failed case](http://g.recordit.co/uQLvQUq7cT.gif)
-
 
 ## Tesults
 

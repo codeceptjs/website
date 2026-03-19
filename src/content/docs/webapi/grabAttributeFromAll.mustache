@@ -1,9 +1,12 @@
-Retrieves an array of attributes from elements located by CSS or XPath and returns it to test.
+﻿Retrieves an array of attributes from elements located by CSS or XPath and returns it to test.
 Resumes test execution, so **should be used inside async with `await`** operator.
 
 ```js
 let hints = await I.grabAttributeFromAll('.tooltip', 'title');
+// by ARIA locator
+const hints = await I.grabAttributeFromAll({ aria: 'Tooltip' }, 'title');
 ```
-@param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|strict locator.
+@param {CodeceptJS.LocatorOrString} locator element located by CSS|XPath|ARIA|strict locator.
 @param {string} attr attribute name.
 @returns {Promise<string[]>} attribute value
+

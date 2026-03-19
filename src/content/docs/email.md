@@ -2,8 +2,6 @@
 title: Email Testing
 ---
 
-# Email Testing
-
 In End 2 End testing we need to interact with emails.
 Email delivery can't be tested locally or mocked while testing.
 That's why for an end to end test you need real emails to be sent and real email address to receive that emails.
@@ -125,6 +123,7 @@ const email = await I.waitForLatestEmail();
 const url = email.body.match(/http(s):\/\/(.*?)\s/)[0];
 // open URL
 I.amOnPage(url);
+I.click({ aria: 'Reset password' });
 ```
 
 ## Assertions
@@ -159,7 +158,7 @@ I.seeEmailAttachment('Attachment_1.pdf'); // Regular expression. Escape special 
 I.seeEmailAttachment('Attachment_2.pdf');
 ```
 
-> More methods are listed in [helper's API reference](https://github.com/codeceptjs/mailslurp-helper/blob/master/README.md#api)
+> More methods are listed in [helper's API reference](https://github.com/codeceptjs/mailslurp-helper#api)
 
 ## Listing All Emails
 

@@ -2,6 +2,8 @@ Opposite to `seeElement`. Checks that element is not visible (or in DOM)
 
 ```js
 I.dontSeeElement('.modal'); // modal is not shown
+// by ARIA locator
+I.dontSeeElement({ aria: 'Submit' });
 ```
 
 @param {CodeceptJS.LocatorOrString} locator located by CSS|XPath|Strict locator.
