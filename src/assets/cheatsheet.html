@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CodeceptJS — Field Manual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3ede1;
+    --paper-2: #ebe3d2;
+    --ink: #1a1614;
+    --ink-2: #3a332c;
+    --muted: #8a7f6f;
+    --rule: #c9bfa9;
+
+    /* primary duotone */
+    --orange: #c2410c;
+    --orange-deep: #9a3412;
+    --purple: #6b21a8;
+    --purple-deep: #4c1d7a;
+    --accent: var(--orange);
+
+    --code-bg: #faf5e6;
+    --code-border: #e6dcc0;
+
+    /* syntax */
+    --kw: var(--purple);       /* keyword — purple */
+    --fn: var(--orange);       /* function — orange */
+    --str: #166534;            /* string — forest green */
+    --com: #998c77;            /* comment — muted */
+    --mth: #1e3a5f;            /* method — ink blue */
+    --prop: #7a1d52;
+  }
+
+  @page { size: A4 landscape; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    color: var(--ink);
+    background: var(--paper);
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .sheet {
+    width: 297mm; height: 210mm;
+    margin: 0 auto;
+    padding: 7mm 9mm 6mm;
+    background:
+      radial-gradient(ellipse at 8% 0%, rgba(194,65,12,0.06), transparent 38%),
+      radial-gradient(ellipse at 100% 100%, rgba(107,33,168,0.055), transparent 45%),
+      var(--paper);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 3mm;
+  }
+  .sheet::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(26,22,20,0.04) 1px, transparent 0);
+    background-size: 3px 3px;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    opacity: 0.45;
+  }
+
+  /* =========== MASTHEAD =========== */
+  .masthead {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: end;
+    gap: 8mm;
+    padding-bottom: 2mm;
+    border-bottom: 1.5px solid var(--ink);
+    position: relative;
+  }
+  .masthead::after {
+    content: "";
+    position: absolute;
+    bottom: -1.2mm; left: 0; right: 0;
+    border-bottom: 0.5px solid var(--ink);
+  }
+  .brand {
+    font-family: "Fraunces", serif;
+    font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 0;
+    font-weight: 500;
+    font-size: 32pt;
+    line-height: 0.9;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 0;
+  }
+  .brand em {
+    font-style: italic;
+    font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+    font-weight: 400;
+    color: var(--accent);
+  }
+  .tagline {
+    font-family: "Fraunces", serif;
+    font-variation-settings: "opsz" 14;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 9.5pt;
+    line-height: 1.3;
+    color: var(--ink-2);
+    max-width: 90mm;
+  }
+  .meta {
+    text-align: right;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 6.2pt;
+    line-height: 1.4;
+    color: var(--ink-2);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .meta .issue {
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-variation-settings: "opsz" 144;
+    font-size: 16pt;
+    letter-spacing: -0.02em;
+    color: var(--purple);
+    text-transform: none;
+    line-height: 1;
+    display: block;
+    margin-bottom: 1.2mm;
+  }
+
+  /* =========== GRID =========== */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+    gap: 2mm 4mm;
+    flex: 1 1 0;
+    min-height: 0;
+  }
+
+  .card {
+    display: flex; flex-direction: column;
+    min-width: 0; min-height: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .s5 { grid-column: span 5; }
+  .s4 { grid-column: span 4; }
+  .s3 { grid-column: span 3; }
+
+  /* =========== SECTION HEADER =========== */
+  .sec-head {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: baseline;
+    column-gap: 2.5mm;
+    padding-bottom: 0.4mm;
+    border-bottom: 0.5px solid var(--rule);
+    margin-bottom: 0.8mm;
+  }
+  .num {
+    font-family: "Fraunces", serif;
+    font-variation-settings: "opsz" 144, "WONK" 1;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 15pt;
+    line-height: 0.8;
+    color: var(--accent);
+    letter-spacing: -0.04em;
+  }
+  .title-wrap { display: flex; flex-direction: column; gap: 0.2mm; }
+  .title {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 600;
+    font-size: 7.5pt;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .subtitle {
+    font-family: "Fraunces", serif;
+    font-variation-settings: "opsz" 14;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 6.8pt;
+    line-height: 1.2;
+    color: var(--muted);
+  }
+
+  /* =========== CONTENT =========== */
+  .card p {
+    margin: 0.5mm 0 0;
+    font-size: 6.7pt;
+    line-height: 1.35;
+    color: var(--ink-2);
+  }
+  .card p strong { color: var(--ink); font-weight: 600; }
+
+  .kv {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 2.5mm;
+    row-gap: 0.3mm;
+    font-size: 6.5pt;
+    line-height: 1.3;
+    margin: 0 0 1mm;
+  }
+  .kv dt {
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 500;
+    font-size: 6.2pt;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .kv dd {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 6.4pt;
+  }
+
+  pre {
+    margin: 0;
+    padding: 1.2mm 2mm;
+    background: var(--code-bg);
+    border-left: 1.5px solid var(--accent);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 6.2pt;
+    line-height: 1.38;
+    color: var(--ink);
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    font-weight: 400;
+    font-variant-ligatures: none;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+  pre + pre { margin-top: 1mm; }
+  .k  { color: var(--kw);  font-weight: 600; }
+  .s  { color: var(--str); }
+  .c  { color: var(--com); font-style: italic; }
+  .f  { color: var(--fn);  font-weight: 500; }
+  .v  { color: var(--mth); }
+  .p  { color: var(--prop); }
+
+  code {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 6pt;
+    padding: 0.3mm 1mm;
+    background: var(--paper-2);
+    color: var(--accent);
+    border-radius: 1px;
+    white-space: nowrap;
+  }
+
+  /* =========== COLOPHON =========== */
+  .colophon {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 5mm;
+    padding-top: 1.5mm;
+    border-top: 1.5px solid var(--ink);
+    position: relative;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 6pt;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .colophon::before {
+    content: "";
+    position: absolute;
+    top: -1.2mm; left: 0; right: 0;
+    border-top: 0.5px solid var(--ink);
+  }
+  .colophon .mark {
+    font-family: "Fraunces", serif;
+    font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 11pt;
+    color: var(--purple);
+    text-transform: none;
+    letter-spacing: -0.02em;
+  }
+  .colophon .right { text-align: right; }
+  .colophon em {
+    font-family: "Fraunces", serif;
+    font-style: italic;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 7pt;
+    color: var(--ink);
+  }
+
+  .run-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1mm 2mm;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+  .run-grid pre { font-size: 6pt; padding: 1.2mm 1.8mm; }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <!-- MASTHEAD -->
+  <header class="masthead">
+    <h1 class="brand">Codecept<em>JS</em></h1>
+    <div class="tagline">
+      A field manual for end-to-end testing &mdash; locators, actions,
+      assertions &amp; page objects on a single sheet.
+    </div>
+    <div class="meta">
+      <span class="issue">№ 01</span>
+      Reference Poster<br>
+      A4 &middot; codecept.io
+    </div>
+  </header>
+
+  <!-- GRID -->
+  <main class="grid">
+
+    <!-- 01 -->
+    <article class="card s4">
+      <header class="sec-head">
+        <span class="num">01</span>
+        <div class="title-wrap">
+          <span class="title">Test Structure</span>
+          <span class="subtitle">One Feature per file &mdash; I is the actor</span>
+        </div>
+      </header>
+<pre><span class="f">Feature</span>(<span class="s">'User Login'</span>)
+<span class="f">Before</span>(({ I }) =&gt; I.<span class="v">amOnPage</span>(<span class="s">'/'</span>))
+<span class="f">Scenario</span>(<span class="s">'login works'</span>, ({ I }) =&gt; {
+  I.<span class="v">click</span>(<span class="s">'Login'</span>)
+  I.<span class="v">fillField</span>(<span class="s">'Email'</span>, <span class="s">'user@x.com'</span>)
+  I.<span class="v">fillField</span>(<span class="s">'Password'</span>, <span class="f">secret</span>(<span class="s">'s3cret'</span>))
+  I.<span class="v">see</span>(<span class="s">'Welcome'</span>)
+  I.<span class="v">seeInCurrentUrl</span>(<span class="s">'/dashboard'</span>)
+})</pre>
+    </article>
+
+    <!-- 02 -->
+    <article class="card s4">
+      <header class="sec-head">
+        <span class="num">02</span>
+        <div class="title-wrap">
+          <span class="title">Async &amp; Await</span>
+          <span class="subtitle">Actions auto-chain</span>
+        </div>
+      </header>
+<pre><span class="c">// queued — no await</span>
+I.<span class="v">amOnPage</span>(<span class="s">'/'</span>)
+I.<span class="v">click</span>(<span class="s">'Login'</span>)
+
+<span class="c">// await grab* &amp; page objects</span>
+<span class="k">const</span> pw = <span class="k">await</span> I.<span class="v">grabTextFrom</span>(<span class="s">'#pw'</span>)
+I.<span class="v">fillField</span>(<span class="s">'Password'</span>, pw)
+
+<span class="k">await</span> loginPage.<span class="v">login</span>(user)</pre>
+    </article>
+
+    <!-- 03 -->
+    <article class="card s4">
+      <header class="sec-head">
+        <span class="num">03</span>
+        <div class="title-wrap">
+          <span class="title">Config &amp; Helpers</span>
+          <span class="subtitle">Playwright &middot; WebDriver &middot; Puppeteer &middot; Appium</span>
+        </div>
+      </header>
+<pre><span class="c">// codecept.conf.js</span>
+<span class="k">export const</span> config = {
+  helpers: { Playwright: {
+    url: <span class="s">'http://localhost:3000'</span>,
+    browser: <span class="s">'chromium'</span>,
+  } },
+  include: { loginPage: <span class="s">'./pages/Login.js'</span> },
+  tests: <span class="s">'./**/*_test.js'</span>,
+}</pre>
+    </article>
+
+    <!-- 04 -->
+    <article class="card s4">
+      <header class="sec-head">
+        <span class="num">04</span>
+        <div class="title-wrap">
+          <span class="title">Locators</span>
+          <span class="subtitle">Strict objects beat fuzzy strings</span>
+        </div>
+      </header>
+<pre>I.<span class="v">click</span>({ role: <span class="s">'button'</span>, name: <span class="s">'Save'</span> })  <span class="c">// ARIA — preferred</span>
+I.<span class="v">click</span>({ css: <span class="s">'.btn-save'</span> })              <span class="c">// CSS</span>
+I.<span class="v">click</span>({ xpath: <span class="s">'//button[1]'</span> })          <span class="c">// XPath</span>
+I.<span class="v">click</span>(<span class="s">'#signup'</span>)                         <span class="c">// id shortcut</span>
+I.<span class="v">click</span>(<span class="s">'~login'</span>)                          <span class="c">// aria-label</span>
+I.<span class="v">click</span>(<span class="s">'Sign In'</span>)                         <span class="c">// semantic (fuzzy)</span>
+I.<span class="v">click</span>(<span class="s">'Delete'</span>, <span class="s">'.toolbar'</span>)              <span class="c">// + context</span>
+I.<span class="v">click</span>(<span class="s">'a'</span>, step.<span class="v">opts</span>({ elementIndex: 2 }))   <span class="c">// Nth match</span>
+I.<span class="v">click</span>(<span class="s">'a'</span>, step.<span class="v">opts</span>({ exact: <span class="k">true</span> }))     <span class="c">// strict</span></pre>
+    </article>
+
+    <!-- 05 -->
+    <article class="card s4">
+      <header class="sec-head">
+        <span class="num">05</span>
+        <div class="title-wrap">
+          <span class="title">locate() Builder</span>
+          <span class="subtitle">XPath only &mdash; not ARIA</span>
+        </div>
+      </header>
+<pre><span class="c">// chain → single XPath</span>
+<span class="f">locate</span>(<span class="s">'tr'</span>)
+  .<span class="v">withDescendant</span>(<span class="f">locate</span>(<span class="s">'td'</span>).<span class="v">withText</span>(<span class="s">'Acme'</span>))
+  .<span class="v">find</span>(<span class="s">'button'</span>).<span class="v">withText</span>(<span class="s">'Edit'</span>)
+<span class="c">// other methods</span>
+<span class="f">locate</span>(<span class="s">'input'</span>).<span class="v">withAttr</span>({ type: <span class="s">'email'</span> })
+<span class="f">locate</span>(<span class="s">'a'</span>).<span class="v">inside</span>(<span class="s">'nav'</span>).<span class="v">first</span>()
+<span class="f">locate</span>(<span class="s">'li'</span>).<span class="v">withClassAttr</span>(<span class="s">'active'</span>).<span class="v">at</span>(-1)
+<span class="f">locate</span>(<span class="s">'form'</span>).<span class="v">withChild</span>(<span class="s">'select'</span>)</pre>
+    </article>
+
+    <!-- 06 -->
+    <article class="card s4">
+      <header class="sec-head">
+        <span class="num">06</span>
+        <div class="title-wrap">
+          <span class="title">Page Objects</span>
+          <span class="subtitle">Classes with lifecycle hooks</span>
+        </div>
+      </header>
+<pre><span class="k">const</span> { I } = <span class="f">inject</span>()
+<span class="k">class</span> LoginPage {
+  <span class="v">sendForm</span>(email, pw) {
+    I.<span class="v">fillField</span>(<span class="s">'Email'</span>, email)
+    I.<span class="v">fillField</span>(<span class="s">'Password'</span>, pw)
+    I.<span class="v">click</span>(<span class="s">'Submit'</span>)
+  }
+  <span class="v">_before</span>() { I.<span class="v">amOnPage</span>(<span class="s">'/login'</span>) }
+}</pre>
+    </article>
+
+    <!-- 07 -->
+    <article class="card s4">
+      <header class="sec-head">
+        <span class="num">07</span>
+        <div class="title-wrap">
+          <span class="title">Clicks &amp; Navigation</span>
+          <span class="subtitle">Pointer &amp; keyboard</span>
+        </div>
+      </header>
+<pre>I.<span class="v">amOnPage</span>(<span class="s">'/about'</span>)
+I.<span class="v">click</span>(<span class="s">'Login'</span>)
+I.<span class="v">click</span>(<span class="s">'Save'</span>, <span class="s">'.toolbar'</span>)
+I.<span class="v">click</span>({ role: <span class="s">'button'</span>, name: <span class="s">'OK'</span> })
+I.<span class="v">forceClick</span>(<span class="s">'.hidden'</span>)
+I.<span class="v">doubleClick</span>(<span class="s">'.row'</span>)
+I.<span class="v">rightClick</span>(<span class="s">'.ctx'</span>)
+I.<span class="v">dragAndDrop</span>(<span class="s">'#src'</span>, <span class="s">'#dst'</span>)
+I.<span class="v">pressKey</span>(<span class="s">'Enter'</span>)</pre>
+    </article>
+
+    <!-- 08 -->
+    <article class="card s4">
+      <header class="sec-head">
+        <span class="num">08</span>
+        <div class="title-wrap">
+          <span class="title">Forms</span>
+          <span class="subtitle">Inputs · selects · files</span>
+        </div>
+      </header>
+<pre>I.<span class="v">fillField</span>(<span class="s">'Email'</span>, <span class="s">'user@test.com'</span>)
+I.<span class="v">fillField</span>(<span class="s">'Password'</span>, <span class="f">secret</span>(<span class="s">'s3cret!'</span>))
+I.<span class="v">fillField</span>(<span class="s">'Email'</span>, email, <span class="s">'#signup'</span>)  <span class="c">// scope</span>
+I.<span class="v">appendField</span>(<span class="s">'Notes'</span>, <span class="s">' — urgent'</span>)
+I.<span class="v">clearField</span>(<span class="s">'#search'</span>)
+I.<span class="v">selectOption</span>(<span class="s">'Country'</span>, <span class="s">'Ukraine'</span>)
+I.<span class="v">selectOption</span>(<span class="s">'Tags'</span>, [<span class="s">'urgent'</span>, <span class="s">'review'</span>])
+I.<span class="v">checkOption</span>(<span class="s">'I Agree'</span>)
+I.<span class="v">attachFile</span>(<span class="s">'#upload'</span>, <span class="s">'invoice.pdf'</span>)</pre>
+    </article>
+
+    <!-- 09 -->
+    <article class="card s4">
+      <header class="sec-head">
+        <span class="num">09</span>
+        <div class="title-wrap">
+          <span class="title">Assertions</span>
+          <span class="subtitle">Every see* has a dontSee* counterpart</span>
+        </div>
+      </header>
+<pre>I.<span class="v">see</span>(<span class="s">'Welcome'</span>)
+I.<span class="v">see</span>(<span class="s">'Error'</span>, <span class="s">'.alert'</span>)
+I.<span class="v">dontSee</span>(<span class="s">'Loading'</span>)
+I.<span class="v">seeElement</span>({ role: <span class="s">'button'</span>, name: <span class="s">'Go'</span> })
+I.<span class="v">dontSeeElement</span>(<span class="s">'.spinner'</span>)
+I.<span class="v">seeInCurrentUrl</span>(<span class="s">'/dashboard'</span>)
+I.<span class="v">seeInField</span>(<span class="s">'Email'</span>, <span class="s">'user@test.com'</span>)
+I.<span class="v">seeNumberOfElements</span>(<span class="s">'.item'</span>, 5)
+I.<span class="v">seeCookie</span>(<span class="s">'session'</span>)</pre>
+    </article>
+
+    <!-- 10 -->
+    <article class="card s4">
+      <header class="sec-head">
+        <span class="num">10</span>
+        <div class="title-wrap">
+          <span class="title">Grabbers</span>
+          <span class="subtitle">Always require await</span>
+        </div>
+      </header>
+<pre><span class="k">const</span> t   = <span class="k">await</span> I.<span class="v">grabTitle</span>()
+<span class="k">const</span> txt = <span class="k">await</span> I.<span class="v">grabTextFrom</span>(<span class="s">'.name'</span>)
+<span class="k">const</span> arr = <span class="k">await</span> I.<span class="v">grabTextFromAll</span>(<span class="s">'.i'</span>)
+<span class="k">const</span> v   = <span class="k">await</span> I.<span class="v">grabValueFrom</span>(<span class="s">'#q'</span>)
+<span class="k">const</span> h   = <span class="k">await</span> I.<span class="v">grabAttributeFrom</span>(<span class="s">'a'</span>, <span class="s">'href'</span>)
+<span class="k">const</span> url = <span class="k">await</span> I.<span class="v">grabCurrentUrl</span>()
+<span class="k">const</span> ck  = <span class="k">await</span> I.<span class="v">grabCookie</span>(<span class="s">'session'</span>)
+<span class="k">const</span> el  = <span class="k">await</span> I.<span class="v">grabWebElement</span>(<span class="s">'.btn'</span>)
+<span class="k">const</span> els = <span class="k">await</span> I.<span class="v">grabWebElements</span>(<span class="s">'.row'</span>)</pre>
+    </article>
+
+    <!-- 11 -->
+    <article class="card s4">
+      <header class="sec-head">
+        <span class="num">11</span>
+        <div class="title-wrap">
+          <span class="title">Waiting</span>
+          <span class="subtitle">Explicit state sync</span>
+        </div>
+      </header>
+<pre>I.<span class="v">waitForVisible</span>(<span class="s">'.modal'</span>, 5)
+I.<span class="v">waitForInvisible</span>(<span class="s">'.spinner'</span>)
+I.<span class="v">waitForElement</span>(<span class="s">'.r li'</span>, 10)
+I.<span class="v">waitForText</span>(<span class="s">'Done'</span>, 5, <span class="s">'.alert'</span>)
+I.<span class="v">waitForClickable</span>(<span class="s">'.btn'</span>)
+I.<span class="v">waitForEnabled</span>(<span class="s">'#submit'</span>)
+I.<span class="v">waitForFunction</span>(() =&gt; ready)
+I.<span class="v">waitInUrl</span>(<span class="s">'/ok'</span>)
+I.<span class="v">wait</span>(2)         <span class="c">// seconds</span></pre>
+    </article>
+
+    <!-- 12 -->
+    <article class="card s4">
+      <header class="sec-head">
+        <span class="num">12</span>
+        <div class="title-wrap">
+          <span class="title">Running Tests</span>
+          <span class="subtitle">CLI · filters · workers · generators</span>
+        </div>
+      </header>
+<pre><span class="c"># basic · filter</span>
+npx codeceptjs run
+npx codeceptjs run tests/login_test.js
+npx codeceptjs run --grep <span class="s">"@smoke"</span>
+npx codeceptjs run --grep <span class="s">"checkout"</span>
+npx codeceptjs run --debug
+npx codeceptjs run-workers 3      <span class="c"># parallel</span>
+npx codeceptjs run -c codecept.ci.conf.js</pre>
+    </article>
+
+  </main>
+
+  <!-- COLOPHON -->
+  <footer class="colophon">
+    <div>Set in <em>Fraunces</em> &amp; IBM Plex</div>
+    <div class="mark">codecept.io</div>
+    <div class="right">/basics · /locators · /assertions · /pageobjects</div>
+  </footer>
+
+</div>
+</body>
+</html>

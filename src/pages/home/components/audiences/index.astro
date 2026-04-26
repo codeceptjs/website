@@ -1,0 +1,371 @@
+---
+type Feature = {
+    humans: string;
+    agents: string;
+    desc: string;
+};
+
+const features: Feature[] = [
+    {
+        humans: 'Less code written',
+        agents: 'Less tokens consumed',
+        desc:
+            'CodeceptJS reads as actions, not selectors. Where Playwright and WebDriver make you wrangle locators by hand, you describe what the user does — the framework resolves the locator and dispatches it through Playwright, WebDriver, or Puppeteer.',
+    },
+    {
+        humans: 'Tests explain themselves',
+        agents: 'Agents understand intent faster',
+        desc:
+            "You write automation the way you'd write a test case: what the user does, what they should see. No tangled selector chains polluting the file. A teammate scanning the scenario — or an agent picking it up — grasps the intent in seconds and can adjust it without reverse-engineering anything.",
+    },
+    {
+        humans: 'Declarative actions',
+        agents: 'Fewer failed tries, faster feedback',
+        desc:
+            '<code>I.selectOption</code> handles native <code>&lt;select&gt;</code>, custom comboboxes, and ARIA listboxes the same way. <code>I.fillField</code> works on plain inputs and rich editors alike. CodeceptJS adapts to whatever your page actually uses — fewer flaky retries for humans, fewer HTML dumps and tool calls for agents.',
+    },
+    {
+        humans: 'Debug live with <code>pause()</code>',
+        agents: 'Debug live via MCP',
+        desc:
+            'Drop <code>pause()</code> anywhere in a scenario and you land in an interactive REPL with the page state still warm — try commands, inspect elements, patch the test in place. Agents get the same surface through MCP: they <strong>drive the running test</strong>, pause on any step, poke at the page, then update the code and rerun in debug mode.',
+    },
+    {
+        humans: 'Opinionated by default',
+        agents: 'Universal skill set',
+        desc:
+            'Page objects, data fixtures, mobile and web plugins — the framework ships with strong defaults instead of leaving you to assemble them. Agents inherit the same structure through the official skill set: they know how to write, debug, refactor, and organize tests the way the framework expects.',
+    },
+];
+---
+
+<section id="audiences" class="audiences-section !mt-0 py-20 relative transition-colors duration-300">
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="audiences-title text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-8 text-center tracking-tight">
+            For Humans <span class="headline-accent">&amp;</span> Agents
+        </h2>
+
+        <table class="audiences-table">
+            <thead>
+                <tr class="audiences-head-row">
+                    <th class="audiences-head-cell">
+                        <span class="audiences-head-icon" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                                <circle cx="12" cy="8" r="4"></circle>
+                                <path d="M4 21v-1a8 8 0 0 1 16 0v1"></path>
+                            </svg>
+                        </span>
+                        <span class="audiences-head-label">Humans</span>
+                    </th>
+                    <th class="audiences-vline" aria-hidden="true"></th>
+                    <th class="audiences-head-cell">
+                        <span class="audiences-head-icon" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                                <rect x="4" y="7" width="16" height="13" rx="2"></rect>
+                                <path d="M12 4v3"></path>
+                                <circle cx="12" cy="3" r="1"></circle>
+                                <path d="M9 13h.01"></path>
+                                <path d="M15 13h.01"></path>
+                                <path d="M9 17h6"></path>
+                            </svg>
+                        </span>
+                        <span class="audiences-head-label">Agents</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {features.map((f, i) => (
+                    <>
+                        <tr
+                            class={`audiences-titles-row ${i === 0 ? 'audiences-first audiences-expanded' : ''}`}
+                            data-feature-id={i}
+                            tabindex="0"
+                            role="button"
+                            aria-expanded={i === 0 ? 'true' : 'false'}
+                            aria-controls={`audiences-desc-${i}`}
+                        >
+                            <td class="audiences-title-cell" set:html={f.humans}></td>
+                            <td class="audiences-vline" aria-hidden="true"></td>
+                            <td class="audiences-title-cell audiences-title-cell-r">
+                                <span set:html={f.agents}></span>
+                                <svg class="audiences-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr
+                            class={`audiences-desc-row ${i === 0 ? 'audiences-expanded' : ''}`}
+                            data-feature-id={i}
+                            id={`audiences-desc-${i}`}
+                        >
+                            <td colspan="3" class="audiences-desc-cell">
+                                <div class="audiences-desc-inner">
+                                    <div class="audiences-desc-content" set:html={f.desc}></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </>
+                ))}
+            </tbody>
+        </table>
+    </div>
+
+    <style is:global>
+        .audiences-section {
+            --aud-border: rgba(0, 0, 0, 0.08);
+            --aud-divider: rgba(0, 0, 0, 0.06);
+            --aud-divider-strong: rgba(0, 0, 0, 0.08);
+            --aud-head-bg: rgba(0, 0, 0, 0.025);
+            --aud-text: #1f2937;
+            --aud-text-mute: #374151;
+            --aud-text-soft: #6b7280;
+            --aud-row-hover: rgba(242, 169, 0, 0.045);
+            --aud-row-active: rgba(242, 169, 0, 0.07);
+            --aud-code-bg: rgba(242, 169, 0, 0.10);
+        }
+        html[data-theme="dark"] .audiences-section {
+            --aud-border: rgba(255, 255, 255, 0.08);
+            --aud-divider: rgba(255, 255, 255, 0.06);
+            --aud-divider-strong: rgba(255, 255, 255, 0.10);
+            --aud-head-bg: rgba(255, 255, 255, 0.025);
+            --aud-text: #e5e7eb;
+            --aud-text-mute: #d1d5db;
+            --aud-text-soft: #9ca3af;
+            --aud-row-hover: rgba(242, 169, 0, 0.06);
+            --aud-row-active: rgba(242, 169, 0, 0.10);
+            --aud-code-bg: rgba(242, 169, 0, 0.14);
+        }
+
+        /* heading uses default sans bold (consistent with rest of page) */
+
+        /* Real HTML table */
+        .audiences-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            border: 1px solid var(--aud-border);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 12px 28px -16px rgba(0, 0, 0, 0.12);
+            table-layout: fixed;
+        }
+        html[data-theme="dark"] .audiences-table {
+            background: #0d1117;
+            box-shadow: 0 12px 28px -16px rgba(0, 0, 0, 0.5);
+        }
+
+        .audiences-table th,
+        .audiences-table td {
+            font-weight: inherit;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .audiences-vline {
+            width: 0;
+            padding: 0;
+            background: transparent;
+        }
+
+        /* Header row */
+        .audiences-head-row { background: var(--aud-head-bg); }
+        .audiences-head-cell {
+            padding: 14px 22px;
+            border-bottom: 1px solid var(--aud-divider-strong);
+            vertical-align: middle;
+        }
+        .audiences-head-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: var(--codecept-accent-soft);
+            color: var(--codecept-accent-deep);
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        html[data-theme="dark"] .audiences-head-icon {
+            background: rgba(242, 169, 0, 0.18);
+            color: var(--codecept-accent);
+        }
+        .audiences-head-label {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--aud-text-soft);
+            vertical-align: middle;
+        }
+
+        /* Title row — clickable */
+        .audiences-titles-row {
+            cursor: pointer;
+            transition: background-color 0.18s ease-out;
+            outline: none;
+        }
+        .audiences-titles-row:hover { background: var(--aud-row-hover); }
+        .audiences-titles-row.audiences-expanded { background: var(--aud-row-active); }
+        .audiences-titles-row:focus-visible {
+            box-shadow: inset 0 0 0 2px var(--codecept-accent);
+        }
+
+        .audiences-titles-row td.audiences-title-cell {
+            padding: 18px 22px;
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--aud-text);
+            line-height: 1.35;
+            position: relative;
+        }
+        .audiences-titles-row td.audiences-title-cell-r {
+            padding-right: 48px;
+        }
+        .audiences-titles-row:not(.audiences-first) td.audiences-title-cell,
+        .audiences-titles-row:not(.audiences-first) td.audiences-vline {
+            border-top: 1px solid var(--aud-divider-strong);
+        }
+
+        /* Chevron */
+        .audiences-chevron {
+            position: absolute;
+            right: 22px;
+            top: 50%;
+            transform: translateY(-50%) rotate(0deg);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s;
+            color: var(--aud-text-soft);
+        }
+        .audiences-titles-row.audiences-expanded .audiences-chevron {
+            transform: translateY(-50%) rotate(180deg);
+            color: var(--codecept-accent);
+        }
+        .audiences-titles-row:hover .audiences-chevron {
+            color: var(--codecept-accent);
+        }
+
+        /* Code in titles */
+        .audiences-title-cell code {
+            background: var(--aud-code-bg);
+            color: var(--codecept-accent-deep);
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 14.5px;
+            font-weight: 600;
+        }
+        html[data-theme="dark"] .audiences-title-cell code {
+            color: var(--codecept-accent);
+        }
+
+        /* Description row — collapsible via grid-template-rows trick */
+        .audiences-desc-row td.audiences-desc-cell {
+            padding: 0;
+            background: rgba(242, 169, 0, 0.025);
+        }
+        html[data-theme="dark"] .audiences-desc-row td.audiences-desc-cell {
+            background: rgba(242, 169, 0, 0.04);
+        }
+        .audiences-desc-inner {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .audiences-desc-row.audiences-expanded .audiences-desc-inner {
+            grid-template-rows: 1fr;
+        }
+        .audiences-desc-content {
+            min-height: 0;
+            overflow: hidden;
+            padding: 0 30px;
+            transition: padding 0.35s ease;
+
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--aud-text-mute);
+        }
+        .audiences-desc-row.audiences-expanded .audiences-desc-content {
+            padding: 16px 30px 22px;
+        }
+        .audiences-desc-content code {
+            background: var(--aud-code-bg);
+            color: var(--codecept-accent-deep);
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        html[data-theme="dark"] .audiences-desc-content code {
+            color: var(--codecept-accent);
+        }
+        .audiences-desc-content strong {
+            color: var(--aud-text);
+            font-weight: 700;
+        }
+
+        /* Mobile */
+        @media (max-width: 720px) {
+            .audiences-table { display: block; }
+            .audiences-table thead,
+            .audiences-table tbody,
+            .audiences-table tr { display: block; }
+            .audiences-table th,
+            .audiences-table td { display: block; width: 100%; }
+            .audiences-vline { display: none !important; }
+            .audiences-head-row .audiences-head-cell:nth-of-type(2) {
+                border-top: 1px solid var(--aud-divider);
+            }
+            .audiences-titles-row .audiences-title-cell:nth-of-type(2) {
+                border-top: 1px solid var(--aud-divider);
+                padding-top: 12px;
+                padding-bottom: 18px;
+            }
+            .audiences-titles-row:not(.audiences-first) .audiences-title-cell:first-of-type {
+                border-top: 1px solid var(--aud-divider-strong);
+            }
+            .audiences-chevron {
+                top: auto;
+                bottom: 18px;
+                transform: rotate(0deg);
+            }
+            .audiences-titles-row.audiences-expanded .audiences-chevron {
+                transform: rotate(180deg);
+            }
+            .audiences-desc-content { font-size: 14px; padding: 0 22px; }
+            .audiences-desc-row.audiences-expanded .audiences-desc-content {
+                padding: 14px 22px 20px;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('astro:page-load', () => {
+            const rows = document.querySelectorAll<HTMLTableRowElement>('.audiences-titles-row');
+            rows.forEach((row) => {
+                if (row.dataset.bound) return;
+                row.dataset.bound = '1';
+
+                const toggle = () => {
+                    const id = row.dataset.featureId;
+                    const desc = document.querySelector<HTMLTableRowElement>(
+                        `.audiences-desc-row[data-feature-id="${id}"]`,
+                    );
+                    const isExpanding = !row.classList.contains('audiences-expanded');
+                    row.classList.toggle('audiences-expanded', isExpanding);
+                    if (desc) desc.classList.toggle('audiences-expanded', isExpanding);
+                    row.setAttribute('aria-expanded', String(isExpanding));
+                };
+
+                row.addEventListener('click', toggle);
+                row.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggle();
+                    }
+                });
+            });
+        });
+    </script>
+</section>

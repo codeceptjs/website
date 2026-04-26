@@ -1,13 +1,10 @@
-﻿Verifies that the specified checkbox is checked.
+Verifies that the specified checkbox is checked.
 
 ```js
 I.seeCheckboxIsChecked('Agree');
 I.seeCheckboxIsChecked('#agree'); // I suppose user agreed to terms
 I.seeCheckboxIsChecked({css: '#signup_form input[type=checkbox]'});
-// by ARIA locator
-I.seeCheckboxIsChecked({ aria: 'Submit' });
 ```
 
-@param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|ARIA|strict locator.
+@param {CodeceptJS.LocatorOrString} field located by label|name|CSS|XPath|strict locator.
 @returns {void} automatically synchronized promise through #recorder
-

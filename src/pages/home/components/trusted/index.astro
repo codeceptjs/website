@@ -12,19 +12,11 @@ import "swiper/css";
 import "swiper/css/pagination";
 ---
 
-<section id="trusted" class="!mt-0 py-20 relative overflow-hidden transition-colors duration-300">
+<section id="trusted" class="!mt-0 py-16 relative overflow-hidden transition-colors duration-300">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-    <div class="text-center mb-16">
-      <h2 class="text-4xl md:text-5xl font-bold mb-6">
-        Trusted by
-        <span class="gradient-text">
-          Industry Leaders
-        </span>
-      </h2>
-      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-8">
-        Join thousands of companies worldwide who trust CodeceptJS for their critical testing needs
-      </p>
-    </div>
+    <p class="text-center text-sm text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-10 font-medium">
+      Trusted by industry leaders
+    </p>
 
     {/* Logo Slider */}
     <div class="swiper swiper-trusted">
@@ -39,8 +31,8 @@ import "swiper/css/pagination";
             { image: mynd, alt: "Mynd logo" },
             { image: zenitech, alt: "Zenitech logo" },
           ].map((item) =>
-              <div class="swiper-slide group flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-2xl p-6 hover:border-purple-300/50 transition-all duration-300">
-                <Image class="text-4xl mb-2 group-hover:scale-110 transition-transform duration-300" src={item.image} alt={item.alt} />
+              <div class="swiper-slide group flex flex-col items-center justify-center p-6">
+                <Image class="text-4xl mb-2 group-hover:scale-110 transition-transform duration-300 grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100" src={item.image} alt={item.alt} />
               </div>
           )
         }

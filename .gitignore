@@ -23,3 +23,12 @@ pnpm-debug.log*
 
 # vercel
 .vercel
+
+# upstream CodeceptJS docs sync (see scripts/sync-codeceptjs-docs.mjs)
+.codeceptjs-docs/
+
+# playwright MCP browser cache
+.playwright-mcp/
+
+# per-user Claude Code settings
+.claude/settings.local.json

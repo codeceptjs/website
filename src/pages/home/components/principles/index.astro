@@ -1,0 +1,384 @@
+---
+type Tone = 'purple' | 'honey' | 'emerald' | 'rose' | 'sky';
+type IconName =
+    | 'infinity' | 'pointer' | 'code-min' | 'heart-pulse' | 'bot'
+    | 'monitor-phone' | 'layers' | 'database' | 'terminal-square';
+
+type Principle = {
+    title: string;
+    body: string;
+    icon: IconName;
+    tone: Tone;
+};
+
+const principles: Principle[] = [
+    {
+        title: 'Tests that outlive the framework wars',
+        icon: 'infinity',
+        tone: 'purple',
+        body:
+            'CodeceptJS <strong>started in 2015</strong>. We watched Protractor, TestCafe, NightmareJS come and go, how WebDriver and CDP tools evolve. But <b>our tests never changed</b>. A test which was running on Protractor back then runs on Playwright today. Whatever comes next: your tests stay.',
+    },
+    {
+        title: 'Write what, not how',
+        icon: 'pointer',
+        tone: 'honey',
+        body:
+            "<code>I.click('Login')</code> finds the button — by text, by label, by ARIA role, by CSS — and clicks it. You describe the action. The framework picks the strategy. The test reads like the spec it came from.",
+    },
+    {
+        title: 'The smallest API in browser testing',
+        icon: 'code-min',
+        tone: 'emerald',
+        body:
+            'A <strong>dozen commands</strong> cover most of what you\'ll write. Less to learn on day one, a test file a junior can read on the first morning. Simplicity is the feature.',
+    },
+    {
+        title: 'Healing, end to end',
+        icon: 'heart-pulse',
+        tone: 'rose',
+        body:
+            'React to instability. When a selector breaks, AI can rewrite it on the fly. When the network blips, API calls restart. Tests adapt to environment changes instead of failing on them.',
+    },
+    {
+        title: 'Designed for agentic testing',
+        icon: 'bot',
+        tone: 'sky',
+        body:
+            'Claude or Cursor run a test and can control it live via <strong>MCP server</strong>. No guessing, running, and retrying loop. Agent can set a breakpoint and debug test in realtime in a browser. ',
+    },
+    {
+        title: 'Mobile, native, web — one framework',
+        icon: 'monitor-phone',
+        tone: 'honey',
+        body:
+            'Appium for iOS and Android. The same <code>I.click</code> or <code>I.tap()</code>, <code>I.see</code>, <code>I.swipeLeft</code> you use on the web. Mobile testing works on same princinples.',
+    },
+    {
+        title: 'Page Objects you compose, never import',
+        icon: 'layers',
+        tone: 'purple',
+        body:
+            'A page object can use any other page object, custom step, or helper <strong>by name</strong>. The DI container resolves them at runtime. One page object can reference other and vise versa with no more circular import failure.',
+    },
+    {
+        title: 'Data declared, not scripted',
+        icon: 'database',
+        tone: 'emerald',
+        body:
+            'Declare your API endpoints once, use built-in tools to create and clean up date in each test. A new user needed? Declare it: <code>I.have(\'user\', { role: \'admin\' })</code> this creates one, and removes after a test.',
+    },
+    {
+        title: 'Output you can actually read',
+        icon: 'terminal-square',
+        tone: 'sky',
+        body:
+            'Steps by step output, useful debug introspections by default. You see how test goes, you see when it goes wrong, screenshots are generated automatically.',
+    },
+];
+---
+
+<section id="principles" class="!mt-0 py-20 transition-colors duration-300">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-14">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white tracking-tight">
+                Built to <span class="headline-accent">last</span>.
+            </h2>
+        </div>
+
+        <div class="feature-grid">
+            {principles.map((p, i) => (
+                <article class={`feature-card`} data-tone={p.tone}>
+                    {/* Left accent strip */}
+                    <div class="feature-card-strip" aria-hidden="true"></div>
+
+                    {/* Icon — overflows top-left corner */}
+                    <span class="feature-card-icon" aria-hidden="true">
+                            {p.icon === 'infinity' && (
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z"/>
+                                </svg>
+                            )}
+                            {p.icon === 'pointer' && (
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m9 9 5 12 1.8-5.2L21 14Z"/>
+                                    <path d="M7.2 2.2 8 5.1"/>
+                                    <path d="m5.1 8-2.9-.8"/>
+                                    <path d="M14 4.1 12 6"/>
+                                    <path d="m6 12-1.9 2"/>
+                                </svg>
+                            )}
+                            {p.icon === 'code-min' && (
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m18 16 4-4-4-4"/>
+                                    <path d="m6 8-4 4 4 4"/>
+                                    <path d="m14.5 4-5 16"/>
+                                </svg>
+                            )}
+                            {p.icon === 'heart-pulse' && (
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/>
+                                    <path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/>
+                                </svg>
+                            )}
+                            {p.icon === 'bot' && (
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 8V4H8"/>
+                                    <rect width="16" height="12" x="4" y="8" rx="2"/>
+                                    <path d="M2 14h2"/>
+                                    <path d="M20 14h2"/>
+                                    <path d="M15 13v2"/>
+                                    <path d="M9 13v2"/>
+                                </svg>
+                            )}
+                            {p.icon === 'monitor-phone' && (
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h2"/>
+                                    <path d="M10 19v-3.96"/>
+                                    <path d="M7 19h5"/>
+                                    <rect width="6" height="10" x="16" y="12" rx="2"/>
+                                </svg>
+                            )}
+                            {p.icon === 'layers' && (
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/>
+                                    <path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/>
+                                    <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>
+                                </svg>
+                            )}
+                            {p.icon === 'database' && (
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                                    <path d="M3 5v14a9 3 0 0 0 18 0V5"/>
+                                    <path d="M3 12a9 3 0 0 0 18 0"/>
+                                </svg>
+                            )}
+                            {p.icon === 'terminal-square' && (
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m7 11 3-3-3-3"/>
+                                    <path d="M13 17h4"/>
+                                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                                </svg>
+                            )}
+                    </span>
+
+                    <span class="feature-card-num">{`0${i + 1}`}</span>
+
+                    <h3 class="feature-card-title">{p.title}</h3>
+                    <div class="feature-card-body" set:html={p.body}></div>
+                </article>
+            ))}
+        </div>
+    </div>
+
+    <style is:global>
+        /* Reusable card grid + card pattern */
+        .feature-grid {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: 1fr;
+        }
+        @media (min-width: 720px) {
+            .feature-grid { grid-template-columns: repeat(2, 1fr); gap: 22px; }
+        }
+        @media (min-width: 1024px) {
+            .feature-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        }
+
+        .feature-card {
+            position: relative;
+            background: #ffffff;
+            border: 1px solid var(--card-border, rgba(0, 0, 0, 0.08));
+            border-radius: 14px;
+            /* Extra left padding to clear the strip; icon overflows top-left so we don't need extra top padding */
+            padding: 24px 26px 26px 30px;
+            box-shadow:
+                0 1px 2px rgba(0, 0, 0, 0.04),
+                0 8px 20px -10px rgba(0, 0, 0, 0.08);
+            transition:
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.3s ease-out,
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+        html[data-theme="dark"] .feature-card {
+            background: #0d1117;
+            border-color: var(--card-border-dark, rgba(255, 255, 255, 0.08));
+            box-shadow:
+                0 1px 2px rgba(0, 0, 0, 0.2),
+                0 8px 24px -10px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Vertical accent strip — left side, full height, colored per tone */
+        .feature-card-strip {
+            position: absolute;
+            top: 0; bottom: 0; left: 0;
+            width: 3px;
+            background: var(--card-tone, var(--codecept-accent));
+            border-radius: 14px 0 0 14px;
+            transition: width 0.3s ease-out;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--card-tone, var(--codecept-accent));
+            box-shadow:
+                0 1px 2px rgba(0, 0, 0, 0.05),
+                0 16px 36px -10px var(--card-shadow, rgba(0, 0, 0, 0.18));
+        }
+        html[data-theme="dark"] .feature-card:hover {
+            box-shadow:
+                0 1px 2px rgba(0, 0, 0, 0.3),
+                0 18px 40px -10px var(--card-shadow-dark, rgba(0, 0, 0, 0.5));
+        }
+        .feature-card:hover .feature-card-strip {
+            width: 4px;
+        }
+
+        /* Tone palette: light + dark + border + shadow per tone */
+        .feature-card[data-tone="purple"] {
+            --card-tone: #7c3aed;
+            --card-tone-soft: rgba(124, 58, 237, 0.10);
+            --card-border: rgba(124, 58, 237, 0.20);
+            --card-border-dark: rgba(167, 139, 250, 0.18);
+            --card-shadow: rgba(124, 58, 237, 0.15);
+            --card-shadow-dark: rgba(124, 58, 237, 0.25);
+        }
+        .feature-card[data-tone="honey"] {
+            --card-tone: #F2A900;
+            --card-tone-soft: rgba(242, 169, 0, 0.12);
+            --card-border: rgba(242, 169, 0, 0.28);
+            --card-border-dark: rgba(252, 211, 77, 0.22);
+            --card-shadow: rgba(242, 169, 0, 0.18);
+            --card-shadow-dark: rgba(242, 169, 0, 0.28);
+        }
+        .feature-card[data-tone="emerald"] {
+            --card-tone: #10b981;
+            --card-tone-soft: rgba(16, 185, 129, 0.12);
+            --card-border: rgba(16, 185, 129, 0.22);
+            --card-border-dark: rgba(52, 211, 153, 0.20);
+            --card-shadow: rgba(16, 185, 129, 0.15);
+            --card-shadow-dark: rgba(16, 185, 129, 0.28);
+        }
+        .feature-card[data-tone="rose"] {
+            --card-tone: #f43f5e;
+            --card-tone-soft: rgba(244, 63, 94, 0.10);
+            --card-border: rgba(244, 63, 94, 0.20);
+            --card-border-dark: rgba(251, 113, 133, 0.20);
+            --card-shadow: rgba(244, 63, 94, 0.15);
+            --card-shadow-dark: rgba(244, 63, 94, 0.28);
+        }
+        .feature-card[data-tone="sky"] {
+            --card-tone: #0ea5e9;
+            --card-tone-soft: rgba(14, 165, 233, 0.12);
+            --card-border: rgba(14, 165, 233, 0.22);
+            --card-border-dark: rgba(56, 189, 248, 0.22);
+            --card-shadow: rgba(14, 165, 233, 0.15);
+            --card-shadow-dark: rgba(14, 165, 233, 0.28);
+        }
+        html[data-theme="dark"] .feature-card[data-tone="purple"]  { --card-tone: #a78bfa; --card-tone-soft: rgba(167, 139, 250, 0.16); }
+        html[data-theme="dark"] .feature-card[data-tone="honey"]   { --card-tone: #fcd34d; --card-tone-soft: rgba(252, 211, 77, 0.18); }
+        html[data-theme="dark"] .feature-card[data-tone="emerald"] { --card-tone: #34d399; --card-tone-soft: rgba(52, 211, 153, 0.18); }
+        html[data-theme="dark"] .feature-card[data-tone="rose"]    { --card-tone: #fb7185; --card-tone-soft: rgba(251, 113, 133, 0.16); }
+        html[data-theme="dark"] .feature-card[data-tone="sky"]     { --card-tone: #38bdf8; --card-tone-soft: rgba(56, 189, 248, 0.18); }
+
+        /* Icon — overflows top-left corner (~half outside the card).
+           Background is fully opaque so it reads cleanly when overflowing
+           outside the card onto the page background. */
+        .feature-card-icon {
+            position: absolute;
+            top: -22px;
+            left: -18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: #ffffff;
+            border: 1.5px solid var(--card-tone);
+            color: var(--card-tone);
+            box-shadow:
+                0 6px 14px -4px var(--card-shadow, rgba(0, 0, 0, 0.18)),
+                0 1px 2px rgba(0, 0, 0, 0.08);
+            z-index: 2;
+            transition: transform 0.3s ease-out;
+        }
+        html[data-theme="dark"] .feature-card-icon {
+            background: #161b22;
+        }
+        .feature-card-icon svg { width: 24px; height: 24px; }
+        .feature-card:hover .feature-card-icon {
+            transform: scale(1.06) rotate(-3deg);
+        }
+
+        /* Number — top-right, neutral honey gold */
+        .feature-card-num {
+            position: absolute;
+            top: 16px;
+            right: 22px;
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            color: var(--codecept-accent);
+            line-height: 1;
+            opacity: 0.65;
+        }
+        .feature-card:hover .feature-card-num { opacity: 1; }
+
+        .feature-card-title {
+            font-family: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
+            font-feature-settings: 'ss01', 'ss02';
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.18;
+            color: #1f2937;
+            margin: 22px 0 12px;
+        }
+        html[data-theme="dark"] .feature-card-title {
+            color: #f3f4f6;
+        }
+
+        .feature-card-body {
+            font-size: 14.5px;
+            line-height: 1.65;
+            color: #4b5563;
+        }
+        html[data-theme="dark"] .feature-card-body {
+            color: #c9d1d9;
+        }
+
+        /* Inline code & strong — always brand honey, regardless of card tone */
+        .feature-card-body code {
+            background: rgba(242, 169, 0, 0.10);
+            color: var(--codecept-accent-deep);
+            padding: 1.5px 6px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 12.5px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        html[data-theme="dark"] .feature-card-body code {
+            background: rgba(242, 169, 0, 0.16);
+            color: var(--codecept-accent);
+        }
+        .feature-card-body strong {
+            color: #1f2937;
+            font-weight: 700;
+            background: linear-gradient(
+                to top,
+                var(--codecept-accent-soft) 0%,
+                var(--codecept-accent-soft) 24%,
+                transparent 24%
+            );
+            padding: 0 2px;
+        }
+        html[data-theme="dark"] .feature-card-body strong {
+            color: #f9fafb;
+        }
+    </style>
+</section>

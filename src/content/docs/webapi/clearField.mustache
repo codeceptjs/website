@@ -1,12 +1,14 @@
-﻿Clears a `<textarea>` or text `<input>` element's value.
+Clears a `<textarea>` or text `<input>` element's value.
+
+The second parameter is an optional context (CSS or XPath locator) to narrow the search.
 
 ```js
 I.clearField('Email');
 I.clearField('user[email]');
 I.clearField('#email');
-// by ARIA locator
-I.clearField({ aria: 'Submit' });
+// within a context
+I.clearField('Email', '.form-container');
 ```
-@param {LocatorOrString} editable field located by label|name|CSS|XPath|ARIA|strict locator.
+@param {LocatorOrString} editable field located by label|name|CSS|XPath|strict locator.
+@param {?CodeceptJS.LocatorOrString} [context=null] (optional, `null` by default) element located by CSS | XPath | strict locator.
 @returns {void} automatically synchronized promise through #recorder.
-

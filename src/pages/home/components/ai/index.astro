@@ -1,137 +1,160 @@
 ---
 
-
 ---
 
 {/* AI-Powered Testing Section */}
-<section class="mt-0 py-20 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 relative overflow-hidden">
-    {/* Floating Background Elements */}
-    <div class="absolute inset-0">
-        <div class="absolute top-20 left-10 w-72 h-72 bg-blue-500/20 dark:bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div class="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/20 dark:bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-500/10 dark:bg-pink-500/5 rounded-full blur-3xl animate-pulse delay-500"></div>
-    </div>
-
+<section class="mt-0 py-24 bg-gray-50 dark:bg-gray-950 relative">
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <div class="inline-flex items-center px-4 py-2 rounded-full bg-blue-500/20 dark:bg-blue-500/10 border border-blue-500/30 dark:border-blue-500/20 mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brain w-5 h-5 text-blue-600 dark:text-blue-400 mr-2"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"></path><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"></path><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"></path><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"></path><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"></path><path d="M3.477 10.896a4 4 0 0 1 .585-.396"></path><path d="M19.938 10.5a4 4 0 0 1 .585.396"></path><path d="M6 18a4 4 0 0 1-1.967-.516"></path><path d="M19.967 17.484A4 4 0 0 1 18 18"></path></svg>
-                <span class="text-blue-700 dark:text-blue-300 text-sm font-medium">Powered by AI</span>
-            </div>
-            <h2 class="mt-0 text-4xl md:text-5xl font-bold mb-6">
-              <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                Intelligent Testing
-              </span>
-                <br />
-                <span class="text-gray-900 dark:text-white">That Adapts & Learns</span>
+        {/* Section Header */}
+        <div class="text-center mb-24">
+            <h2 class="mt-0 text-4xl md:text-6xl font-bold leading-tight text-gray-900 dark:text-white">
+                Tests that <span class="headline-accent">fix themselves</span>.
             </h2>
-            <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                Revolutionary AI technology that makes your tests smarter, more resilient, and dramatically reduces maintenance overhead.
+            <p class="text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mt-6">
+                Selectors break. UIs change. CodeceptJS heals the test before you notice.
             </p>
         </div>
 
-        {/* Features Grid */}
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            {/* Self-Healing Tests */}
-            <div class="mt-0 group relative">
-                <div class="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 dark:from-blue-600/20 dark:to-purple-600/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
-                <div class="mt-0 relative bg-white/80 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 rounded-2xl p-8 hover:border-blue-500/50 transition-all duration-300">
-                    <div class="w-12 h-12 bg-blue-500/10 dark:bg-blue-500/20 rounded-xl flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield w-6 h-6 text-blue-600 dark:text-blue-400"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>
+        {/* Feature Panel 1: Self-Healing Tests (text left, visual right) */}
+        <div class="grid lg:grid-cols-2 gap-16 items-center mb-32">
+            <div class="space-y-6">
+                <h3 class="text-3xl font-bold text-gray-900 dark:text-white">Selectors that heal</h3>
+                <p class="text-lg text-gray-500 dark:text-gray-400 leading-relaxed">
+                    Your designer renames a button. Your test still passes. CodeceptJS finds the new selector, swaps it in, and tells you what it changed.
+                </p>
+                <a href="/ai" class="explore-link no-underline inline-flex items-center gap-2 text-orange-500 dark:text-orange-400 font-semibold hover:text-orange-600 dark:hover:text-orange-300 transition-colors">
+                    Explore self-healing <span class="arrow">&rarr;</span>
+                </a>
+            </div>
+            <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-8 relative overflow-hidden">
+                <div class="relative space-y-4">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-purple-500/10 dark:bg-purple-500/20 rounded-xl flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-purple-600 dark:text-purple-400"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-900 dark:text-white">Auto-Healed Selectors</span>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Self-Healing Tests</h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-4">
-                        AI automatically fixes broken selectors when UI changes, reducing test maintenance by up to 80%.
-                    </p>
-                    <div class="text-sm text-blue-600 dark:text-blue-400 font-medium">
-                        ↳ 80% less maintenance
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3 p-3 bg-red-50/80 dark:bg-red-900/20 rounded-lg border border-red-200/50 dark:border-red-800/30">
+                            <span class="text-red-500 text-xs font-mono">&#10005;</span>
+                            <code class="text-sm text-red-600 dark:text-red-400 line-through">#old-submit-btn</code>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-purple-500"><path d="M12 5v14"></path><path d="m19 12-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-green-50/80 dark:bg-green-900/20 rounded-lg border border-green-200/50 dark:border-green-800/30">
+                            <span class="text-green-500 text-xs font-mono">&#10003;</span>
+                            <code class="text-sm text-green-600 dark:text-green-400">[data-testid="submit"]</code>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-4">Healed automatically in 0.3s</p>
+                </div>
+            </div>
+        </div>
+
+        {/* Feature Panel 2: AI Visual Testing (visual left, text right) */}
+        <div class="grid lg:grid-cols-2 gap-16 items-center mb-32">
+            <div class="order-2 lg:order-1 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-8 relative overflow-hidden">
+                <div class="relative space-y-4">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-purple-500/10 dark:bg-purple-500/20 rounded-xl flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-purple-600 dark:text-purple-400"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-900 dark:text-white">Visual Comparison</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <div class="text-xs text-gray-400 uppercase tracking-wider">Baseline</div>
+                            <div class="h-24 bg-gray-100 dark:bg-gray-700 rounded-lg border border-gray-200/50 dark:border-gray-600/50 flex items-center justify-center">
+                                <div class="w-16 h-4 bg-purple-200 dark:bg-purple-700 rounded"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="text-xs text-gray-400 uppercase tracking-wider">Current</div>
+                            <div class="h-24 bg-gray-100 dark:bg-gray-700 rounded-lg border border-orange-300/50 dark:border-orange-500/30 flex items-center justify-center relative">
+                                <div class="w-16 h-4 bg-orange-200 dark:bg-orange-700 rounded"></div>
+                                <div class="absolute top-1 right-1 w-3 h-3 bg-orange-500 rounded-full animate-pulse"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 mt-2">
+                        <div class="w-2 h-2 bg-orange-500 rounded-full"></div>
+                        <span class="text-xs text-gray-500 dark:text-gray-400">2 visual differences detected</span>
                     </div>
                 </div>
             </div>
+            <div class="order-1 lg:order-2 space-y-6">
+                <h3 class="text-3xl font-bold text-gray-900 dark:text-white">Visual diffs that know better</h3>
+                <p class="text-lg text-gray-500 dark:text-gray-400 leading-relaxed">
+                    Snapshot tests with a brain. We tell a regression from a redesign so your visual suite stops crying wolf.
+                </p>
+                <a href="/ai" class="explore-link no-underline inline-flex items-center gap-2 text-orange-500 dark:text-orange-400 font-semibold hover:text-orange-600 dark:hover:text-orange-300 transition-colors">
+                    Explore visual testing <span class="arrow">&rarr;</span>
+                </a>
+            </div>
+        </div>
 
-            {/* AI Visual Testing */}
-            <div class="mt-0 group relative">
-                <div class="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-pink-600/10 dark:from-purple-600/20 dark:to-pink-600/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
-                <div class="mt-0 relative bg-white/80 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 rounded-2xl p-8 hover:border-purple-500/50 transition-all duration-300">
-                    <div class="w-12 h-12 bg-purple-500/10 dark:bg-purple-500/20 rounded-xl flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye w-6 h-6 text-purple-600 dark:text-purple-400"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        {/* Feature Panel 3: Natural Language Tests (text left, visual right) */}
+        <div class="grid lg:grid-cols-2 gap-16 items-center mb-20">
+            <div class="space-y-6">
+                <h3 class="text-3xl font-bold text-gray-900 dark:text-white">Write a sentence. Get a test.</h3>
+                <p class="text-lg text-gray-500 dark:text-gray-400 leading-relaxed">
+                    Describe what the user does. CodeceptJS turns it into runnable steps you can read out loud.
+                </p>
+                <a href="/ai" class="explore-link no-underline inline-flex items-center gap-2 text-orange-500 dark:text-orange-400 font-semibold hover:text-orange-600 dark:hover:text-orange-300 transition-colors">
+                    Explore AI testing <span class="arrow">&rarr;</span>
+                </a>
+            </div>
+            <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-8 relative overflow-hidden">
+                <div class="relative space-y-4">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-purple-500/10 dark:bg-purple-500/20 rounded-xl flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-purple-600 dark:text-purple-400"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"></path><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"></path><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"></path></svg>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-900 dark:text-white">Natural Language &rarr; Code</span>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">AI Visual Testing</h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-4">
-                        Computer vision algorithms detect visual regressions and UI inconsistencies automatically.
-                    </p>
-                    <div class="text-sm text-purple-600 dark:text-purple-400 font-medium">
-                        ↳ Pixel-perfect accuracy
+                    <div class="p-3 bg-gray-50 dark:bg-gray-900/50 rounded-lg border border-gray-200/50 dark:border-gray-700/50">
+                        <p class="text-sm text-gray-600 dark:text-gray-300 italic">"User logs in, adds item to cart, and completes checkout"</p>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-purple-500"><path d="M12 5v14"></path><path d="m19 12-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="p-3 bg-gray-900 dark:bg-gray-950 rounded-lg">
+                        <code class="text-xs text-green-400 font-mono leading-relaxed">
+                            I.login('user');<br/>
+                            I.click('Add to Cart');<br/>
+                            I.click('Checkout');<br/>
+                            I.see('Order confirmed');
+                        </code>
                     </div>
                 </div>
             </div>
+        </div>
 
-            {/* Smart Generation */}
-            <div class="mt-0 group relative">
-                <div class="absolute inset-0 bg-gradient-to-r from-green-600/10 to-blue-600/10 dark:from-green-600/20 dark:to-blue-600/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
-                <div class="mt-0 relative bg-white/80 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 rounded-2xl p-8 hover:border-green-500/50 transition-all duration-300">
-                    <div class="w-12 h-12 bg-green-500/10 dark:bg-green-500/20 rounded-xl flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap w-6 h-6 text-green-600 dark:text-green-400"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Smart Test Generation</h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-4">
-                        AI generates comprehensive test scenarios including edge cases you might miss.
-                    </p>
-                    <div class="text-sm text-green-600 dark:text-green-400 font-medium">
-                        ↳ 3x faster test creation
-                    </div>
+        {/* Compact 3-column row for remaining features */}
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="mt-0 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 transition-colors duration-200 hover:border-purple-400 dark:hover:border-purple-500">
+                <div class="w-10 h-10 bg-purple-500/10 dark:bg-purple-500/20 rounded-xl flex items-center justify-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-purple-600 dark:text-purple-400"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                 </div>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Edge cases, generated</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Hand it a happy path. It writes the angry, sad, and weird ones too.</p>
             </div>
 
-            {/* Predictive Analysis */}
-            <div class="mt-0 group relative">
-                <div class="absolute inset-0 bg-gradient-to-r from-yellow-600/10 to-orange-600/10 dark:from-yellow-600/20 dark:to-orange-600/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
-                <div class="mt-0 relative bg-white/80 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 rounded-2xl p-8 hover:border-yellow-500/50 transition-all duration-300">
-                    <div class="w-12 h-12 bg-yellow-500/10 dark:bg-yellow-500/20 rounded-xl flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart3 w-6 h-6 text-yellow-600 dark:text-yellow-400"><path d="M3 3v18h18"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Predictive Analysis</h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-4">
-                        Machine learning predicts potential test failures before they happen.
-                    </p>
-                    <div class="text-sm text-yellow-600 dark:text-yellow-400 font-medium">
-                        ↳ 90% failure prevention
-                    </div>
+            <div class="mt-0 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 transition-colors duration-200 hover:border-purple-400 dark:hover:border-purple-500">
+                <div class="w-10 h-10 bg-orange-500/10 dark:bg-orange-500/20 rounded-xl flex items-center justify-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-orange-600 dark:text-orange-400"><path d="M3 3v18h18"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg>
                 </div>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Flake radar</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">See which tests are about to start lying to you, before CI does.</p>
             </div>
 
-            {/* Intelligent Reporting */}
-            <div class="mt-0 group relative">
-                <div class="absolute inset-0 bg-gradient-to-r from-pink-600/10 to-red-600/10 dark:from-pink-600/20 dark:to-red-600/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
-                <div class="mt-0 relative bg-white/80 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 rounded-2xl p-8 hover:border-pink-500/50 transition-all duration-300">
-                    <div class="w-12 h-12 bg-pink-500/10 dark:bg-pink-500/20 rounded-xl flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-6 h-6 text-pink-600 dark:text-pink-400"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path><path d="M5 3v4"></path><path d="M19 17v4"></path><path d="M3 5h4"></path><path d="M17 19h4"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Intelligent Reporting</h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-4">
-                        AI-powered insights and recommendations for improving test coverage and quality.
-                    </p>
-                    <div class="text-sm text-pink-600 dark:text-pink-400 font-medium">
-                        ↳ Actionable insights
-                    </div>
+            <div class="mt-0 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 transition-colors duration-200 hover:border-purple-400 dark:hover:border-purple-500">
+                <div class="w-10 h-10 bg-purple-500/10 dark:bg-purple-500/20 rounded-xl flex items-center justify-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-purple-600 dark:text-purple-400"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path><path d="M5 3v4"></path><path d="M19 17v4"></path><path d="M3 5h4"></path><path d="M17 19h4"></path></svg>
                 </div>
-            </div>
-
-            {/* Natural Language Tests */}
-            <div class="mt-0 group relative">
-                <div class="absolute inset-0 bg-gradient-to-r from-indigo-600/10 to-blue-600/10 dark:from-indigo-600/20 dark:to-blue-600/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
-                <div class="mt-0 relative bg-white/80 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 rounded-2xl p-8 hover:border-indigo-500/50 transition-all duration-300">
-                    <div class="w-12 h-12 bg-indigo-500/10 dark:bg-indigo-500/20 rounded-xl flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brain w-6 h-6 text-indigo-600 dark:text-indigo-400"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"></path><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"></path><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"></path><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"></path><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"></path><path d="M3.477 10.896a4 4 0 0 1 .585-.396"></path><path d="M19.938 10.5a4 4 0 0 1 .585.396"></path><path d="M6 18a4 4 0 0 1-1.967-.516"></path><path d="M19.967 17.484A4 4 0 0 1 18 18"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Natural Language Tests</h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-4">
-                        Write tests in plain English and let AI convert them to executable code.
-                    </p>
-                    <div class="text-sm text-indigo-600 dark:text-indigo-400 font-medium">
-                        ↳ Human-readable tests
-                    </div>
-                </div>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Reports that read themselves</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Plain-English summaries of what passed, what broke, and why.</p>
             </div>
         </div>
     </div>

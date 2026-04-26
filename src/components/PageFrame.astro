@@ -7,14 +7,6 @@ const shouldRenderSidebar = hasSidebar && !is404Page;
 ---
 
 <div class="page sl-flex" data-page-slug={entry.slug}>
-    <span class="fixed w-full h-full bg-gradient-to-br from-gray-50 via-purple-50 to-blue-50 dark:from-gray-900 dark:via-purple-900 dark:to-blue-950 overflow-hidden"></span>
-    <span class="fixed top-10 left-10 w-64 h-64 bg-yellow-500/10 rounded-full blur-3xl animate-float-slow"></span>
-    <span class="fixed bottom-10 right-10 w-80 h-80 rounded-full blur-3xl animate-float-delayed" style={{backgroundColor: 'rgba(194, 122, 255, 0.2)'}}></span>
-    <span class="fixed inset-0 h-full w-full
-  bg-[linear-gradient(to_right,#80808010_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)]
-  dark:bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)]
-  bg-[size:50px_50px]"></span>
-
     <header id="site-header" class="header">
         <slot name="header" />
     </header>
@@ -165,8 +157,29 @@ const shouldRenderSidebar = hasSidebar && !is404Page;
         }
     }
 
+    function tagHeaderlessTables() {
+        // Markdown often produces tables with empty <th> cells when authors
+        // want a plain N-column grid. Tag those so the stylesheet can hide
+        // the empty band and force equal column widths.
+        const tables = document.querySelectorAll('.sl-markdown-content table');
+        tables.forEach((t) => {
+            const ths = t.querySelectorAll('thead th');
+            if (!ths.length) return;
+            const allEmpty = Array.from(ths).every((th) => !th.textContent || !th.textContent.trim());
+            t.classList.toggle('cc-table-no-header', allEmpty);
+            if (allEmpty) {
+                // Expose the column count so CSS can split width equally.
+                const firstRow = t.querySelector('tbody tr');
+                if (firstRow) t.style.setProperty('--col-count', String(firstRow.children.length));
+            }
+        });
+    }
+
     function setup() {
         header = document.querySelector('#site-header');
+
+        tagHeaderlessTables();
+
         if (!header) return;
 
         const isHome = window.location.pathname === '/';

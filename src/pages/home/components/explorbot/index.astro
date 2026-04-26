@@ -1,0 +1,141 @@
+---
+---
+
+<section id="explorbot" class="explorbot-section !mt-0 py-16 transition-colors duration-300 relative">
+    <div class="explorbot-bg" aria-hidden="true"></div>
+
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="explorbot-grid">
+
+            {/* LEFT — headline + CTA */}
+            <div class="explorbot-left">
+                <h2 class="explorbot-headline">
+                    No tests yet?
+                    <span class="headline-accent">Agent can test for you!</span>
+                </h2>
+
+                <a
+                    href="https://github.com/testomatio/explorbot"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="explorbot-cta no-underline"
+                >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true">
+                        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                        <path d="M9 18c-4.51 2-5-2-7-2"/>
+                    </svg>
+                    <span>Explorbot on GitHub</span>
+                    <span class="arrow" aria-hidden="true">&rarr;</span>
+                </a>
+            </div>
+
+            {/* RIGHT — explanation */}
+            <div class="explorbot-right">
+                <p class="explorbot-body">
+                    We also created <a href="https://github.com/testomatio/explorbot" target="_blank" rel="noopener noreferrer"><strong>Explorbot</strong></a> — the world's <strong>first open-source self-testing agent</strong>.
+                    It explores your site, writes tests as it goes, and runs autonomously for hours on CI.
+                    Already have a regression suite? Explorbot finds the paths it never touched.
+                    Explorbot is <b>powered by CodeceptJS</b> and writes its tests.
+                </p>
+                <p class="explorbot-meta">Free · Open source · Powered by CodeceptJS</p>
+            </div>
+
+        </div>
+    </div>
+
+    <style is:global>
+        .explorbot-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(124, 58, 237, 0.05) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(242, 169, 0, 0.04) 0%, transparent 30%);
+            pointer-events: none;
+        }
+
+        .explorbot-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 28px;
+            align-items: center;
+        }
+        @media (min-width: 900px) {
+            .explorbot-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 64px;
+            }
+        }
+
+        /* LEFT */
+        .explorbot-headline {
+            font-family: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
+            font-feature-settings: 'ss01', 'ss02';
+            font-size: 38px;
+            line-height: 1.05;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            color: #1f2937;
+            margin: 0 0 24px;
+        }
+        @media (min-width: 720px) {
+            .explorbot-headline { font-size: 48px; }
+        }
+        html[data-theme="dark"] .explorbot-headline { color: #f3f4f6; }
+
+        .explorbot-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 20px;
+            border-radius: 9px;
+            border: 1.5px solid rgba(124, 58, 237, 0.32);
+            background: transparent;
+            font-size: 14.5px;
+            font-weight: 600;
+            color: #1f2937;
+            transition: all 0.2s ease-out;
+            cursor: pointer;
+        }
+        html[data-theme="dark"] .explorbot-cta {
+            border-color: rgba(167, 139, 250, 0.38);
+            color: #f3f4f6;
+        }
+        .explorbot-cta:hover {
+            border-color: #7c3aed;
+            color: #7c3aed;
+            background: rgba(124, 58, 237, 0.04);
+        }
+        html[data-theme="dark"] .explorbot-cta:hover {
+            border-color: #a78bfa;
+            color: #a78bfa;
+            background: rgba(167, 139, 250, 0.06);
+        }
+        .explorbot-cta .arrow { transition: transform 0.2s ease-out; }
+        .explorbot-cta:hover .arrow { transform: translateX(2px); }
+
+        /* RIGHT */
+        .explorbot-body {
+            font-size: 17px;
+            line-height: 1.6;
+            color: #374151;
+            margin: 0 0 18px;
+        }
+        html[data-theme="dark"] .explorbot-body { color: #d1d5db; }
+        .explorbot-body strong {
+            color: #1f2937;
+            font-weight: 700;
+        }
+        html[data-theme="dark"] .explorbot-body strong { color: #ffffff; }
+
+        .explorbot-meta {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #9ca3af;
+            margin: 0;
+        }
+        html[data-theme="dark"] .explorbot-meta { color: #6b7280; }
+    </style>
+</section>

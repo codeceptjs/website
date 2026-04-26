@@ -1,113 +1,312 @@
 ---
-import { Code } from "@astrojs/starlight/components";
+import IDEPanel from "@/components/ide/IDEPanel";
+import type { IDEFile, IDEFolder } from "@/components/ide/IDEPanel";
 
-const example =
-  `const { faker } = require('@faker-js/faker');                               // Use 3rd-party JS code
+const files: IDEFile[] = [
+  {
+    path: "codecept.conf.ts",
+    name: "codecept.conf.ts",
+    language: "typescript",
+    code: `import { setHeadlessWhen } from '@codeceptjs/configure';
 
-Feature('Store');
+setHeadlessWhen(process.env.HEADLESS);
 
-Scenario('Create a new store', async ({ I, login, SettingsPage }) => {
-  const storeName = faker.lorem.slug();
-  login('customer');                                          // Login customer from saved cookies
-  SettingsPage.open();                                        // Use Page objects
-  I.dontSee(storeName, '.settings');                          // Assert text not present inside an element (located by CSS)
-  I.click('Add', '.settings');                                // Click link by text inside element (located by CSS)
-  I.fillField('Store Name', storeName);                       // Fill fields by labels or placeholders
-  I.fillField('Email', faker.internet.email());
-  I.fillField('Telephone', faker.phone.phoneNumberFormat());
-  I.selectInDropdown('Status', 'Active');                     // Use custom methods
-  I.retry(2).click('Create');                                 // Retry flaky step
-  I.waitInUrl('/settings/setup/stores');                      // Explicit waiter
-  I.see(storeName, '.settings');                              // Assert text present inside an element (located by CSS)
-  const storeId = await I.grabTextFrom('#store-id');          // Use await to get information from browser
-  I.say(\`Created a store with \${storeId}\`);                   // Print custom comments
-}).tag('stores');\`;
-`;
+export const config: CodeceptJS.MainConfig = {
+  tests: './tests/**/*.test.ts',
+  output: './output',
+  helpers: {
+    Playwright: {
+      browser: 'chromium',
+      url: process.env.URL || 'http://localhost:3000',
+      show: true,
+    },
+  },
+  include: {
+    I: './steps_file.ts',
+    milestonePage: './pages/Milestone.ts',
+    taskPage: './pages/Task.ts',
+  },
+  plugins: {
+    heal: { enabled: true },
+    retryFailedStep: { enabled: true },
+    auth: {
+      enabled: true,
+      saveToFile: true,
+      users: {
+        user: {
+          login: (I) => I.login(),
+          check: (I) => { I.amOnPage('/'); I.see('Dashboard', '.navbar'); },
+        },
+      },
+    },
+  },
+  require: ['./support/heal.ts'],
+};`,
+  },
+  {
+    path: "tests/milestones.test.ts",
+    name: "milestones.test.ts",
+    language: "typescript",
+    code: `Feature('Milestones');
+
+Before(({ login }) => {
+  login();
+});
+
+Scenario('Create a milestone @smoke', ({ milestonePage }) => {
+  milestonePage.open();
+  milestonePage.create({ name: 'Q2 Release', dueDate: '2024-06-30' });
+  milestonePage.checkVisible('Q2 Release');
+});
+
+Scenario('Milestone tracks task progress', ({ I, milestonePage }) => {
+  milestonePage.open();
+  milestonePage.select('Q2 Release');
+  I.see('0 / 5 tasks', '.progress');
+  I.see('0%', '.progress-bar');
+});
+
+Scenario('Complete a milestone', ({ I, milestonePage }) => {
+  milestonePage.open();
+  milestonePage.select('Q2 Release');
+  I.click('Mark as Complete');
+  I.see('Completed', '.milestone-status');
+});`,
+  },
+  {
+    path: "tests/tasks.test.ts",
+    name: "tasks.test.ts",
+    language: "typescript",
+    code: `Feature('Task Management');
+
+Before(({ login }) => {
+  login();
+});
+
+Scenario('Create and assign a task @smoke', ({ I, taskPage }) => {
+  taskPage.openProject('Backend API');
+  taskPage.create({
+    title: 'Setup CI pipeline',
+    assignee: 'Alice',
+    milestone: 'Q2 Release',
+    priority: 'high',
+  });
+  I.see('Setup CI pipeline', '.task-board');
+  taskPage.checkAssignee('Setup CI pipeline', 'Alice');
+});
+
+Scenario('Move task through statuses', ({ I, taskPage }) => {
+  taskPage.openProject('Backend API');
+  taskPage.setStatus('Setup CI pipeline', 'In Progress');
+  I.see('In Progress', '.task-status');
+  taskPage.setStatus('Setup CI pipeline', 'Done');
+  I.see('1 / 5 tasks', '.milestone-progress');
+});`,
+  },
+  {
+    path: "pages/Milestone.ts",
+    name: "Milestone.ts",
+    language: "typescript",
+    code: `const { I } = inject();
+
+class MilestonePage {
+  url = '/milestones';
+  milestoneList = '.milestone-list';
+  nameInput = '#milestone-name';
+  dueDateInput = '#due-date';
+  submitButton = locate('button').withText('Create Milestone');
+
+  open() {
+    I.amOnPage(this.url);
+    I.waitForElement(this.milestoneList, 5);
+  }
+
+  create({ name, dueDate }: { name: string; dueDate: string }) {
+    I.click('New Milestone');
+    I.waitForElement(this.nameInput, 5);
+    I.fillField(this.nameInput, name);
+    I.fillField(this.dueDateInput, dueDate);
+    I.click(this.submitButton);
+    I.waitForElement(locate('.milestone-item').withText(name), 5);
+  }
+
+  select(name: string) {
+    I.click(locate('.milestone-item').withText(name));
+    I.waitForElement('.milestone-detail', 5);
+  }
+
+  checkVisible(name: string) {
+    I.waitForElement(locate('.milestone-item').withText(name), 5);
+    I.see(name, this.milestoneList);
+  }
+}
+
+export default MilestonePage`,
+  },
+  {
+    path: "pages/Task.ts",
+    name: "Task.ts",
+    language: "typescript",
+    code: `const { I } = inject();
+
+interface TaskInput {
+  title: string;
+  assignee?: string;
+  milestone?: string;
+  priority?: 'low' | 'medium' | 'high';
+}
+
+class TaskPage {
+  taskBoard = '.task-board';
+  createButton = locate('button').withText('Add Task');
+  titleInput = '#task-title';
+
+  openProject(name: string) {
+    I.amOnPage('/projects');
+    I.click(locate('.project-card').withText(name));
+    I.waitForElement(this.taskBoard, 10);
+  }
+
+  create(task: TaskInput) {
+    I.click(this.createButton);
+    I.waitForElement(this.titleInput, 5);
+    I.fillField(this.titleInput, task.title);
+    if (task.assignee) I.selectOption('#task-assignee', task.assignee);
+    if (task.milestone) I.selectOption('#task-milestone', task.milestone);
+    if (task.priority) I.selectOption('#task-priority', task.priority);
+    I.click('Save Task');
+    I.waitForElement(locate('.task-item').withText(task.title), 5);
+  }
+
+  setStatus(title: string, status: string) {
+    I.click(locate('.task-item').withText(title));
+    I.waitForElement('.task-detail', 5);
+    I.selectOption('#task-status', status);
+    I.click('Update');
+    I.see(status, '.task-status');
+  }
+
+  checkAssignee(title: string, assignee: string) {
+    I.see(assignee, locate('.task-item').withText(title));
+  }
+}
+
+export default TaskPage`,
+  },
+  {
+    path: "support/heal.ts",
+    name: "heal.ts",
+    language: "typescript",
+    code: `import { heal } from 'codeceptjs';
+
+// Tests can randomly fails due to session expiration
+// if we see unauthorized message -> relogin and try prev step again
+heal.addRecipe('loginOnUnauthorized', {
+  priority: 10,
+  steps: ['click', 'see', 'amOnPage'],
+  prepare: {
+    url: ({ I }) => I.grabCurrentUrl(),
+    html: ({ I }) => I.grabHTMLFrom('body'),
+  },
+  fn: async ({ url, error, html, step }) => {
+    if (
+      !url.includes('/login') &&
+      !error.message.toLowerCase().includes('unauthorized') &&
+      !html.toLowerCase().includes('Error: Unauthorized')
+    ) return;
+
+    return ({ I }) => {
+      I.login();
+      I[step.name](...step.args);
+    };
+  },
+});
+
+// When UX and HTML changes, flaky locator issues can be picked up by AI
+// AI will analyze HTML tree we passed in and will try to fix failing step
+// or replace it with a workaround and continue testing
+heal.addRecipe('ai', {
+  priority: 20,
+  steps: ['click', 'fillField', 'selectOption', 'checkOption', 'doubleClick'],
+  prepare: {
+    html: ({ I }) => I.grabHTMLFrom('body'),
+  },
+  fn: async (args) => {
+    return ai.healFailedStep(args);
+  },
+});`,
+  },
+  {
+    path: "steps_file.ts",
+    name: "steps_file.ts",
+    language: "typescript",
+    code: `export default function () {
+  return actor({
+    login() {
+      this.amOnPage('/login');
+      this.fillField('#email', 'user@pm.app');
+      this.fillField('#password', 'secret');
+      this.click('Sign In');
+      this.waitForElement('.dashboard', 10);
+    },
+  });
+}`,
+  },
+];
+
+const tree: (IDEFile | IDEFolder)[] = [
+  files[0], // codecept.conf.ts
+  {
+    name: "tests",
+    path: "tests",
+    children: [files[1], files[2]], // milestones.test.ts, tasks.test.ts
+  },
+  {
+    name: "pages",
+    path: "pages",
+    children: [files[3], files[4]], // Milestone.ts, Task.ts
+  },
+  {
+    name: "support",
+    path: "support",
+    children: [files[5]], // heal.ts
+  },
+  files[6], // steps_file.ts
+];
 ---
 
-<section id="examples" class="!mt-0 py-20 relative transition-colors duration-300">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+<section id="examples" class="!mt-0 py-24 relative transition-colors duration-300">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
     <div class="text-center mb-16">
-      <h2 class="text-4xl md:text-5xl font-bold mb-6">
-          Real-world
-          <span class="bg-gradient-to-r from-purple-600 to-yellow-600 bg-clip-text text-transparent">
-            Examples
-          </span>
+      <h2 class="text-4xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
+          Simple, yet <span class="headline-accent">professional</span>.
       </h2>
-      <p class="text-xl text-gray-600 dark:text-gray-300  max-w-3xl mx-auto">
-        See how CodeceptJS makes complex testing scenarios simple and readable
+      <p class="text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+          Architecture and test design applied by default
       </p>
     </div>
 
-    {/* Mac Window Code Editor */}
-    <div class="max-w-5xl mx-auto">
-      <div class="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden border border-gray-700">
-        {/* Mac Window Header */}
-        <div class="bg-gray-800 px-6 py-4 flex items-center justify-between border-b border-gray-700">
-          <div class="flex items-center space-x-3">
-            <div class="flex space-x-2">
-              <div class="!mt-0 w-3 h-3 bg-red-500 rounded-full"></div>
-              <div class="!mt-0 w-3 h-3 bg-yellow-500 rounded-full"></div>
-              <div class="!mt-0 w-3 h-3 bg-green-500 rounded-full"></div>
-            </div>
-            <div class="!mt-0 flex items-center space-x-2 ml-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-terminal w-4 h-4 text-gray-400"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" x2="20" y1="19" y2="19"></line></svg>
-              <span class="text-gray-300 text-sm font-medium">CodeceptJS Tests</span>
-            </div>
-          </div>
-        </div>
-
-
-        {/* Code Content */}
-        <div class="!mt-0 relative">
-          <Code code={example} lang="js" />
-        </div>
-
-        {/* Status Bar */}
-        <div class="!mt-0 bg-gray-800 px-6 py-3 flex items-center justify-between border-t border-gray-700 text-xs">
-          <div class="flex items-center space-x-4">
-            <span class="text-gray-400">JavaScript</span>
-            <span class="text-gray-400">UTF-8</span>
-            <div class="flex items-center space-x-1">
-              <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-              <span class="text-green-400">Tests Passing</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Example Benefits */}
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-        <div class="!mt-0 dark:bg-gray-800/80 dark:border-gray-600/50 bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300">
-          <div class="w-12 h-12 bg-gradient-to-r from-yellow-500 to-amber-500 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle w-6 h-6 text-white"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><path d="m9 11 3 3L22 4"></path></svg>
-          </div>
-          <h3 class="text-lg font-bold dark:text-white text-gray-800 mb-2">Human Readable</h3>
-          <p class="text-gray-600 dark:text-gray-300 text-sm">Tests read like plain English, making them easy to understand and maintain</p>
-        </div>
-
-        <div class="!mt-0 dark:bg-gray-800/80 dark:border-gray-600/50 bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300">
-          <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-700 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap w-6 h-6 text-white"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-          </div>
-          <h3 class="text-lg font-bold dark:text-white text-gray-800 mb-2">Quick Setup</h3>
-          <p class="text-gray-600 dark:text-gray-300 text-sm">Get started in minutes with minimal configuration and setup</p>
-        </div>
-
-        <div class="!mt-0 dark:bg-gray-800/80 dark:border-gray-600/50 bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300">
-          <div class="w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-target w-6 h-6 text-white"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
-          </div>
-          <h3 class="text-lg font-bold dark:text-white text-gray-800 mb-2">Real Scenarios</h3>
-          <p class="text-gray-600 dark:text-gray-300 text-sm">Test actual user workflows and business-critical functionality</p>
-        </div>
-      </div>
+    <div class="max-w-6xl mx-auto">
+      <IDEPanel
+        client:load
+        files={files}
+        tree={tree}
+        defaultFile="tests/milestones.test.ts"
+      />
     </div>
   </div>
-</section>
 
-<style is:global>
-    .expressive-code pre {
-        overflow: hidden !important;
+  <style is:global>
+    /* Match the hero panel: JetBrains Mono with programming ligatures + the
+       same syntax palette (purple keywords, amber strings, pink `I`). */
+    .ide-panel pre,
+    .ide-panel code {
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace !important;
+      font-feature-settings: 'calt' 1, 'liga' 1, 'ss01' 1, 'ss02' 1, 'ss03' 1, 'ss19' 1, 'zero' 1;
+      font-variant-ligatures: contextual common-ligatures;
+      font-size: 13.5px !important;
+      line-height: 1.7;
     }
-</style>
+
+  </style>
+</section>

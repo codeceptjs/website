@@ -1,0 +1,172 @@
+---
+// Custom theme switcher. Replaces Starlight's default <select>-based control.
+// Persists choice via localStorage under the same key Starlight uses
+// (`starlight-theme`) so the rest of the site keeps working unchanged.
+---
+
+<starlight-theme-toggle>
+  <button
+    type="button"
+    class="cc-theme-toggle"
+    role="switch"
+    aria-checked="false"
+    aria-label="Toggle dark mode"
+    title="Toggle dark mode"
+  >
+    {/* Honey-tinted pill that slides under the active icon */}
+    <span class="cc-theme-active" aria-hidden="true"></span>
+
+    {/* Sun side */}
+    <span class="cc-theme-icon-side cc-theme-icon-sun" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2"/><path d="M12 20v2"/>
+        <path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/>
+        <path d="M2 12h2"/><path d="M20 12h2"/>
+        <path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
+      </svg>
+    </span>
+
+    {/* Moon side */}
+    <span class="cc-theme-icon-side cc-theme-icon-moon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+      </svg>
+    </span>
+  </button>
+</starlight-theme-toggle>
+
+<style is:global>
+  .cc-theme-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3px;
+    border: 1px solid var(--sl-color-hairline-shade, rgba(127, 127, 127, 0.22));
+    border-radius: 999px;
+    background: rgba(127, 127, 127, 0.04);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .cc-theme-toggle:hover {
+    border-color: rgba(242, 169, 0, 0.45);
+  }
+  .cc-theme-toggle:focus-visible {
+    outline: 2px solid var(--codecept-accent, #F2A900);
+    outline-offset: 3px;
+  }
+
+  /* Sun + moon icons */
+  .cc-theme-icon-side {
+    position: relative;
+    z-index: 2;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(120, 120, 130, 0.55);
+    transition: color 0.2s ease, transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .cc-theme-icon-side svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Active state: honey-gold icon, slight scale up */
+  html[data-theme="light"] .cc-theme-icon-sun,
+  html[data-theme="dark"] .cc-theme-icon-moon {
+    color: var(--codecept-accent, #F2A900);
+    transform: scale(1.08);
+  }
+  html[data-theme="light"] .cc-theme-icon-moon,
+  html[data-theme="dark"] .cc-theme-icon-sun {
+    transform: scale(0.92);
+  }
+
+  /* Sliding honey pill behind the active icon */
+  .cc-theme-active {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background: rgba(242, 169, 0, 0.15);
+    box-shadow: inset 0 0 0 1px rgba(242, 169, 0, 0.35);
+    z-index: 1;
+    transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+  }
+  html[data-theme="dark"] .cc-theme-active {
+    transform: translateX(26px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cc-theme-icon-side,
+    .cc-theme-active {
+      transition: none !important;
+    }
+  }
+
+  /* Hide Starlight's default theme select label if it leaks through anywhere */
+  starlight-theme-select { display: none; }
+</style>
+
+<script>
+  // Mirrors Starlight's storage key + system-preference fallback so the
+  // custom toggle plays nicely with everything else on the site.
+  type Theme = "light" | "dark";
+  const STORAGE_KEY = "starlight-theme";
+
+  const getStoredTheme = (): Theme | null => {
+    try {
+      const v = localStorage.getItem(STORAGE_KEY);
+      return v === "light" || v === "dark" ? v : null;
+    } catch {
+      return null;
+    }
+  };
+
+  const systemPreference = (): Theme =>
+    window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+
+  const currentTheme = (): Theme =>
+    (document.documentElement.getAttribute("data-theme") as Theme | null) ||
+    getStoredTheme() ||
+    systemPreference();
+
+  const applyTheme = (theme: Theme) => {
+    document.documentElement.setAttribute("data-theme", theme);
+    try {
+      localStorage.setItem(STORAGE_KEY, theme);
+    } catch {
+      // ignore quota / privacy errors
+    }
+    document
+      .querySelectorAll<HTMLButtonElement>(".cc-theme-toggle")
+      .forEach((btn) => {
+        btn.setAttribute("aria-checked", theme === "dark" ? "true" : "false");
+      });
+  };
+
+  class StarlightThemeToggle extends HTMLElement {
+    connectedCallback() {
+      const btn = this.querySelector<HTMLButtonElement>(".cc-theme-toggle");
+      if (!btn) return;
+      btn.setAttribute(
+        "aria-checked",
+        currentTheme() === "dark" ? "true" : "false"
+      );
+      btn.addEventListener("click", () => {
+        applyTheme(currentTheme() === "dark" ? "light" : "dark");
+      });
+    }
+  }
+
+  if (!customElements.get("starlight-theme-toggle")) {
+    customElements.define("starlight-theme-toggle", StarlightThemeToggle);
+  }
+</script>

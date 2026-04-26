@@ -1,10 +1,13 @@
 import {defineConfig} from 'astro/config';
 import starlight from '@astrojs/starlight';
+import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 import starlightSidebarTopics from 'starlight-sidebar-topics';
 import starlightImageZoom from 'starlight-image-zoom';
 import rehypeAstroRelativeMarkdownLinks from "astro-rehype-relative-markdown-links";
 import starlightScrollToTop from 'starlight-scroll-to-top';
+import {codeceptDark, codeceptLight} from './src/lib/shiki-themes.ts';
+import {codeceptShikiTransformer} from './src/lib/shiki-codecept-transformer.ts';
 
 const options = {
     collectionBase: false,
@@ -13,9 +16,29 @@ const options = {
 export default defineConfig({
     site: 'https://codecept.io',
     integrations: [
+        react(),
         starlight({
             expressiveCode: {
-                themes: ['github-dark', 'dracula'],
+                themes: [codeceptDark, codeceptLight],
+                themeCssSelector: (theme) =>
+                    theme.name === 'codecept-dark'
+                        ? '[data-theme="dark"]'
+                        : '[data-theme="light"]',
+                styleOverrides: {
+                    codeFontFamily:
+                        "'JetBrains Mono', ui-monospace, SFMono-Regular, monospace",
+                    codeFontSize: '15px',
+                    codeLineHeight: '2',
+                    codePaddingBlock: '1.1rem',
+                    codePaddingInline: '1.1rem',
+                    borderRadius: '0.5rem',
+                    frames: {
+                        shadowColor: 'rgba(0, 0, 0, 0.08)',
+                    },
+                },
+                shiki: {
+                    transformers: [codeceptShikiTransformer],
+                },
             },
             disable404Route: true,
             title: '',
@@ -32,6 +55,7 @@ export default defineConfig({
                 SiteTitle: './src/components/SiteTitle.astro',
                 Search: './src/components/Search.astro',
                 SocialIcons: './src/components/Links.astro',
+                ThemeSelect: './src/components/ThemeSelect.astro',
             },
             customCss: [
                 './src/styles/custom.css',
@@ -46,19 +70,22 @@ export default defineConfig({
                         link: 'quickstart',
                         items: [
                             {
-                                label: 'Web Testing',
+                                label: 'Basics',
                                 items: [
-                                    {label: 'Web Basics', link: 'basics'},
-                                    {label: 'Testing with Playwright', link: 'playwright'},
-                                    {label: 'Testing with WebDriver', link: 'webdriver'},
-                                    {label: 'Testing with Puppeteer', link: 'puppeteer'},
-                                    {label: 'Testing React Applications', link: 'react'},
-                                    {label: 'Testing Vue Apps', link: 'vue'},
+                                  { label: 'Web Basics', link: 'basics' },
+                                  {label: 'Test Structure', link: 'test-structure'},
+                                  { label: 'Locators', link: 'locators' },
+                                  { label: 'Assertions', link: 'assertions' },
+                                  { label: 'Element Testing', link: 'element-based-testing' },
+                                  { label: 'Debugging', link: 'debugging' },
                                 ],
                             },
                             {
-                                label: 'Mobile Testing',
+                                label: 'Web & Mobile Testing',
                                 items: [
+                                    {label: 'Testing with Playwright', link: 'playwright'},
+                                    {label: 'Testing with WebDriver', link: 'webdriver'},
+                                    { label: 'Testing with Puppeteer', link: 'puppeteer' },
                                     {label: 'Mobile Testing with Appium', link: 'mobile'},
                                     {label: 'Testing React Native with Detox', link: 'detox'},
                                 ],
@@ -69,9 +96,6 @@ export default defineConfig({
                                     {label: 'Page Objects', link: 'pageobjects'},
                                     {label: 'Data Management', link: 'data'},
                                     {label: 'Behavior Driven Development', link: 'bdd'},
-                                    {label: 'Locators', link: 'locators'},
-                                    {label: 'Shadow DOM', link: 'shadow'},
-                                    {label: 'Translation', link: 'translation'},
                                     {label: 'Best Practices', link: 'best'},
                                 ],
                             },
@@ -80,35 +104,36 @@ export default defineConfig({
                                 items: [
                                     {label: 'Web API (Unified)', link: 'web-api'},
                                     {label: 'Mobile API (Unified)', link: 'mobile-api'},
-                                    {label: 'API Testing', link: 'api'},
+                                   { label: 'API Testing', link: 'api' },
                                     {label: 'Commands', link: 'commands'},
                                     {label: 'Configuration', link: 'configuration'},
                                     {label: 'Plugins', link: 'plugins'},
-                                    {label: 'Effects', link: 'effects'},
-                                    {label: 'Element Access (els)', link: 'els'},
-                                    {label: 'WebElement API', link: 'web-element'},
+                                    { label: 'Effects', link: 'effects' },
+                                    {label: 'Elements', link: 'els'},
+                                    {label: 'WebElement', link: 'web-element'},
                                 ],
                             },
                             {
                                 label: 'Advanced Usage',
                                 items: [
-                                    {label: 'Advanced Usage', link: 'advanced'},
                                     {label: 'TypeScript', link: 'typescript'},
                                     {label: 'ESM Migration', link: 'esm-migration'},
-                                    {label: 'CodeceptUI', link: 'ui'},
-                                    {label: 'Bootstrap', link: 'bootstrap'},
-                                    {label: 'Reporters', link: 'reports'},
+                                    {label: 'Self-Healing', link: 'heal'},
+                                    { label: 'Reporting', link: 'reports' },
+                                    { label: 'Element Selection', link: 'element-selection'},
+                                    {label: 'Enable AI', link: 'ai'},
                                     {label: 'Docker', link: 'docker'},
                                     {label: 'Parallel Execution', link: 'parallel'},
-                                    {label: 'Retry Mechanisms', link: 'retry'},
-                                    {label: 'Visual Testing', link: 'visual'},
-                                    {label: 'Email Testing', link: 'email'},
-                                    {label: 'Secrets', link: 'secrets'},
+                                   { label: 'Retries', link: 'retry' },
+                                    {label: 'Timeouts', link: 'timeouts'},
+                                    { label: 'Secrets', link: 'secrets' },
+                                    {label: 'Within', link: 'within'},
                                     {label: 'Extending', link: 'hooks'},
                                     {label: 'Concepts', link: 'internal-api'},
-                                    {label: 'Testing with AI', link: 'ai'},
                                     {label: 'MCP Server', link: 'mcp'},
-                                    {label: 'Self-Healing Tests', link: 'heal'},
+                                  { label: 'Bootstrap', link: 'bootstrap' },
+                                  {label: 'Shadow DOM', link: 'shadow'},
+                                  {label: 'Translation', link: 'translation'},
                                 ],
                             },
                             {
@@ -116,10 +141,7 @@ export default defineConfig({
                                 items: [
                                     {label: 'Tutorial', link: 'tutorial'},
                                     {label: 'Examples', link: 'examples'},
-                                    {label: 'Videos', link: 'videos'},
-                                    {label: 'Books & Posts', link: 'books'},
-                                    {label: 'Community Helpers', link: 'helpers/community-helpers'},
-                                    {label: 'Changelog', link: 'changelog'},
+                                    {label: 'Cheatsheet', link: 'cheatsheet'},
                                 ],
                             },
                         ],
@@ -183,8 +205,27 @@ export default defineConfig({
                 ], {
                     exclude: ['/404'],
                     topics: {
-                        documentation: ['/mobile-react-native-locators', '/installation', '/continuous-integration', '/internal-test-server'],
-                        helpers: ['/helpers/puppeteer-firefox', '/helpers/protractor'],
+                        documentation: [
+                            '/mobile-react-native-locators',
+                            '/installation',
+                            '/continuous-integration',
+                            '/internal-test-server',
+                            '/advanced',
+                            '/books',
+                            '/changelog',
+                            '/email',
+                            '/react',
+                            '/ui',
+                            '/videos',
+                            '/visual',
+                            '/vue',
+                            '/community-helpers-page',
+                        ],
+                        helpers: [
+                            '/helpers/puppeteer-firefox',
+                            '/helpers/protractor',
+                            '/helpers/community-helpers',
+                        ],
                     },
                 }),
                 starlightScrollToTop({
@@ -219,5 +260,3 @@ export default defineConfig({
         ],
     },
 });
-
-

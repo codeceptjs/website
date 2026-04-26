@@ -1,0 +1,55 @@
+---
+---
+
+{/* Bottom CTA — quiet, single line */}
+<section class="!mt-0 py-20 relative">
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
+        <h2>
+            Testing can be damn simple
+        </h2>
+
+        <p class="text-xl italic text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+            for you and your agent
+        </p>
+
+        <button
+            id="bottom-install-line"
+            type="button"
+            class="group inline-flex items-center gap-4 px-6 sm:px-8 py-5 sm:py-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-950 dark:bg-black hover:border-purple-500 dark:hover:border-purple-400 transition-colors duration-150 cursor-pointer"
+        >
+            <span class="text-purple-400 font-mono text-2xl sm:text-3xl select-none">$</span>
+            <code class="font-mono text-2xl sm:text-3xl text-gray-100 bg-transparent">
+                npm i codeceptjs
+            </code>
+            <span id="bottom-install-icon" class="ml-2 text-gray-500 group-hover:text-gray-300 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+            </span>
+        </button>
+        <p class="mt-6 text-sm text-gray-500 dark:text-gray-400">
+            Click to copy. Then <a href="/quickstart" class="text-purple-600 dark:text-purple-400 underline-offset-2 hover:underline">start writing scenarios</a>.
+        </p>
+
+        <p class="text-sm uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 mb-6">
+            Free. Open source. MIT.
+        </p>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('astro:page-load', () => {
+        const btn = document.getElementById('bottom-install-line');
+        const icon = document.getElementById('bottom-install-icon');
+        if (!btn || !icon || btn.dataset.init) return;
+        btn.dataset.init = '1';
+
+        const copySvg = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>`;
+        const checkSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+
+        btn.addEventListener('click', async () => {
+            await navigator.clipboard.writeText('npm i codeceptjs');
+            icon.innerHTML = checkSvg;
+            setTimeout(() => { icon.innerHTML = copySvg; }, 2000);
+        });
+    });
+</script>

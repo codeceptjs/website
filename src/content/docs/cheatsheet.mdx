@@ -1,0 +1,21 @@
+---
+title: CodeceptJS Cheatsheet
+description: A printable one-page field manual covering the most-used CodeceptJS commands, locators, and patterns. Available as PDF and PNG.
+---
+
+import { Image } from 'astro:assets';
+import cheatsheetPng from '../../assets/cheatsheet.png';
+import cheatsheetPdfUrl from '../../assets/cheatsheet.pdf?url';
+import cheatsheetPngUrl from '../../assets/cheatsheet.png?url';
+
+A printable one-page reference covering the commands and patterns you reach for every day — actions, assertions, locators, waits, page objects, BDD, hooks, and more.
+
+<div class="flex flex-wrap gap-3 my-6">
+  <a href={cheatsheetPdfUrl} download="codeceptjs-cheatsheet.pdf" class="no-underline inline-flex items-center px-5 py-2.5 rounded-lg font-semibold text-white bg-purple-600 hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-400 transition-colors">Download PDF</a>
+  <a href={cheatsheetPngUrl} download="codeceptjs-cheatsheet.png" class="no-underline inline-flex items-center px-5 py-2.5 rounded-lg font-semibold border border-gray-300 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-400 transition-colors">Download PNG</a>
+  <a href={cheatsheetPdfUrl} target="_blank" rel="noopener" class="no-underline inline-flex items-center px-5 py-2.5 rounded-lg font-semibold border border-gray-300 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-400 transition-colors">Open in new tab</a>
+</div>
+
+<a href={cheatsheetPdfUrl} target="_blank" rel="noopener" class="block rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-lg mt-4 no-underline">
+  <Image src={cheatsheetPng} alt="CodeceptJS cheatsheet preview — full page reference of commands, locators, and patterns" loading="eager" class="block w-full h-auto" />
+</a>

@@ -1,11 +1,8 @@
-﻿Retrieves an array of value from a form located by CSS or XPath and returns it to test.
+Retrieves an array of value from a form located by CSS or XPath and returns it to test.
 Resumes test execution, so **should be used inside async function with `await`** operator.
 
 ```js
 let inputs = await I.grabValueFromAll('//form/input');
-// by ARIA locator
-I.grabValueFromAll({ aria: 'Submit' });
 ```
-@param {CodeceptJS.LocatorOrString} locator field located by label|name|CSS|XPath|ARIA|strict locator.
+@param {CodeceptJS.LocatorOrString} locator field located by label|name|CSS|XPath|strict locator.
 @returns {Promise<string[]>} attribute value
-

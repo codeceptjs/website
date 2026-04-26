@@ -14,74 +14,9 @@
     margin-right: .5rem;
 }
 
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0px) rotate(0deg);
-    }
-    33% {
-        transform: translateY(-20px) rotate(1deg);
-    }
-    66% {
-        transform: translateY(-10px) rotate(-1deg);
-    }
-}
-
-@keyframes float-delayed {
-    0%, 100% {
-        transform: translateY(0px) rotate(0deg);
-    }
-    33% {
-        transform: translateY(-15px) rotate(-1deg);
-    }
-    66% {
-        transform: translateY(-25px) rotate(1deg);
-    }
-}
-
-@keyframes float-slow {
-    0%, 100% {
-        transform: translateY(0px) rotate(0deg);
-    }
-    50% {
-        transform: translateY(-10px) rotate(0.5deg);
-    }
-}
-
-@keyframes pulse-glow {
-    0%, 100% {
-        box-shadow: 0 0 20px rgba(234, 179, 8, 0.3);
-    }
-    50% {
-        box-shadow: 0 0 40px rgba(234, 179, 8, 0.6);
-    }
-}
-
-@keyframes gradient-shift {
-    0%, 100% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-}
-
-/* New Dark Hero Animations */
-@keyframes text-shimmer {
-    0%, 100% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-}
-
-@keyframes gradient-x {
-    0%, 100% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
+@keyframes fade-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fade-in-up {
@@ -115,74 +50,8 @@
     }
 }
 
-@keyframes float-particle {
-    0%, 100% {
-        transform: translateY(0px) translateX(0px) rotate(0deg);
-        opacity: 0.3;
-    }
-    25% {
-        opacity: 1;
-    }
-    50% {
-        transform: translateY(-20px) translateX(10px) rotate(180deg);
-        opacity: 0.8;
-    }
-    75% {
-        opacity: 0.6;
-    }
-}
-
-@keyframes grid-move {
-    0% {
-        transform: translate(0, 0);
-    }
-    100% {
-        transform: translate(20px, 20px);
-    }
-}
-
-/* Enhanced Gradient Animation for Open Source Badge */
-@keyframes gradient-300 {
-    0%, 100% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-}
-
-.animate-float {
-    animation: float 8s ease-in-out infinite;
-}
-
-.animate-float-delayed {
-    animation: float-delayed 10s ease-in-out infinite;
-    animation-delay: 2s;
-}
-
-.animate-float-slow {
-    animation: float-slow 12s ease-in-out infinite;
-    animation-delay: 4s;
-}
-
-.animate-pulse-glow {
-    animation: pulse-glow 3s ease-in-out infinite;
-}
-
-.animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient-shift 4s ease infinite;
-}
-
-/* New Dark Hero Animation Classes */
-.animate-text-shimmer {
-    background-size: 200% 200%;
-    animation: text-shimmer 3s ease-in-out infinite;
-}
-
-.animate-gradient-x {
-    background-size: 200% 200%;
-    animation: gradient-x 4s ease infinite;
+.animate-fade-in {
+    animation: fade-in 0.6s ease-out forwards;
 }
 
 .animate-fade-in-up {
@@ -193,27 +62,6 @@
 .animate-fade-in-up-delayed {
     animation: fade-in-up-delayed 1s ease-out 0.3s forwards;
     opacity: 0;
-}
-
-.animate-pulse-button {
-    animation: pulse-button 2s ease-in-out infinite;
-}
-
-.animate-float-particle {
-    animation: float-particle linear infinite;
-}
-
-.animate-grid-move {
-    animation: grid-move 20s linear infinite;
-}
-
-/* Enhanced Gradient Animation Classes */
-.bg-300\% {
-    background-size: 300% 300%;
-}
-
-.animate-gradient-300 {
-    animation: gradient-300 4s ease infinite;
 }
 
 /* Grid Pattern Background */
@@ -229,23 +77,19 @@ html {
     scroll-behavior: smooth;
 }
 
-/* Enhanced button hover effects */
-.btn-gradient {
-    background: linear-gradient(45deg, #eab308, #9333ea, #eab308);
-    background-size: 200% 200%;
-    transition: all 0.3s ease;
+/* Dot grid background pattern (Attio style) */
+.bg-dot-grid {
+    background-image: radial-gradient(circle, #d1d5db 1px, transparent 1px);
+    background-size: 24px 24px;
 }
 
-.btn-gradient:hover {
-    background-position: right center;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(234, 179, 8, 0.4);
+/* Explore link arrow hover */
+.explore-link:hover .arrow {
+    transform: translateX(4px);
 }
-
-/* Parallax container */
-.parallax-container {
-    transform-style: preserve-3d;
-    perspective: 1000px;
+.explore-link .arrow {
+    display: inline-block;
+    transition: transform 0.2s ease;
 }
 
 /* Glass morphism effect - Light theme */
@@ -255,31 +99,6 @@ html {
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* Text glow effect - Updated for yellow/purple theme */
-.text-glow {
-    text-shadow: 0 0 20px rgba(234, 179, 8, 0.3);
-}
-
-/* Animated border - Updated for yellow/purple theme */
-.animated-border {
-    position: relative;
-    overflow: hidden;
-}
-
-.animated-border::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(234, 179, 8, 0.4), transparent);
-    transition: left 0.5s;
-}
-
-.animated-border:hover::before {
-    left: 100%;
-}
 
 /* Custom Swiper Styles for Logo Slider */
 .trusted-logos-swiper {
@@ -305,14 +124,6 @@ html {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
-/* Gradient text animations for light theme - Updated for yellow/purple */
-.gradient-text {
-    background: linear-gradient(45deg, #eab308, #9333ea, #ec4899, #eab308);
-    background-size: 300% 300%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: gradient-shift 4s ease infinite;
-}
 
 /* Enhanced shadows for light theme */
 .shadow-soft {
@@ -323,35 +134,6 @@ html {
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
 }
 
-/* Dark Hero Section Specific Styles - Updated for yellow/purple */
-.hero-dark {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-}
-
-/* Particle System */
-.particle {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    pointer-events: none;
-}
-
-/* Enhanced Glow Effects for Dark Theme - Updated colors */
-.glow-yellow {
-    box-shadow: 0 0 30px rgba(234, 179, 8, 0.3);
-}
-
-.glow-purple {
-    box-shadow: 0 0 30px rgba(147, 51, 234, 0.3);
-}
-
-.glow-amber {
-    box-shadow: 0 0 30px rgba(245, 158, 11, 0.3);
-}
-
-.glow-violet {
-    box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
-}
 
 /* Code Editor Syntax Highlighting */
 .code-editor {
@@ -416,42 +198,6 @@ html {
     background: linear-gradient(135deg, #28ca42 0%, #30d158 100%);
 }
 
-/* Enhanced Open Source Badge Styles */
-.open-source-badge {
-    position: relative;
-    overflow: hidden;
-}
-
-.open-source-badge::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(from 0deg, transparent, rgba(234, 179, 8, 0.3), transparent, rgba(147, 51, 234, 0.3), transparent);
-    animation: rotate 4s linear infinite;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.open-source-badge:hover::before {
-    opacity: 1;
-}
-
-@keyframes rotate {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-/* Enhanced shadow effects */
-.shadow-3xl {
-    box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
-}
 
 /* Responsive adjustments for dark hero */
 @media (max-width: 768px) {
@@ -516,7 +262,7 @@ html {
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, #eab308, #9333ea);
+    background: linear-gradient(90deg, #7C3AED, #F97316);
 }
 
 .copy-button {
@@ -529,22 +275,8 @@ html {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-[data-theme="dark"] #trusted,
-[data-theme="dark"] #examples,
-[data-theme="dark"] #test {
-    background: #111827;
-}
-
-[data-theme="dark"] #reviews {
-    background: #1d2735;
-}
-
 [data-theme="dark"] .swiper-pagination-bullet {
     background: #ffffff;
-}
-
-#trusted {
-    background: linear-gradient(135deg, #fefce8 0%, #fff 50%, #faf5ff 100%);
 }
 .swiper {
     margin-top: 0 !important;
@@ -578,4 +310,30 @@ html {
 }
 .swiper-pagination {
     position: relative;
+}
+
+/* Reset Starlight global margins inside IDE panel */
+.ide-panel *,
+.ide-panel * + * {
+    margin-top: 0 !important;
+}
+
+.ide-panel pre {
+    margin: 0 !important;
+    border: none !important;
+}
+
+.ide-panel code {
+    background: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+    font-size: inherit !important;
+}
+
+.ide-panel button {
+    margin: 0 !important;
+}
+
+.ide-panel svg {
+    margin: 0 !important;
 }
