@@ -37,6 +37,49 @@
     box-shadow: none !important;
 }
 
+/* Markdown blockquotes — used as info / callout blocks throughout the docs.
+   Honey-gold left bar, soft tint, no italics; reads as a noticeable aside. */
+.sl-markdown-content blockquote {
+    margin: 1.5em 0;
+    padding: 0.9em 2.4em 0.9em 1.2em;
+    border-left: 4px solid color-mix(in srgb, var(--codecept-accent) 70%, transparent);
+    background: rgba(242, 169, 0, 0.07);
+    border-radius: 0 8px 8px 0;
+    color: inherit;
+    font-style: normal;
+    position: relative;
+}
+html[data-theme="dark"] .sl-markdown-content blockquote {
+    background: rgba(242, 169, 0, 0.06);
+    border-left-color: color-mix(in srgb, var(--codecept-accent) 60%, transparent);
+}
+.sl-markdown-content blockquote > :first-child { margin-top: 0; }
+.sl-markdown-content blockquote > :last-child { margin-bottom: 0; }
+/* Italic `i` glyph in the corner — reads as a subtle "info" mark */
+.sl-markdown-content blockquote::before {
+    content: 'i';
+    position: absolute;
+    top: 0.55em;
+    right: 0.7em;
+    font-family: 'Bricolage Grotesque', serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 0.95em;
+    line-height: 1;
+    width: 1.4em;
+    height: 1.4em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--codecept-accent) 18%, transparent);
+    color: var(--codecept-accent-deep, #C88800);
+    pointer-events: none;
+}
+html[data-theme="dark"] .sl-markdown-content blockquote::before {
+    color: var(--codecept-accent, #F2A900);
+}
+
 /* Markdown tables — honey-tinted header, hairline row separators, generous padding.
    Default layout is `auto` so columns size by content but expand to fill the
    table width (better for tables with headers). Headerless tables get
@@ -480,19 +523,35 @@ html[data-theme=dark] .sidebar-pane {
     background-color: transparent;
 }
 
-html[data-theme=dark] header.header {
-    background-color: transparent;
-    backdrop-filter: blur(16px);
+header.header {
+    background: linear-gradient(
+        to bottom,
+        #f2eefb 0%,
+        #f2eefb 40%,
+        rgba(242, 238, 251, 0) 100%
+    );
+    border-bottom: none !important;
     transition: all .2s ease;
+}
+
+html[data-theme=dark] header.header {
+    background: linear-gradient(
+        to bottom,
+        rgba(124, 58, 237, 0.22) 0%,
+        rgba(124, 58, 237, 0.22) 40%,
+        rgba(124, 58, 237, 0) 100%
+    );
+    backdrop-filter: blur(16px);
     border-bottom: none !important;
 }
 
-header.header {
-    background-color: #ffffff;
-}
-
 html[data-theme=dark] header.scrolled {
-    background-color: rgba(10, 11, 20, 0.85);
+    background: linear-gradient(
+        to bottom,
+        rgba(10, 11, 20, 0.92) 0%,
+        rgba(10, 11, 20, 0.85) 40%,
+        rgba(10, 11, 20, 0.4) 100%
+    );
 }
 
 html[data-theme=dark] .fill-primary {
