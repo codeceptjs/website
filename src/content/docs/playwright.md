@@ -171,7 +171,7 @@ Scenario('create todo item', ({ I }) => {
 If you need to get element's value inside a test you can use `grab*` methods. They should be used with `await` operator inside `async` function:
 
 ```js
-const assert = require('assert')
+import assert from 'assert'
 Scenario('get value of current tasks', async ({ I }) => {
   I.fillField('.todo', 'my first item')
   I.pressKey('Enter')
@@ -243,7 +243,7 @@ To use this functionality, all you need to do is set the browser to `electron` i
 `main.js` - main Electron application file
 
 ```js
-const { app, BrowserWindow } = require('electron')
+import { app, BrowserWindow } from 'electron'
 
 function createWindow() {
   const window = new BrowserWindow({ width: 800, height: 600 })
@@ -256,14 +256,15 @@ app.whenReady().then(createWindow)
 `codecept.conf.js` - CodeceptJS configuration file
 
 ```js
-const path = require('path')
+import path from 'path'
+import electron from 'electron'
 
-exports.config = {
+export const config = {
   helpers: {
     Playwright: {
       browser: 'electron',
       electron: {
-        executablePath: require('electron'),
+        executablePath: electron,
         args: [path.join(__dirname, 'main.js')],
       },
     },
@@ -280,14 +281,15 @@ Sometimes, the Electron app is built with [electron-forge](https://www.electronf
 `codecept.conf.js` - CodeceptJS configuration file
 
 ```js
-const path = require('path')
+import path from 'path'
+import electron from 'electron'
 
-exports.config = {
+export const config = {
   helpers: {
     Playwright: {
       browser: 'electron',
       electron: {
-        executablePath: require('electron'),
+        executablePath: electron,
         args: [path.join(__dirname, '.webpack/main/index.js')],
       },
     },
@@ -316,7 +318,7 @@ Device emulation can be enabled in CodeceptJS globally in a config or per sessio
 Playwright contains a [list of predefined devices](https://github.com/microsoft/playwright/blob/master/src/server/deviceDescriptors.js) to emulate, for instance this is how you can enable iPhone 6 emulation for all tests:
 
 ```js
-const { devices } = require('playwright');
+import { devices } from 'playwright';
 
 helpers: {
   Playwright: {
@@ -341,7 +343,7 @@ helpers: {
 To enable device emulation for a specific test, create an additional browser session and pass in config as a second parameter:
 
 ```js
-const { devices } = require('playwright')
+import { devices } from 'playwright'
 
 Scenario('website looks nice on iPhone', () => {
   session('mobile user', devices['iPhone 6'], () => {
@@ -445,7 +447,7 @@ To master request intercepting [use `route` object](https://playwright.dev/docs/
 Playwright may record videos for failed tests. This can be enabled in a config with `video: true` option:
 
 ```js
-exports.config = {
+export const config = {
   helpers: {
     Playwright: {
       // ...
@@ -473,11 +475,47 @@ When a test fails and video was enabled a video file is shown under the `artifac
 
 Open video and use it to debug a failed test case. Video helps when running tests on CI. Configure your CI system to enable artifacts storage for `output/video` and review videos of failed test case to understand failures.
 
-It is recommended to enable [subtitles](https://codecept.io/plugins/#subtitles) plugin which will generate subtitles from steps in `.srt` format. Subtitles file will be saved into after a video file so video player (like VLC) would load them automatically:
+## Screencast
+
+For richer evidence than helper-level `video`, enable the [`screencast`](https://codecept.io/plugins/#screencast) plugin. It uses Playwright's `page.screencast` API (Playwright >= 1.59) to record WebM video with optional burned-in action captions and a standalone `.srt` subtitle track.
+
+```js
+plugins: {
+  screencast: {
+    enabled: true,
+    on: 'fail',
+  }
+}
+```
+
+`on: 'fail'` (default) deletes the recording when the test passes; `on: 'test'` keeps every test's video.
+
+`captions: true` (default) burns `I.click()` / `I.fillField()` annotations into the video via `page.screencast.showActions()`. `subtitles: true` writes a standalone `.srt` file alongside the video — VLC and most players auto-load it.
+
+```js
+plugins: {
+  screencast: {
+    enabled: true,
+    on: 'test',
+    captions: true,
+    subtitles: true,
+  }
+}
+```
 
 ![](https://user-images.githubusercontent.com/220264/131644090-38d1ca55-1ba1-41fa-8fd1-7dea2b7ae995.png)
 
-## Trace <Badge text="Since 3.1" type="warning"/>
+CLI usage:
+
+    npx codeceptjs run -p screencast
+    npx codeceptjs run -p screencast:on=test
+    npx codeceptjs run -p screencast:on=test;captions=false;subtitles=true
+
+The recording is attached to the test as `test.artifacts.screencast`; the `.srt` (when enabled) is attached as `test.artifacts.subtitle`.
+
+> Enabling helper-level `video: true` **and** the `screencast` plugin produces two independent recordings (one in `output/videos/`, one in `output/screencast/`). Pick one.
+
+## Trace 
 
 If video is not enough to descover why a test failed a [trace](https://playwright.dev/docs/trace-viewer/) can be recorded.
 
@@ -488,7 +526,7 @@ Inside a trace you get screenshots, DOM snapshots, console logs, network request
 Enable trace with `trace: true` option in a config:
 
 ```js
-exports.config = {
+export const config = {
   helpers: {
     Playwright: {
       // ...
@@ -643,7 +681,7 @@ Minimal examples:
 helpers: { Playwright: { url: 'http://localhost', browser: 'chromium', storageState: 'authState.json' } }
 
 // Inline object
-const state = require('./authState.json');
+import state from './authState.json' with { type: 'json' };
 helpers: { Playwright: { url: 'http://localhost', browser: 'chromium', storageState: state } }
 ```
 
@@ -660,12 +698,14 @@ Scenario('Dashboard (authenticated)', { cookies: authCookies }, ({ I }) => {
 Helper snippet:
 
 ```js
+import fs from 'fs'
+
 // Grab current state as object
 const state = await I.grabStorageState()
 // Persist manually (sensitive file!)
-require('fs').writeFileSync('authState.json', JSON.stringify(state))
+fs.writeFileSync('authState.json', JSON.stringify(state))
 
 // Include IndexedDB (Playwright >= 1.51) if your app relies on it (e.g. Firebase Auth persistence)
 const stateWithIDB = await I.grabStorageState({ indexedDB: true })
-require('fs').writeFileSync('authState-with-idb.json', JSON.stringify(stateWithIDB))
+fs.writeFileSync('authState-with-idb.json', JSON.stringify(stateWithIDB))
 ```

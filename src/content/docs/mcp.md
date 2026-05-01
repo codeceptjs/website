@@ -9,11 +9,12 @@ Model Context Protocol (MCP) server for CodeceptJS enables AI agents (like Claud
 The MCP server provides AI agents with tools to:
 - List all tests in a CodeceptJS project
 - List all available CodeceptJS actions (I.* methods)
-- Run arbitrary CodeceptJS code with artifacts capture
+- Run arbitrary CodeceptJS code with artifacts capture, return value, and `console.log` capture
 - Run specific tests with detailed output
 - Run tests step by step for detailed analysis
+- Capture a point-in-time snapshot of the browser without any action
 - Start and stop browser sessions
-- Capture screenshots, ARIA snapshots, HTML, and console logs
+- Capture screenshots, ARIA snapshots, formatted HTML, browser console logs, and storage state (cookies + localStorage)
 
 ## Installation
 
@@ -147,13 +148,13 @@ List all available CodeceptJS actions (I.* methods) from enabled helpers and sup
 
 ### run_code
 
-Run arbitrary CodeceptJS code. Returns status, ARIA snapshot, URL, console logs, and HTML.
+Run arbitrary CodeceptJS code. The tool captures the value the code returns, every `I.*` step it runs, anything written to `console.log` / `console.info` / `console.warn` / `console.error` / `console.debug`, plus a final-state snapshot of the page.
 
 **Parameters:**
-- `code` (required): CodeceptJS code to execute
+- `code` (required): CodeceptJS code to execute. May `return` a value and use `console.*` for debugging.
 - `timeout` (optional): Timeout in milliseconds (default: 60000)
 - `config` (optional): Path to codecept.conf.js
-- `saveArtifacts` (optional): Save artifacts like ARIA, URL, console logs, HTML (default: true)
+- `saveArtifacts` (optional): Save final-state artifacts to disk (default: true)
 
 **Returns:**
 ```json
@@ -161,11 +162,69 @@ Run arbitrary CodeceptJS code. Returns status, ARIA snapshot, URL, console logs,
   "status": "success",
   "output": "Code executed successfully",
   "error": null,
+  "commands": [
+    "I.amOnPage(\"/\")",
+    "I.grabTextFrom(\"h1\")"
+  ],
+  "logs": [
+    { "level": "log", "message": "headline Welcome", "t": 47 }
+  ],
+  "returnValue": "{\n  \"url\": \"http://localhost:8000/\",\n  \"text\": \"Welcome\"\n}",
   "artifacts": {
-    "aria": "main -> \"Welcome\"...",
     "url": "http://localhost:8000/",
-    "consoleLogs": [],
-    "html": "<html>...</html>"
+    "html": "file:///output/trace_run_code_.../mcp_page.html",
+    "aria": "file:///output/trace_run_code_.../mcp_aria.txt",
+    "screenshot": "file:///output/trace_run_code_.../mcp_screenshot.png",
+    "console": "file:///output/trace_run_code_.../mcp_console.json",
+    "storage": "file:///output/trace_run_code_.../mcp_storage.json",
+    "cookieCount": 3,
+    "localStorageCount": 5
+  },
+  "dir": "/output/trace_run_code_...",
+  "traceFile": "file:///output/trace_run_code_.../trace.md"
+}
+```
+
+**Notes:**
+- `returnValue` is the value the code's last `return` statement produced, JSON-stringified with circular-ref handling. Capped at 20 KB; `returnValueTruncated: true` is set if it was cut.
+- `logs` is an in-order list of console output captured during execution. Each entry has `{ level, message, t }` where `t` is ms since the code started. Capped at 100 entries × 2 KB per message; `logsTruncated: true` is set if hit. `console.*` writes do not pollute MCP stdio — they're captured in-memory only.
+- `commands` is the list of `I.*` calls observed during execution (via the recorder).
+- `artifacts.storage` is omitted when both cookies and localStorage are empty.
+
+**Example:**
+```json
+{
+  "name": "run_code",
+  "arguments": {
+    "code": "await I.amOnPage('/'); const t = await I.grabTextFrom('h1'); console.log('headline', t); return { url: await I.grabCurrentUrl(), text: t };",
+    "timeout": 30000
+  }
+}
+```
+
+### snapshot
+
+Capture the current state of the browser without performing any action. Useful for inspecting what's on the page right now (URL, cookies, localStorage, formatted HTML, ARIA, screenshot, browser console logs) when reasoning between actions.
+
+**Parameters:**
+- `config` (optional): Path to codecept.conf.js
+- `fullPage` (optional): Take a full-page screenshot (default: false)
+
+**Returns:**
+```json
+{
+  "status": "success",
+  "dir": "/output/snapshot_1700000000000_abcd1234",
+  "traceFile": "file:///output/snapshot_.../trace.md",
+  "artifacts": {
+    "url": "http://localhost:8000/dashboard",
+    "html": "file:///output/snapshot_.../snapshot_page.html",
+    "aria": "file:///output/snapshot_.../snapshot_aria.txt",
+    "screenshot": "file:///output/snapshot_.../snapshot_screenshot.png",
+    "console": "file:///output/snapshot_.../snapshot_console.json",
+    "storage": "file:///output/snapshot_.../snapshot_storage.json",
+    "cookieCount": 3,
+    "localStorageCount": 5
   }
 }
 ```
@@ -173,53 +232,90 @@ Run arbitrary CodeceptJS code. Returns status, ARIA snapshot, URL, console logs,
 **Example:**
 ```json
 {
-  "name": "run_code",
-  "arguments": {
-    "code": "await I.amOnPage('/'); await I.see('Welcome');",
-    "timeout": 30000,
-    "saveArtifacts": true
-  }
+  "name": "snapshot",
+  "arguments": { "fullPage": true }
 }
 ```
 
+### continue
+
+Release a paused test (one that called `pause()` during `run_test`) and let it run to completion. Returns the final reporter result.
+
+To inspect or manipulate state while the test is paused, use [`run_code`](#run_code) — it operates on the same container the test is using.
+
+**Parameters:**
+- `timeout` (optional): ms to wait for the test to finish after continuing (default 60000).
+
+**Returns:**
+```json
+{
+  "status": "completed",
+  "reporterJson": { "stats": { "tests": 1, "passes": 1, "failures": 0 }, "tests": [...] },
+  "error": null
+}
+```
+
+**Example flow:**
+
+```json
+{ "name": "run_test", "arguments": { "test": "checkout_test" } }
+// → { "status": "paused", "file": "...", "note": "..." }
+
+{ "name": "run_code", "arguments": { "code": "return await I.grabCurrentUrl()" } }
+// → { "status": "success", "returnValue": "http://...", "artifacts": { ... } }
+
+{ "name": "run_code", "arguments": { "code": "await I.click('Save')" } }
+// → { "status": "success", "artifacts": { ... } }
+
+{ "name": "continue", "arguments": {} }
+// → { "status": "completed", "reporterJson": { ... } }
+```
+
+**Notes:**
+- Pause runs in-process: `run_code` and the test share the same `I` / browser. There's no subprocess, no IPC.
+- `run_test` and `continue` wrap test execution in the same `withSilencedIO` helper that `run_step_by_step` uses, so step output doesn't interleave with the MCP JSON-RPC stream. Stdout/stderr are restored before each tool call returns.
+- TTY behaviour (`npx codeceptjs run --debug` at a terminal) is unchanged — `pause()` opens the readline REPL whenever `process.stdin.isTTY` is true.
+
 ### run_test
 
-Run a specific test by name or file path. Uses subprocess to run tests with isolation.
+Run a specific test by name or file path. Runs in-process so it shares the same `I` / browser as `run_code` and `snapshot`. If the test calls `pause()` — or if `pauseAt` is set and the Nth step completes — this tool returns early and the agent drives the session through `run_code` and `continue`.
 
 **Parameters:**
 - `test` (required): Test name or file path
 - `timeout` (optional): Timeout in milliseconds (default: 60000)
 - `config` (optional): Path to codecept.conf.js
+- `pauseAt` (optional): 1-based step index. The test pauses after the Nth step completes. Use this as a programmatic breakpoint without editing the test. Discover step indices via the `list` CLI (`--steps`) or via `run_step_by_step`.
 
-**Returns:**
+**Returns (test completed normally):**
 ```json
 {
-  "meta": {
-    "exitCode": 0,
-    "cli": "/path/to/codecept.js",
-    "root": "/project/root",
-    "configPath": "/path/to/codecept.conf.js",
-    "args": ["run", "--config", "...", "--reporter", "json", "test_file.js"],
-    "resolvedFile": "/full/path/to/test_file.js"
-  },
-  "reporterJson": {
-    "stats": {
-      "tests": 3,
-      "passes": 2,
-      "failures": 1
-    }
-  },
-  "stderr": "",
-  "rawStdout": ""
+  "status": "completed",
+  "file": "/path/to/test.js",
+  "reporterJson": { "stats": { "tests": 1, "passes": 1, "failures": 0 }, "tests": [...] },
+  "error": null
+}
+```
+
+**Returns (test reached `pause()` or `pauseAt`):**
+```json
+{
+  "status": "paused",
+  "file": "/path/to/test.js",
+  "pausedAfter": { "index": 3, "name": "I.click(\"Save\")", "status": "passed" },
+  "page": { "url": "https://example.com/checkout", "title": "Checkout", "contentSize": 18432 },
+  "suggestions": [
+    "Call snapshot to capture URL/HTML/ARIA/screenshot/console/storage at this point",
+    "Call run_code to inspect or manipulate state (e.g. return await I.grabText(\"h1\"))",
+    "Call continue to release the pause and let the test finish"
+  ]
 }
 ```
 
 **Features:**
 - Automatically resolves test names to file paths
 - Supports partial test name matching
-- Uses json reporter for structured output
-- Executes in subprocess for isolation
-- Includes stderr for debugging
+- Runs in-process; results assembled from CodeceptJS test events
+- Yields on `pause()` (or `pauseAt`) so the agent can inspect via `run_code` and release with `continue`
 
 **Example:**
 ```json
@@ -234,56 +330,51 @@ Run a specific test by name or file path. Uses subprocess to run tests with isol
 
 ### run_step_by_step
 
-Run a test step by step with detailed step information including timing and status. Generates AI-friendly trace files.
+Run a test interactively, pausing after every step. Returns a paused payload after the first step completes — the agent then calls `continue` to advance one step at a time, or `run_code` / `snapshot` to inspect state at any pause.
 
 **Parameters:**
 - `test` (required): Test name or file path
-- `timeout` (optional): Timeout in milliseconds (default: 60000)
+- `timeout` (optional): per-call timeout in milliseconds (default: 60000)
 - `config` (optional): Path to codecept.conf.js
 
-**Returns:**
+**Returns (after each step):**
 ```json
 {
-  "stepByStep": true,
-  "results": [
-    {
-      "test": "Navigate to homepage",
-      "file": "/path/to/test.js",
-      "traceFile": "file:///output/trace_Test_Name_abc123/trace.md",
-      "status": "completed",
-      "steps": [
-        {
-          "step": "I.amOnPage(\"/\")",
-          "status": "passed",
-          "time": 150
-        },
-        {
-          "step": "I.seeInTitle(\"Test App\")",
-          "status": "passed",
-          "time": 50
-        }
-      ]
-    }
+  "status": "paused",
+  "file": "/path/to/test.js",
+  "pausedAfter": { "index": 1, "name": "I.amOnPage(\"/\")", "status": "passed" },
+  "page": { "url": "http://localhost:8000/", "title": "Test App", "contentSize": 1832 },
+  "suggestions": [
+    "Call snapshot to capture URL/HTML/ARIA/screenshot/console/storage at this point",
+    "Call run_code to inspect or manipulate state ...",
+    "Call continue to release the pause and let the test run the next step (or finish)"
   ]
 }
 ```
 
-**Trace Files:**
-- Generated in `{output_dir}/trace_{TestName}_{hash}/`
-- Includes screenshots (PNG), page HTML, ARIA snapshots, console logs
-- `trace.md` file provides structured summary for AI analysis
-- Named with test title and hash for uniqueness
-
-**Example:**
+**Returns (after the last step):**
 ```json
-{
-  "name": "run_step_by_step",
-  "arguments": {
-    "test": "authentication_test",
-    "timeout": 90000
-  }
-}
+{ "status": "completed", "file": "...", "reporterJson": { "stats": {...}, "tests": [...] } }
 ```
+
+**Flow:**
+```json
+{ "name": "run_step_by_step", "arguments": { "test": "checkout_test" } }
+// → { "status": "paused", "pausedAfter": { "index": 1, ... } }
+
+{ "name": "snapshot", "arguments": {} }
+// → full artifact bundle for step 1
+
+{ "name": "continue", "arguments": {} }
+// → { "status": "paused", "pausedAfter": { "index": 2, ... } }
+
+{ "name": "continue", "arguments": {} }
+// → ... and so on, until { "status": "completed", "reporterJson": {...} }
+```
+
+For a one-shot breakpoint (pause once at a specific step rather than every step), use `run_test` with `pauseAt: N` instead.
+
+For per-step trace artifacts written to disk (HTML / ARIA / screenshot / console / storage per step) without the interactive flow, enable the `aiTrace` plugin.
 
 ### start_browser
 
@@ -380,16 +471,19 @@ When using `run_step_by_step`, the server generates trace files that provide ric
 ```
 output/
 └── trace_Test_Name_abc123/
-    ├── 0000_screenshot.png     # Screenshot after step 0
-    ├── 0000_page.html         # HTML snapshot after step 0
-    ├── 0000_aria.txt          # ARIA snapshot after step 0
-    ├── 0000_console.json      # Console logs after step 0
-    ├── 0001_screenshot.png     # Screenshot after step 1
-    ├── 0001_page.html
-    ├── 0001_aria.txt
-    ├── 0001_console.json
-    └── trace.md               # AI-friendly summary
+    ├── 0000_<step>_screenshot.png   # Screenshot after step 0
+    ├── 0000_<step>_page.html        # Formatted HTML (minified -> trash classes/scripts/styles stripped -> beautified)
+    ├── 0000_<step>_aria.txt         # ARIA snapshot after step 0 (Playwright only)
+    ├── 0000_<step>_console.json     # Browser console logs (normalized to {type, text})
+    ├── 0001_<step>_screenshot.png
+    ├── 0001_<step>_page.html
+    ├── 0001_<step>_aria.txt
+    ├── 0001_<step>_console.json
+    ├── final_storage.json           # Cookies + localStorage at test end (run_step_by_step fallback)
+    └── trace.md                     # AI-friendly summary with links to all of the above
 ```
+
+For ad-hoc `run_code` and `snapshot()` runs, only a single set of artifacts is produced (`mcp_*` / `snapshot_*` prefix), since there are no per-step iterations.
 
 ### Using Trace Files with AI
 
@@ -425,6 +519,22 @@ AI agents can use these artifacts to:
 - Analyze page structure via ARIA
 - Debug issues using HTML snapshots
 - Identify errors from console logs
+
+## HTML Formatting
+
+Every HTML snapshot saved by the MCP server (and the aiTrace / pageInfo plugins, since they share the same `captureSnapshot` funnel in `lib/utils/captureSnapshot.js`) is processed through a three-stage pipeline before being written to disk:
+
+1. **Minify** (via `html-minifier-terser`) — strips comments, collapses whitespace, removes redundant attributes.
+2. **Clean** — drops `<style>`, `<noscript>`, and inline `<script>` (no `src`) blocks entirely; preserves `<script src="...">`; strips trash class names (Tailwind utilities `text-*`, `flex-*`, `border-*`, framework-generated `v-*`, `ember-*`, `Header__title`, hashed classes containing digits, and `xl:hidden`-style scoped classes); drops `style="..."` attributes. Semantic attributes (`id`, `aria-*`, `data-*`, `role`, `href`, `src`, `alt`, `title`, `name`) are kept.
+3. **Beautify** (via `js-beautify`) — re-indents with 2-space indentation; keeps inline elements like `<strong>` / `<a>` on the same line as their text.
+
+The result is a multi-line, low-noise HTML document that's far cheaper for an LLM to reason about than raw page source.
+
+## Storage State
+
+When a Playwright helper is configured, `captureSnapshot` calls `helper.grabStorageState()` to dump cookies + localStorage in one go. For Puppeteer / WebDriver, it falls back to `helper.grabCookie()` plus an `executeScript()` call that walks `window.localStorage`. Both paths produce the same shape (`{ cookies: [...], origins: [{ origin, localStorage: [...] }] }`) so AI agents see a consistent storage payload regardless of the helper.
+
+Storage capture is **disabled per-step in aiTrace** (cookies / localStorage rarely change between actions, so per-step files would be noise) and **enabled by default** for `run_code`, `snapshot`, `run_step_by_step` fallback, and `pageInfo`.
 
 ## Architecture
 

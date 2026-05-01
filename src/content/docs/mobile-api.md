@@ -12,8 +12,8 @@ For hybrid/mobile webview flows, ARIA locators such as `{ aria: "Sign in" }` are
 ### `I.appendField()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.appendField()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -54,8 +54,8 @@ I.appendField('name', 'davert');
 ### `I.checkIfAppIsInstalled()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.checkIfAppIsInstalled()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -78,8 +78,8 @@ _Not available in this helper._
 ### `I.checkIfElementExists()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.checkIfElementExists()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -102,8 +102,8 @@ I.checkIfElementExists('~edit', '#menu'); // element inside #menu
 ### `I.checkOption()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.checkOption()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -132,8 +132,8 @@ _Not available in this helper._
 ### `I.clearField()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.clearField()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -155,8 +155,8 @@ I.clearField('~name');
 ### `I.click()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.click()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -217,8 +217,8 @@ I.click({ ios: 'Save', android: 'SAVE' }, '#main'); // different texts on iOS an
 ### `I.clickAtPoint()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.clickAtPoint()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -243,8 +243,8 @@ I.clickAtPoint('~save', 10, 10); // locate by accessibility id
 ### `I.closeApp()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.closeApp()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -264,8 +264,8 @@ _Not available in this helper._
 ### `I.dontSee()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.dontSee()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -302,8 +302,8 @@ I.dontSee('Record deleted', '~message');
 ### `I.dontSeeCheckboxIsChecked()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.dontSeeCheckboxIsChecked()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -328,8 +328,8 @@ _Not available in this helper._
 ### `I.dontSeeElement()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.dontSeeElement()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -366,8 +366,8 @@ I.dontSeeElement('~edit', '#menu'); // element inside #menu
 ### `I.dontSeeElementExists()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.dontSeeElementExists()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -391,8 +391,8 @@ I.dontSeeElementExist('~edit', '#menu'); // element inside #menu
 ### `I.dontSeeInField()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.dontSeeInField()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -423,8 +423,8 @@ _Not available in this helper._
 ### `I.fillField()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.fillField()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -472,8 +472,8 @@ I.fillField({ android: 'NAME', ios: 'name' }, 'davert');
 ### `I.goBack()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.goBack()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -491,8 +491,8 @@ I.goBack(); // on Android only
 ### `I.grabAllContexts()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabAllContexts()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -510,8 +510,8 @@ _Not available in this helper._
 ### `I.grabAttributeFrom()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabAttributeFrom()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -539,8 +539,8 @@ _Not available in this helper._
 ### `I.grabAttributeFromAll()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabAttributeFromAll()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -566,8 +566,8 @@ _Not available in this helper._
 ### `I.grabContext()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabContext()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -587,8 +587,8 @@ _Not available in this helper._
 ### `I.grabCurrentActivity()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabCurrentActivity()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -608,8 +608,8 @@ _Not available in this helper._
 ### `I.grabNetworkConnection()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabNetworkConnection()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -631,8 +631,8 @@ _Not available in this helper._
 ### `I.grabNumberOfVisibleElements()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabNumberOfVisibleElements()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -656,8 +656,8 @@ _Not available in this helper._
 ### `I.grabOrientation()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabOrientation()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -677,8 +677,8 @@ _Not available in this helper._
 ### `I.grabPlatform()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabPlatform()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -696,8 +696,8 @@ const platform = await I.grabPlatform();
 ### `I.grabSettings()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabSettings()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -717,8 +717,8 @@ _Not available in this helper._
 ### `I.grabTextFrom()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabTextFrom()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -744,8 +744,8 @@ _Not available in this helper._
 ### `I.grabTextFromAll()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabTextFromAll()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -769,8 +769,8 @@ _Not available in this helper._
 ### `I.grabValueFrom()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabValueFrom()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -795,8 +795,8 @@ _Not available in this helper._
 ### `I.grabValueFromAll()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabValueFromAll()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -820,8 +820,8 @@ _Not available in this helper._
 ### `I.hideDeviceKeyboard()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.hideDeviceKeyboard()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -842,8 +842,8 @@ _Not available in this helper._
 ### `I.installApp()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.installApp()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -871,8 +871,8 @@ I.installApp();
 ### `I.launchApp()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.launchApp()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -890,8 +890,8 @@ I.launchApp();
 ### `I.longPress()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.longPress()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -916,8 +916,8 @@ I.longPress('Update', 2, '#menu'); // locate by text inside #menu, hold for 2 se
 ### `I.makeTouchAction()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.makeTouchAction()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -945,8 +945,8 @@ _Not available in this helper._
 ### `I.multiTap()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.multiTap()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -976,8 +976,8 @@ I.multiTap('Update', 2, '#menu'); // locate by id
 ### `I.openNotifications()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.openNotifications()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -997,8 +997,8 @@ _Not available in this helper._
 ### `I.performSwipe()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.performSwipe()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1020,8 +1020,8 @@ _Not available in this helper._
 ### `I.pullFile()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.pullFile()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1047,8 +1047,8 @@ _Not available in this helper._
 ### `I.relaunchApp()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.relaunchApp()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1066,8 +1066,8 @@ I.relaunchApp();
 ### `I.removeApp()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.removeApp()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1091,8 +1091,8 @@ _Not available in this helper._
 ### `I.resetApp()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.resetApp()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1110,8 +1110,8 @@ _Not available in this helper._
 ### `I.rotate()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.rotate()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1141,8 +1141,8 @@ _Not available in this helper._
 ### `I.runInWeb()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.runInWeb()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1163,8 +1163,8 @@ _Not available in this helper._
 ### `I.runOnAndroid()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.runOnAndroid()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1219,8 +1219,8 @@ I.runOnAndroid(() => {
 ### `I.runOnIOS()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.runOnIOS()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1275,8 +1275,8 @@ I.runOnIOS(() => {
 ### `I.saveScreenshot()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.saveScreenshot()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1307,8 +1307,8 @@ I.saveScreenshot('main-window.png');
 ### `I.scrollDown()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.scrollDown()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1329,8 +1329,8 @@ I.scrollDown('#container');
 ### `I.scrollIntoView()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.scrollIntoView()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1356,8 +1356,8 @@ _Not available in this helper._
 ### `I.scrollLeft()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.scrollLeft()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1378,8 +1378,8 @@ I.scrollLeft('#container');
 ### `I.scrollRight()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.scrollRight()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1400,8 +1400,8 @@ I.scrollRight('#container');
 ### `I.scrollToElement()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.scrollToElement()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1421,8 +1421,8 @@ Scrolls within a scrollable container to an element.
 ### `I.scrollUp()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.scrollUp()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1443,8 +1443,8 @@ I.scrollUp('#container');
 ### `I.see()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.see()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1482,8 +1482,8 @@ I.see('Record deleted', '~message');
 ### `I.seeAppIsInstalled()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeAppIsInstalled()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1506,8 +1506,8 @@ _Not available in this helper._
 ### `I.seeAppIsNotInstalled()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeAppIsNotInstalled()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1530,8 +1530,8 @@ _Not available in this helper._
 ### `I.seeCheckboxIsChecked()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeCheckboxIsChecked()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1556,8 +1556,8 @@ _Not available in this helper._
 ### `I.seeCurrentActivityIs()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeCurrentActivityIs()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1580,8 +1580,8 @@ _Not available in this helper._
 ### `I.seeDeviceIsLocked()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeDeviceIsLocked()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1601,8 +1601,8 @@ _Not available in this helper._
 ### `I.seeDeviceIsUnlocked()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeDeviceIsUnlocked()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1622,8 +1622,8 @@ _Not available in this helper._
 ### `I.seeElement()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeElement()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1661,8 +1661,8 @@ I.seeElement('~edit', '#menu'); // element inside #menu
 ### `I.seeElementExists()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeElementExists()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1686,8 +1686,8 @@ I.seeElementExists('~edit', '#menu'); // element inside #menu
 ### `I.seeInField()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeInField()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1720,8 +1720,8 @@ _Not available in this helper._
 ### `I.seeOrientationIs()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeOrientationIs()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1745,8 +1745,8 @@ _Not available in this helper._
 ### `I.selectOption()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.selectOption()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1788,8 +1788,8 @@ _Not available in this helper._
 ### `I.sendDeviceKeyEvent()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.sendDeviceKeyEvent()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1813,8 +1813,8 @@ _Not available in this helper._
 ### `I.setImmediateValue()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.setImmediateValue()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1836,8 +1836,8 @@ _Not available in this helper._
 ### `I.setLandscapeOrientation()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.setLandscapeOrientation()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1855,8 +1855,8 @@ I.setLandscapeOrientation();
 ### `I.setNetworkConnection()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.setNetworkConnection()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1891,8 +1891,8 @@ _Not available in this helper._
 ### `I.setOrientation()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.setOrientation()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1914,8 +1914,8 @@ _Not available in this helper._
 ### `I.setPortraitOrientation()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.setPortraitOrientation()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1933,8 +1933,8 @@ I.setPortraitOrientation();
 ### `I.setSettings()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.setSettings()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1955,8 +1955,8 @@ _Not available in this helper._
 ### `I.shakeDevice()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.shakeDevice()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -1980,8 +1980,8 @@ I.shakeDevice();
 ### `I.simulateTouchId()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.simulateTouchId()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2007,8 +2007,8 @@ _Not available in this helper._
 ### `I.startActivity()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.startActivity()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2034,8 +2034,8 @@ _Not available in this helper._
 ### `I.swipe()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.swipe()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2064,8 +2064,8 @@ _Not available in this helper._
 ### `I.swipeDown()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.swipeDown()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2102,8 +2102,8 @@ I.swipeUp('#container');
 ### `I.swipeLeft()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.swipeLeft()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2140,8 +2140,8 @@ I.swipeUp('#container');
 ### `I.swipeRight()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.swipeRight()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2178,8 +2178,8 @@ I.swipeUp('#container');
 ### `I.swipeTo()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.swipeTo()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2213,8 +2213,8 @@ _Not available in this helper._
 ### `I.swipeUp()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.swipeUp()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2251,8 +2251,8 @@ I.swipeUp('#container');
 ### `I.switchToContext()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.switchToContext()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2269,8 +2269,8 @@ _Not available in this helper._
 ### `I.switchToNative()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.switchToNative()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2297,8 +2297,8 @@ _Not available in this helper._
 ### `I.switchToWeb()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.switchToWeb()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2326,8 +2326,8 @@ _Not available in this helper._
 ### `I.tap()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.tap()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2369,8 +2369,8 @@ I.tap({ ios: 'Save', android: 'SAVE' }, '#main'); // different texts on iOS and 
 ### `I.tapByLabel()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.tapByLabel()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2396,8 +2396,8 @@ I.tapByLabel('Login', '#nav'); // locate by text inside #nav
 ### `I.tapReturnKey()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.tapReturnKey()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2421,8 +2421,8 @@ I.tapReturnKey({ android: 'NAME', ios: 'name' });
 ### `I.touchPerform()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.touchPerform()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2462,8 +2462,8 @@ _Not available in this helper._
 ### `I.wait()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.wait()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2484,8 +2484,8 @@ I.wait(2); // waits for 2 seconds
 ### `I.waitForElement()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitForElement()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2519,8 +2519,8 @@ I.waitForElement('#message', 1); // wait for 1 second
 ### `I.waitForElementVisible()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitForElementVisible()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2542,8 +2542,8 @@ I.waitForElementVisible('#message', 1); // wait for 1 second
 ### `I.waitForInvisible()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitForInvisible()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2568,8 +2568,8 @@ _Not available in this helper._
 ### `I.waitForText()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitForText()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2631,8 +2631,8 @@ _Not available in this helper._
 ### `I.waitForVisible()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitForVisible()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
 
 **Appium**
@@ -2657,8 +2657,8 @@ _Not available in this helper._
 ### `I.waitToHide()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitToHide()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**

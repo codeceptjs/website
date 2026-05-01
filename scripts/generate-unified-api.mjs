@@ -102,6 +102,76 @@ function normalizeDocForDiff(content) {
     .trim();
 }
 
+// Prose+code body of a shared mustache snippet (drops the @param/@returns lines).
+// The helper docs typically contain this body verbatim, so it can be subtracted.
+function commonBodyText(mustache) {
+  return mustache
+    .split('\n')
+    .filter((line) => !/^@(?:param|returns?)\b/.test(line.trim()))
+    .join('\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+// Strip Parameters / Returns blocks (heading + bullet list + blank lines) and
+// inline `Returns **void** ...` lines. Used after subtracting the common body
+// so the residue isn't cluttered with cosmetically-different param rendering.
+function stripParamsAndReturns(text) {
+  const lines = text.split('\n');
+  const out = [];
+  const isHeading = (l) =>
+    /^(?:#{2,5}\s+Parameters?|\*\*Parameters\*\*|#{2,5}\s+Returns?|\*\*Returns\*\*)\s*$/.test(l);
+  const isBulletOrIndented = (l) => l.trim() === '' || /^[ \t]*[*\-+]\s/.test(l) || /^[ \t]+\S/.test(l);
+
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+    if (isHeading(line)) {
+      i += 1;
+      while (i < lines.length && isBulletOrIndented(lines[i])) i += 1;
+      continue;
+    }
+    if (/^Returns\s+/.test(line)) { i += 1; continue; }
+    if (/^@(?:param|returns?)\b/.test(line.trim())) { i += 1; continue; }
+    out.push(line);
+    i += 1;
+  }
+  return out.join('\n');
+}
+
+// Normalize formatting that documentation.js renders differently from the raw
+// mustache snippet (italic markers, link reference style, blank lines between
+// code blocks) so the subtraction fall-back below can still find the common
+// body when the only differences are cosmetic.
+function normalizeForSubtract(text) {
+  return text
+    .replace(/\r\n/g, '\n')
+    .replace(/_([^_\n]+)_/g, '*$1*')
+    .replace(/\[([^\]]+)\]\[\d+\]/g, '$1')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/[ \t]+/g, ' ')
+    .replace(/\n+/g, '\n')
+    .trim();
+}
+
+// Subtract the shared common body and the params/returns block from a helper's
+// method doc. What remains is the helper-specific addition (e.g. an extra note
+// about React locators). Empty result ⇒ helper just repeats common behavior.
+function helperResidue(helperDoc, commonBody) {
+  let text = helperDoc;
+  if (commonBody && helperDoc.includes(commonBody)) {
+    text = helperDoc.split(commonBody).join('');
+  } else if (commonBody) {
+    const normCommon = normalizeForSubtract(commonBody);
+    const normHelper = normalizeForSubtract(helperDoc);
+    text = normCommon && normHelper.includes(normCommon)
+      ? normHelper.split(normCommon).join('')
+      : helperDoc;
+  }
+  text = stripParamsAndReturns(text);
+  return text.replace(/\n{3,}/g, '\n\n').trim();
+}
+
 function renderAvailabilityTable(headers, row) {
   const th = headers
     .map((h) => `<th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">${h}</th>`)
@@ -261,21 +331,21 @@ function generateWebApiContent() {
 
   for (const fileName of webapiFiles) {
     const method = path.basename(fileName, '.mustache');
+    const supportedAnywhere = WEB_HELPER_NAMES.some((name) => helperMethods[name].has(method));
+    if (!supportedAnywhere) continue;
     const methodCall = `I.${method}()`;
-    const sharedBlock = formatSharedBlock(readFile(path.join(WEBAPI_DIR, fileName)).trim());
+    const rawShared = readFile(path.join(WEBAPI_DIR, fileName)).trim();
+    const sharedBlock = formatSharedBlock(rawShared);
+    const commonBody = commonBodyText(rawShared);
 
     lines.push(`### \`${methodCall}\``);
     lines.push('');
     lines.push(
       ...renderAvailabilityTable(
-        ['Method', ...WEB_HELPER_NAMES],
-        [`<code>${methodCall}</code>`, ...WEB_HELPER_NAMES.map((name) =>
-          availability(helperMethods[name].has(method)),
-        )],
+        WEB_HELPER_NAMES,
+        WEB_HELPER_NAMES.map((name) => availability(helperMethods[name].has(method))),
       ),
     );
-    lines.push('');
-    lines.push('#### Common Behavior');
     lines.push('');
     lines.push(sharedBlock || '_No shared snippet found._');
     lines.push('');
@@ -293,18 +363,22 @@ function generateWebApiContent() {
     const helperDocsByMethod = WEB_HELPER_NAMES.map((helperName) => {
       const methodDoc = extractMethodDoc(helperDocs[helperName], method);
       const prefix = override?.helperPrefix?.[helperName] || '';
+      const residue = methodDoc ? helperResidue(methodDoc, commonBody) : '';
       return {
         helperName,
         supported: helperMethods[helperName].has(method),
         methodDoc,
         prefix,
-        normalized: methodDoc ? normalizeDocForDiff(methodDoc) : '',
+        residue,
+        normalized: residue ? normalizeDocForDiff(residue) : '',
       };
     });
 
-    const supportedWithDocs = helperDocsByMethod.filter((item) => item.supported && item.methodDoc);
+    const helpersWithUniqueContent = helperDocsByMethod.filter(
+      (item) => item.supported && item.residue,
+    );
     const uniqueGroups = new Map();
-    for (const item of supportedWithDocs) {
+    for (const item of helpersWithUniqueContent) {
       const key = item.normalized;
       if (!uniqueGroups.has(key)) uniqueGroups.set(key, []);
       uniqueGroups.get(key).push(item.helperName);
@@ -313,7 +387,7 @@ function generateWebApiContent() {
     const hasHelperPrefixOverrides = helperDocsByMethod.some((item) => item.prefix);
 
     const compactDifferences = method === 'click' || Boolean(override?.compactDifferences);
-    if (uniqueGroups.size > 1 || hasHelperPrefixOverrides) {
+    if (helpersWithUniqueContent.length > 0 || hasHelperPrefixOverrides) {
       lines.push('#### Helper-Specific Differences');
       lines.push('');
 
@@ -328,17 +402,9 @@ function generateWebApiContent() {
         continue;
       }
 
-      let baselineGroup = [];
-      for (const names of uniqueGroups.values()) {
-        if (names.length > baselineGroup.length) baselineGroup = names;
-      }
-      const hideBaseline = baselineGroup.length > 1;
-
       for (const item of helperDocsByMethod) {
-        if (!item.supported || !item.methodDoc) continue;
-        const differsFromBaseline = !baselineGroup.includes(item.helperName);
-        const forceInclude = Boolean(item.prefix);
-        if (hideBaseline && !differsFromBaseline && !forceInclude) continue;
+        if (!item.supported) continue;
+        if (!item.residue && !item.prefix) continue;
 
         lines.push(`**${item.helperName}**`);
         lines.push('');
@@ -346,8 +412,10 @@ function generateWebApiContent() {
           lines.push(item.prefix);
           lines.push('');
         }
-        lines.push(normalizeMethodDocHeadings(item.methodDoc));
-        lines.push('');
+        if (item.residue) {
+          lines.push(normalizeMethodDocHeadings(item.residue));
+          lines.push('');
+        }
       }
     }
   }
@@ -391,12 +459,8 @@ function generateMobileApiContent() {
     lines.push('');
     lines.push(
       ...renderAvailabilityTable(
-        ['Method', 'Appium', 'Detox'],
-        [
-          `<code>${methodCall}</code>`,
-          availability(hasMethod.Appium.has(method)),
-          availability(hasMethod.Detox.has(method)),
-        ],
+        ['Appium', 'Detox'],
+        [availability(hasMethod.Appium.has(method)), availability(hasMethod.Detox.has(method))],
       ),
     );
     lines.push('');

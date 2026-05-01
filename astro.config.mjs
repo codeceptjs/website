@@ -70,9 +70,18 @@ export default defineConfig({
                         link: 'quickstart',
                         items: [
                             {
+                            label: 'Setup',
+                            items: [
+                              { label: 'Quickstart', link: 'quickstart' },
+                              { label: 'Installation', link: 'installation' },
+                              { label: 'Upgrade from v3', link: 'migration-4' },
+                              ]
+                            },
+                            {
                                 label: 'Basics',
                                 items: [
                                   { label: 'Web Basics', link: 'basics' },
+                                  {label: 'Agentic Testing', link: 'agents'},
                                   {label: 'Test Structure', link: 'test-structure'},
                                   { label: 'Locators', link: 'locators' },
                                   { label: 'Assertions', link: 'assertions' },
@@ -117,7 +126,6 @@ export default defineConfig({
                                 label: 'Advanced Usage',
                                 items: [
                                     {label: 'TypeScript', link: 'typescript'},
-                                    {label: 'ESM Migration', link: 'esm-migration'},
                                     {label: 'Self-Healing', link: 'heal'},
                                     { label: 'Reporting', link: 'reports' },
                                     { label: 'Element Selection', link: 'element-selection'},

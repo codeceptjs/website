@@ -39,6 +39,9 @@ const specialKindFor = (text: string): SpecialKind => {
   return null;
 };
 
+// Set color + bold on the token. Light-mode color is rendered as-is;
+// dark-mode override is applied via CSS attribute selectors on
+// `[style*="--0:#..."][style*="fw:bold"]` (see custom.css).
 const colorize = (
   base: ThemedToken,
   text: string,
@@ -48,20 +51,11 @@ const colorize = (
     return { ...base, content: text };
   }
   const lightColor = kind === "actor" ? "#db2777" : "#7c3aed";
-  const darkColor = kind === "actor" ? "#f472b6" : "#c084fc";
-  // Preserve any existing htmlStyle keys (e.g. background) but override the
-  // color-related ones. Mark fontStyle as bold (=2) for emphasis.
-  const baseHtmlStyle = (base.htmlStyle ?? {}) as Record<string, string>;
   return {
     ...base,
     content: text,
     color: lightColor,
     fontStyle: 2,
-    htmlStyle: {
-      ...baseHtmlStyle,
-      "--shiki-dark": darkColor,
-      "--shiki-dark-font-style": "bold",
-    },
   };
 };
 
@@ -77,7 +71,6 @@ export const codeceptShikiTransformer: ShikiTransformer = {
           out.push(tok);
           continue;
         }
-        // Slow path: split content into normal/special parts.
         let lastIdx = 0;
         SPECIAL_RE.lastIndex = 0;
         let m: RegExpExecArray | null;

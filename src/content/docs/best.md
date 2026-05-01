@@ -97,8 +97,8 @@ class CheckoutForm {
   }
 
 }
-module.exports = new CheckoutForm();
-module.exports.CheckoutForm = CheckoutForm; // for inheritance
+export default new CheckoutForm();
+export { CheckoutForm }; // for inheritance
 ```
 
 * for components that are repeated accross a website (widgets) but don't belong to any page, use component objects. They are the same as page objects but focused only aroung one element:
@@ -140,8 +140,8 @@ class DatePicker {
 }
 
 
-module.exports = new DatePicker();
-module.exports.DatePicker = DatePicker; // for inheritance
+export default new DatePicker();
+export { DatePicker }; // for inheritance
 ```
 
 ## Configuration
@@ -153,7 +153,7 @@ module.exports.DatePicker = DatePicker; // for inheritance
 * use `.env` files and dotenv package to load sensitive data
 
 ```js
-require('dotenv').config({ path: '.env' });
+import 'dotenv/config'
 ```
 
 * move similar parts in those configs by moving them to modules and putting them to `config` dir
@@ -161,7 +161,7 @@ require('dotenv').config({ path: '.env' });
 
 ```js
 // inside config/components.js
-module.exports = {
+export default {
     DatePicker: "./components/datePicker",
     Dropdown: "./components/dropdown",
 }
@@ -170,10 +170,13 @@ module.exports = {
 include them like this:
 
 ```js
+import pages from './config/pages.js'
+import components from './config/components.js'
+
   include: {
       I: './steps_file',
-      ...require('./config/pages'), // require POs and DOs for module
-      ...require('./config/components'), // require all components
+      ...pages, // import POs and DOs for module
+      ...components, // import all components
   },
 ```
 
@@ -212,9 +215,9 @@ include: {
 * When you need to customize access to API and go beyond what ApiDataFactory provides, implement DAO:
 
 ```js
-const { faker } = require('@faker-js/faker');
+import { faker } from '@faker-js/faker';
+import { output } from 'codeceptjs';
 const { I } = inject();
-const { output } = require('codeceptjs');
 
 class InterfaceData {
 
@@ -230,5 +233,5 @@ class InterfaceData {
   }
 }
 
-module.exports = new InterfaceData;
+export default new InterfaceData;
 ```

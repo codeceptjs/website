@@ -104,28 +104,37 @@ After(({ I }) => {
 })
 ```
 
-## Pause On Plugin
+### Pause Modes
 
-For automated debugging without modifying test code, use the `pauseOn` plugin. It pauses tests based on different triggers, controlled entirely from the command line.
+`pause()` adapts to who's driving the test:
+
+- **TTY (humans)** — when `process.stdin` is a terminal (running `npx codeceptjs run --debug` yourself), the readline REPL described above opens.
+- **MCP server (agent-driven debug)** — the MCP server registers an in-process pause handler before running tests, so when `pause()` fires inside a `run_test` invocation, control yields back to the agent. The agent drives the REPL through the [`pause` MCP tool](/mcp#pause). The same `I` container the test uses runs the agent's code, so artifacts (URL, ARIA, HTML, screenshot, console, storage) are captured against the live page.
+
+## Pause Plugin
+
+For automated debugging without modifying test code, use the `pause` plugin. It pauses tests based on different triggers, controlled entirely from the command line. The default is `on=fail`.
 
 ### Pause on Failure
 
 Automatically enters interactive pause when a step fails:
 
 ```bash
-npx codeceptjs run -p pauseOn:fail
+npx codeceptjs run -p pause
+# or, explicit:
+npx codeceptjs run -p pause:on=fail
 ```
 
 This is the most common debug workflow — run your tests, and when one fails, you land in the interactive shell with the browser in the exact state of the failure. You can inspect elements, try different selectors, and figure out what went wrong.
 
-> The older `pauseOnFail` plugin still works: `npx codeceptjs run -p pauseOnFail`
+> The legacy `pauseOnFail` plugin still works as a deprecated alias.
 
 ### Pause on Every Step
 
 Enters interactive pause at the start of the test. Use *ENTER* to advance step by step:
 
 ```bash
-npx codeceptjs run -p pauseOn:step
+npx codeceptjs run -p pause:on=step
 ```
 
 This gives you full step-by-step execution. After each step, you're back in the interactive shell where you can inspect the page before pressing ENTER to continue.
@@ -135,13 +144,13 @@ This gives you full step-by-step execution. After each step, you're back in the 
 Pauses when execution reaches a specific file:
 
 ```bash
-npx codeceptjs run -p pauseOn:file:tests/login_test.js
+npx codeceptjs run -p pause:on=file:path=tests/login_test.js
 ```
 
 With a specific line number:
 
 ```bash
-npx codeceptjs run -p pauseOn:file:tests/login_test.js:43
+npx codeceptjs run -p pause:on=file:path=tests/login_test.js;line=43
 ```
 
 This works like a breakpoint — the test runs normally until it hits a step defined at that file and line, then opens the interactive shell.
@@ -151,17 +160,49 @@ This works like a breakpoint — the test runs normally until it hits a step def
 Pauses when the browser navigates to a matching URL:
 
 ```bash
-npx codeceptjs run -p pauseOn:url:/users/1
+npx codeceptjs run -p pause:on=url:pattern=/users/1
 ```
 
 Supports `*` wildcards:
 
 ```bash
-npx codeceptjs run -p pauseOn:url:/api/*/edit
-npx codeceptjs run -p pauseOn:url:/checkout/*
+npx codeceptjs run -p pause:on=url:pattern=/api/*/edit
+npx codeceptjs run -p pause:on=url:pattern=/checkout/*
 ```
 
 This is useful when you want to inspect a specific page regardless of which test step navigates there.
+
+## Browser Control
+
+For ad-hoc overrides of browser helper config without editing `codecept.conf`, use the `browser` plugin via `-p`. Works for Playwright, Puppeteer, WebDriver and Appium in one call.
+
+Force a visible browser:
+
+```bash
+npx codeceptjs run -p browser:show
+```
+
+Force headless (also injects `--headless` into WebDriver chrome/firefox capability args):
+
+```bash
+npx codeceptjs run -p browser:hide
+```
+
+Switch the browser engine for Playwright / Puppeteer / WebDriver / TestCafe in one shot — no per-helper config gymnastics:
+
+```bash
+npx codeceptjs run -p browser:browser=firefox
+npx codeceptjs run -p browser:browser=webkit:hide
+```
+
+Pass any other helper config as `key=value`. Values are coerced (`true`/`false` → boolean, digits → Number, otherwise string). Tokens are colon-chained on a single `-p`:
+
+```bash
+npx codeceptjs run -p browser:windowSize=1024x768:video=false
+npx codeceptjs run -p browser:hide:video=true
+```
+
+`browser=<name>` routes through `setBrowser` (so Puppeteer correctly receives `product`, Playwright receives `browser`, etc.); `windowSize=WxH` routes through `setWindowSize` (which also injects `--window-size=W,H` into chromium/chrome args). Anything else is shallow-merged onto every browser helper present in config.
 
 ## IDE Debugging
 
@@ -208,15 +249,16 @@ Enabled by default. Saves a screenshot when a test fails:
 
 ```js
 plugins: {
-  screenshotOnFail: {
+  screenshot: {
     enabled: true,
+    on: 'fail',
     uniqueScreenshotNames: true,
     fullPageScreenshots: true,
   }
 }
 ```
 
-Screenshots are saved in the `output` directory.
+Screenshots are saved in the `output` directory. The same plugin also supports `on=test`, `on=step`, `on=file`, and `on=url` to capture screenshots in other situations.
 
 ### Page Info on Failure
 
@@ -232,12 +274,14 @@ plugins: {
 
 ### Step-by-Step Report
 
-Generates a slideshow of screenshots taken after every step — a visual replay of what the test did:
+Generates a slideshow of screenshots taken after every step — a visual replay of what the test did. Set `slides: true` on the `screenshot` plugin (with `on=step`):
 
 ```js
 plugins: {
-  stepByStepReport: {
+  screenshot: {
     enabled: true,
+    on: 'step',
+    slides: true,
     deleteSuccessful: true,   // keep only failed tests
     fullPageScreenshots: true,
   }
@@ -245,7 +289,7 @@ plugins: {
 ```
 
 ```bash
-npx codeceptjs run -p stepByStepReport
+npx codeceptjs run -p screenshot:on=step;slides=true
 ```
 
 After the run, open `output/records.html` to browse through the slideshows.

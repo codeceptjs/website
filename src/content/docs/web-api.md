@@ -11,11 +11,9 @@ This page is generated from `docs/webapi` and helper docblocks.
 ### `I.amOnPage()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.amOnPage()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Opens a web page in a browser. Requires relative or absolute url.
 If url starts with `/`, opens a web page of a site defined in `url` config parameter.
@@ -37,11 +35,9 @@ I.amOnPage('/login'); // opens a login page
 ### `I.appendField()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.appendField()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Appends text to a input field or textarea.
 Field is located by name, label, CSS or XPath
@@ -68,36 +64,20 @@ I.appendField('name', 'John', '.form-container');
 
 #### Helper-Specific Differences
 
-**Playwright**
+**WebDriver**
 
-Appends text to a input field or textarea.
-Field is located by name, label, CSS or XPath
+This action supports [React locators](https://codecept.io/react#locators)
 
-The third parameter is an optional context (CSS or XPath locator) to narrow the search.
+**Puppeteer**
 
-```js
-I.appendField('#myTextField', 'appended');
-// typing secret
-I.appendField('password', secret('123456'));
-// within a context
-I.appendField('name', 'John', '.form-container');
-```
-
-**Parameters**
-*   `field` **([string][9] | [object][6])** located by label|name|CSS|XPath|strict locator
-*   `value` **[string][9]** text value to append.
-*   `context` **([string][9]? | [object][6])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
-
-Returns **void** automatically synchronized promise through #recorder
+This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.attachFile()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.attachFile()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Attaches a file to element located by label, name, CSS or XPath
 Path to file is relative current codecept directory (where codecept.conf.ts or codecept.conf.js is located).
@@ -131,105 +111,20 @@ I.attachFile('#dropzone', 'data/avatar.jpg');
 
 #### Helper-Specific Differences
 
-**Playwright**
-
-Attaches a file to element located by label, name, CSS or XPath
-Path to file is relative current codecept directory (where codecept.conf.ts or codecept.conf.js is located).
-File will be uploaded to remote system (if tests are running remotely).
-
-The third parameter is an optional context (CSS or XPath locator) to narrow the search.
-
-```js
-I.attachFile('Avatar', 'data/avatar.jpg');
-I.attachFile('form input[name=avatar]', 'data/avatar.jpg');
-// within a context
-I.attachFile('Avatar', 'data/avatar.jpg', '.form-container');
-```
-
-If the locator points to a non-file-input element (e.g., a dropzone area),
-the file will be dropped onto that element using drag-and-drop events.
-
-```js
-I.attachFile('#dropzone', 'data/avatar.jpg');
-```
-
-**Parameters**
-*   `locator` **([string][9] | [object][6])** field located by label|name|CSS|XPath|strict locator.
-*   `pathToFile` **[string][9]** local file path relative to codecept.conf.ts or codecept.conf.js config file.
-*   `context` **([string][9]? | [object][6])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
-
-Returns **void** automatically synchronized promise through #recorder
-
 **WebDriver**
 
 Appium: not tested
-
-Attaches a file to element located by label, name, CSS or XPath
-Path to file is relative current codecept directory (where codecept.conf.ts or codecept.conf.js is located).
-File will be uploaded to remote system (if tests are running remotely).
-
-The third parameter is an optional context (CSS or XPath locator) to narrow the search.
-
-```js
-I.attachFile('Avatar', 'data/avatar.jpg');
-I.attachFile('form input[name=avatar]', 'data/avatar.jpg');
-// within a context
-I.attachFile('Avatar', 'data/avatar.jpg', '.form-container');
-```
-
-If the locator points to a non-file-input element (e.g., a dropzone area),
-the file will be dropped onto that element using drag-and-drop events.
-
-```js
-I.attachFile('#dropzone', 'data/avatar.jpg');
-```
-
-**Parameters**
-*   `locator` **([string][18] | [object][17])** field located by label|name|CSS|XPath|strict locator.
-*   `pathToFile` **[string][18]** local file path relative to codecept.conf.ts or codecept.conf.js config file.
-*   `context` **([string][18]? | [object][17])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
-
-Returns **void** automatically synchronized promise through #recorder
 
 **Puppeteer**
 
 > ⚠ There is an [issue with file upload in Puppeteer 2.1.0 & 2.1.1][7], downgrade to 2.0.0 if you face it.
 
-Attaches a file to element located by label, name, CSS or XPath
-Path to file is relative current codecept directory (where codecept.conf.ts or codecept.conf.js is located).
-File will be uploaded to remote system (if tests are running remotely).
-
-The third parameter is an optional context (CSS or XPath locator) to narrow the search.
-
-```js
-I.attachFile('Avatar', 'data/avatar.jpg');
-I.attachFile('form input[name=avatar]', 'data/avatar.jpg');
-// within a context
-I.attachFile('Avatar', 'data/avatar.jpg', '.form-container');
-```
-
-If the locator points to a non-file-input element (e.g., a dropzone area),
-the file will be dropped onto that element using drag-and-drop events.
-
-```js
-I.attachFile('#dropzone', 'data/avatar.jpg');
-```
-
-**Parameters**
-*   `locator` **([string][6] | [object][4])** field located by label|name|CSS|XPath|strict locator.
-*   `pathToFile` **[string][6]** local file path relative to codecept.conf.ts or codecept.conf.js config file.
-*   `context` **([string][6]? | [object][4])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
-
-Returns **void** automatically synchronized promise through #recorder
-
 ### `I.blur()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.blur()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Remove focus from a text input, button, etc.
 Calls [blur](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus) on the element.
@@ -255,40 +150,12 @@ I.dontSee('#add-to-cart-btn');
 
 - `void` - automatically synchronized promise through #recorder
 
-#### Helper-Specific Differences
-
-**Playwright**
-
-Remove focus from a text input, button, etc.
-Calls [blur][13] on the element.
-
-Examples:
-
-```js
-I.blur('.text-area')
-```
-
-```js
-//element `#product-tile` is focused
-I.see('#add-to-cart-btn');
-I.blur('#product-tile')
-I.dontSee('#add-to-cart-btn');
-```
-
-**Parameters**
-*   `locator` **([string][9] | [object][6])** field located by label|name|CSS|XPath|strict locator.
-*   `options` **any?** Playwright only: [Additional options][14] for available options object as 2nd argument. 
-
-Returns **void** automatically synchronized promise through #recorder
-
 ### `I.checkOption()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.checkOption()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Selects a checkbox or radio button.
 Element is located by label or name or CSS or XPath.
@@ -325,71 +192,16 @@ I.checkOption('Agree', '.signup', { position: { x: 5, y: 5 } })
 
 > ⚠️ To avoid flakiness, option `force: true` is set by default
 
-Selects a checkbox or radio button.
-Element is located by label or name or CSS or XPath.
-
-The second parameter is an optional context (CSS or XPath locator) to narrow the search.
-
-```js
-I.checkOption('#agree');
-I.checkOption('I Agree to Terms and Conditions');
-I.checkOption('agree', '//form');
-```
-
-**Parameters**
-*   `field` **([string][9] | [object][6])** checkbox located by label | name | CSS | XPath | strict locator.
-*   `context` **([string][9]? | [object][6])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
-*   `options`   
-
-Returns **void** automatically synchronized promise through #recorder
-
 **WebDriver**
 
 Appium: not tested
-Selects a checkbox or radio button.
-Element is located by label or name or CSS or XPath.
-
-The second parameter is an optional context (CSS or XPath locator) to narrow the search.
-
-```js
-I.checkOption('#agree');
-I.checkOption('I Agree to Terms and Conditions');
-I.checkOption('agree', '//form');
-```
-
-**Parameters**
-*   `field` **([string][18] | [object][17])** checkbox located by label | name | CSS | XPath | strict locator.
-*   `context` **([string][18]? | [object][17])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
-
-Returns **void** automatically synchronized promise through #recorder
-
-**Puppeteer**
-
-Selects a checkbox or radio button.
-Element is located by label or name or CSS or XPath.
-
-The second parameter is an optional context (CSS or XPath locator) to narrow the search.
-
-```js
-I.checkOption('#agree');
-I.checkOption('I Agree to Terms and Conditions');
-I.checkOption('agree', '//form');
-```
-
-**Parameters**
-*   `field` **([string][6] | [object][4])** checkbox located by label | name | CSS | XPath | strict locator.
-*   `context` **([string][6]? | [object][4])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
-
-Returns **void** automatically synchronized promise through #recorder
 
 ### `I.clearCookie()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.clearCookie()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Clears a cookie by name,
 if none provided clears all cookies.
@@ -403,57 +215,12 @@ I.clearCookie('test');
 
 - `[cookie=null]` `?string` - (optional, `null` by default) cookie name
 
-#### Helper-Specific Differences
-
-**Playwright**
-
-Clears a cookie by name,
-if none provided clears all cookies.
-
-```js
-I.clearCookie();
-I.clearCookie('test');
-```
-
-**Parameters**
-*   `cookieName` &#x20;
-*   `cookie` **[string][9]?** (optional, `null` by default) cookie name
-
-**WebDriver**
-
-Clears a cookie by name,
-if none provided clears all cookies.
-
-```js
-I.clearCookie();
-I.clearCookie('test');
-```
-
-**Parameters**
-*   `cookie` **[string][18]?** (optional, `null` by default) cookie name
-
-**Puppeteer**
-
-Clears a cookie by name,
-if none provided clears all cookies.
-
-```js
-I.clearCookie();
-I.clearCookie('test');
-```
-
-**Parameters**
-*   `name` &#x20;
-*   `cookie` **[string][6]?** (optional, `null` by default) cookie name
-
 ### `I.clearField()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.clearField()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Clears a `<textarea>` or text `<input>` element's value.
 
@@ -476,37 +243,12 @@ I.clearField('Email', '.form-container');
 
 - `void` - automatically synchronized promise through #recorder.
 
-#### Helper-Specific Differences
-
-**Playwright**
-
-Clears a `<textarea>` or text `<input>` element's value.
-
-The second parameter is an optional context (CSS or XPath locator) to narrow the search.
-
-```js
-I.clearField('Email');
-I.clearField('user[email]');
-I.clearField('#email');
-// within a context
-I.clearField('Email', '.form-container');
-```
-
-**Parameters**
-*   `locator` &#x20;
-*   `context` **([string][9]? | [object][6])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
-*   `editable` **([string][9] | [object][6])** field located by label|name|CSS|XPath|strict locator.
-
-Returns **void** automatically synchronized promise through #recorder.
-
 ### `I.click()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.click()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Perform a click on a link or a button, given by a locator.
 If a fuzzy locator is given, the page will be searched for a button, link, or image matching the locator string.
@@ -558,11 +300,9 @@ In WebDriver, click can only happen on an actionable element. Use specific locat
 ### `I.clickLink()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.clickLink()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Performs a click on a link and waits for navigation before moving on.
 
@@ -585,35 +325,16 @@ I.clickLink('Logout', '#nav');
 
 Clicks link and waits for navigation (deprecated)
 
-**Parameters**
-*   `locator` &#x20;
-*   `context`
-
 **Puppeteer**
-
-Performs a click on a link and waits for navigation before moving on.
-
-```js
-I.clickLink('Logout', '#nav');
-```
-
-**Parameters**
-*   `locator` **([string][6] | [object][4])** clickable link or button located by text, or any element located by CSS|XPath|strict locator
-*   `context` **([string][6]? | [object][4])** (optional, `null` by default) element to search in CSS|XPath|Strict locator 
-
-Returns **void** automatically synchronized promise through #recorder
-
 
 This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.closeCurrentTab()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.closeCurrentTab()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Close current tab.
 
@@ -627,24 +348,28 @@ I.closeCurrentTab();
 
 #### Helper-Specific Differences
 
-**WebDriver**
+**Playwright**
 
-Close current tab.
+Close current tab and switches to previous.
 
 ```js
 I.closeCurrentTab();
 ```
 
-Returns **void** automatically synchronized promise through #recorder
+**Puppeteer**
+
+Close current tab and switches to previous.
+
+```js
+I.closeCurrentTab();
+```
 
 ### `I.closeOtherTabs()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.closeOtherTabs()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Close all tabs except for the current one.
 
@@ -657,26 +382,12 @@ I.closeOtherTabs();
 
 - `void` - automatically synchronized promise through #recorder
 
-#### Helper-Specific Differences
-
-**WebDriver**
-
-Close all tabs except for the current one.
-
-```js
-I.closeOtherTabs();
-```
-
-Returns **void** automatically synchronized promise through #recorder
-
 ### `I.dontSee()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.dontSee()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Opposite to `see`. Checks that a text is not present on a page.
 Use context parameter to narrow down the search.
@@ -697,30 +408,20 @@ I.dontSee('Login', '.nav'); // no login inside .nav element
 
 #### Helper-Specific Differences
 
-**Playwright**
+**WebDriver**
 
-Opposite to `see`. Checks that a text is not present on a page.
-Use context parameter to narrow down the search.
+This action supports [React locators](https://codecept.io/react#locators)
 
-```js
-I.dontSee('Login'); // assume we are already logged in.
-I.dontSee('Login', '.nav'); // no login inside .nav element
-```
+**Puppeteer**
 
-**Parameters**
-*   `text` **[string][9]** which is not present.
-*   `context` **([string][9] | [object][6])?** (optional) element located by CSS|XPath|strict locator in which to perfrom search. 
-
-Returns **void** automatically synchronized promise through #recorder
+This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.dontSeeCheckboxIsChecked()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.dontSeeCheckboxIsChecked()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Verifies that the specified checkbox is not checked.
 
@@ -743,27 +444,13 @@ I.dontSeeCheckboxIsChecked('agree'); // located by name
 **WebDriver**
 
 Appium: not tested
-Verifies that the specified checkbox is not checked.
-
-```js
-I.dontSeeCheckboxIsChecked('#agree'); // located by ID
-I.dontSeeCheckboxIsChecked('I agree to terms'); // located by label
-I.dontSeeCheckboxIsChecked('agree'); // located by name
-```
-
-**Parameters**
-*   `field` **([string][18] | [object][17])** located by label|name|CSS|XPath|strict locator.
-
-Returns **void** automatically synchronized promise through #recorder
 
 ### `I.dontSeeCookie()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.dontSeeCookie()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Checks that cookie with given name does not exist.
 
@@ -782,11 +469,9 @@ I.dontSeeCookie('auth'); // no auth cookie
 ### `I.dontSeeCurrentUrlEquals()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.dontSeeCurrentUrlEquals()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Checks that current url is not equal to provided one.
 If a relative url provided, a configured url will be prepended to it.
@@ -807,11 +492,9 @@ I.dontSeeCurrentUrlEquals('http://mysite.com/login'); // absolute urls are also 
 ### `I.dontSeeElement()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.dontSeeElement()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Opposite to `seeElement`. Checks that element is not visible (or in DOM)
 
@@ -833,31 +516,20 @@ I.dontSeeElement('.modal', '#container');
 
 #### Helper-Specific Differences
 
-**Playwright**
+**WebDriver**
 
-Opposite to `seeElement`. Checks that element is not visible (or in DOM)
+This action supports [React locators](https://codecept.io/react#locators)
 
-The second parameter is a context (CSS or XPath locator) to narrow the search.
+**Puppeteer**
 
-```js
-I.dontSeeElement('.modal'); // modal is not shown
-I.dontSeeElement('.modal', '#container');
-```
-
-**Parameters**
-*   `locator` **([string][9] | [object][6])** located by CSS|XPath|Strict locator.
-*   `context` **([string][9]? | [object][6])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
-
-Returns **void** automatically synchronized promise through #recorder
+This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.dontSeeElementInDOM()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.dontSeeElementInDOM()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Opposite to `seeElementInDOM`. Checks that element is not on page.
 
@@ -876,11 +548,9 @@ I.dontSeeElementInDOM('.nav'); // checks that element is not on page visible or 
 ### `I.dontSeeInCurrentUrl()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.dontSeeInCurrentUrl()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Checks that current url does not contain a provided fragment.
 
@@ -895,11 +565,9 @@ Checks that current url does not contain a provided fragment.
 ### `I.dontSeeInField()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.dontSeeInField()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Checks that value of input field or textarea doesn't equal to given value
 Opposite to `seeInField`.
@@ -926,11 +594,9 @@ I.dontSeeInField('Name', 'old_value', '.form-container');
 ### `I.dontSeeInSource()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.dontSeeInSource()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Checks that the current page does not contains the given string in its raw source code.
 
@@ -949,11 +615,9 @@ I.dontSeeInSource('<!--'); // no comments in source
 ### `I.dontSeeInTitle()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.dontSeeInTitle()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Checks that title does not contain text.
 
@@ -972,11 +636,9 @@ I.dontSeeInTitle('Error');
 ### `I.dontSeeTraffic()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.dontSeeTraffic()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Verifies that a certain request is not part of network traffic.
 
@@ -1000,11 +662,9 @@ I.dontSeeTraffic({ name: 'Unexpected API Call of "user" endpoint', url: /api.exa
 ### `I.doubleClick()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.doubleClick()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Performs a double-click on an element matched by link|button|label|CSS or XPath.
 Context can be specified as second parameter to narrow search.
@@ -1027,32 +687,20 @@ I.doubleClick('.btn.edit');
 
 #### Helper-Specific Differences
 
-**Playwright**
+**WebDriver**
 
-Performs a double-click on an element matched by link|button|label|CSS or XPath.
-Context can be specified as second parameter to narrow search.
+This action supports [React locators](https://codecept.io/react#locators)
 
-```js
-I.doubleClick('Edit');
-I.doubleClick('Edit', '.actions');
-I.doubleClick({css: 'button.accept'});
-I.doubleClick('.btn.edit');
-```
+**Puppeteer**
 
-**Parameters**
-*   `locator` **([string][9] | [object][6])** clickable link or button located by text, or any element located by CSS|XPath|strict locator.
-*   `context` **([string][9]? | [object][6])** (optional, `null` by default) element to search in CSS|XPath|Strict locator. 
-
-Returns **void** automatically synchronized promise through #recorder
+This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.downloadFile()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.downloadFile()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Performs a download file on an element matched by link|button|CSS or XPath.
 File is downloaded by default to output folder.
@@ -1072,14 +720,20 @@ I.downloadFile('td[class="text-right file-link"] a', 'thisIsCustomName');
 
 - `void` - automatically synchronized promise through #recorder
 
+#### Helper-Specific Differences
+
+**Puppeteer**
+
+This method is **deprecated**.
+
+Please use `handleDownloads()` instead.
+
 ### `I.dragAndDrop()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.dragAndDrop()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Drag an item to a destination element.
 
@@ -1107,56 +761,16 @@ I.dragAndDrop('img.src', 'img.dst', { sourcePosition: {x: 10, y: 10} })
 
 > When no option is set, custom drag and drop would be used, to use the dragAndDrop API from Playwright, please set options, for example `force: true`
 
-Drag an item to a destination element.
-
-```js
-I.dragAndDrop('#dragHandle', '#container');
-```
-
-**Parameters**
-*   `srcElement` **([string][9] | [object][6])** located by CSS|XPath|strict locator.
-*   `destElement` **([string][9] | [object][6])** located by CSS|XPath|strict locator.
-*   `options` **any?** [Additional options][19] can be passed as 3rd argument.
-
-Returns **void** automatically synchronized promise through #recorder
-
 **WebDriver**
 
 Appium: not tested
-Drag an item to a destination element.
-
-```js
-I.dragAndDrop('#dragHandle', '#container');
-```
-
-**Parameters**
-*   `srcElement` **([string][18] | [object][17])** located by CSS|XPath|strict locator.
-*   `destElement` **([string][18] | [object][17])** located by CSS|XPath|strict locator.
-
-Returns **void** automatically synchronized promise through #recorder
-
-**Puppeteer**
-
-Drag an item to a destination element.
-
-```js
-I.dragAndDrop('#dragHandle', '#container');
-```
-
-**Parameters**
-*   `srcElement` **([string][6] | [object][4])** located by CSS|XPath|strict locator.
-*   `destElement` **([string][6] | [object][4])** located by CSS|XPath|strict locator.
-
-Returns **void** automatically synchronized promise through #recorder
 
 ### `I.dragSlider()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.dragSlider()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Drag the scrubber of a slider to a given position
 For fuzzy locators, fields are matched by label text, the "name" attribute, CSS, and XPath.
@@ -1179,31 +793,14 @@ I.dragSlider('#slider', -70);
 
 **Puppeteer**
 
-Drag the scrubber of a slider to a given position
-For fuzzy locators, fields are matched by label text, the "name" attribute, CSS, and XPath.
-
-```js
-I.dragSlider('#slider', 30);
-I.dragSlider('#slider', -70);
-```
-
-**Parameters**
-*   `locator` **([string][6] | [object][4])** located by label|name|CSS|XPath|strict locator.
-*   `offsetX` **[number][10]** position to drag. 
-
-Returns **void** automatically synchronized promise through #recorder
-
-
 This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.executeAsyncScript()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.executeAsyncScript()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Executes async script on page.
 Provided function should execute a passed callback (as first argument) to signal it is finished.
@@ -1237,73 +834,16 @@ let val = await I.executeAsyncScript(function(url, done) {
 
 #### Helper-Specific Differences
 
-**WebDriver**
-
-Executes async script on page.
-Provided function should execute a passed callback (as first argument) to signal it is finished.
-
-Example: In Vue.js to make components completely rendered we are waiting for [nextTick][25].
-
-```js
-I.executeAsyncScript(function(done) {
-  Vue.nextTick(done); // waiting for next tick
-});
-```
-
-By passing value to `done()` function you can return values.
-Additional arguments can be passed as well, while `done` function is always last parameter in arguments list.
-
-```js
-let val = await I.executeAsyncScript(function(url, done) {
-  // in browser context
-  $.ajax(url, { success: (data) => done(data); }
-}, 'http://ajax.callback.url/');
-```
-
-**Parameters**
-*   `args` **...any** to be passed to function.
-*   `fn` **([string][18] | [function][26])** function to be executed in browser context.
-
-Returns **[Promise][23]<any>** script return value
-
 **Puppeteer**
 
 Asynchronous scripts can also be executed with `executeScript` if a function returns a Promise.
-Executes async script on page.
-Provided function should execute a passed callback (as first argument) to signal it is finished.
-
-Example: In Vue.js to make components completely rendered we are waiting for [nextTick][13].
-
-```js
-I.executeAsyncScript(function(done) {
-  Vue.nextTick(done); // waiting for next tick
-});
-```
-
-By passing value to `done()` function you can return values.
-Additional arguments can be passed as well, while `done` function is always last parameter in arguments list.
-
-```js
-let val = await I.executeAsyncScript(function(url, done) {
-  // in browser context
-  $.ajax(url, { success: (data) => done(data); }
-}, 'http://ajax.callback.url/');
-```
-
-**Parameters**
-*   `args` **...any** to be passed to function.
-*   `fn` **([string][6] | [function][14])** function to be executed in browser context.
-
-Returns **[Promise][11]<any>** script return value
 
 ### `I.executeScript()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.executeScript()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Executes sync script on a page.
 Pass arguments to function as additional parameters.
@@ -1362,88 +902,20 @@ I.executeScript(([x, y]) => x + y, [x, y]);
 
 If a function returns a Promise it will wait for its resolution.
 
-**Parameters**
-*   `fn` **([string][9] | [function][20])** function to be executed in browser context.
-*   `arg` **any?** optional argument to pass to the function
-
-Returns **[Promise][18]<any>**&#x20;
-
 **WebDriver**
 
-Wraps [execute][27] command.
-
-Executes sync script on a page.
-Pass arguments to function as additional parameters.
-Will return execution result to a test.
-In this case you should use async function and await to receive results.
-
-Example with jQuery DatePicker:
-
-```js
-// change date of jQuery DatePicker
-I.executeScript(function() {
-  // now we are inside browser context
-  $('date').datetimepicker('setDate', new Date());
-});
-```
-
-Can return values. Don't forget to use `await` to get them.
-
-```js
-let date = await I.executeScript(function(el) {
-  // only basic types can be returned
-  return $(el).datetimepicker('getDate').toString();
-}, '#date'); // passing jquery selector
-```
-
-**Parameters**
-*   `args` **...any** to be passed to function.
-*   `fn` **([string][18] | [function][26])** function to be executed in browser context.
-
-Returns **[Promise][23]<any>** script return value
+Wraps execute command.
 
 **Puppeteer**
 
 If a function returns a Promise, tt will wait for its resolution.
 
-Executes sync script on a page.
-Pass arguments to function as additional parameters.
-Will return execution result to a test.
-In this case you should use async function and await to receive results.
-
-Example with jQuery DatePicker:
-
-```js
-// change date of jQuery DatePicker
-I.executeScript(function() {
-  // now we are inside browser context
-  $('date').datetimepicker('setDate', new Date());
-});
-```
-
-Can return values. Don't forget to use `await` to get them.
-
-```js
-let date = await I.executeScript(function(el) {
-  // only basic types can be returned
-  return $(el).datetimepicker('getDate').toString();
-}, '#date'); // passing jquery selector
-```
-
-**Parameters**
-*   `args` **...any** to be passed to function.
-*   `fn` **([string][6] | [function][14])** function to be executed in browser context.
-
-Returns **[Promise][11]<any>** script return value
-
 ### `I.fillField()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.fillField()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Fills a text field or textarea, after clearing its value, with the given string.
 Field is located by name, label, CSS, or XPath.
@@ -1475,60 +947,7 @@ I.fillField('Name', 'John', '#section2');
 
 #### Helper-Specific Differences
 
-**Playwright**
-
-Fills a text field or textarea, after clearing its value, with the given string.
-Field is located by name, label, CSS, or XPath.
-
-The third parameter is an optional context (CSS or XPath locator) to narrow the search.
-
-```js
-// by label
-I.fillField('Email', 'hello@world.com');
-// by name
-I.fillField('password', secret('123456'));
-// by CSS
-I.fillField('form#login input[name=username]', 'John');
-// or by strict locator
-I.fillField({css: 'form#login input[name=username]'}, 'John');
-// within a context
-I.fillField('Name', 'John', '#section2');
-```
-
-**Parameters**
-*   `field` **([string][9] | [object][6])** located by label|name|CSS|XPath|strict locator.
-*   `value` **([string][9] | [object][6])** text value to fill.
-*   `context` **([string][9]? | [object][6])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
-
-Returns **void** automatically synchronized promise through #recorder
-
 **WebDriver**
-
-Fills a text field or textarea, after clearing its value, with the given string.
-Field is located by name, label, CSS, or XPath.
-
-The third parameter is an optional context (CSS or XPath locator) to narrow the search.
-
-```js
-// by label
-I.fillField('Email', 'hello@world.com');
-// by name
-I.fillField('password', secret('123456'));
-// by CSS
-I.fillField('form#login input[name=username]', 'John');
-// or by strict locator
-I.fillField({css: 'form#login input[name=username]'}, 'John');
-// within a context
-I.fillField('Name', 'John', '#section2');
-```
-
-**Parameters**
-*   `field` **([string][18] | [object][17])** located by label|name|CSS|XPath|strict locator.
-*   `value` **([string][18] | [object][17])** text value to fill.
-*   `context` **([string][18]? | [object][17])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
-
-Returns **void** automatically synchronized promise through #recorder
-
 
 This action supports [React locators](https://codecept.io/react#locators)
 
@@ -1536,42 +955,14 @@ This action supports [React locators](https://codecept.io/react#locators)
 
 **Puppeteer**
 
-Fills a text field or textarea, after clearing its value, with the given string.
-Field is located by name, label, CSS, or XPath.
-
-The third parameter is an optional context (CSS or XPath locator) to narrow the search.
-
-```js
-// by label
-I.fillField('Email', 'hello@world.com');
-// by name
-I.fillField('password', secret('123456'));
-// by CSS
-I.fillField('form#login input[name=username]', 'John');
-// or by strict locator
-I.fillField({css: 'form#login input[name=username]'}, 'John');
-// within a context
-I.fillField('Name', 'John', '#section2');
-```
-
-**Parameters**
-*   `field` **([string][6] | [object][4])** located by label|name|CSS|XPath|strict locator.
-*   `value` **([string][6] | [object][4])** text value to fill.
-*   `context` **([string][6]? | [object][4])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
-
-Returns **void** automatically synchronized promise through #recorder
-
-
 This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.flushNetworkTraffics()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.flushNetworkTraffics()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Resets all recorded network requests.
 
@@ -1582,11 +973,9 @@ I.flushNetworkTraffics();
 ### `I.focus()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.focus()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Calls [focus](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus) on the matching element.
 
@@ -1607,34 +996,12 @@ I.see('#add-to-cart-bnt');
 
 - `void` - automatically synchronized promise through #recorder
 
-#### Helper-Specific Differences
-
-**Playwright**
-
-Calls [focus][13] on the matching element.
-
-Examples:
-
-```js
-I.dontSee('#add-to-cart-btn');
-I.focus('#product-tile')
-I.see('#add-to-cart-bnt');
-```
-
-**Parameters**
-*   `locator` **([string][9] | [object][6])** field located by label|name|CSS|XPath|strict locator.
-*   `options` **any?** Playwright only: [Additional options][21] for available options object as 2nd argument. 
-
-Returns **void** automatically synchronized promise through #recorder
-
 ### `I.forceClick()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.forceClick()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Perform an emulated click on a link or a button, given by a locator.
 Unlike normal click instead of sending native event, emulates a click with JavaScript.
@@ -1672,47 +1039,20 @@ I.forceClick({css: 'nav a.login'});
 
 #### Helper-Specific Differences
 
-**Playwright**
+**WebDriver**
 
-Perform an emulated click on a link or a button, given by a locator.
-Unlike normal click instead of sending native event, emulates a click with JavaScript.
-This works on hidden, animated or inactive elements as well.
+This action supports [React locators](https://codecept.io/react#locators)
 
-If a fuzzy locator is given, the page will be searched for a button, link, or image matching the locator string.
-For buttons, the "value" attribute, "name" attribute, and inner text are searched. For links, the link text is searched.
-For images, the "alt" attribute and inner text of any parent links are searched.
+**Puppeteer**
 
-The second parameter is a context (CSS or XPath locator) to narrow the search.
-
-```js
-// simple link
-I.forceClick('Logout');
-// button of form
-I.forceClick('Submit');
-// CSS button
-I.forceClick('#form input[type=submit]');
-// XPath
-I.forceClick('//form/*[@type=submit]');
-// link in context
-I.forceClick('Logout', '#nav');
-// using strict locator
-I.forceClick({css: 'nav a.login'});
-```
-
-**Parameters**
-*   `locator` **([string][9] | [object][6])** clickable link or button located by text, or any element located by CSS|XPath|strict locator.
-*   `context` **([string][9]? | [object][6])** (optional, `null` by default) element to search in CSS|XPath|Strict locator. 
-
-Returns **void** automatically synchronized promise through #recorder
+This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.forceRightClick()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.forceRightClick()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Emulates right click on an element.
 Unlike normal click instead of sending native event, emulates a click with JavaScript.
@@ -1738,14 +1078,18 @@ I.forceRightClick('Menu');
 
 - `void` - automatically synchronized promise through #recorder
 
+#### Helper-Specific Differences
+
+**WebDriver**
+
+This action supports [React locators](https://codecept.io/react#locators)
+
 ### `I.grabAllWindowHandles()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabAllWindowHandles()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Get all Window Handles.
 Useful for referencing a specific handle when calling `I.switchToWindow(handle)`
@@ -1761,11 +1105,9 @@ const windows = await I.grabAllWindowHandles();
 ### `I.grabAttributeFrom()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabAttributeFrom()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Retrieves an attribute from an element located by CSS or XPath and returns it to test.
 Resumes test execution, so **should be used inside async with `await`** operator.
@@ -1788,31 +1130,14 @@ let hint = await I.grabAttributeFrom('#tooltip', 'title');
 
 **Puppeteer**
 
-Retrieves an attribute from an element located by CSS or XPath and returns it to test.
-Resumes test execution, so **should be used inside async with `await`** operator.
-If more than one element is found - attribute of first element is returned.
-
-```js
-let hint = await I.grabAttributeFrom('#tooltip', 'title');
-```
-
-**Parameters**
-*   `locator` **([string][6] | [object][4])** element located by CSS|XPath|strict locator.
-*   `attr` **[string][6]** attribute name.
-
-Returns **[Promise][11]<[string][6]>** attribute value
-
-
 This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.grabAttributeFromAll()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabAttributeFromAll()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Retrieves an array of attributes from elements located by CSS or XPath and returns it to test.
 Resumes test execution, so **should be used inside async with `await`** operator.
@@ -1834,30 +1159,14 @@ let hints = await I.grabAttributeFromAll('.tooltip', 'title');
 
 **Puppeteer**
 
-Retrieves an array of attributes from elements located by CSS or XPath and returns it to test.
-Resumes test execution, so **should be used inside async with `await`** operator.
-
-```js
-let hints = await I.grabAttributeFromAll('.tooltip', 'title');
-```
-
-**Parameters**
-*   `locator` **([string][6] | [object][4])** element located by CSS|XPath|strict locator.
-*   `attr` **[string][6]** attribute name.
-
-Returns **[Promise][11]<[Array][16]<[string][6]>>** attribute value
-
-
 This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.grabBrowserLogs()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabBrowserLogs()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Get JS log from browser. Log buffer is reset after each request.
 Resumes test execution, so **should be used inside an async function with `await`** operator.
@@ -1885,20 +1194,6 @@ console.log(JSON.stringify(errors));
 
 [Learn more about console messages][24]
 
-Returns **[Promise][18]<[Array][10]<any>>**&#x20;
-
-**WebDriver**
-
-Get JS log from browser. Log buffer is reset after each request.
-Resumes test execution, so **should be used inside an async function with `await`** operator.
-
-```js
-let logs = await I.grabBrowserLogs();
-console.log(JSON.stringify(logs))
-```
-
-Returns **([Promise][23]<[Array][29]<[object][17]>> | [undefined][30])** all browser logs
-
 **Puppeteer**
 
 Get JS log from browser.
@@ -1908,16 +1203,12 @@ let logs = await I.grabBrowserLogs();
 console.log(JSON.stringify(logs))
 ```
 
-Returns **[Promise][11]<[Array][16]<any>>**&#x20;
-
 ### `I.grabCookie()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabCookie()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Gets a cookie object by name.
 If none provided gets all cookies.
@@ -1936,66 +1227,12 @@ assert(cookie.value, '123456');
 
 - `any` - attribute value
 
-#### Helper-Specific Differences
-
-**Playwright**
-
-Returns cookie in JSON format. If name not passed returns all cookies for this domain.
-
-Gets a cookie object by name.
-If none provided gets all cookies.
-Resumes test execution, so **should be used inside async function with `await`** operator.
-
-```js
-let cookie = await I.grabCookie('auth');
-assert(cookie.value, '123456');
-```
-
-**Parameters**
-*   `name` **[string][9]?** cookie name. 
-
-Returns **any** attribute value
-
-**WebDriver**
-
-Gets a cookie object by name.
-If none provided gets all cookies.
-Resumes test execution, so **should be used inside async function with `await`** operator.
-
-```js
-let cookie = await I.grabCookie('auth');
-assert(cookie.value, '123456');
-```
-
-**Parameters**
-*   `name` **[string][18]?** cookie name. 
-
-Returns **any** attribute value
-
-**Puppeteer**
-
-Gets a cookie object by name.
-If none provided gets all cookies.
-Resumes test execution, so **should be used inside async function with `await`** operator.
-
-```js
-let cookie = await I.grabCookie('auth');
-assert(cookie.value, '123456');
-```
-
-**Parameters**
-*   `name` **[string][6]?** cookie name. 
-
-Returns **any** attribute valueReturns cookie in JSON format. If name not passed returns all cookies for this domain.
-
 ### `I.grabCssPropertyFrom()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabCssPropertyFrom()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Grab CSS property for given locator
 Resumes test execution, so **should be used inside an async function with `await`** operator.
@@ -2018,31 +1255,14 @@ const value = await I.grabCssPropertyFrom('h3', 'font-weight');
 
 **Puppeteer**
 
-Grab CSS property for given locator
-Resumes test execution, so **should be used inside an async function with `await`** operator.
-If more than one element is found - value of first element is returned.
-
-```js
-const value = await I.grabCssPropertyFrom('h3', 'font-weight');
-```
-
-**Parameters**
-*   `locator` **([string][6] | [object][4])** element located by CSS|XPath|strict locator.
-*   `cssProperty` **[string][6]** CSS property name.
-
-Returns **[Promise][11]<[string][6]>** CSS value
-
-
 This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.grabCssPropertyFromAll()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabCssPropertyFromAll()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Grab array of CSS properties for given locator
 Resumes test execution, so **should be used inside an async function with `await`** operator.
@@ -2064,30 +1284,14 @@ const values = await I.grabCssPropertyFromAll('h3', 'font-weight');
 
 **Puppeteer**
 
-Grab array of CSS properties for given locator
-Resumes test execution, so **should be used inside an async function with `await`** operator.
-
-```js
-const values = await I.grabCssPropertyFromAll('h3', 'font-weight');
-```
-
-**Parameters**
-*   `locator` **([string][6] | [object][4])** element located by CSS|XPath|strict locator.
-*   `cssProperty` **[string][6]** CSS property name.
-
-Returns **[Promise][11]<[Array][16]<[string][6]>>** CSS value
-
-
 This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.grabCurrentUrl()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabCurrentUrl()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Get current URL from browser.
 Resumes test execution, so should be used inside an async function.
@@ -2104,11 +1308,9 @@ console.log(`Current URL is [${url}]`);
 ### `I.grabCurrentWindowHandle()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabCurrentWindowHandle()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Get the current Window Handle.
 Useful for referencing it when calling `I.switchToWindow(handle)`
@@ -2123,11 +1325,9 @@ const window = await I.grabCurrentWindowHandle();
 ### `I.grabDataFromPerformanceTiming()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabDataFromPerformanceTiming()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Grab the data from performance timing using Navigation Timing API.
 The returned data will contain following things in ms:
@@ -2153,14 +1353,60 @@ let data = await I.grabDataFromPerformanceTiming();
 
 - `void` - automatically synchronized promise through #recorder
 
+#### Helper-Specific Differences
+
+**Playwright**
+
+Grab the data from performance timing using Navigation Timing API.
+The returned data will contain following things in ms:
+
+*   responseEnd,
+*   domInteractive,
+*   domContentLoadedEventEnd,
+*   loadEventEnd
+    Resumes test execution, so **should be used inside an async function with `await`** operator.
+
+```js
+await I.amOnPage('https://example.com');
+let data = await I.grabDataFromPerformanceTiming();
+//Returned data
+{ // all results are in [ms]
+  responseEnd: 23,
+  domInteractive: 44,
+  domContentLoadedEventEnd: 196,
+  loadEventEnd: 241
+}
+```
+
+**Puppeteer**
+
+Grab the data from performance timing using Navigation Timing API.
+The returned data will contain following things in ms:
+
+*   responseEnd,
+*   domInteractive,
+*   domContentLoadedEventEnd,
+*   loadEventEnd
+    Resumes test execution, so **should be used inside an async function with `await`** operator.
+
+```js
+await I.amOnPage('https://example.com');
+let data = await I.grabDataFromPerformanceTiming();
+//Returned data
+{ // all results are in [ms]
+  responseEnd: 23,
+  domInteractive: 44,
+  domContentLoadedEventEnd: 196,
+  loadEventEnd: 241
+}
+```
+
 ### `I.grabElementBoundingRect()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabElementBoundingRect()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Grab the width, height, location of given locator.
 Provide `width` or `height`as second param to get your desired prop.
@@ -2189,34 +1435,12 @@ const width = await I.grabElementBoundingRect('h3', 'width');
 
 - `Promise<DOMRect>|Promise<number>` - Element bounding rectangle
 
-### `I.grabGeoLocation()`
-
-<table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabGeoLocation()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
-</table>
-
-#### Common Behavior
-
-Return the current geo location 
-Resumes test execution, so **should be used inside async function with `await`** operator.
-
-```js
-let geoLocation = await I.grabGeoLocation();
-```
-
-**Returns**
-
-- `Promise<{ latitude: number, longitude: number, altitude: number` - >}
-
 ### `I.grabHTMLFrom()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabHTMLFrom()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Retrieves the innerHTML from an element located by CSS or XPath and returns it to test.
 Resumes test execution, so **should be used inside async function with `await`** operator.
@@ -2237,11 +1461,9 @@ let postHTML = await I.grabHTMLFrom('#post');
 ### `I.grabHTMLFromAll()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabHTMLFromAll()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Retrieves all the innerHTML from elements located by CSS or XPath and returns it to test.
 Resumes test execution, so **should be used inside async function with `await`** operator.
@@ -2261,11 +1483,9 @@ let postHTMLs = await I.grabHTMLFromAll('.post');
 ### `I.grabNumberOfOpenTabs()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabNumberOfOpenTabs()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Grab number of open tabs.
 Resumes test execution, so **should be used inside async function with `await`** operator.
@@ -2281,11 +1501,9 @@ let tabs = await I.grabNumberOfOpenTabs();
 ### `I.grabNumberOfVisibleElements()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabNumberOfVisibleElements()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Grab number of visible elements by locator.
 Resumes test execution, so **should be used inside async function with `await`** operator.
@@ -2306,30 +1524,14 @@ let numOfElements = await I.grabNumberOfVisibleElements('p');
 
 **Puppeteer**
 
-Grab number of visible elements by locator.
-Resumes test execution, so **should be used inside async function with `await`** operator.
-
-```js
-let numOfElements = await I.grabNumberOfVisibleElements('p');
-```
-
-**Parameters**
-*   `locator` **([string][6] | [object][4])** located by CSS|XPath|strict locator.
-
-Returns **[Promise][11]<[number][10]>** number of visible elements
-
-
-
 This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.grabPageScrollPosition()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabPageScrollPosition()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Retrieves a page scroll position and returns it to test.
 Resumes test execution, so **should be used inside an async function with `await`** operator.
@@ -2345,11 +1547,9 @@ let { x, y } = await I.grabPageScrollPosition();
 ### `I.grabPopupText()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabPopupText()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Grab the text within the popup. If no popup is visible then it will return null.
 ```js
@@ -2362,24 +1562,28 @@ await I.grabPopupText();
 
 #### Helper-Specific Differences
 
-**WebDriver**
+**Playwright**
 
-Grab the text within the popup. If no popup is visible then it will return null.
+Grab the text within the popup. If no popup is visible then it will return null
 
 ```js
 await I.grabPopupText();
 ```
 
-Returns **[Promise][23]<[string][18]>**&#x20;
+**Puppeteer**
+
+Grab the text within the popup. If no popup is visible then it will return null
+
+```js
+await I.grabPopupText();
+```
 
 ### `I.grabRecordedNetworkTraffics()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabRecordedNetworkTraffics()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Grab the recording network traffics
 
@@ -2397,11 +1601,9 @@ expect(traffics[0].response.body).to.contain({ name: 'this was mocked' });
 ### `I.grabSource()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabSource()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Retrieves page source and returns it to test.
 Resumes test execution, so **should be used inside async function with `await`** operator.
@@ -2417,11 +1619,9 @@ let pageSource = await I.grabSource();
 ### `I.grabTextFrom()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabTextFrom()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Retrieves a text from an element located by CSS or XPath and returns it to test.
 Resumes test execution, so **should be used inside async with `await`** operator.
@@ -2443,31 +1643,14 @@ If multiple elements found returns first element.
 
 **Puppeteer**
 
-Retrieves a text from an element located by CSS or XPath and returns it to test.
-Resumes test execution, so **should be used inside async with `await`** operator.
-
-```js
-let pin = await I.grabTextFrom('#pin');
-```
-
-If multiple elements found returns first element.
-
-**Parameters**
-*   `locator` **([string][6] | [object][4])** element located by CSS|XPath|strict locator.
-
-Returns **[Promise][11]<[string][6]>** attribute value
-
-
-This action supports [React locators](https://codecept.io/react#locators)
+This action supports React locators
 
 ### `I.grabTextFromAll()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabTextFromAll()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Retrieves all texts from an element located by CSS or XPath and returns it to test.
 Resumes test execution, so **should be used inside async with `await`** operator.
@@ -2488,29 +1671,14 @@ let pins = await I.grabTextFromAll('#pin li');
 
 **Puppeteer**
 
-Retrieves all texts from an element located by CSS or XPath and returns it to test.
-Resumes test execution, so **should be used inside async with `await`** operator.
-
-```js
-let pins = await I.grabTextFromAll('#pin li');
-```
-
-**Parameters**
-*   `locator` **([string][6] | [object][4])** element located by CSS|XPath|strict locator.
-
-Returns **[Promise][11]<[Array][16]<[string][6]>>** attribute value
-
-
 This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.grabTitle()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabTitle()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Retrieves a page title and returns it to test.
 Resumes test execution, so **should be used inside async with `await`** operator.
@@ -2526,11 +1694,9 @@ let title = await I.grabTitle();
 ### `I.grabValueFrom()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabValueFrom()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Retrieves a value from a form element located by CSS or XPath and returns it to test.
 Resumes test execution, so **should be used inside async function with `await`** operator.
@@ -2551,11 +1717,9 @@ let email = await I.grabValueFrom('input[name=email]');
 ### `I.grabValueFromAll()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabValueFromAll()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Retrieves an array of value from a form located by CSS or XPath and returns it to test.
 Resumes test execution, so **should be used inside async function with `await`** operator.
@@ -2575,11 +1739,9 @@ let inputs = await I.grabValueFromAll('//form/input');
 ### `I.grabWebElement()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabWebElement()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Grab WebElement for given locator
 Resumes test execution, so **should be used inside an async function with `await`** operator.
@@ -2599,11 +1761,9 @@ const webElement = await I.grabWebElement('#button');
 ### `I.grabWebElements()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.grabWebElements()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Grab WebElements for given locator
 Resumes test execution, so **should be used inside an async function with `await`** operator.
@@ -2623,11 +1783,9 @@ const webElements = await I.grabWebElements('#button');
 ### `I.moveCursorTo()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.moveCursorTo()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Moves cursor to element matched by locator.
 Extra shift can be set with offsetX and offsetY options.
@@ -2653,82 +1811,16 @@ I.moveCursorTo('#submit', '.container');
 
 #### Helper-Specific Differences
 
-**Playwright**
-
-Moves cursor to element matched by locator.
-Extra shift can be set with offsetX and offsetY options.
-
-An optional `context` (as a second parameter) can be specified to narrow the search to an element within a parent.
-When the second argument is a non-number (string or locator object), it is treated as context.
-
-```js
-I.moveCursorTo('.tooltip');
-I.moveCursorTo('#submit', 5,5);
-I.moveCursorTo('#submit', '.container');
-```
-
-**Parameters**
-*   `locator` **([string][9] | [object][6])** located by CSS|XPath|strict locator.
-*   `offsetX` **([number][17] | [string][9] | [object][6])** (optional, `0` by default) X-axis offset or context locator. 
-*   `offsetY` **[number][17]** (optional, `0` by default) Y-axis offset. 
-
-Returns **void** automatically synchronized promise through #recorder
-
-**WebDriver**
-
-Moves cursor to element matched by locator.
-Extra shift can be set with offsetX and offsetY options.
-
-An optional `context` (as a second parameter) can be specified to narrow the search to an element within a parent.
-When the second argument is a non-number (string or locator object), it is treated as context.
-
-```js
-I.moveCursorTo('.tooltip');
-I.moveCursorTo('#submit', 5,5);
-I.moveCursorTo('#submit', '.container');
-```
-
-**Parameters**
-*   `locator` **([string][18] | [object][17])** located by CSS|XPath|strict locator.
-*   `xOffset` &#x20;
-*   `yOffset` &#x20;
-*   `offsetX` **([number][22] | [string][18] | [object][17])** (optional, `0` by default) X-axis offset or context locator. 
-*   `offsetY` **[number][22]** (optional, `0` by default) Y-axis offset. 
-
-Returns **void** automatically synchronized promise through #recorder
-
 **Puppeteer**
-
-Moves cursor to element matched by locator.
-Extra shift can be set with offsetX and offsetY options.
-
-An optional `context` (as a second parameter) can be specified to narrow the search to an element within a parent.
-When the second argument is a non-number (string or locator object), it is treated as context.
-
-```js
-I.moveCursorTo('.tooltip');
-I.moveCursorTo('#submit', 5,5);
-I.moveCursorTo('#submit', '.container');
-```
-
-**Parameters**
-*   `locator` **([string][6] | [object][4])** located by CSS|XPath|strict locator.
-*   `offsetX` **([number][10] | [string][6] | [object][4])** (optional, `0` by default) X-axis offset or context locator. 
-*   `offsetY` **[number][10]** (optional, `0` by default) Y-axis offset. 
-
-Returns **void** automatically synchronized promise through #recorder
-
 
 This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.openNewTab()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.openNewTab()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Open new tab and switch to it.
 
@@ -2757,23 +1849,6 @@ You can pass in [page options][32] to emulate device on this page
 I.openNewTab({ isMobile: true });
 ```
 
-**Parameters**
-*   `options` &#x20;
-
-**WebDriver**
-
-Open new tab and switch to it.
-
-```js
-I.openNewTab();
-```
-
-**Parameters**
-*   `url`   
-*   `windowName`   
-
-Returns **void** automatically synchronized promise through #recorder
-
 **Puppeteer**
 
 Open new tab and switch to it
@@ -2785,11 +1860,9 @@ I.openNewTab();
 ### `I.pressKey()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.pressKey()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Presses a key on a focused element.
 Special keys like 'Enter', 'Control', [etc](https://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element/:id/value)
@@ -2810,6 +1883,69 @@ I.pressKey(['Control','a']);
 - `void` - automatically synchronized promise through #recorder
 
 #### Helper-Specific Differences
+
+**Playwright**
+
+*Note:* Shortcuts like `'Meta'` + `'A'` do not work on macOS ([puppeteer/puppeteer#1313][33]).
+
+Presses a key in the browser (on a focused element).
+
+*Hint:* For populating text field or textarea, it is recommended to use [`fillField`][34].
+
+```js
+I.pressKey('Backspace');
+```
+
+To press a key in combination with modifier keys, pass the sequence as an array. All modifier keys (`'Alt'`, `'Control'`, `'Meta'`, `'Shift'`) will be released afterwards.
+
+```js
+I.pressKey(['Control', 'Z']);
+```
+
+For specifying operation modifier key based on operating system it is suggested to use `'CommandOrControl'`.
+This will press `'Command'` (also known as `'Meta'`) on macOS machines and `'Control'` on non-macOS machines.
+
+```js
+I.pressKey(['CommandOrControl', 'Z']);
+```
+
+Some of the supported key names are:
+
+*   `'AltLeft'` or `'Alt'`
+*   `'AltRight'`
+*   `'ArrowDown'`
+*   `'ArrowLeft'`
+*   `'ArrowRight'`
+*   `'ArrowUp'`
+*   `'Backspace'`
+*   `'Clear'`
+*   `'ControlLeft'` or `'Control'`
+*   `'ControlRight'`
+*   `'Command'`
+*   `'CommandOrControl'`
+*   `'Delete'`
+*   `'End'`
+*   `'Enter'`
+*   `'Escape'`
+*   `'F1'` to `'F12'`
+*   `'Home'`
+*   `'Insert'`
+*   `'MetaLeft'` or `'Meta'`
+*   `'MetaRight'`
+*   `'Numpad0'` to `'Numpad9'`
+*   `'NumpadAdd'`
+*   `'NumpadDecimal'`
+*   `'NumpadDivide'`
+*   `'NumpadMultiply'`
+*   `'NumpadSubtract'`
+*   `'PageDown'`
+*   `'PageUp'`
+*   `'Pause'`
+*   `'Return'`
+*   `'ShiftLeft'` or `'Shift'`
+*   `'ShiftRight'`
+*   `'Space'`
+*   `'Tab'`
 
 **WebDriver**
 
@@ -2874,19 +2010,75 @@ Some of the supported key names are:
 *   `'Space'`
 *   `'Tab'`
 
-**Parameters**
-*   `key` **([string][18] | [Array][29]<[string][18]>)** key or array of keys to press.
+**Puppeteer**
 
-Returns **void** automatically synchronized promise through #recorder
+*Note:* Shortcuts like `'Meta'` + `'A'` do not work on macOS ([puppeteer/puppeteer#1313][20]).
+
+Presses a key in the browser (on a focused element).
+
+*Hint:* For populating text field or textarea, it is recommended to use [`fillField`][21].
+
+```js
+I.pressKey('Backspace');
+```
+
+To press a key in combination with modifier keys, pass the sequence as an array. All modifier keys (`'Alt'`, `'Control'`, `'Meta'`, `'Shift'`) will be released afterwards.
+
+```js
+I.pressKey(['Control', 'Z']);
+```
+
+For specifying operation modifier key based on operating system it is suggested to use `'CommandOrControl'`.
+This will press `'Command'` (also known as `'Meta'`) on macOS machines and `'Control'` on non-macOS machines.
+
+```js
+I.pressKey(['CommandOrControl', 'Z']);
+```
+
+Some of the supported key names are:
+
+*   `'AltLeft'` or `'Alt'`
+*   `'AltRight'`
+*   `'ArrowDown'`
+*   `'ArrowLeft'`
+*   `'ArrowRight'`
+*   `'ArrowUp'`
+*   `'Backspace'`
+*   `'Clear'`
+*   `'ControlLeft'` or `'Control'`
+*   `'ControlRight'`
+*   `'Command'`
+*   `'CommandOrControl'`
+*   `'Delete'`
+*   `'End'`
+*   `'Enter'`
+*   `'Escape'`
+*   `'F1'` to `'F12'`
+*   `'Home'`
+*   `'Insert'`
+*   `'MetaLeft'` or `'Meta'`
+*   `'MetaRight'`
+*   `'Numpad0'` to `'Numpad9'`
+*   `'NumpadAdd'`
+*   `'NumpadDecimal'`
+*   `'NumpadDivide'`
+*   `'NumpadMultiply'`
+*   `'NumpadSubtract'`
+*   `'PageDown'`
+*   `'PageUp'`
+*   `'Pause'`
+*   `'Return'`
+*   `'ShiftLeft'` or `'Shift'`
+*   `'ShiftRight'`
+*   `'Space'`
+*   `'Tab'`
 
 ### `I.pressKeyDown()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.pressKeyDown()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Presses a key in the browser and leaves it in a down state.
 
@@ -2909,11 +2101,9 @@ I.pressKeyUp('Control');
 ### `I.pressKeyUp()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.pressKeyUp()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Releases a key in the browser which was previously set to a down state.
 
@@ -2933,89 +2123,12 @@ I.pressKeyUp('Control');
 
 - `void` - automatically synchronized promise through #recorder
 
-### `I.pressKeyWithKeyNormalization()`
-
-<table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.pressKeyWithKeyNormalization()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
-</table>
-
-#### Common Behavior
-
-Presses a key in the browser (on a focused element).
-
-_Hint:_ For populating text field or textarea, it is recommended to use [`fillField`](#ifillfield).
-
-```js
-I.pressKey('Backspace');
-```
-
-To press a key in combination with modifier keys, pass the sequence as an array. All modifier keys (`'Alt'`, `'Control'`, `'Meta'`, `'Shift'`) will be released afterwards.
-
-```js
-I.pressKey(['Control', 'Z']);
-```
-
-For specifying operation modifier key based on operating system it is suggested to use `'CommandOrControl'`.
-This will press `'Command'` (also known as `'Meta'`) on macOS machines and `'Control'` on non-macOS machines.
-
-```js
-I.pressKey(['CommandOrControl', 'Z']);
-```
-
-Some of the supported key names are:
-- `'AltLeft'` or `'Alt'`
-- `'AltRight'`
-- `'ArrowDown'`
-- `'ArrowLeft'`
-- `'ArrowRight'`
-- `'ArrowUp'`
-- `'Backspace'`
-- `'Clear'`
-- `'ControlLeft'` or `'Control'`
-- `'ControlRight'`
-- `'Command'`
-- `'CommandOrControl'`
-- `'Delete'`
-- `'End'`
-- `'Enter'`
-- `'Escape'`
-- `'F1'` to `'F12'`
-- `'Home'`
-- `'Insert'`
-- `'MetaLeft'` or `'Meta'`
-- `'MetaRight'`
-- `'Numpad0'` to `'Numpad9'`
-- `'NumpadAdd'`
-- `'NumpadDecimal'`
-- `'NumpadDivide'`
-- `'NumpadMultiply'`
-- `'NumpadSubtract'`
-- `'PageDown'`
-- `'PageUp'`
-- `'Pause'`
-- `'Return'`
-- `'ShiftLeft'` or `'Shift'`
-- `'ShiftRight'`
-- `'Space'`
-- `'Tab'`
-
-**Parameters**
-
-- `key` `string|string[]` - key or array of keys to press.
-
-**Returns**
-
-- `void` - automatically synchronized promise through #recorder
-
 ### `I.refreshPage()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.refreshPage()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Reload the current page.
 
@@ -3030,11 +2143,9 @@ I.refreshPage();
 ### `I.resizeWindow()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.resizeWindow()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Resize the current window to provided width and height.
 First parameter can be set to `maximize`.
@@ -3064,27 +2175,9 @@ Update configuration to change real window size on start:
 { setWindowSize } = require('@codeceptjs/configure');
 ```
 
-Resize the current window to provided width and height.
-First parameter can be set to `maximize`.
-
-**Parameters**
-*   `width` **[number][17]** width in pixels or `maximize`.
-*   `height` **[number][17]** height in pixels.
-
-Returns **void** automatically synchronized promise through #recorder
-
 **WebDriver**
 
 Appium: not tested in web, in apps doesn't work
-
-Resize the current window to provided width and height.
-First parameter can be set to `maximize`.
-
-**Parameters**
-*   `width` **[number][22]** width in pixels or `maximize`.
-*   `height` **[number][22]** height in pixels.
-
-Returns **void** automatically synchronized promise through #recorder
 
 **Puppeteer**
 
@@ -3092,23 +2185,12 @@ Unlike other drivers Puppeteer changes the size of a viewport, not the window!
 Puppeteer does not control the window of a browser, so it can't adjust its real size.
 It also can't maximize a window.
 
-Resize the current window to provided width and height.
-First parameter can be set to `maximize`.
-
-**Parameters**
-*   `width` **[number][10]** width in pixels or `maximize`.
-*   `height` **[number][10]** height in pixels.
-
-Returns **void** automatically synchronized promise through #recorder
-
 ### `I.rightClick()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.rightClick()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Performs right click on a clickable element matched by semantic locator, CSS or XPath.
 
@@ -3132,33 +2214,20 @@ I.rightClick('Click me', '.context');
 
 #### Helper-Specific Differences
 
-**Playwright**
+**WebDriver**
 
-Performs right click on a clickable element matched by semantic locator, CSS or XPath.
+This action supports [React locators](https://codecept.io/react#locators)
 
-```js
-// right click element with id el
-I.rightClick('#el');
-// right click link or button with text "Click me"
-I.rightClick('Click me');
-// right click button with text "Click me" inside .context
-I.rightClick('Click me', '.context');
-```
+**Puppeteer**
 
-**Parameters**
-*   `locator` **([string][9] | [object][6])** clickable element located by CSS|XPath|strict locator.
-*   `context` **([string][9]? | [object][6])** (optional, `null` by default) element located by CSS|XPath|strict locator. 
-
-Returns **void** automatically synchronized promise through #recorder
+This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.saveElementScreenshot()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.saveElementScreenshot()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Saves screenshot of the specified locator to ouput folder (set in codecept.conf.ts or codecept.conf.js).
 Filename is relative to output folder.
@@ -3179,11 +2248,9 @@ I.saveElementScreenshot(`#submit`,'debug.png');
 ### `I.saveScreenshot()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.saveScreenshot()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Saves a screenshot to ouput folder (set in codecept.conf.ts or codecept.conf.js).
 Filename is relative to output folder.
@@ -3203,40 +2270,12 @@ I.saveScreenshot('debug.png', true) //resizes to available scrollHeight and scro
 
 - `void` - automatically synchronized promise through #recorder
 
-### `I.say()`
-
-<table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.say()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
-</table>
-
-#### Common Behavior
-
-Print a text in console log
-
-```js
-I.say('This is red', 'red'); //red is used
-I.say('This is blue', 'blue'); //blue is used
-I.say('This is by default'); //cyan is used
-```
-
-**Parameters**
-
-- `text` `string` - expected on console log.
-- `[color='cyan']` `string` - color you want to use.
-
-**Returns**
-
-- `void` - automatically synchronized promise through #recorder
-
 ### `I.scrollIntoView()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.scrollIntoView()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Scroll element into viewport.
 
@@ -3258,11 +2297,9 @@ I.scrollIntoView('#submit', { behavior: "smooth", block: "center", inline: "cent
 ### `I.scrollPageToBottom()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.scrollPageToBottom()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Scroll page to the bottom.
 
@@ -3277,11 +2314,9 @@ I.scrollPageToBottom();
 ### `I.scrollPageToTop()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.scrollPageToTop()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Scroll page to the top.
 
@@ -3296,11 +2331,9 @@ I.scrollPageToTop();
 ### `I.scrollTo()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.scrollTo()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Scrolls to element matched by locator.
 Extra shift can be set with offsetX and offsetY options.
@@ -3323,11 +2356,9 @@ I.scrollTo('#submit', 5, 5);
 ### `I.see()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.see()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Checks that a page contains a visible text.
 Use context parameter to narrow down the search.
@@ -3349,31 +2380,20 @@ I.see('Register', {css: 'form.register'}); // use strict locator
 
 #### Helper-Specific Differences
 
-**Playwright**
+**WebDriver**
 
-Checks that a page contains a visible text.
-Use context parameter to narrow down the search.
+This action supports [React locators](https://codecept.io/react#locators)
 
-```js
-I.see('Welcome'); // text welcome on a page
-I.see('Welcome', '.content'); // text inside .content div
-I.see('Register', {css: 'form.register'}); // use strict locator
-```
+**Puppeteer**
 
-**Parameters**
-*   `text` **[string][9]** expected on page.
-*   `context` **([string][9]? | [object][6])** (optional, `null` by default) element located by CSS|Xpath|strict locator in which to search for text. 
-
-Returns **void** automatically synchronized promise through #recorder
+This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.seeAttributesOnElements()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeAttributesOnElements()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Checks that all elements with given locator have given attributes.
 
@@ -3394,29 +2414,14 @@ I.seeAttributesOnElements('//form', { method: "post"});
 
 **Puppeteer**
 
-Checks that all elements with given locator have given attributes.
-
-```js
-I.seeAttributesOnElements('//form', { method: "post"});
-```
-
-**Parameters**
-*   `locator` **([string][6] | [object][4])** located by CSS|XPath|strict locator.
-*   `attributes` **[object][4]** attributes and their values to check.
-
-Returns **void** automatically synchronized promise through #recorder
-
-
 This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.seeCheckboxIsChecked()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeCheckboxIsChecked()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Verifies that the specified checkbox is checked.
 
@@ -3439,27 +2444,13 @@ I.seeCheckboxIsChecked({css: '#signup_form input[type=checkbox]'});
 **WebDriver**
 
 Appium: not tested
-Verifies that the specified checkbox is checked.
-
-```js
-I.seeCheckboxIsChecked('Agree');
-I.seeCheckboxIsChecked('#agree'); // I suppose user agreed to terms
-I.seeCheckboxIsChecked({css: '#signup_form input[type=checkbox]'});
-```
-
-**Parameters**
-*   `field` **([string][18] | [object][17])** located by label|name|CSS|XPath|strict locator.
-
-Returns **void** automatically synchronized promise through #recorder
 
 ### `I.seeCookie()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeCookie()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Checks that cookie with given name exists.
 
@@ -3478,11 +2469,9 @@ I.seeCookie('Auth');
 ### `I.seeCssPropertiesOnElements()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeCssPropertiesOnElements()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Checks that all elements with given locator have given CSS properties.
 
@@ -3503,29 +2492,14 @@ I.seeCssPropertiesOnElements('h3', { 'font-weight': "bold"});
 
 **Puppeteer**
 
-Checks that all elements with given locator have given CSS properties.
-
-```js
-I.seeCssPropertiesOnElements('h3', { 'font-weight': "bold"});
-```
-
-**Parameters**
-*   `locator` **([string][6] | [object][4])** located by CSS|XPath|strict locator.
-*   `cssProperties` **[object][4]** object with CSS properties and their values to check.
-
-Returns **void** automatically synchronized promise through #recorder
-
-
 This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.seeCurrentUrlEquals()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeCurrentUrlEquals()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Checks that current url is equal to provided one.
 If a relative url provided, a configured url will be prepended to it.
@@ -3547,11 +2521,9 @@ I.seeCurrentUrlEquals('http://my.site.com/register');
 ### `I.seeElement()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeElement()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Checks that a given Element is visible
 Element is located by CSS or XPath.
@@ -3574,32 +2546,20 @@ I.seeElement('#modal', '#container');
 
 #### Helper-Specific Differences
 
-**Playwright**
+**WebDriver**
 
-Checks that a given Element is visible
-Element is located by CSS or XPath.
+This action supports [React locators](https://codecept.io/react#locators)
 
-The second parameter is a context (CSS or XPath locator) to narrow the search.
+**Puppeteer**
 
-```js
-I.seeElement('#modal');
-I.seeElement('#modal', '#container');
-```
-
-**Parameters**
-*   `locator` **([string][9] | [object][6])** located by CSS|XPath|strict locator.
-*   `context` **([string][9]? | [object][6])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
-
-Returns **void** automatically synchronized promise through #recorder
+This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.seeElementInDOM()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeElementInDOM()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Checks that a given Element is present in the DOM
 Element is located by CSS or XPath.
@@ -3619,11 +2579,9 @@ I.seeElementInDOM('#modal');
 ### `I.seeInCurrentUrl()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeInCurrentUrl()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Checks that current url contains a provided fragment.
 
@@ -3642,11 +2600,9 @@ I.seeInCurrentUrl('/register'); // we are on registration page
 ### `I.seeInField()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeInField()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Checks that the given input field or textarea equals to given value.
 For fuzzy locators, fields are matched by label text, the "name" attribute, CSS, and XPath.
@@ -3675,11 +2631,9 @@ I.seeInField('Name', 'John', '.form-container');
 ### `I.seeInPopup()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeInPopup()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Checks that the active JavaScript popup, as created by `window.alert|window.confirm|window.prompt`, contains the
 given string.
@@ -3703,17 +2657,12 @@ I.seeInPopup('Popup text');
 Checks that the active JavaScript popup, as created by `window.alert|window.confirm|window.prompt`, contains the
 given string.
 
-**Parameters**
-*   `text` **[string][18]** value to check.
-
 ### `I.seeInSource()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeInSource()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Checks that the current page contains the given string in its raw source code.
 
@@ -3732,11 +2681,9 @@ I.seeInSource('<h1>Green eggs &amp; ham</h1>');
 ### `I.seeInTitle()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeInTitle()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Checks that title contains text.
 
@@ -3755,11 +2702,9 @@ I.seeInTitle('Home Page');
 ### `I.seeNumberOfElements()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeNumberOfElements()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Asserts that an element appears a given number of times in the DOM.
 Element is located by label or name or CSS or XPath.
@@ -3780,29 +2725,20 @@ I.seeNumberOfElements('#submitBtn', 1);
 
 #### Helper-Specific Differences
 
-**Playwright**
+**WebDriver**
 
-Asserts that an element appears a given number of times in the DOM.
-Element is located by label or name or CSS or XPath.
+This action supports [React locators](https://codecept.io/react#locators)
 
-```js
-I.seeNumberOfElements('#submitBtn', 1);
-```
+**Puppeteer**
 
-**Parameters**
-*   `locator` **([string][9] | [object][6])** element located by CSS|XPath|strict locator.
-*   `num` **[number][17]** number of elements.
-
-Returns **void** automatically synchronized promise through #recorder
+This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.seeNumberOfVisibleElements()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeNumberOfVisibleElements()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Asserts that an element is visible a given number of times.
 Element is located by CSS or XPath.
@@ -3822,29 +2758,20 @@ I.seeNumberOfVisibleElements('.buttons', 3);
 
 #### Helper-Specific Differences
 
-**Playwright**
+**WebDriver**
 
-Asserts that an element is visible a given number of times.
-Element is located by CSS or XPath.
+This action supports [React locators](https://codecept.io/react#locators)
 
-```js
-I.seeNumberOfVisibleElements('.buttons', 3);
-```
+**Puppeteer**
 
-**Parameters**
-*   `locator` **([string][9] | [object][6])** element located by CSS|XPath|strict locator.
-*   `num` **[number][17]** number of elements.
-
-Returns **void** automatically synchronized promise through #recorder
+This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.seeTextEquals()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeTextEquals()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Checks that text is equal to provided one.
 
@@ -3864,11 +2791,9 @@ I.seeTextEquals('text', 'h1');
 ### `I.seeTitleEquals()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeTitleEquals()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Checks that title is equal to provided one.
 
@@ -3887,11 +2812,9 @@ I.seeTitleEquals('Test title.');
 ### `I.seeTraffic()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.seeTraffic()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Verifies that a certain request is part of network traffic.
 
@@ -3938,11 +2861,9 @@ await I.seeTraffic({
 ### `I.selectOption()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.selectOption()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Selects an option in a drop-down select.
 Field is searched by label | name | CSS | XPath.
@@ -3980,11 +2901,9 @@ I.selectOption('Which OS do you use?', ['Android', 'iOS']);
 ### `I.setCookie()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.setCookie()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Sets cookie(s).
 
@@ -4013,60 +2932,13 @@ I.setCookie([
 **WebDriver**
 
 Uses Selenium's JSON [cookie format][35].
-Sets cookie(s).
-
-Can be a single cookie object or an array of cookies:
-
-```js
-I.setCookie({name: 'auth', value: true});
-
-// as array
-I.setCookie([
-  {name: 'auth', value: true},
-  {name: 'agree', value: true}
-]);
-```
-
-**Parameters**
-*   `cookie` **(Cookie | [Array][29]<Cookie>)** a cookie object or array of cookie objects.
-
-Returns **void** automatically synchronized promise through #recorder
-
-### `I.setGeoLocation()`
-
-<table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.setGeoLocation()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
-</table>
-
-#### Common Behavior
-
-Set the current geo location
-
-
-```js
-I.setGeoLocation(121.21, 11.56);
-I.setGeoLocation(121.21, 11.56, 10);
-```
-
-**Parameters**
-
-- `latitude` `number` - to set.
-- `longitude` `number` - to set
-- `altitude` `number=` - (optional, null by default) to set
-
-**Returns**
-
-- `void` - automatically synchronized promise through #recorder
 
 ### `I.startRecordingTraffic()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.startRecordingTraffic()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Starts recording the network traffics.
 This also resets recorded network requests.
@@ -4082,11 +2954,9 @@ I.startRecordingTraffic();
 ### `I.startRecordingWebSocketMessages()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.startRecordingWebSocketMessages()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Starts recording of websocket messages.
 This also resets recorded websocket messages.
@@ -4102,11 +2972,9 @@ await I.startRecordingWebSocketMessages();
 ### `I.stopRecordingTraffic()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.stopRecordingTraffic()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Stops recording of network traffic. Recorded traffic is not flashed.
 
@@ -4117,11 +2985,9 @@ I.stopRecordingTraffic();
 ### `I.stopRecordingWebSocketMessages()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.stopRecordingWebSocketMessages()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Stops recording WS messages. Recorded WS messages is not flashed.
 
@@ -4136,11 +3002,9 @@ await I.stopRecordingWebSocketMessages();
 ### `I.switchTo()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.switchTo()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Switches frame or in case of null locator reverts to parent.
 
@@ -4160,11 +3024,9 @@ I.switchTo(); // switch back to main page
 ### `I.switchToNextTab()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.switchToNextTab()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Switch focus to a particular tab by its number. It waits tabs loading and then switch tab.
 
@@ -4184,29 +3046,30 @@ I.switchToNextTab(2);
 
 #### Helper-Specific Differences
 
-**WebDriver**
+**Playwright**
 
-Switch focus to a particular tab by its number. It waits tabs loading and then switch tab.
+Switch focus to a particular tab by its number. It waits tabs loading and then switch tab
 
 ```js
 I.switchToNextTab();
 I.switchToNextTab(2);
 ```
 
-**Parameters**
-*   `num` **[number][22]?** (optional) number of tabs to switch forward, default: 1. 
-*   `sec` **([number][22] | null)?** (optional) time in seconds to wait. 
+**Puppeteer**
 
-Returns **void** automatically synchronized promise through #recorder
+Switch focus to a particular tab by its number. It waits tabs loading and then switch tab
+
+```js
+I.switchToNextTab();
+I.switchToNextTab(2);
+```
 
 ### `I.switchToPreviousTab()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.switchToPreviousTab()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Switch focus to a particular tab by its number. It waits tabs loading and then switch tab.
 
@@ -4226,29 +3089,30 @@ I.switchToPreviousTab(2);
 
 #### Helper-Specific Differences
 
-**WebDriver**
+**Playwright**
 
-Switch focus to a particular tab by its number. It waits tabs loading and then switch tab.
+Switch focus to a particular tab by its number. It waits tabs loading and then switch tab
 
 ```js
 I.switchToPreviousTab();
 I.switchToPreviousTab(2);
 ```
 
-**Parameters**
-*   `num` **[number][22]?** (optional) number of tabs to switch backward, default: 1. 
-*   `sec` **[number][22]??** (optional) time in seconds to wait. 
+**Puppeteer**
 
-Returns **void** automatically synchronized promise through #recorder
+Switch focus to a particular tab by its number. It waits tabs loading and then switch tab
+
+```js
+I.switchToPreviousTab();
+I.switchToPreviousTab(2);
+```
 
 ### `I.type()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.type()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Types out the given text into an active field.
 To slow down typing use a second parameter, to set interval between key presses.
@@ -4280,11 +3144,9 @@ I.type(secret('123456'));
 ### `I.uncheckOption()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.uncheckOption()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Unselects a checkbox or radio button.
 Element is located by label or name or CSS or XPath.
@@ -4321,71 +3183,16 @@ I.uncheckOption('Agree', '.signup', { position: { x: 5, y: 5 } })
 
 > ⚠️ To avoid flakiness, option `force: true` is set by default
 
-Unselects a checkbox or radio button.
-Element is located by label or name or CSS or XPath.
-
-The second parameter is an optional context (CSS or XPath locator) to narrow the search.
-
-```js
-I.uncheckOption('#agree');
-I.uncheckOption('I Agree to Terms and Conditions');
-I.uncheckOption('agree', '//form');
-```
-
-**Parameters**
-*   `field` **([string][9] | [object][6])** checkbox located by label | name | CSS | XPath | strict locator.
-*   `context` **([string][9]? | [object][6])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
-*   `options`   
-
-Returns **void** automatically synchronized promise through #recorder
-
 **WebDriver**
 
 Appium: not tested
-Unselects a checkbox or radio button.
-Element is located by label or name or CSS or XPath.
-
-The second parameter is an optional context (CSS or XPath locator) to narrow the search.
-
-```js
-I.uncheckOption('#agree');
-I.uncheckOption('I Agree to Terms and Conditions');
-I.uncheckOption('agree', '//form');
-```
-
-**Parameters**
-*   `field` **([string][18] | [object][17])** checkbox located by label | name | CSS | XPath | strict locator.
-*   `context` **([string][18]? | [object][17])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
-
-Returns **void** automatically synchronized promise through #recorder
-
-**Puppeteer**
-
-Unselects a checkbox or radio button.
-Element is located by label or name or CSS or XPath.
-
-The second parameter is an optional context (CSS or XPath locator) to narrow the search.
-
-```js
-I.uncheckOption('#agree');
-I.uncheckOption('I Agree to Terms and Conditions');
-I.uncheckOption('agree', '//form');
-```
-
-**Parameters**
-*   `field` **([string][6] | [object][4])** checkbox located by label | name | CSS | XPath | strict locator.
-*   `context` **([string][6]? | [object][4])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
-
-Returns **void** automatically synchronized promise through #recorder
 
 ### `I.wait()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.wait()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Pauses execution for a number of seconds.
 
@@ -4404,11 +3211,9 @@ I.wait(2); // wait 2 secs
 ### `I.waitForClickable()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitForClickable()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Waits for element to be clickable (by default waits for 1sec).
 Element can be located by CSS or XPath.
@@ -4430,11 +3235,9 @@ I.waitForClickable('.btn.continue', 5); // wait for 5 secs
 ### `I.waitForCookie()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitForCookie()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Waits for the specified cookie in the cookies.
 
@@ -4454,11 +3257,9 @@ I.waitForCookie("token");
 ### `I.waitForDetached()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitForDetached()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Waits for an element to become not attached to the DOM on a page (by default waits for 1sec).
 Element can be located by CSS or XPath.
@@ -4479,11 +3280,9 @@ I.waitForDetached('#popup');
 ### `I.waitForDisabled()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitForDisabled()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Waits for element to become disabled (by default waits for 1sec).
 Element can be located by CSS or XPath.
@@ -4500,11 +3299,9 @@ Element can be located by CSS or XPath.
 ### `I.waitForElement()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitForElement()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Waits for element to be present on page (by default waits for 1sec).
 Element can be located by CSS or XPath.
@@ -4525,65 +3322,16 @@ I.waitForElement('.btn.continue', 5); // wait for 5 secs
 
 #### Helper-Specific Differences
 
-**Playwright**
-
-Waits for element to be present on page (by default waits for 1sec).
-Element can be located by CSS or XPath.
-
-```js
-I.waitForElement('.btn.continue');
-I.waitForElement('.btn.continue', 5); // wait for 5 secs
-```
-
-**Parameters**
-*   `locator` **([string][9] | [object][6])** element located by CSS|XPath|strict locator.
-*   `sec` **[number][17]?** (optional, `1` by default) time in seconds to wait
-
-Returns **void** automatically synchronized promise through #recorder
-
-**WebDriver**
-
-Waits for element to be present on page (by default waits for 1sec).
-Element can be located by CSS or XPath.
-
-```js
-I.waitForElement('.btn.continue');
-I.waitForElement('.btn.continue', 5); // wait for 5 secs
-```
-
-**Parameters**
-*   `locator` **([string][18] | [object][17])** element located by CSS|XPath|strict locator.
-*   `sec` **[number][22]?** (optional, `1` by default) time in seconds to wait 
-
-Returns **void** automatically synchronized promise through #recorder
-
 **Puppeteer**
-
-Waits for element to be present on page (by default waits for 1sec).
-Element can be located by CSS or XPath.
-
-```js
-I.waitForElement('.btn.continue');
-I.waitForElement('.btn.continue', 5); // wait for 5 secs
-```
-
-**Parameters**
-*   `locator` **([string][6] | [object][4])** element located by CSS|XPath|strict locator.
-*   `sec` **[number][10]?** (optional, `1` by default) time in seconds to wait
-
-Returns **void** automatically synchronized promise through #recorder
-
 
 This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.waitForEnabled()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitForEnabled()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Waits for element to become enabled (by default waits for 1sec).
 Element can be located by CSS or XPath.
@@ -4600,11 +3348,9 @@ Element can be located by CSS or XPath.
 ### `I.waitForFunction()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitForFunction()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Waits for a function to return true (waits for 1 sec by default).
 Running in browser context.
@@ -4632,11 +3378,9 @@ I.waitForFunction((count) => window.requests == count, [3], 5) // pass args and 
 ### `I.waitForInvisible()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitForInvisible()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Waits for an element to be removed or become invisible on a page (by default waits for 1sec).
 Element can be located by CSS or XPath.
@@ -4657,11 +3401,9 @@ I.waitForInvisible('#popup');
 ### `I.waitForNumberOfTabs()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitForNumberOfTabs()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Waits for number of tabs.
 
@@ -4681,11 +3423,9 @@ I.waitForNumberOfTabs(2);
 ### `I.waitForText()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitForText()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Waits for a text to appear (by default waits for 1sec).
 Element can be located by CSS or XPath.
@@ -4710,11 +3450,9 @@ I.waitForText('Thank you, form has been submitted', 5, '#modal');
 ### `I.waitForValue()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitForValue()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Waits for the specified value to be in value attribute.
 
@@ -4736,11 +3474,9 @@ I.waitForValue('//input', "GoodValue");
 ### `I.waitForVisible()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitForVisible()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Waits for an element to become visible on a page (by default waits for 1sec).
 Element can be located by CSS or XPath.
@@ -4764,60 +3500,16 @@ I.waitForVisible('#popup');
 
 This method accepts [React selectors][43].
 
-Waits for an element to become visible on a page (by default waits for 1sec).
-Element can be located by CSS or XPath.
-
-```js
-I.waitForVisible('#popup');
-```
-
-**Parameters**
-*   `locator` **([string][9] | [object][6])** element located by CSS|XPath|strict locator.
-*   `sec` **[number][17]** (optional, `1` by default) time in seconds to wait 
-
-Returns **void** automatically synchronized promise through #recorder
-
-**WebDriver**
-
-Waits for an element to become visible on a page (by default waits for 1sec).
-Element can be located by CSS or XPath.
-
-```js
-I.waitForVisible('#popup');
-```
-
-**Parameters**
-*   `locator` **([string][18] | [object][17])** element located by CSS|XPath|strict locator.
-*   `sec` **[number][22]** (optional, `1` by default) time in seconds to wait 
-
-Returns **void** automatically synchronized promise through #recorder
-
 **Puppeteer**
-
-Waits for an element to become visible on a page (by default waits for 1sec).
-Element can be located by CSS or XPath.
-
-```js
-I.waitForVisible('#popup');
-```
-
-**Parameters**
-*   `locator` **([string][6] | [object][4])** element located by CSS|XPath|strict locator.
-*   `sec` **[number][10]** (optional, `1` by default) time in seconds to wait 
-
-Returns **void** automatically synchronized promise through #recorder
-
 
 This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.waitInUrl()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitInUrl()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Waiting for the part of the URL to match the expected. Useful for SPA to understand that page was changed.
 
@@ -4837,11 +3529,9 @@ I.waitInUrl('/info', 2);
 ### `I.waitNumberOfVisibleElements()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitNumberOfVisibleElements()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Waits for a specified number of elements on the page.
 
@@ -4863,30 +3553,14 @@ I.waitNumberOfVisibleElements('a', 3);
 
 **Puppeteer**
 
-Waits for a specified number of elements on the page.
-
-```js
-I.waitNumberOfVisibleElements('a', 3);
-```
-
-**Parameters**
-*   `locator` **([string][6] | [object][4])** element located by CSS|XPath|strict locator.
-*   `num` **[number][10]** number of elements.
-*   `sec` **[number][10]** (optional, `1` by default) time in seconds to wait 
-
-Returns **void** automatically synchronized promise through #recorder
-
-
 This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.waitToHide()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitToHide()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Waits for an element to hide (by default waits for 1sec).
 Element can be located by CSS or XPath.
@@ -4904,37 +3578,12 @@ I.waitToHide('#popup');
 
 - `void` - automatically synchronized promise through #recorder
 
-### `I.waitUntil()`
-
-<table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitUntil()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
-</table>
-
-#### Common Behavior
-
-Waits for a function to return true (waits for 1sec by default).
-
-```js
-I.waitUntil(() => window.requests == 0);
-I.waitUntil(() => window.requests == 0, 5);
-```
-
-**Parameters**
-
-- `fn` `function|string` - function which is executed in browser context.
-- `[sec=1]` `number` - (optional, `1` by default) time in seconds to wait
-- `[timeoutMsg='']` `string` - message to show in case of timeout fail.
-- `[interval=null]` `?number`
-
 ### `I.waitUrlEquals()`
 
 <table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Method</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;"><code>I.waitUrlEquals()</code></td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
-
-#### Common Behavior
 
 Waits for the entire URL to match the expected
 
@@ -4955,19 +3604,6 @@ I.waitUrlEquals('http://127.0.0.1:8000/info');
 #### Helper-Specific Differences
 
 **Playwright**
-
-Waits for the entire URL to match the expected
-
-```js
-I.waitUrlEquals('/info', 2);
-I.waitUrlEquals('http://127.0.0.1:8000/info');
-```
-
-**Parameters**
-*   `urlPart` **[string][9]** value to check.
-*   `sec` **[number][17]** (optional, `1` by default) time in seconds to wait 
-
-Returns **void** automatically synchronized promise through #recorder
 
 [1]: https://github.com/microsoft/playwright
 
@@ -5069,19 +3705,6 @@ Returns **void** automatically synchronized promise through #recorder
 
 **WebDriver**
 
-Waits for the entire URL to match the expected
-
-```js
-I.waitUrlEquals('/info', 2);
-I.waitUrlEquals('http://127.0.0.1:8000/info');
-```
-
-**Parameters**
-*   `urlPart` **[string][18]** value to check.
-*   `sec` **[number][22]** (optional, `1` by default) time in seconds to wait 
-
-Returns **void** automatically synchronized promise through #recorder
-
 [1]: http://webdriver.io/
 
 [2]: https://codecept.io/webdriver/#testing-with-webdriver
@@ -5163,19 +3786,6 @@ Returns **void** automatically synchronized promise through #recorder
 [40]: https://webdriver.io/docs/configuration/#loglevel
 
 **Puppeteer**
-
-Waits for the entire URL to match the expected
-
-```js
-I.waitUrlEquals('/info', 2);
-I.waitUrlEquals('http://127.0.0.1:8000/info');
-```
-
-**Parameters**
-*   `urlPart` **[string][6]** value to check.
-*   `sec` **[number][10]** (optional, `1` by default) time in seconds to wait 
-
-Returns **void** automatically synchronized promise through #recorder
 
 [1]: https://github.com/puppeteer/puppeteer
 

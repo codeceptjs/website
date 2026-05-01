@@ -108,7 +108,7 @@ const applySpecialColors = (
     next.fontWeight = 600;
   } else {
     next.color = "#7c3aed";
-    next["--shiki-dark"] = "#c084fc";
+    next["--shiki-dark"] = "#d8b4fe";
     next.fontWeight = 600;
   }
   return next as CSSProperties;

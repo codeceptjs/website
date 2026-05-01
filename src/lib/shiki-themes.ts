@@ -75,10 +75,10 @@ export const codeceptLight: ThemeRegistration = {
 export const codeceptDark: ThemeRegistration = {
   name: "codecept-dark",
   type: "dark",
-  bg: "#0d1117",
+  bg: "#14161e",
   fg: "#c9d1d9",
   colors: {
-    "editor.background": "#0d1117",
+    "editor.background": "#14161e",
     "editor.foreground": "#c9d1d9",
   },
   tokenColors: [
@@ -98,7 +98,7 @@ export const codeceptDark: ThemeRegistration = {
         "keyword.declaration",
         "keyword.import",
       ],
-      settings: { foreground: "#c084fc" },
+      settings: { foreground: "#d8b4fe" },
     },
     {
       scope: ["string", "string.quoted", "string.template", "punctuation.definition.string"],
@@ -110,7 +110,7 @@ export const codeceptDark: ThemeRegistration = {
     },
     {
       scope: ["constant.language.boolean", "constant.language.null"],
-      settings: { foreground: "#c084fc" },
+      settings: { foreground: "#d8b4fe" },
     },
     {
       scope: ["entity.name.function", "support.function", "meta.function-call entity.name.function"],

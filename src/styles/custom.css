@@ -9,6 +9,22 @@
     font-variant-ligatures: contextual common-ligatures;
 }
 
+/* CodeceptJS DSL highlights in code blocks. Expressive-code bakes the
+   theme colors into per-token inline styles like `--0:#7c3aed;--0fw:bold`,
+   and strips htmlAttrs before render — so we identify our special tokens
+   by their unique color+bold signature and apply theme-specific overrides
+   via CSS attribute selectors. */
+
+/* Keyword — Feature, Scenario, Before, ... — light mode is already correct
+   (#7c3aed from the transformer), only fix dark mode. */
+html[data-theme="dark"] .expressive-code [style*="--0:#7c3aed"][style*="fw:bold"] {
+    color: #d8b4fe !important;
+}
+/* Actor — `I` — same approach */
+html[data-theme="dark"] .expressive-code [style*="--0:#db2777"][style*="fw:bold"] {
+    color: #f472b6 !important;
+}
+
 /* Larger code + more breathing room inside docs codeblocks. */
 .sl-markdown-content .expressive-code pre,
 .sl-markdown-content .expressive-code code,
@@ -152,12 +168,10 @@ html[data-theme="dark"] .sl-markdown-content table tbody tr:nth-child(even) td {
 .sl-markdown-content table tbody tr:hover td {
     background: color-mix(in srgb, var(--codecept-accent) 4%, transparent);
 }
-/* Code inside table cells is the only thing that should really wrap weirdly;
-   let it shrink so columns don't blow out. */
+/* Inline code inside table cells stays on one line. */
 .sl-markdown-content table td code,
 .sl-markdown-content table th code {
-    white-space: normal;
-    word-break: break-word;
+    white-space: nowrap;
 }
 
 /* Inline code in markdown content — honey-tinted bg + border, JetBrains Mono.
@@ -215,13 +229,13 @@ html[data-theme="dark"] .sl-markdown-content :is(p, li, td, th, dt, dd, blockquo
 
     /* Page surface — single source of truth for both themes. */
     --codecept-page-bg-light: #ffffff;
-    --codecept-page-bg-dark: #0a0b14;
+    --codecept-page-bg-dark: #1a1d28;
     --codecept-card-bg-light: #ffffff;
-    --codecept-card-bg-dark: #0d1117;
+    --codecept-card-bg-dark: #23262f;
     --sl-color-bg: var(--codecept-page-bg-light);
 
     --sl-color-text-accent: #7C3AED !important;
-    --docsearch-primary-color: #ffe680 !important;
+    --docsearch-primary-color: #FFB938 !important;
     --docsearch-text-color: rgb(28, 30, 33);
     --docsearch-spacing: 12px;
     --docsearch-icon-stroke-width: 1.4;
@@ -254,7 +268,7 @@ html[data-theme="dark"] .sl-markdown-content :is(p, li, td, th, dt, dd, blockquo
 }
 
 :root[data-theme="dark"] {
-    --sl-color-text-accent: #ffe680 !important;
+    --sl-color-text-accent: #FFB938 !important;
     --sl-color-bg: var(--codecept-page-bg-dark);
 }
 
@@ -280,6 +294,8 @@ html[data-theme=dark] .docsearch-btn-placeholder {
 .sl-markdown-content h1,
 .sl-markdown-content h2,
 .sl-markdown-content h3,
+h1#_top,
+.sl-container h1,
 .audiences-title,
 .hero-headline,
 .section-headline {
@@ -337,7 +353,7 @@ html[data-theme="dark"] .sl-markdown-content .sl-heading-wrapper.level-h2 {
 }
 
 /*a:where(.astro-wkinvgav):is(.starlight-sidebar-topics-current,:hover,:focus-visible) {*/
-/*    color: #ffe680;*/
+/*    color: #FFB938;*/
 /*}*/
 
 /*:root[data-theme='light'],*/
@@ -425,13 +441,13 @@ html[data-theme=dark] .scroll-to-top-button {
 }
 
 html[data-theme=dark] .right-sidebar-panel a[aria-current="true"] {
-    background: rgb(255,230,128,.1);
-    color: #ffe680;
-    text-shadow: -.2px 0 0 #ffe680, .2px 0 0 #ffe680;
+    background: rgba(255, 185, 56, 0.12);
+    color: #FFB938;
+    text-shadow: -.2px 0 0 #FFB938, .2px 0 0 #FFB938;
 }
 
 html[data-theme=dark] .right-sidebar-panel a[aria-current="true"]:hover {
-    background: rgb(255,230,128,.2);
+    background: rgba(255, 185, 56, 0.22);
 }
 
 html[data-theme=dark] .right-sidebar-panel ul ul {
@@ -439,7 +455,7 @@ html[data-theme=dark] .right-sidebar-panel ul ul {
 }
 
 html[data-theme=dark] .right-sidebar-panel a:hover {
-    background: rgb(255,230,128,.1);
+    background: rgba(255, 185, 56, 0.12);
 }
 
 html[data-theme=dark] .right-sidebar-panel a {
@@ -490,7 +506,7 @@ html[data-theme=dark] .starlight-sidebar-topics a {
 }
 
 html[data-theme=dark] .sidebar-content ul a:hover {
-    background: rgb(255,230,128,.1);
+    background: rgba(255, 185, 56, 0.12);
     color: #d8d3d4;
 }
 
@@ -499,24 +515,24 @@ html[data-theme=dark] .starlight-sidebar-topics a:hover {
 }
 
 html[data-theme=dark] .sidebar-content ul a[aria-current="page"] {
-    background: rgb(255,230,128,.1);
-    color: #ffe680;
-    text-shadow: -.2px 0 0 #ffe680, .2px 0 0 #ffe680;
+    background: rgba(255, 185, 56, 0.12);
+    color: #FFB938;
+    text-shadow: -.2px 0 0 #FFB938, .2px 0 0 #FFB938;
 }
 
 html[data-theme=dark] .sidebar-content ul a[aria-current="page"]:hover {
-    background: rgb(255,230,128,.2);
+    background: rgba(255, 185, 56, 0.22);
 }
 
 html[data-theme=dark] .starlight-sidebar-topics .starlight-sidebar-topics-current {
-    background: rgb(255,230,128,.1);
-    color: #ffe680 !important;
-    text-shadow: -.2px 0 0 #ffe680, .2px 0 0 #ffe680;
+    background: rgba(255, 185, 56, 0.12);
+    color: #FFB938 !important;
+    text-shadow: -.2px 0 0 #FFB938, .2px 0 0 #FFB938;
 }
 
 html[data-theme=dark] .starlight-sidebar-topics .starlight-sidebar-topics-current:hover {
-    background: rgb(255,230,128,.2);
-    color: #ffe680 !important;
+    background: rgba(255, 185, 56, 0.22);
+    color: #FFB938 !important;
 }
 
 html[data-theme=dark] .sidebar-pane {
@@ -526,8 +542,8 @@ html[data-theme=dark] .sidebar-pane {
 header.header {
     background: linear-gradient(
         to bottom,
-        #f2eefb 0%,
-        #f2eefb 40%,
+        rgba(242, 238, 251, 0.55) 0%,
+        rgba(242, 238, 251, 0.55) 40%,
         rgba(242, 238, 251, 0) 100%
     );
     border-bottom: none !important;
@@ -537,8 +553,8 @@ header.header {
 html[data-theme=dark] header.header {
     background: linear-gradient(
         to bottom,
-        rgba(124, 58, 237, 0.22) 0%,
-        rgba(124, 58, 237, 0.22) 40%,
+        rgba(124, 58, 237, 0.09) 0%,
+        rgba(124, 58, 237, 0.09) 40%,
         rgba(124, 58, 237, 0) 100%
     );
     backdrop-filter: blur(16px);
@@ -548,9 +564,9 @@ html[data-theme=dark] header.header {
 html[data-theme=dark] header.scrolled {
     background: linear-gradient(
         to bottom,
-        rgba(10, 11, 20, 0.92) 0%,
-        rgba(10, 11, 20, 0.85) 40%,
-        rgba(10, 11, 20, 0.4) 100%
+        rgba(26, 29, 40, 0.92) 0%,
+        rgba(26, 29, 40, 0.85) 40%,
+        rgba(26, 29, 40, 0.4) 100%
     );
 }
 
