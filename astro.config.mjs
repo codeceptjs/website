@@ -66,7 +66,7 @@ export default defineConfig({
                 starlightSidebarTopics([
                     {
                         id: 'documentation',
-                        label: 'Documentation',
+                        label: 'Guides',
                         link: 'quickstart',
                         items: [
                             {
