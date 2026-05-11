@@ -39,6 +39,15 @@ const figureInjections = [
         height: 580,
     },
     {
+        slug: 'pageobjects',
+        afterHeading: 'Dependency Injection',
+        before: true,
+        src: '/pageobjects-di.png',
+        alt: 'CodeceptJS dependency injection: register page objects in codecept.conf.js, inject them by name into Scenarios or other page objects via inject() (lazy proxies, so circular references resolve at call time), instead of plain import which gives a class, not the shared instance.',
+        width: 3270,
+        height: 710,
+    },
+    {
         slug: 'locators',
         afterHeading: 'Locator types at a glance',
         before: true,

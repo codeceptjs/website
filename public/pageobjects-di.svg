@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 420" width="1700" height="420">
+  <defs>
+    <filter id="ambient" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="9" flood-color="#1a1d28" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrowGold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,1 L9,5 L0,9 z" fill="#C88800"/>
+    </marker>
+    <marker id="arrowGoldOpen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,1 L9,5 L0,9 z" fill="#C88800" opacity="0.85"/>
+    </marker>
+  </defs>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400..700&amp;display=swap');
+    .title { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 26px; letter-spacing: -0.025em; font-feature-settings: 'ss01','ss02'; }
+    .body  { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 14px; letter-spacing: -0.005em; }
+    .mono  { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 11.5px; }
+    .vs    { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; }
+  </style>
+
+  <!-- ── Card 1 — Register ───────────────────────────── -->
+  <g transform="translate(50, 50)">
+    <path d="M0,0 L370,0 L384,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M370,0 L384,-8 L384,312 L370,320 Z" fill="#E2E8F0"/>
+    <rect width="370" height="320" fill="#FFFFFF" filter="url(#ambient)"/>
+    <text x="24" y="52" class="title" fill="#111827">Register</text>
+    <rect x="24" y="74" width="322" height="136" rx="8" fill="#FAFAF7" stroke="#F0EDE5" stroke-width="1"/>
+    <text x="40" y="98"  class="mono" fill="#9CA3AF">// codecept.conf.js</text>
+    <text x="40" y="120" class="mono"><tspan fill="#C88800">include</tspan><tspan fill="#1F2937">: {</tspan></text>
+    <text x="40" y="142" class="mono"><tspan fill="#1F2937">  </tspan><tspan fill="#C88800">loginPage</tspan><tspan fill="#1F2937">: './pages/Login.js',</tspan></text>
+    <text x="40" y="164" class="mono"><tspan fill="#1F2937">  </tspan><tspan fill="#C88800">registerPage</tspan><tspan fill="#1F2937">: './pages/Register.js',</tspan></text>
+    <text x="40" y="186" class="mono" fill="#1F2937">}</text>
+    <text x="24" y="246" class="body" fill="#4B5563">A name maps to a module — built once</text>
+    <text x="24" y="268" class="body" fill="#4B5563">and shared everywhere by that name.</text>
+  </g>
+
+  <!-- ── Card 2 — Inject by name ─────────────────────── -->
+  <g transform="translate(460, 50)">
+    <path d="M0,0 L370,0 L384,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M370,0 L384,-8 L384,312 L370,320 Z" fill="#E2E8F0"/>
+    <rect width="370" height="320" fill="#FFFFFF" filter="url(#ambient)"/>
+    <text x="24" y="52" class="title" fill="#111827">Inject by name</text>
+    <rect x="24" y="74" width="322" height="136" rx="8" fill="#FAFAF7" stroke="#F0EDE5" stroke-width="1"/>
+    <text x="40" y="98"  class="mono" fill="#9CA3AF">// in a Scenario:</text>
+    <text x="40" y="120" class="mono"><tspan fill="#1F2937">Scenario('login', ({ I, </tspan><tspan fill="#C88800">loginPage</tspan><tspan fill="#1F2937"> }) =&gt; …)</tspan></text>
+    <text x="40" y="164" class="mono" fill="#9CA3AF">// in a Page Object:</text>
+    <text x="40" y="186" class="mono"><tspan fill="#1F2937">const { I, </tspan><tspan fill="#C88800">registerPage</tspan><tspan fill="#1F2937"> } = </tspan><tspan fill="#C88800">inject</tspan><tspan fill="#1F2937">()</tspan></text>
+    <text x="24" y="246" class="body" fill="#4B5563">Scenario params and inject() read one</text>
+    <text x="24" y="268" class="body" fill="#4B5563">container — no new, no manual wiring.</text>
+  </g>
+
+  <!-- ── Card 3 — Lazy proxies ───────────────────────── -->
+  <g transform="translate(870, 50)">
+    <path d="M0,0 L370,0 L384,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M370,0 L384,-8 L384,312 L370,320 Z" fill="#E2E8F0"/>
+    <rect width="370" height="320" fill="#FFFFFF" filter="url(#ambient)"/>
+    <text x="24" y="52" class="title" fill="#111827">Lazy proxies</text>
+    <rect x="24" y="74" width="322" height="136" rx="8" fill="#FAFAF7" stroke="#F0EDE5" stroke-width="1"/>
+    <text x="40" y="98"  class="mono" fill="#9CA3AF">// pages/Login.js</text>
+    <text x="40" y="120" class="mono"><tspan fill="#1F2937">const { I, </tspan><tspan fill="#C88800">registerPage</tspan><tspan fill="#1F2937"> } = </tspan><tspan fill="#C88800">inject</tspan><tspan fill="#1F2937">()</tspan></text>
+    <text x="40" y="164" class="mono" fill="#9CA3AF">// pages/Register.js  (circular)</text>
+    <text x="40" y="186" class="mono"><tspan fill="#1F2937">const { I, </tspan><tspan fill="#C88800">loginPage</tspan><tspan fill="#1F2937"> } = </tspan><tspan fill="#C88800">inject</tspan><tspan fill="#1F2937">()</tspan></text>
+    <text x="24" y="246" class="body" fill="#4B5563">inject() returns proxies, not objects —</text>
+    <text x="24" y="268" class="body" fill="#4B5563">each resolves on its first method call.</text>
+  </g>
+
+  <!-- ── Card 4 — Why not import? ────────────────────── -->
+  <g transform="translate(1280, 50)">
+    <path d="M0,0 L370,0 L384,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M370,0 L384,-8 L384,312 L370,320 Z" fill="#E2E8F0"/>
+    <rect width="370" height="320" fill="#FFFFFF" filter="url(#ambient)"/>
+    <text x="24" y="52" class="title" fill="#111827">Why not import?</text>
+    <rect x="24" y="74" width="322" height="136" rx="8" fill="#FAFAF7" stroke="#F0EDE5" stroke-width="1"/>
+    <text x="40" y="98"  class="mono"><tspan fill="#1F2937">import </tspan><tspan fill="#C88800">LoginPage</tspan><tspan fill="#1F2937"> from './pages/Login.js'</tspan></text>
+    <text x="40" y="120" class="mono"><tspan fill="#1F2937">const lp = new </tspan><tspan fill="#C88800">LoginPage</tspan><tspan fill="#1F2937">()</tspan></text>
+    <text x="40" y="150" class="mono" fill="#9CA3AF">// a fresh instance — not the shared one</text>
+    <text x="40" y="170" class="mono" fill="#9CA3AF">// circular import = undefined</text>
+    <text x="40" y="190" class="mono" fill="#9CA3AF">// _before / _after never run</text>
+    <text x="24" y="246" class="body" fill="#4B5563">import gives a class, not the shared</text>
+    <text x="24" y="268" class="body" fill="#4B5563">instance DI manages — hooks and all.</text>
+  </g>
+
+  <!-- ── Arrows ──────────────────────────────────────── -->
+  <g stroke="#C88800" stroke-width="2.2" fill="none" stroke-linecap="round">
+    <line x1="426" y1="210" x2="454" y2="210" marker-end="url(#arrowGold)"/>
+    <line x1="836" y1="210" x2="864" y2="210" marker-end="url(#arrowGold)"/>
+    <line x1="1246" y1="210" x2="1274" y2="210" marker-end="url(#arrowGoldOpen)" stroke-dasharray="5 4" opacity="0.85"/>
+  </g>
+  <text x="1260" y="192" text-anchor="middle" class="vs" fill="#C88800">vs</text>
+</svg>
