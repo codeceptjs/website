@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 340" width="1700" height="340">
+  <defs>
+    <filter id="ambient" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="9" flood-color="#1a1d28" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrowGold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,1 L9,5 L0,9 z" fill="#C88800"/>
+    </marker>
+  </defs>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;600;700&amp;display=swap');
+    .title { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 28px; letter-spacing: -0.025em; font-feature-settings: 'ss01','ss02'; }
+    .body  { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 14px; letter-spacing: -0.005em; }
+    .mono  { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 13px; }
+  </style>
+
+  <!-- Card 1 — Semantic + Context -->
+  <g transform="translate(110, 50)">
+    <path d="M0,0 L320,0 L334,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M320,0 L334,-8 L334,252 L320,260 Z" fill="#E2E8F0"/>
+    <rect width="320" height="260" fill="#FFFFFF" filter="url(#ambient)"/>
+    <text x="24" y="70" class="title" fill="#111827">Semantic + Context</text>
+    <text x="24" y="130" class="mono" fill="#C88800">I.click('Save', '.header')</text>
+    <text x="24" y="200" class="body" fill="#4B5563">Plain string scoped to a region —</text>
+    <text x="24" y="222" class="body" fill="#4B5563">reads like prose.</text>
+  </g>
+
+  <!-- Card 2 — ARIA Role -->
+  <g transform="translate(500, 50)">
+    <path d="M0,0 L320,0 L334,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M320,0 L334,-8 L334,252 L320,260 Z" fill="#E2E8F0"/>
+    <rect width="320" height="260" fill="#FFFFFF" filter="url(#ambient)"/>
+    <text x="24" y="70" class="title" fill="#111827">ARIA Role</text>
+    <text x="24" y="130" class="mono" fill="#C88800">I.click({ role: 'button',</text>
+    <text x="104" y="152" class="mono" fill="#C88800">name: 'Save' })</text>
+    <text x="24" y="200" class="body" fill="#4B5563">Role + accessible name —</text>
+    <text x="24" y="222" class="body" fill="#4B5563">pair with context too.</text>
+  </g>
+
+  <!-- Card 3 — CSS -->
+  <g transform="translate(890, 50)">
+    <path d="M0,0 L320,0 L334,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M320,0 L334,-8 L334,252 L320,260 Z" fill="#E2E8F0"/>
+    <rect width="320" height="260" fill="#FFFFFF" filter="url(#ambient)"/>
+    <text x="24" y="70" class="title" fill="#111827">CSS</text>
+    <text x="24" y="130" class="mono" fill="#C88800">I.click('.btn-save')</text>
+    <text x="24" y="200" class="body" fill="#4B5563">Fast and familiar — pair with</text>
+    <text x="24" y="222" class="body" fill="#4B5563">data-testid, not style classes.</text>
+  </g>
+
+  <!-- Card 4 — XPath -->
+  <g transform="translate(1280, 50)">
+    <path d="M0,0 L320,0 L334,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M320,0 L334,-8 L334,252 L320,260 Z" fill="#E2E8F0"/>
+    <rect width="320" height="260" fill="#FFFFFF" filter="url(#ambient)"/>
+    <text x="24" y="70" class="title" fill="#111827">XPath</text>
+    <text x="24" y="130" class="mono" fill="#C88800">I.click("//tr[td='Acme']")</text>
+    <text x="24" y="200" class="body" fill="#4B5563">Text match and axis navigation —</text>
+    <text x="24" y="222" class="body" fill="#4B5563">verbose, but reaches anywhere.</text>
+  </g>
+
+  <!-- Preference arrows between cards -->
+  <g stroke="#C88800" stroke-width="2.2" fill="none" marker-end="url(#arrowGold)" stroke-linecap="round">
+    <line x1="454" y1="180" x2="488" y2="180"/>
+    <line x1="844" y1="180" x2="878" y2="180"/>
+    <line x1="1234" y1="180" x2="1268" y2="180"/>
+  </g>
+</svg>

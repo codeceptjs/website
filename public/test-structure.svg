@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1020" width="760" height="1020">
+  <defs>
+    <filter id="ambient" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="9" flood-color="#1a1d28" flood-opacity="0.12"/>
+    </filter>
+    <filter id="ambientSoft" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#1a1d28" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400..700&amp;display=swap');
+    .kicker   { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11.5px; letter-spacing: 0.22em; text-transform: uppercase; }
+    .title-xl { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 34px; letter-spacing: -0.025em; font-feature-settings: 'ss01','ss02'; }
+    .title    { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: -0.025em; font-feature-settings: 'ss01','ss02'; }
+    .body     { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 14px; letter-spacing: -0.005em; }
+    .mono-lg  { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 14px; }
+    .mono     { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 13px; }
+    .mono-sm  { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 12.5px; }
+  </style>
+
+  <!-- ─── OUTER: Feature (required, contains everything) ─── -->
+  <g transform="translate(40, 60)">
+    <path d="M0,0 L680,0 L694,-8 L14,-8 Z" fill="#FFF1D6"/>
+    <path d="M680,0 L694,-8 L694,892 L680,900 Z" fill="#F5E5B0"/>
+    <rect width="680" height="900" fill="#FFFBF0" filter="url(#ambient)"/>
+
+    <!-- Feature header -->
+    <text x="32" y="46" class="kicker" fill="#C88800">REQUIRED · CONTAINER</text>
+    <text x="32" y="92" class="title-xl" fill="#111827">Feature</text>
+    <text x="32" y="124" class="body" fill="#4B5563">One per file — wraps all scenarios and hooks.</text>
+    <text x="32" y="154" class="mono-lg" fill="#C88800">Feature('User Authentication')</text>
+
+    <!-- ── BeforeSuite (optional) ── -->
+    <g transform="translate(40, 200)">
+      <path d="M0,0 L600,0 L614,-8 L14,-8 Z" fill="#F1F5F9"/>
+      <path d="M600,0 L614,-8 L614,72 L600,80 Z" fill="#E2E8F0"/>
+      <rect width="600" height="80" fill="#FFFFFF" filter="url(#ambientSoft)"/>
+      <text x="24" y="28" class="kicker" fill="#94A3B8">OPTIONAL · ONCE BEFORE ALL</text>
+      <text x="24" y="60" class="title" fill="#334155">BeforeSuite</text>
+      <text x="576" y="60" class="mono-sm" fill="#64748B" text-anchor="end">BeforeSuite(({ I }) =&gt; { /* seed */ })</text>
+    </g>
+
+    <!-- ── Before (optional) ── -->
+    <g transform="translate(40, 300)">
+      <path d="M0,0 L600,0 L614,-8 L14,-8 Z" fill="#F1F5F9"/>
+      <path d="M600,0 L614,-8 L614,72 L600,80 Z" fill="#E2E8F0"/>
+      <rect width="600" height="80" fill="#FFFFFF" filter="url(#ambientSoft)"/>
+      <text x="24" y="28" class="kicker" fill="#94A3B8">OPTIONAL · BEFORE EACH SCENARIO</text>
+      <text x="24" y="60" class="title" fill="#334155">Before</text>
+      <text x="576" y="60" class="mono-sm" fill="#64748B" text-anchor="end">Before(({ I }) =&gt; { I.amOnPage('/') })</text>
+    </g>
+
+    <!-- ── Scenario (required, 1+) ── -->
+    <g transform="translate(40, 400)">
+      <path d="M0,0 L600,0 L614,-8 L14,-8 Z" fill="#F1F5F9"/>
+      <path d="M600,0 L614,-8 L614,252 L600,260 Z" fill="#E2E8F0"/>
+      <rect width="600" height="260" fill="#FFFFFF" filter="url(#ambient)"/>
+      <text x="24" y="30" class="kicker" fill="#C88800">REQUIRED · ONE OR MORE</text>
+      <text x="24" y="62" class="title" fill="#111827">Scenario</text>
+      <text x="148" y="62" class="body" fill="#6B7280" font-style="italic">— the test itself, repeat as needed</text>
+
+      <!-- code block -->
+      <rect x="24" y="82" width="552" height="160" fill="#FAFAF7" stroke="#F0EDE5" stroke-width="1" rx="8"/>
+      <text x="40" y="108" class="mono"><tspan fill="#C88800">Scenario</tspan><tspan fill="#1F2937">('user logs in', ({ I }) =&gt; {</tspan></text>
+      <text x="72" y="132" class="mono"><tspan fill="#C88800">I.amOnPage</tspan><tspan fill="#1F2937">('/login')</tspan></text>
+      <text x="72" y="156" class="mono"><tspan fill="#C88800">I.fillField</tspan><tspan fill="#1F2937">('Email', user)</tspan></text>
+      <text x="72" y="180" class="mono"><tspan fill="#C88800">I.click</tspan><tspan fill="#1F2937">('Sign In')</tspan></text>
+      <text x="72" y="204" class="mono"><tspan fill="#C88800">I.see</tspan><tspan fill="#1F2937">('Welcome')</tspan></text>
+      <text x="40" y="228" class="mono" fill="#1F2937">})</text>
+    </g>
+
+    <!-- ── After (optional) ── -->
+    <g transform="translate(40, 680)">
+      <path d="M0,0 L600,0 L614,-8 L14,-8 Z" fill="#F1F5F9"/>
+      <path d="M600,0 L614,-8 L614,72 L600,80 Z" fill="#E2E8F0"/>
+      <rect width="600" height="80" fill="#FFFFFF" filter="url(#ambientSoft)"/>
+      <text x="24" y="28" class="kicker" fill="#94A3B8">OPTIONAL · AFTER EACH SCENARIO</text>
+      <text x="24" y="60" class="title" fill="#334155">After</text>
+      <text x="576" y="60" class="mono-sm" fill="#64748B" text-anchor="end">After(({ I }) =&gt; { I.clearCookie() })</text>
+    </g>
+
+    <!-- ── AfterSuite (optional) ── -->
+    <g transform="translate(40, 780)">
+      <path d="M0,0 L600,0 L614,-8 L14,-8 Z" fill="#F1F5F9"/>
+      <path d="M600,0 L614,-8 L614,72 L600,80 Z" fill="#E2E8F0"/>
+      <rect width="600" height="80" fill="#FFFFFF" filter="url(#ambientSoft)"/>
+      <text x="24" y="28" class="kicker" fill="#94A3B8">OPTIONAL · ONCE AFTER ALL</text>
+      <text x="24" y="60" class="title" fill="#334155">AfterSuite</text>
+      <text x="576" y="60" class="mono-sm" fill="#64748B" text-anchor="end">AfterSuite(({ I }) =&gt; { /* cleanup */ })</text>
+    </g>
+  </g>
+</svg>

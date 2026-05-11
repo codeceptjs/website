@@ -214,6 +214,40 @@ html[data-theme="dark"] .sl-markdown-content :is(p, li, td, th, dt, dd, blockquo
     text-underline-offset: 2px;
 }
 
+/* Figures injected by src/lib/rehype-inject-figure.mjs (configured in
+   astro.config.mjs → figureInjections). Center, max-width to content,
+   no card chrome — the diagram carries its own styling.
+
+   IMPORTANT: starlight-image-zoom-zoomable is a custom element that
+   defaults to display:inline, which makes max-width on its <img> child
+   ineffective. Force display:block + max-width:100% on the wrapper too
+   so the diagram never overflows the docs content area. */
+.sl-markdown-content .injected-figure {
+    margin: 1.75em 0;
+    text-align: center;
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow: hidden;
+}
+.sl-markdown-content .injected-figure starlight-image-zoom-zoomable {
+    display: block !important;
+    max-width: 100% !important;
+    width: 100% !important;
+}
+.sl-markdown-content .injected-figure img {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: auto !important;
+    display: block;
+    margin: 0 auto;
+}
+.sl-markdown-content .injected-figure figcaption {
+    margin-top: 0.6em;
+    font-size: 0.875em;
+    color: var(--sl-color-text-secondary, #6b7280);
+    font-style: italic;
+}
+
 .docsearch-modal-footer-logo {
     display: none!important;
 }

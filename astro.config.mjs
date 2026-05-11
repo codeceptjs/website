@@ -8,10 +8,70 @@ import rehypeAstroRelativeMarkdownLinks from "astro-rehype-relative-markdown-lin
 import starlightScrollToTop from 'starlight-scroll-to-top';
 import {codeceptDark, codeceptLight} from './src/lib/shiki-themes.ts';
 import {codeceptShikiTransformer} from './src/lib/shiki-codecept-transformer.ts';
+import rehypeInjectFigure from './src/lib/rehype-inject-figure.mjs';
 
 const options = {
     collectionBase: false,
 };
+
+// Figures injected into synced docs after a specific heading. Lets us enrich
+// upstream-managed pages without editing the markdown (which gets overwritten
+// on `pnpm sync:docs`). Add a row per figure — no plugin edits needed.
+//   slug         — page slug relative to src/content/docs (no extension)
+//   afterHeading — heading text to find (case-insensitive, trimmed)
+//   before       — if true, insert immediately *before* the matched heading
+//                  (useful when the figure introduces the section)
+//   replace      — optional HTML tagName to swap with the figure within that
+//                  section (e.g. 'table'). If omitted, the figure is inserted
+//                  immediately after the heading.
+//   src          — image path under /public
+//   alt          — required for a11y
+//   width/height — optional, recommended to avoid layout shift
+//   caption      — optional <figcaption> text
+//   className    — optional, defaults to "injected-figure"
+const figureInjections = [
+    {
+        slug: 'agents',
+        afterHeading: 'The loop',
+        src: '/agents-loop.png',
+        alt: 'CodeceptJS agentic testing loop: Open → Read → Try → Verify → Commit, with a live-feedback loop returning to the start.',
+        width: 1700,
+        height: 580,
+    },
+    {
+        slug: 'locators',
+        afterHeading: 'Locator types at a glance',
+        before: true,
+        src: '/locators.png',
+        alt: 'CodeceptJS locator strategies in preference order: Semantic + Context, ARIA Role, CSS, and XPath as a last resort.',
+        width: 3050,
+        height: 590,
+    },
+    {
+        slug: 'test-structure',
+        afterHeading: 'Feature',
+        before: true,
+        src: '/test-structure.png',
+        alt: 'CodeceptJS test file structure: a required Feature wraps optional BeforeSuite/Before hooks, one or more required Scenarios, and optional After/AfterSuite hooks.',
+        width: 1430,
+        height: 1870,
+    },
+    {
+        slug: 'agents',
+        afterHeading: 'Skills bundle',
+        replace: 'table',
+        src: '/skills-bundle.png',
+        alt: 'CodeceptJS skills bundle: Write Tests, Debug Tests, Clean Code, and CI Auto-fix shown as a 4-step staircase of perspective cards.',
+        width: 2030,
+        height: 1179,
+        captionHtml:
+            'Also available: ' +
+            '<code>/codeceptjs-fundamentals</code> · ' +
+            '<code>/codeceptjs-exploration</code> · ' +
+            '<code>/codeceptjs-run-analysis</code> · ' +
+            '<code>/codeceptjs-auth</code>',
+    },
+];
 
 export default defineConfig({
     site: 'https://codecept.io',
@@ -265,6 +325,7 @@ export default defineConfig({
     markdown: {
         rehypePlugins: [
             [rehypeAstroRelativeMarkdownLinks, options],
+            [rehypeInjectFigure, { injections: figureInjections }],
         ],
     },
 });

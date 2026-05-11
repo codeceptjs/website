@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 620" width="1080" height="620">
+  <defs>
+    <filter id="ambient" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="9" flood-color="#1a1d28" flood-opacity="0.12"/>
+    </filter>
+
+    <!-- Flowbite-style outline icons, 48x48 viewBox, stroke-width 2 -->
+    <symbol id="icon-pencil" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M30 4 L44 18 L18 44 L4 44 L4 30 Z"/>
+      <line x1="26" y1="8" x2="40" y2="22"/>
+    </symbol>
+    <symbol id="icon-bug" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="14" y="16" width="20" height="24" rx="10"/>
+      <line x1="24" y1="16" x2="24" y2="40"/>
+      <line x1="18" y1="16" x2="14" y2="8"/>
+      <line x1="30" y1="16" x2="34" y2="8"/>
+      <line x1="14" y1="22" x2="6" y2="22"/>
+      <line x1="14" y1="30" x2="6" y2="30"/>
+      <line x1="14" y1="38" x2="8" y2="44"/>
+      <line x1="34" y1="22" x2="42" y2="22"/>
+      <line x1="34" y1="30" x2="42" y2="30"/>
+      <line x1="34" y1="38" x2="40" y2="44"/>
+    </symbol>
+    <symbol id="icon-code" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="16,14 6,24 16,34"/>
+      <polyline points="32,14 42,24 32,34"/>
+      <line x1="28" y1="8" x2="20" y2="40"/>
+    </symbol>
+    <symbol id="icon-refresh" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 18 a18 18 0 0 1 32 -4"/>
+      <polyline points="42,4 38,14 28,12"/>
+      <path d="M42 30 a18 18 0 0 1 -32 4"/>
+      <polyline points="6,44 10,34 20,36"/>
+    </symbol>
+  </defs>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400..700&amp;display=swap');
+    .skill-id { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 13px; }
+    .title    { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 28px; letter-spacing: -0.025em; font-feature-settings: 'ss01','ss02'; }
+    .body     { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 14px; }
+  </style>
+
+  <!-- Step 1: /writing-codeceptjs-tests (left column, top) -->
+  <g transform="translate(24, 30)">
+    <path d="M0,0 L460,0 L474,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M460,0 L474,-8 L474,152 L460,160 Z" fill="#E2E8F0"/>
+    <rect width="460" height="160" fill="#FFFFFF" filter="url(#ambient)"/>
+    <text x="24" y="37" class="skill-id" fill="#C88800">/writing-codeceptjs-tests</text>
+    <text x="24" y="78" class="title" fill="#111827">Write Tests</text>
+    <text x="24" y="112" class="body" fill="#4B5563">Explore page, run commands,</text>
+    <text x="24" y="132" class="body" fill="#4B5563">save progress as a test.</text>
+    <use href="#icon-pencil" x="336" y="30" width="100" height="100" color="#F2A900"/>
+  </g>
+
+  <!-- Step 2: /debugging-codeceptjs-tests (right column, step down) -->
+  <g transform="translate(544, 170)">
+    <path d="M0,0 L460,0 L474,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M460,0 L474,-8 L474,152 L460,160 Z" fill="#E2E8F0"/>
+    <rect width="460" height="160" fill="#FFFFFF" filter="url(#ambient)"/>
+    <text x="24" y="37" class="skill-id" fill="#C88800">/debugging-codeceptjs-tests</text>
+    <text x="24" y="78" class="title" fill="#111827">Debug Tests</text>
+    <text x="24" y="112" class="body" fill="#4B5563">Read trace, analyze failures, change</text>
+    <text x="24" y="132" class="body" fill="#4B5563">tests on the fly and see them pass.</text>
+    <use href="#icon-bug" x="336" y="30" width="100" height="100" color="#F2A900"/>
+  </g>
+
+  <!-- Step 3: /refactoring-codeceptjs-tests (left column, step down) -->
+  <g transform="translate(24, 250)">
+    <path d="M0,0 L460,0 L474,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M460,0 L474,-8 L474,152 L460,160 Z" fill="#E2E8F0"/>
+    <rect width="460" height="160" fill="#FFFFFF" filter="url(#ambient)"/>
+    <text x="24" y="37" class="skill-id" fill="#C88800">/refactoring-codeceptjs-tests</text>
+    <text x="24" y="78" class="title" fill="#111827">Clean Code</text>
+    <text x="24" y="112" class="body" fill="#4B5563">Refactor to page objects, apply</text>
+    <text x="24" y="132" class="body" fill="#4B5563">CodeceptJS best practices.</text>
+    <use href="#icon-code" x="336" y="30" width="100" height="100" color="#F2A900"/>
+  </g>
+
+  <!-- Step 4: /ci-fix-tests (right column, step down) -->
+  <g transform="translate(544, 390)">
+    <path d="M0,0 L460,0 L474,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M460,0 L474,-8 L474,152 L460,160 Z" fill="#E2E8F0"/>
+    <rect width="460" height="160" fill="#FFFFFF" filter="url(#ambient)"/>
+    <text x="24" y="37" class="skill-id" fill="#C88800">/ci-fix-tests</text>
+    <text x="24" y="78" class="title" fill="#111827">CI Auto-fix</text>
+    <text x="24" y="112" class="body" fill="#4B5563">Analyze failures, apply fixes, and</text>
+    <text x="24" y="132" class="body" fill="#4B5563">re-run tests automatically on CI.</text>
+    <use href="#icon-refresh" x="336" y="30" width="100" height="100" color="#F2A900"/>
+  </g>
+</svg>
