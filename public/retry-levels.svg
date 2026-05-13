@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 1184" width="980" height="1184">
+  <defs>
+    <filter id="ambient" x="-12%" y="-12%" width="124%" height="124%">
+      <feDropShadow dx="0" dy="4" stdDeviation="9" flood-color="#1a1d28" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrowGold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,1 L9,5 L0,9 z" fill="#C88800"/>
+    </marker>
+  </defs>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400..700&amp;display=swap');
+    .kicker   { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; }
+    .title-xl { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 32px; letter-spacing: -0.025em; font-feature-settings: 'ss01','ss02'; }
+    .title    { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 23px; letter-spacing: -0.02em; font-feature-settings: 'ss01','ss02'; }
+    .body     { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 14px; letter-spacing: -0.005em; }
+    .mono     { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 13px; }
+  </style>
+
+  <g transform="translate(30, 34)">
+
+    <!-- ═══ Retries — escalate to the smallest scope that fixes the flakiness ═══ -->
+    <path d="M0,0 L910,0 L924,-8 L14,-8 Z" fill="#FFF1D6"/>
+    <path d="M910,0 L924,-8 L924,1104 L910,1112 Z" fill="#F5E5B0"/>
+    <rect width="910" height="1112" fill="#FFFBF0" filter="url(#ambient)"/>
+    <text x="40" y="56" class="title-xl" fill="#111827">Retries</text>
+    <text x="182" y="56" class="body" fill="#6B7280" font-style="italic">— start narrow, widen the scope only if it's still flaky</text>
+
+    <!-- ── 1 · Helper Retries (built-in) ── -->
+    <g transform="translate(40, 100)">
+      <path d="M0,0 L830,0 L844,-8 L14,-8 Z" fill="#F1F5F9"/>
+      <path d="M830,0 L844,-8 L844,112 L830,120 Z" fill="#E2E8F0"/>
+      <rect width="830" height="120" fill="#FFFFFF" filter="url(#ambient)"/>
+      <text x="24" y="26" class="kicker" fill="#C88800">Per action · automatic</text>
+      <text x="24" y="52" class="title" fill="#111827">Helper Retries</text>
+      <text x="206" y="52" class="body" fill="#6B7280" font-style="italic">— every action retries for ~5 s already</text>
+      <rect x="24" y="68" width="782" height="40" rx="8" fill="#FAFAF7" stroke="#F0EDE5" stroke-width="1"/>
+      <text x="40" y="92" class="mono"><tspan fill="#1F2937">helpers: { Playwright: { </tspan><tspan fill="#C88800">timeout</tspan><tspan fill="#1F2937">: 5000 } }</tspan></text>
+    </g>
+
+    <!-- ── 2 · Automatic Step Retry — retryFailedStep, enabled by default ── -->
+    <g transform="translate(40, 244)">
+      <path d="M0,0 L830,0 L844,-8 L14,-8 Z" fill="#F1F5F9"/>
+      <path d="M830,0 L844,-8 L844,112 L830,120 Z" fill="#E2E8F0"/>
+      <rect width="830" height="120" fill="#FFFFFF" filter="url(#ambient)"/>
+      <text x="24" y="26" class="kicker" fill="#C88800">Every step · on by default</text>
+      <text x="24" y="52" class="title" fill="#111827">Automatic Step Retry</text>
+      <text x="270" y="52" class="body" fill="#6B7280" font-style="italic">— failed steps retry on their own, no code change</text>
+      <rect x="24" y="68" width="782" height="40" rx="8" fill="#FAFAF7" stroke="#F0EDE5" stroke-width="1"/>
+      <text x="40" y="92" class="mono"><tspan fill="#1F2937">plugins: { </tspan><tspan fill="#C88800">retryFailedStep</tspan><tspan fill="#1F2937">: { retries: 3 } }</tspan></text>
+    </g>
+
+    <!-- ── 3 · Manual Step Retry — step.retry() ── -->
+    <g transform="translate(40, 388)">
+      <path d="M0,0 L830,0 L844,-8 L14,-8 Z" fill="#F1F5F9"/>
+      <path d="M830,0 L844,-8 L844,112 L830,120 Z" fill="#E2E8F0"/>
+      <rect width="830" height="120" fill="#FFFFFF" filter="url(#ambient)"/>
+      <text x="24" y="26" class="kicker" fill="#C88800">One step · explicit</text>
+      <text x="24" y="52" class="title" fill="#111827">Manual Step Retry</text>
+      <text x="234" y="52" class="body" fill="#6B7280" font-style="italic">— explicit retry &amp; timing for one flaky step</text>
+      <rect x="24" y="68" width="782" height="40" rx="8" fill="#FAFAF7" stroke="#F0EDE5" stroke-width="1"/>
+      <text x="40" y="92" class="mono"><tspan fill="#1F2937">I.click('Save', </tspan><tspan fill="#C88800">step.retry</tspan><tspan fill="#1F2937">(3))</tspan></text>
+    </g>
+
+    <!-- ── 4 · Retry a Block (retryTo) ── -->
+    <g transform="translate(40, 532)">
+      <path d="M0,0 L830,0 L844,-8 L14,-8 Z" fill="#F1F5F9"/>
+      <path d="M830,0 L844,-8 L844,112 L830,120 Z" fill="#E2E8F0"/>
+      <rect width="830" height="120" fill="#FFFFFF" filter="url(#ambient)"/>
+      <text x="24" y="26" class="kicker" fill="#C88800">Step group</text>
+      <text x="24" y="52" class="title" fill="#111827">Retry a Block</text>
+      <text x="190" y="52" class="body" fill="#6B7280" font-style="italic">— steps that must pass together</text>
+      <rect x="24" y="68" width="782" height="40" rx="8" fill="#FAFAF7" stroke="#F0EDE5" stroke-width="1"/>
+      <text x="40" y="92" class="mono"><tspan fill="#1F2937">await </tspan><tspan fill="#C88800">retryTo</tspan><tspan fill="#1F2937">(() => { I.click('Load More'); I.see('New') }, 3)</tspan></text>
+    </g>
+
+    <!-- ── 5 · Scenario Retry ── -->
+    <g transform="translate(40, 676)">
+      <path d="M0,0 L830,0 L844,-8 L14,-8 Z" fill="#F1F5F9"/>
+      <path d="M830,0 L844,-8 L844,112 L830,120 Z" fill="#E2E8F0"/>
+      <rect width="830" height="120" fill="#FFFFFF" filter="url(#ambient)"/>
+      <text x="24" y="26" class="kicker" fill="#C88800">One test</text>
+      <text x="24" y="52" class="title" fill="#111827">Scenario Retry</text>
+      <text x="204" y="52" class="body" fill="#6B7280" font-style="italic">— re-run the whole test on failure</text>
+      <rect x="24" y="68" width="782" height="40" rx="8" fill="#FAFAF7" stroke="#F0EDE5" stroke-width="1"/>
+      <text x="40" y="92" class="mono"><tspan fill="#C88800">Scenario</tspan><tspan fill="#1F2937">('checkout', { </tspan><tspan fill="#C88800">retries</tspan><tspan fill="#1F2937">: 3 }, ...)</tspan></text>
+    </g>
+
+    <!-- ── 6 · Feature Retry ── -->
+    <g transform="translate(40, 820)">
+      <path d="M0,0 L830,0 L844,-8 L14,-8 Z" fill="#F1F5F9"/>
+      <path d="M830,0 L844,-8 L844,112 L830,120 Z" fill="#E2E8F0"/>
+      <rect width="830" height="120" fill="#FFFFFF" filter="url(#ambient)"/>
+      <text x="24" y="26" class="kicker" fill="#C88800">Feature suite</text>
+      <text x="24" y="52" class="title" fill="#111827">Feature Retry</text>
+      <text x="196" y="52" class="body" fill="#6B7280" font-style="italic">— re-run every test in a feature</text>
+      <rect x="24" y="68" width="782" height="40" rx="8" fill="#FAFAF7" stroke="#F0EDE5" stroke-width="1"/>
+      <text x="40" y="92" class="mono"><tspan fill="#C88800">Feature</tspan><tspan fill="#1F2937">('Payments', { </tspan><tspan fill="#C88800">retries</tspan><tspan fill="#1F2937">: 2 })</tspan></text>
+    </g>
+
+    <!-- ── 7 · Global Retry (config, by grep) ── -->
+    <g transform="translate(40, 964)">
+      <path d="M0,0 L830,0 L844,-8 L14,-8 Z" fill="#F1F5F9"/>
+      <path d="M830,0 L844,-8 L844,112 L830,120 Z" fill="#E2E8F0"/>
+      <rect width="830" height="120" fill="#FFFFFF" filter="url(#ambient)"/>
+      <text x="24" y="26" class="kicker" fill="#C88800">All tests · config</text>
+      <text x="24" y="52" class="title" fill="#111827">Global Retry</text>
+      <text x="186" y="52" class="body" fill="#6B7280" font-style="italic">— retry tests by grep across the whole run</text>
+      <rect x="24" y="68" width="782" height="40" rx="8" fill="#FAFAF7" stroke="#F0EDE5" stroke-width="1"/>
+      <text x="40" y="92" class="mono"><tspan fill="#1F2937">export const config = { </tspan><tspan fill="#C88800">retry</tspan><tspan fill="#1F2937">: [{ grep: '@flaky', Scenario: 5 }] }</tspan></text>
+    </g>
+
+    <!-- flow: narrowest → widest scope -->
+    <g stroke="#C88800" stroke-width="2.4" fill="none" stroke-linecap="round" marker-end="url(#arrowGold)">
+      <line x1="455" y1="222" x2="455" y2="242"/>
+      <line x1="455" y1="366" x2="455" y2="386"/>
+      <line x1="455" y1="510" x2="455" y2="530"/>
+      <line x1="455" y1="654" x2="455" y2="674"/>
+      <line x1="455" y1="798" x2="455" y2="818"/>
+      <line x1="455" y1="942" x2="455" y2="962"/>
+    </g>
+  </g>
+</svg>

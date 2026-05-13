@@ -241,6 +241,16 @@ html[data-theme="dark"] .sl-markdown-content :is(p, li, td, th, dt, dd, blockquo
     display: block;
     margin: 0 auto;
 }
+/* Inlined SVG diagrams: same responsive sizing as the <img> variant (the SVG
+   sits inside the starlight-image-zoom-zoomable wrapper, click = full-screen).
+   `> svg` so the zoom-control button's icon <svg> is left alone. */
+.sl-markdown-content .injected-figure starlight-image-zoom-zoomable > svg {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: auto !important;
+    display: block;
+    margin: 0 auto;
+}
 .sl-markdown-content .injected-figure figcaption {
     margin-top: 0.6em;
     font-size: 0.875em;
