@@ -228,22 +228,9 @@ export default defineConfig({
                                 ],
                             },
                             {
-                                label: 'API Reference',
-                                items: [
-                                    {label: 'Web API (Unified)', link: 'web-api'},
-                                    {label: 'Mobile API (Unified)', link: 'mobile-api'},
-                                   { label: 'API Testing', link: 'api' },
-                                    {label: 'Commands', link: 'commands'},
-                                    {label: 'Configuration', link: 'configuration'},
-                                    {label: 'Plugins', link: 'plugins'},
-                                    { label: 'Effects', link: 'effects' },
-                                    {label: 'Element Functions', link: 'els'},
-                                    {label: 'WebElement', link: 'web-element'},
-                                ],
-                            },
-                            {
                                 label: 'Advanced Usage',
                                 items: [
+                                   { label: 'API Testing', link: 'api' },
                                   { label: 'TypeScript', link: 'typescript' },
                                     {label: 'Continuous Integration', link: 'continuous-integration'},
                                     {label: 'Self-Healing', link: 'heal'},
@@ -277,8 +264,15 @@ export default defineConfig({
                     {
                         id: 'reference',
                         label: 'Reference',
-                        link: 'helpers/playwright',
+                        link: 'web-api',
                         items: [
+                            {
+                                label: 'API',
+                                items: [
+                                    {label: 'Web API (Unified)', link: 'web-api'},
+                                    {label: 'Mobile API (Unified)', link: 'mobile-api'},
+                                ],
+                            },
                             {
                                 label: 'Helpers',
                                 items: [
@@ -299,6 +293,7 @@ export default defineConfig({
                             {
                                 label: 'Plugins',
                                 items: [
+                                  {label: 'Overview', link: 'plugins'},
                                   {label: 'aiTrace', link: 'plugins/ai-trace'},
                                   {label: 'analyze', link: 'plugins/analyze'},
                                   {label: 'auth', link: 'plugins/auth'},
@@ -314,9 +309,18 @@ export default defineConfig({
                                   {label: 'retryFailedStep', link: 'plugins/retry-failed-step'},
                                   {label: 'screencast', link: 'plugins/screencast'},
                                   {label: 'screenshot', link: 'plugins/screenshot'},
+                                  {label: 'screenshotOnFail', link: 'plugins/screenshot-on-fail'},
                                   {label: 'stepTimeout', link: 'plugins/step-timeout'},
                                 ],
-                            },
+                          },
+                          { label: 'Miscellaneous', items: [
+                              {label: 'Commands', link: 'commands'},
+                              {label: 'Configuration', link: 'configuration'},
+                              { label: 'Effects', link: 'effects' },
+                              {label: 'Element Functions', link: 'els'},
+                              {label: 'WebElement', link: 'web-element'},
+
+                          ]},
                             {
                                 label: 'Reporters Plugins',
                                 items: [
