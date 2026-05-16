@@ -1,3 +1,4 @@
+import { loadEnvFile } from 'node:process';
 import {defineConfig} from 'astro/config';
 import starlight from '@astrojs/starlight';
 import react from '@astrojs/react';
@@ -9,6 +10,9 @@ import starlightScrollToTop from 'starlight-scroll-to-top';
 import {codeceptDark, codeceptLight} from './src/lib/shiki-themes.ts';
 import {codeceptShikiTransformer} from './src/lib/shiki-codecept-transformer.ts';
 import rehypeInjectFigure from './src/lib/rehype-inject-figure.mjs';
+import rehypeSearchStrip from './src/lib/rehype-search-strip.mjs';
+
+loadEnvFile(); // Loads default .env file
 
 const options = {
     collectionBase: false,
@@ -185,7 +189,11 @@ export default defineConfig({
                             items: [
                               { label: 'Quickstart', link: 'quickstart' },
                               { label: 'Installation', link: 'installation' },
-                              { label: 'Upgrade from v3', link: 'migration-4' },
+                              { label: 'Upgrade', link: 'migration-4' },
+                              { label: 'Migrate from Cypress.io', link: 'migrate-from-cypress' },
+                              { label: 'Migrate from Java Selenium', link: 'migrate-from-java' },
+                              { label: 'Migrate from TestCafe', link: 'migrate-from-testcafe' },
+                              { label: 'Migrate from Protractor', link: 'migrate-from-protractor' },
                               ]
                             },
                             {
@@ -316,7 +324,7 @@ export default defineConfig({
                     {
                         id: 'blog',
                         label: 'Blog',
-                        link: '/blog/my-first-blog-post/',
+                        link: '/blog/codeceptjs-4/',
                         items: [
                             {label: 'Blog', autogenerate: {directory: 'blog/'}},
                         ],
@@ -386,6 +394,7 @@ export default defineConfig({
         rehypePlugins: [
             [rehypeAstroRelativeMarkdownLinks, options],
             [rehypeInjectFigure, { injections: figureInjections }],
+            rehypeSearchStrip,
         ],
     },
 });

@@ -1,16 +1,62 @@
 {
   "start_urls": [
-    "https://codecept.io/"
+    {
+      "url": "https://codeceptjs4.vercel.app/web-api",
+      "page_rank": 5
+    },
+    {
+      "url": "https://codeceptjs4.vercel.app/mobile-api",
+      "page_rank": 4
+    },
+    {
+      "url": "https://codeceptjs4.vercel.app/helpers/playwright",
+      "page_rank": 1
+    },
+    {
+      "url": "https://codeceptjs4.vercel.app/helpers/web-driver",
+      "page_rank": 1
+    },
+    {
+      "url": "https://codeceptjs4.vercel.app/helpers/appium",
+      "page_rank": 1
+    },
+    {
+      "url": "https://codeceptjs4.vercel.app/helpers/puppeteer",
+      "page_rank": 1
+    },
+    {
+      "url": "https://codeceptjs4.vercel.app/helpers/detox",
+      "page_rank": 1
+    },
+    "https://codeceptjs4.vercel.app"
   ],
   "index_uid": "codeceptjs",
+  "stop_urls": [
+    "https://codeceptjs4\\.vercel\\.app/.+/$"
+  ],
+  "selectors_exclude": [
+    ".search-strip"
+  ],
+  "custom_settings": {
+    "rankingRules": [
+      "words",
+      "typo",
+      "attribute",
+      "page_rank:desc",
+      "proximity",
+      "exactness",
+      "level:desc",
+      "position:asc"
+    ]
+  },
   "selectors": {
     "default": {
-      "lvl0": "main h1",
-      "lvl1": "main h2",
-      "lvl2": "main h3",
-      "lvl3": "main h4",
-      "lvl4": "main h5",
-      "text": "main p"
+      "lvl0": ".content-panel h1",
+      "lvl1": ".content-panel h2",
+      "lvl2": ".content-panel h3",
+      "lvl3": ".content-panel h4",
+      "lvl4": ".content-panel h5",
+      "text": ".content-panel p"
     }
   }
 }

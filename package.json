@@ -17,7 +17,8 @@
     "sync:docs": "node scripts/sync-codeceptjs-docs.mjs",
     "sync:docs:check": "node scripts/sync-codeceptjs-docs.mjs --check",
     "generate:unified-api": "node scripts/generate-unified-api.mjs",
-    "generate:unified-api:check": "node scripts/generate-unified-api.mjs --check"
+    "generate:unified-api:check": "node scripts/generate-unified-api.mjs --check",
+    "search:scrape": "docker run -t --rm --env-file .env -v $PWD/docsearch.json:/docs-scraper/docsearch.json getmeili/docs-scraper:latest pipenv run ./docs_scraper docsearch.json"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^6.3.10",

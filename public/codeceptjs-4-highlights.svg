@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 984 700" width="984" height="700">
+  <defs>
+    <filter id="ambient" x="-12%" y="-12%" width="124%" height="124%">
+      <feDropShadow dx="0" dy="4" stdDeviation="9" flood-color="#1a1d28" flood-opacity="0.12"/>
+    </filter>
+    <filter id="ambientSoft" x="-12%" y="-12%" width="124%" height="124%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#1a1d28" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400..700&amp;display=swap');
+    .kicker  { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11px; letter-spacing: 0.20em; }
+    .heading { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 32px; letter-spacing: -0.025em; font-feature-settings: 'ss01','ss02'; }
+    .title   { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: -0.020em; font-feature-settings: 'ss01','ss02'; }
+    .body    { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 14px; letter-spacing: -0.005em; }
+  </style>
+
+  <!-- Honey container — front (24, 44) 922x532 -->
+  <g transform="translate(24, 44)">
+    <path d="M0,0 L922,0 L936,-8 L14,-8 Z" fill="#FFF1D6"/>
+    <path d="M922,0 L936,-8 L936,524 L922,532 Z" fill="#F5E5B0"/>
+    <rect width="922" height="532" fill="#FFFBF0" filter="url(#ambient)"/>
+    <text x="44" y="56" class="kicker" fill="#C88800">CODECEPTJS · 4.0</text>
+    <text x="44" y="96" class="heading" fill="#111827">Featured Updates</text>
+  </g>
+
+  <!-- Card 1 — Native ESM — (68, 184) 380x150 -->
+  <g transform="translate(68, 184)">
+    <path d="M0,0 L380,0 L394,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M380,0 L394,-8 L394,142 L380,150 Z" fill="#E2E8F0"/>
+    <rect width="380" height="150" fill="#FFFFFF" filter="url(#ambientSoft)"/>
+    <text x="24" y="40" class="kicker" fill="#C88800">01 · CORE</text>
+    <text x="24" y="76" class="title" fill="#111827">Native ESM</text>
+    <text x="24" y="112" class="body" fill="#4B5563">import/export, Node 20+, noGlobals default</text>
+  </g>
+
+  <!-- Card 2 — Agent-first — (508, 184) 380x150 -->
+  <g transform="translate(508, 184)">
+    <path d="M0,0 L380,0 L394,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M380,0 L394,-8 L394,142 L380,150 Z" fill="#E2E8F0"/>
+    <rect width="380" height="150" fill="#FFFFFF" filter="url(#ambientSoft)"/>
+    <text x="24" y="40" class="kicker" fill="#C88800">02 · AGENTS</text>
+    <text x="24" y="76" class="title" fill="#111827">Agent-first</text>
+    <text x="24" y="112" class="body" fill="#4B5563">MCP server + skills; the agent writes tests</text>
+  </g>
+
+  <!-- Card 3 — Smarter actions — (68, 382) 380x150 -->
+  <g transform="translate(68, 382)">
+    <path d="M0,0 L380,0 L394,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M380,0 L394,-8 L394,142 L380,150 Z" fill="#E2E8F0"/>
+    <rect width="380" height="150" fill="#FFFFFF" filter="url(#ambientSoft)"/>
+    <text x="24" y="40" class="kicker" fill="#C88800">03 · ACTIONS</text>
+    <text x="24" y="76" class="title" fill="#111827">Smarter actions</text>
+    <text x="24" y="112" class="body" fill="#4B5563">Custom dropdowns, editors, file dropzones</text>
+  </g>
+
+  <!-- Card 4 — Elements API — (508, 382) 380x150 -->
+  <g transform="translate(508, 382)">
+    <path d="M0,0 L380,0 L394,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M380,0 L394,-8 L394,142 L380,150 Z" fill="#E2E8F0"/>
+    <rect width="380" height="150" fill="#FFFFFF" filter="url(#ambientSoft)"/>
+    <text x="24" y="40" class="kicker" fill="#C88800">04 · ELEMENTS</text>
+    <text x="24" y="76" class="title" fill="#111827">Elements API</text>
+    <text x="24" y="112" class="body" fill="#4B5563">grabWebElement: one API for any helper</text>
+  </g>
+</svg>

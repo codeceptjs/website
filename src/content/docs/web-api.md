@@ -3707,9 +3707,9 @@ I.waitUrlEquals('http://127.0.0.1:8000/info');
 
 [1]: http://webdriver.io/
 
-[2]: https://codecept.io/webdriver/#testing-with-webdriver
+[2]: https://webdriver.io/blog/2023/07/31/driver-management/
 
-[3]: https://webdriver.io/blog/2023/07/31/driver-management/
+[3]: https://codecept.io/webdriver/#testing-with-webdriver
 
 [4]: http://webdriver.io/guide/getstarted/configuration.html
 

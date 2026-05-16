@@ -3,7 +3,7 @@
 ---
 
 {/* Hero Section */}
-<section class="hero-section !mt-0 -mt-22 relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-24">
+<section class="hero-section !mt-0 -mt-22 relative overflow-hidden pt-4 pb-20 lg:pt-6 lg:pb-24">
 
     {/* Animated background — wallpaper of CodeceptJS commands drifting diagonally */}
     <svg class="hero-wallpaper" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
@@ -52,6 +52,15 @@
 
     {/* Content */}
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+
+        {/* Quiet install row — centered at the top */}
+        <div class="flex justify-center mb-12 hero-stagger">
+            <div class="hero-install" id="install-widget">
+                <div id="install-tabs"></div>
+                <div id="install-body"></div>
+            </div>
+        </div>
+
         <div class="grid md:grid-cols-12 gap-10 md:gap-10 lg:gap-12 items-center">
 
             {/* LEFT — Headline & CTAs */}
@@ -128,13 +137,23 @@
                         </div>
                     </div>
                 </div>
-
-                {/* Quiet install row */}
-                <div class="hero-install mt-6" id="install-widget">
-                    <div id="install-tabs"></div>
-                    <div id="install-body"></div>
-                </div>
             </div>
+        </div>
+
+        {/* Migration shortcuts — centered CTAs below the hero grid */}
+        <div class="mt-12 hero-stagger flex flex-wrap justify-center gap-3">
+            <a href="/migrate-from-cypress" class="no-underline px-4 py-2 rounded-lg text-xs font-medium border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-purple-500 dark:hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-150">
+                Migrate from Cypress
+            </a>
+            <a href="/migrate-from-protractor" class="no-underline px-4 py-2 rounded-lg text-xs font-medium border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-purple-500 dark:hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-150">
+                Migrate from Protractor
+            </a>
+            <a href="/migrate-from-testcafe" class="no-underline px-4 py-2 rounded-lg text-xs font-medium border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-purple-500 dark:hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-150">
+                Migrate from TestCafe
+            </a>
+            <a href="/migrate-from-java" class="no-underline px-4 py-2 rounded-lg text-xs font-medium border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-purple-500 dark:hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-150">
+                Migrate from Java / Selenium
+            </a>
         </div>
     </div>
 
@@ -466,6 +485,9 @@
         }
         .hero-runner-summary.show { opacity: 1; }
 
+        /* Install row sits darker in dark mode */
+        html[data-theme="dark"] #install-body { background: rgba(255, 255, 255, 0.06) !important; }
+
         /* Reduced motion */
         @media (prefers-reduced-motion: reduce) {
             .hero-wallpaper, .hero-tick, .hero-stagger > *, .hero-pulse, .hero-runner-dot {
@@ -692,10 +714,10 @@
             deno: 'deno add npm:codeceptjs',
         };
 
-        widget.style.cssText = 'border-radius:8px; overflow:hidden; border:1px solid rgba(127,127,127,0.22); background:transparent; max-width:420px;';
+        widget.style.cssText = 'border:none; background:transparent; max-width:420px;';
 
         const tabsRow = document.getElementById('install-tabs')!;
-        tabsRow.style.cssText = 'display:flex; border-bottom:1px solid rgba(127,127,127,0.16); margin:0; padding:0;';
+        tabsRow.style.cssText = 'display:flex; border:none; margin:0 0 6px 0; padding:0;';
 
         const tabEls: HTMLElement[] = [];
         pms.forEach(pm => {
@@ -725,7 +747,7 @@
         });
 
         const body = document.getElementById('install-body')!;
-        body.style.cssText = 'display:flex; align-items:center; padding:10px 12px; gap:10px; margin:0;';
+        body.style.cssText = 'display:flex; align-items:center; padding:10px 14px; gap:10px; margin:0; background:#eee; border-radius:8px;';
 
         const prompt = document.createElement('span');
         prompt.textContent = '$';
