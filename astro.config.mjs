@@ -12,7 +12,11 @@ import {codeceptShikiTransformer} from './src/lib/shiki-codecept-transformer.ts'
 import rehypeInjectFigure from './src/lib/rehype-inject-figure.mjs';
 import rehypeSearchStrip from './src/lib/rehype-search-strip.mjs';
 
-loadEnvFile(); // Loads default .env file
+try {
+    loadEnvFile(); // Loads default .env file when present (local dev)
+} catch {
+    // No .env on CI/Vercel — env vars are injected directly into process.env
+}
 
 const options = {
     collectionBase: false,
