@@ -1,0 +1,14 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import HomePage from './home/index.astro';
+---
+
+<StarlightPage
+	frontmatter={{
+		title: 'CodeceptJS docs',
+		description: 'CodeceptJS ‐ supercharged End 2 End Testing',
+		template: 'splash',
+	}}
+>
+	<HomePage />
+</StarlightPage>

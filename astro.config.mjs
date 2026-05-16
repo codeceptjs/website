@@ -277,36 +277,21 @@ export default defineConfig({
                     {
                         id: 'reference',
                         label: 'Reference',
-                        link: '/helpers/playwright/',
+                        link: 'helpers/playwright',
                         items: [
                             {
-                                label: 'Web Testing',
+                                label: 'Helpers',
                                 items: [
                                     {label: 'Playwright', link: 'helpers/playwright'},
                                     {label: 'WebDriver', link: 'helpers/web-driver'},
                                     {label: 'Puppeteer', link: 'helpers/puppeteer'},
-                                ],
-                            },
-                            {
-                                label: 'Mobile Testing',
-                                items: [
                                     {label: 'Appium', link: 'helpers/appium'},
                                     {label: 'Detox', link: 'helpers/detox'},
-                                ],
-                            },
-                            {
-                                label: 'API Helpers',
-                                items: [
                                     {label: 'REST', link: 'helpers/rest'},
                                     {label: 'ApiDataFactory', link: 'helpers/api-data-factory'},
                                     {label: 'GraphQL', link: 'helpers/graph-ql'},
                                     {label: 'GraphQLDataFactory', link: 'helpers/graph-ql-data-factory'},
                                     {label: 'JSONResponse', link: 'helpers/json-response'},
-                                ],
-                            },
-                            {
-                                label: 'Other Helpers',
-                                items: [
                                     {label: 'FileSystem', link: 'helpers/file-system'},
                                     {label: 'Expect', link: 'helpers/expect'},
                                 ],
@@ -314,47 +299,31 @@ export default defineConfig({
                             {
                                 label: 'Plugins',
                                 items: [
-                                    {label: 'auth', link: 'plugins/auth'},
-                                    {label: 'autoDelay', link: 'plugins/auto-delay'},
-                                    {label: 'browser', link: 'plugins/browser'},
-                                    {label: 'pause', link: 'plugins/pause'},
-                                    {label: 'pauseOnFail', link: 'plugins/pause-on-fail'},
-                                    {label: 'retryFailedStep', link: 'plugins/retry-failed-step'},
-                                    {label: 'stepTimeout', link: 'plugins/step-timeout'},
+                                  {label: 'aiTrace', link: 'plugins/ai-trace'},
+                                  {label: 'analyze', link: 'plugins/analyze'},
+                                  {label: 'auth', link: 'plugins/auth'},
+                                  {label: 'autoDelay', link: 'plugins/auto-delay'},
+                                  {label: 'browser', link: 'plugins/browser'},
+                                  {label: 'coverage', link: 'plugins/coverage'},
+                                  {label: 'customLocator', link: 'plugins/custom-locator'},
+                                  {label: 'expose', link: 'plugins/expose'},
+                                  {label: 'heal', link: 'plugins/heal'},
+                                  {label: 'pageInfo', link: 'plugins/page-info'},
+                                  {label: 'pause', link: 'plugins/pause'},
+                                  {label: 'pauseOnFail', link: 'plugins/pause-on-fail'},
+                                  {label: 'retryFailedStep', link: 'plugins/retry-failed-step'},
+                                  {label: 'screencast', link: 'plugins/screencast'},
+                                  {label: 'screenshot', link: 'plugins/screenshot'},
+                                  {label: 'stepTimeout', link: 'plugins/step-timeout'},
                                 ],
                             },
                             {
-                                label: 'AI Plugins',
-                                items: [
-                                    {label: 'aiTrace', link: 'plugins/ai-trace'},
-                                    {label: 'analyze', link: 'plugins/analyze'},
-                                    {label: 'heal', link: 'plugins/heal'},
-                                ],
-                            },
-                            {
-                                label: 'Diagnostics Plugins',
-                                items: [
-                                    {label: 'pageInfo', link: 'plugins/page-info'},
-                                    {label: 'screencast', link: 'plugins/screencast'},
-                                    {label: 'screenshot', link: 'plugins/screenshot'},
-                                    {label: 'screenshotOnFail', link: 'plugins/screenshot-on-fail'},
-                                ],
-                            },
-                            {
-                                label: 'Reporter Plugins',
+                                label: 'Reporters Plugins',
                                 items: [
                                     {label: 'customReporter', link: 'plugins/custom-reporter'},
                                     {label: 'junitReporter', link: 'plugins/junit-reporter'},
                                 ],
-                            },
-                            {
-                                label: 'Utility Plugins',
-                                items: [
-                                    {label: 'coverage', link: 'plugins/coverage'},
-                                    {label: 'customLocator', link: 'plugins/custom-locator'},
-                                    {label: 'expose', link: 'plugins/expose'},
-                                ],
-                            },
+                            }
                         ]
                     },
                     {
