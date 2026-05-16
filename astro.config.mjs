@@ -275,8 +275,8 @@ export default defineConfig({
                     },
 
                     {
-                        id: 'helpers',
-                        label: 'Helpers',
+                        id: 'reference',
+                        label: 'Reference',
                         link: '/helpers/playwright/',
                         items: [
                             {
@@ -307,16 +307,52 @@ export default defineConfig({
                             {
                                 label: 'Other Helpers',
                                 items: [
-                                    {label: 'OpenAI', link: 'helpers/open-ai'},
-                                    {label: 'AI', link: 'helpers/ai'},
                                     {label: 'FileSystem', link: 'helpers/file-system'},
                                     {label: 'Expect', link: 'helpers/expect'},
-                                    {label: 'SoftExpectHelper', link: 'helpers/soft-expect-helper'},
-                                    {label: 'MockRequest', link: 'helpers/mock-request'},
-                                    {label: 'MockServer', link: 'helpers/mock-server'},
-                                    {label: 'Polly', link: 'helpers/polly'},
-                                    {label: 'Mochawesome', link: 'helpers/mochawesome'},
-                                    {label: 'Custom Helpers', link: 'custom-helpers'},
+                                ],
+                            },
+                            {
+                                label: 'Plugins',
+                                items: [
+                                    {label: 'auth', link: 'plugins/auth'},
+                                    {label: 'autoDelay', link: 'plugins/auto-delay'},
+                                    {label: 'browser', link: 'plugins/browser'},
+                                    {label: 'pause', link: 'plugins/pause'},
+                                    {label: 'pauseOnFail', link: 'plugins/pause-on-fail'},
+                                    {label: 'retryFailedStep', link: 'plugins/retry-failed-step'},
+                                    {label: 'stepTimeout', link: 'plugins/step-timeout'},
+                                ],
+                            },
+                            {
+                                label: 'AI Plugins',
+                                items: [
+                                    {label: 'aiTrace', link: 'plugins/ai-trace'},
+                                    {label: 'analyze', link: 'plugins/analyze'},
+                                    {label: 'heal', link: 'plugins/heal'},
+                                ],
+                            },
+                            {
+                                label: 'Diagnostics Plugins',
+                                items: [
+                                    {label: 'pageInfo', link: 'plugins/page-info'},
+                                    {label: 'screencast', link: 'plugins/screencast'},
+                                    {label: 'screenshot', link: 'plugins/screenshot'},
+                                    {label: 'screenshotOnFail', link: 'plugins/screenshot-on-fail'},
+                                ],
+                            },
+                            {
+                                label: 'Reporter Plugins',
+                                items: [
+                                    {label: 'customReporter', link: 'plugins/custom-reporter'},
+                                    {label: 'junitReporter', link: 'plugins/junit-reporter'},
+                                ],
+                            },
+                            {
+                                label: 'Utility Plugins',
+                                items: [
+                                    {label: 'coverage', link: 'plugins/coverage'},
+                                    {label: 'customLocator', link: 'plugins/custom-locator'},
+                                    {label: 'expose', link: 'plugins/expose'},
                                 ],
                             },
                         ]

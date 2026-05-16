@@ -22,12 +22,10 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - name: Install deps
         run: npm ci
-      - name: Sync changelog from CodeceptJS 4.x
-        run: npm run sync:changelog
       - name: Generate unified API docs
         run: npm run generate:unified-api
       - name: deployment
-        run: ./runok.js publish
+        run: npx bunosh publish
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

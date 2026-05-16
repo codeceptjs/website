@@ -13,19 +13,13 @@ npm run dev
 
 The docs sync flow is now:
 
-1. Sync changelog from CodeceptJS `4.x`:
-
-```bash
-npm run sync:changelog
-```
-
-2. Regenerate unified API pages:
+1. Regenerate unified API pages:
 
 ```bash
 npm run generate:unified-api
 ```
 
-3. Build:
+2. Build:
 
 ```bash
 npm run build
@@ -34,7 +28,7 @@ npm run build
 You can also run the compatibility helper:
 
 ```bash
-./runok.js update
+bunosh docs:update
 ```
 
-This command now runs `sync:changelog` + `generate:unified-api` (legacy 3.x VuePress sync was removed).
+This command now runs `generate:unified-api` (legacy 3.x VuePress sync was removed).
