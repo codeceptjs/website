@@ -1,0 +1,38 @@
+# Re-indexes the site in Meilisearch after every push to main.
+# Waits for the Vercel deploy to go live before scraping.
+name: Search scrape
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: search-scrape
+  cancel-in-progress: true
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Wait for Vercel deploy to go live
+        run: sleep 180
+
+      - name: Write Meilisearch credentials
+        run: |
+          cat > .env <<EOF
+          MEILISEARCH_HOST_URL=${{ secrets.MEILISEARCH_HOST_URL }}
+          MEILISEARCH_API_KEY=${{ secrets.MEILISEARCH_API_KEY }}
+          EOF
+
+      - name: Scrape into Meilisearch
+        run: bunx bunosh search:scrape

@@ -32,3 +32,4 @@ pnpm-debug.log*
 
 # per-user Claude Code settings
 .claude/settings.local.json
+videos

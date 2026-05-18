@@ -18,7 +18,7 @@
         "search:scrape": "bunosh search:scrape",
         "publish": "bunosh publish",
         "serve": "bunosh serve",
-        "update": "bunosh docs:update"
+        "update": "bunosh docs"
     },
     "dependencies": {
         "@astrojs/markdown-remark": "^6.3.10",

@@ -184,6 +184,17 @@ export async function releasePull(pages = 5) {
   await pullReleases(Math.max(1, Number(pages) || 5));
 }
 
+/**
+ * Refresh every piece of generated content in one shot: sync upstream docs,
+ * regenerate the unified web/mobile API pages, and pull the latest releases.
+ * This is the command the CodeceptJS release pipeline triggers.
+ */
+export async function docs() {
+  await docsSync();
+  await docsUnifiedApi();
+  await releasePull();
+}
+
 // ===========================================================================
 // Helpers
 // ===========================================================================
