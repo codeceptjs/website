@@ -123,7 +123,7 @@ export async function publish() {
  * Sync CodeceptJS docs from the upstream repository into src/content/docs.
  */
 export async function docsSync() {
-  const { diff, considered } = await stageUpstreamDocs();
+  const { links, diff, considered } = await stageUpstreamDocs();
 
   await task('Apply curated docs', () => {
     for (const { target, content } of diff.changes) {
@@ -131,6 +131,10 @@ export async function docsSync() {
       fs.writeFileSync(target, content);
     }
   });
+
+  let images = 0;
+  await task('Copy referenced images', () => { images = syncReferencedImages(links); });
+  say(`copied ${images} referenced image(s)`);
 
   reportSyncResult(diff, considered);
 }
@@ -231,16 +235,17 @@ async function stageUpstreamDocs() {
   await task('Stage upstream docs', () => { stagedCount = buildStaging(); });
   say(`staged ${stagedCount} files in ${STAGING_DIR}`);
 
+  let links;
   let diff;
   let considered = 0;
   await task('Scan curated docs', () => {
-    const links = collectSidebarLinks();
+    links = collectSidebarLinks();
     diff = diffCuratedDocs(links);
     considered = links.size - [...SKIP_LINKS].filter((l) => links.has(l)).length;
   });
   say(`scanned ${considered} sidebar-listed docs`);
 
-  return { diff, considered };
+  return { links, diff, considered };
 }
 
 async function cloneUpstream() {
@@ -278,6 +283,54 @@ function diffCuratedDocs(links) {
     changes.push({ link, target, content });
   }
   return { changes, unchanged, missing };
+}
+
+function collectImagePaths(markdown) {
+  const paths = new Set();
+  const patterns = [
+    /!\[[^\]]*\]\(\s*<?([^)>\s]+)>?/g, // ![alt](path)
+    /<img[^>]+src=["']([^"']+)["']/gi, // <img src="path">
+  ];
+  for (const re of patterns) {
+    let m;
+    while ((m = re.exec(markdown)) !== null) {
+      const p = m[1].trim();
+      if (!p || /^(?:[a-z]+:)?\/\//i.test(p) || p.startsWith('data:') || p.startsWith('/')) continue;
+      paths.add(p.split('#')[0].split('?')[0]);
+    }
+  }
+  return [...paths];
+}
+
+// Curated docs reference upstream images by relative path; copy those images
+// from staging into src/content/docs so the Astro build can resolve them.
+function syncReferencedImages(links) {
+  let copied = 0;
+  for (const link of links) {
+    if (SKIP_LINKS.has(link)) continue;
+    const staged = path.join(STAGING_DIR, `${link}.md`);
+    if (!fs.existsSync(staged)) continue;
+    const linkDir = path.posix.dirname(link);
+    for (const rel of collectImagePaths(fs.readFileSync(staged, 'utf8'))) {
+      const relFromRoot = path.posix.normalize(
+        linkDir === '.' ? rel : path.posix.join(linkDir, rel),
+      );
+      if (relFromRoot.startsWith('..')) continue;
+      const src = path.join(STAGING_DIR, relFromRoot);
+      if (!fs.existsSync(src)) continue;
+      const dest = path.join(DOCS_DIR, relFromRoot);
+      const srcBuf = fs.readFileSync(src);
+      let destBuf = null;
+      try { destBuf = fs.readFileSync(dest); } catch (e) {
+        if (e.code !== 'ENOENT') throw e;
+      }
+      if (destBuf && destBuf.equals(srcBuf)) continue;
+      fs.mkdirSync(path.dirname(dest), { recursive: true });
+      fs.writeFileSync(dest, srcBuf);
+      copied += 1;
+    }
+  }
+  return copied;
 }
 
 function assertNoDocsDrift(diff) {
