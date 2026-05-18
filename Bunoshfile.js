@@ -61,10 +61,117 @@ const WEB_METHOD_OVERRIDES = {
   },
 };
 
-async function prepareContent() {
-  await syncDocs();
-  await buildUnifiedApi();
-  await pullReleases(5, { soft: true }); // tolerate offline / rate-limited GitHub
+/**
+ * Start the Astro dev server (syncs docs and regenerates the unified API first).
+ */
+export async function dev() {
+  await prepareContent();
+  await shell`astro dev`;
+}
+
+/**
+ * Alias of `dev` — kept because package.json (`start`, `serve`) and the README
+ * invoke the `serve` command name directly.
+ */
+export async function serve() {
+  await dev();
+}
+
+/**
+ * Build the static site (syncs docs and regenerates the unified API first).
+ */
+export async function build() {
+  stopOnFailures();
+  await prepareContent();
+  await task('Build static site', () => shell`astro build`);
+  say('static site built into dist/');
+}
+
+/**
+ * Preview the production build locally.
+ */
+export async function preview() {
+  await shell`astro preview`;
+}
+
+/**
+ * Scrape the site into Meilisearch via the docs-scraper Docker image.
+ */
+export async function searchScrape() {
+  await shell`docker run -t --rm --env-file .env -v ${ROOT}/docsearch.json:/docs-scraper/docsearch.json getmeili/docs-scraper:latest pipenv run ./docs_scraper docsearch.json`;
+}
+
+/**
+ * Build and publish the site to the codeceptjs.github.io deploy branch.
+ */
+export async function publish() {
+  stopOnFailures();
+
+  await task('Install dependencies', () => shell`npm i`);
+  say('dependencies installed');
+
+  await build();
+
+  await task('Write CNAME', () => Bun.write(path.join(DIST_DIR, 'CNAME'), 'codecept.io\n'));
+  say(`wrote CNAME to ${DIST_DIR}`);
+
+  await pushDeployBranch();
+  say('pushed dist/ to codeceptjs.github.io@master');
+}
+
+/**
+ * Sync CodeceptJS docs from the upstream repository into src/content/docs.
+ */
+export async function docsSync() {
+  const { diff, considered } = await stageUpstreamDocs();
+
+  await task('Apply curated docs', () => {
+    for (const { target, content } of diff.changes) {
+      fs.mkdirSync(path.dirname(target), { recursive: true });
+      fs.writeFileSync(target, content);
+    }
+  });
+
+  reportSyncResult(diff, considered);
+}
+
+/**
+ * Verify synced docs are up to date without writing (CI check; fails on drift).
+ */
+export async function docsSyncCheck() {
+  const { diff, considered } = await stageUpstreamDocs();
+  assertNoDocsDrift(diff);
+  say(`docs:sync-check ok — ${considered} curated docs in sync`);
+}
+
+/**
+ * Regenerate the unified web/mobile API pages from helper docblocks.
+ */
+export async function docsUnifiedApi() {
+  const { webContent, mobileContent } = await buildUnifiedApiContent();
+
+  await task('Write unified API pages', () => {
+    writeFile(WEB_OUTPUT, webContent);
+    writeFile(MOBILE_OUTPUT, mobileContent);
+  });
+  say(`generated ${path.relative(ROOT, WEB_OUTPUT)} and ${path.relative(ROOT, MOBILE_OUTPUT)}`);
+}
+
+/**
+ * Alias of `docs:unified-api` — kept because package.json (`update`) and the
+ * README invoke the legacy `docs:update` command name directly.
+ */
+export async function docsUpdate() {
+  await docsUnifiedApi();
+}
+
+/**
+ * Verify unified API pages are up to date without writing (CI check; fails on drift).
+ */
+export async function docsUnifiedApiCheck() {
+  const { webContent, mobileContent } = await buildUnifiedApiContent();
+  assertUnifiedApiUpToDate(webContent, mobileContent);
+  say('unified API docs are up to date');
 }
 
 /**
@@ -75,6 +182,136 @@ async function prepareContent() {
 export async function releasePull(pages = 5) {
   stopOnFailures();
   await pullReleases(Math.max(1, Number(pages) || 5));
+}
+
+// ===========================================================================
+// Helpers
+// ===========================================================================
+
+async function prepareContent() {
+  await docsSync();
+  await docsUnifiedApi();
+  await pullReleases(5, { soft: true }); // tolerate offline / rate-limited GitHub
+}
+
+async function pushDeployBranch() {
+  await task('Push deploy branch', () => shell`
+    git init
+    git remote add origin git@github.com:codeceptjs/codeceptjs.github.io.git
+    git checkout -b deploy
+    git reset --soft HEAD~$(git rev-list --count HEAD ^master)
+    git add -A
+    git commit -m "deploy"
+    git push -f origin deploy:master
+  `.cwd(DIST_DIR));
+}
+
+/**
+ * Clone upstream, stage its docs, and diff them against the curated copies.
+ * Writes nothing — returns the planned changes so callers decide what to do.
+ */
+async function stageUpstreamDocs() {
+  stopOnFailures();
+
+  await cloneUpstream();
+  say(`cloned ${REPO_URL}@${BRANCH} into ${REPO_DIR}`);
+
+  let stagedCount = 0;
+  await task('Stage upstream docs', () => { stagedCount = buildStaging(); });
+  say(`staged ${stagedCount} files in ${STAGING_DIR}`);
+
+  let diff;
+  let considered = 0;
+  await task('Scan curated docs', () => {
+    const links = collectSidebarLinks();
+    diff = diffCuratedDocs(links);
+    considered = links.size - [...SKIP_LINKS].filter((l) => links.has(l)).length;
+  });
+  say(`scanned ${considered} sidebar-listed docs`);
+
+  return { diff, considered };
+}
+
+async function cloneUpstream() {
+  await task('Clone CodeceptJS docs', async () => {
+    fs.rmSync(REPO_DIR, { recursive: true, force: true });
+    fs.mkdirSync(SYNC_ROOT, { recursive: true });
+    const res = await shell`git clone --depth=1 --branch ${BRANCH} --single-branch ${REPO_URL} ${REPO_DIR}`;
+    if (res.hasFailed) {
+      throw new Error(`git clone failed for ${REPO_URL}@${BRANCH} (is git installed and the branch reachable?)`);
+    }
+  });
+}
+
+function diffCuratedDocs(links) {
+  const changes = [];
+  let unchanged = 0;
+  const missing = [];
+  for (const link of links) {
+    if (SKIP_LINKS.has(link)) continue;
+    const srcFile = path.join(STAGING_DIR, `${link}.md`);
+    if (!fs.existsSync(srcFile)) {
+      missing.push(link);
+      continue;
+    }
+    const target = path.join(DOCS_DIR, `${link}.md`);
+    const content = Buffer.from(stripStagedSlug(fs.readFileSync(srcFile, 'utf8')), 'utf8');
+    let existing = null;
+    try { existing = fs.readFileSync(target); } catch (e) {
+      if (e.code !== 'ENOENT') throw e;
+    }
+    if (existing && existing.equals(content)) {
+      unchanged += 1;
+      continue;
+    }
+    changes.push({ link, target, content });
+  }
+  return { changes, unchanged, missing };
+}
+
+function assertNoDocsDrift(diff) {
+  if (diff.changes.length === 0) return;
+  const names = diff.changes.map((c) => `${c.link}.md`);
+  const head = names.slice(0, 20).map((f) => `  ${f}`).join('\n');
+  const more = names.length > 20 ? `\n  …and ${names.length - 20} more` : '';
+  throw new Error(`docs:sync-check failed — ${names.length} files would change:\n${head}${more}`);
+}
+
+function reportSyncResult(diff, considered) {
+  say(`copied ${diff.changes.length} (${diff.unchanged} unchanged) of ${considered} sidebar-listed docs`);
+  if (diff.missing.length === 0) return;
+  say(`note: ${diff.missing.length} sidebar links have no upstream source (kept local-only or generated):`);
+  for (const m of diff.missing.slice(0, 30)) say(`  ${m}`);
+  if (diff.missing.length > 30) say(`  …and ${diff.missing.length - 30} more`);
+}
+
+/**
+ * Generate the unified web + mobile API markdown. Writes nothing — returns the
+ * content so callers decide whether to write it or assert it is up to date.
+ */
+async function buildUnifiedApiContent() {
+  stopOnFailures();
+
+  let webContent;
+  let mobileContent;
+  await task('Build unified API content', () => {
+    webContent = generateWebApiContent();
+    mobileContent = generateMobileApiContent();
+  });
+  say('built web + mobile unified API content');
+
+  return { webContent, mobileContent };
+}
+
+function assertUnifiedApiUpToDate(webContent, mobileContent) {
+  const webOk = isFileUpToDate(WEB_OUTPUT, webContent);
+  const mobileOk = isFileUpToDate(MOBILE_OUTPUT, mobileContent);
+  if (webOk && mobileOk) return;
+
+  const outdated = [];
+  if (!webOk) outdated.push(path.relative(ROOT, WEB_OUTPUT));
+  if (!mobileOk) outdated.push(path.relative(ROOT, MOBILE_OUTPUT));
+  throw new Error(`Unified API docs are outdated: ${outdated.join(', ')}\nRun: bunosh docs:unified-api`);
 }
 
 async function pullReleases(pages, { soft = false } = {}) {
@@ -164,199 +401,6 @@ function renderReleases(releases) {
   }
 
   return lines.join('\n').trimEnd() + '\n';
-}
-
-/**
- * Start the Astro dev server (syncs docs and regenerates the unified API first).
- */
-export async function dev() {
-  await prepareContent();
-  await shell`astro dev`;
-}
-
-/**
- * Alias of `dev` — start the Astro dev server.
- */
-export async function serve() {
-  await dev();
-}
-
-/**
- * Build the static site (syncs docs and regenerates the unified API first).
- */
-export async function build() {
-  stopOnFailures();
-  await prepareContent();
-  await task('Build static site', () => shell`astro build`);
-  say('static site built into dist/');
-}
-
-/**
- * Preview the production build locally.
- */
-export async function preview() {
-  await shell`astro preview`;
-}
-
-/**
- * Scrape the site into Meilisearch via the docs-scraper Docker image.
- */
-export async function searchScrape() {
-  await shell`docker run -t --rm --env-file .env -v ${ROOT}/docsearch.json:/docs-scraper/docsearch.json getmeili/docs-scraper:latest pipenv run ./docs_scraper docsearch.json`;
-}
-
-/**
- * Build and publish the site to the codeceptjs.github.io deploy branch.
- */
-export async function publish() {
-  stopOnFailures();
-
-  await task('Install dependencies', () => shell`npm i`);
-  say('dependencies installed');
-
-  await build();
-
-  await task('Write CNAME', () => Bun.write(path.join(DIST_DIR, 'CNAME'), 'codecept.io\n'));
-  say(`wrote CNAME to ${DIST_DIR}`);
-
-  await pushDeployBranch();
-  say('pushed dist/ to codeceptjs.github.io@master');
-}
-
-async function pushDeployBranch() {
-  await task('Push deploy branch', () => shell`
-    git init
-    git remote add origin git@github.com:codeceptjs/codeceptjs.github.io.git
-    git checkout -b deploy
-    git reset --soft HEAD~$(git rev-list --count HEAD ^master)
-    git add -A
-    git commit -m "deploy"
-    git push -f origin deploy:master
-  `.cwd(DIST_DIR));
-}
-
-/**
- * Sync CodeceptJS docs from the upstream repository into src/content/docs.
- */
-export async function docsSync() {
-  await syncDocs();
-}
-
-/**
- * Verify synced docs are up to date without writing (CI check; fails on drift).
- */
-export async function docsSyncCheck() {
-  await syncDocs({ check: true }); // fail on drift, write nothing
-}
-
-/**
- * Regenerate the unified API pages (legacy runok `update`).
- */
-export async function docsUpdate() {
-  await docsUnifiedApi();
-}
-
-/**
- * Regenerate the unified web/mobile API pages from helper docblocks.
- */
-export async function docsUnifiedApi() {
-  await buildUnifiedApi();
-}
-
-/**
- * Verify unified API pages are up to date without writing (CI check; fails on drift).
- */
-export async function docsUnifiedApiCheck() {
-  await buildUnifiedApi({ check: true }); // fail on drift, write nothing
-}
-
-async function syncDocs({ check = false } = {}) {
-  stopOnFailures();
-
-  await cloneUpstream();
-  say(`cloned ${REPO_URL}@${BRANCH} into ${REPO_DIR}`);
-
-  let stagedCount = 0;
-  await task('Stage upstream docs', () => { stagedCount = buildStaging(); });
-  say(`staged ${stagedCount} files in ${STAGING_DIR}`);
-
-  let result;
-  let considered = 0;
-  await task('Apply curated docs', () => {
-    const links = collectSidebarLinks();
-    result = copyCurated(links, { check });
-    considered = links.size - [...SKIP_LINKS].filter((l) => links.has(l)).length;
-  });
-  say(`scanned ${considered} sidebar-listed docs`);
-
-  if (check) {
-    assertNoDocsDrift(result);
-    say(`docs:sync-check ok — ${considered} curated docs in sync`);
-    return;
-  }
-
-  reportSyncResult(result, considered);
-}
-
-async function cloneUpstream() {
-  await task('Clone CodeceptJS docs', async () => {
-    fs.rmSync(REPO_DIR, { recursive: true, force: true });
-    fs.mkdirSync(SYNC_ROOT, { recursive: true });
-    const res = await shell`git clone --depth=1 --branch ${BRANCH} --single-branch ${REPO_URL} ${REPO_DIR}`;
-    if (res.hasFailed) {
-      throw new Error(`git clone failed for ${REPO_URL}@${BRANCH} (is git installed and the branch reachable?)`);
-    }
-  });
-}
-
-function assertNoDocsDrift(result) {
-  if (result.drift.length === 0) return;
-  const head = result.drift.slice(0, 20).map((f) => `  ${f}`).join('\n');
-  const more = result.drift.length > 20 ? `\n  …and ${result.drift.length - 20} more` : '';
-  throw new Error(`docs:sync-check failed — ${result.drift.length} files would change:\n${head}${more}`);
-}
-
-function reportSyncResult(result, considered) {
-  say(`copied ${result.written} (${result.unchanged} unchanged) of ${considered} sidebar-listed docs`);
-  if (result.missing.length === 0) return;
-  say(`note: ${result.missing.length} sidebar links have no upstream source (kept local-only or generated):`);
-  for (const m of result.missing.slice(0, 30)) say(`  ${m}`);
-  if (result.missing.length > 30) say(`  …and ${result.missing.length - 30} more`);
-}
-
-async function buildUnifiedApi({ check = false } = {}) {
-  stopOnFailures();
-
-  let webContent;
-  let mobileContent;
-  await task('Build unified API content', () => {
-    webContent = generateWebApiContent();
-    mobileContent = generateMobileApiContent();
-  });
-  say('built web + mobile unified API content');
-
-  if (check) {
-    assertUnifiedApiUpToDate(webContent, mobileContent);
-    say('unified API docs are up to date');
-    return;
-  }
-
-  await task('Write unified API pages', () => {
-    writeFile(WEB_OUTPUT, webContent);
-    writeFile(MOBILE_OUTPUT, mobileContent);
-  });
-  say(`generated ${path.relative(ROOT, WEB_OUTPUT)} and ${path.relative(ROOT, MOBILE_OUTPUT)}`);
-}
-
-function assertUnifiedApiUpToDate(webContent, mobileContent) {
-  const webOk = isFileUpToDate(WEB_OUTPUT, webContent);
-  const mobileOk = isFileUpToDate(MOBILE_OUTPUT, mobileContent);
-  if (webOk && mobileOk) return;
-
-  const outdated = [];
-  if (!webOk) outdated.push(path.relative(ROOT, WEB_OUTPUT));
-  if (!mobileOk) outdated.push(path.relative(ROOT, MOBILE_OUTPUT));
-  throw new Error(`Unified API docs are outdated: ${outdated.join(', ')}\nRun: bunosh docs:unified-api`);
 }
 
 function toKebab(name) {
@@ -476,38 +520,6 @@ function collectSidebarLinks() {
 
 function stripStagedSlug(text) {
   return text.replace(/^slug:\s*.+\n/m, '');
-}
-
-function copyCurated(links, { check = false } = {}) {
-  let written = 0;
-  let unchanged = 0;
-  const missing = [];
-  const drift = [];
-  for (const link of links) {
-    if (SKIP_LINKS.has(link)) continue;
-    const srcFile = path.join(STAGING_DIR, `${link}.md`);
-    if (!fs.existsSync(srcFile)) {
-      missing.push(link);
-      continue;
-    }
-    const target = path.join(DOCS_DIR, `${link}.md`);
-    const newContent = Buffer.from(stripStagedSlug(fs.readFileSync(srcFile, 'utf8')), 'utf8');
-    let existing = null;
-    try { existing = fs.readFileSync(target); } catch (e) {
-      if (e.code !== 'ENOENT') throw e;
-    }
-    if (existing && existing.equals(newContent)) {
-      unchanged += 1;
-      continue;
-    }
-    if (!check) {
-      fs.mkdirSync(path.dirname(target), { recursive: true });
-      fs.writeFileSync(target, newContent);
-    }
-    written += 1;
-    drift.push(`${link}.md`);
-  }
-  return { written, unchanged, missing, drift };
 }
 
 function readFile(filePath) {
