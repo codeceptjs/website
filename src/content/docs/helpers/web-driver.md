@@ -26,26 +26,26 @@ Type: [object][17]
 
 *   `url` **[string][18]** base url of website to be tested.
 *   `browser` **[string][18]** Browser in which to perform testing.
-*   `bidiProtocol` **[boolean][33]?** WebDriver Bidi Protocol. Default: false. More info: [https://webdriver.io/docs/api/webdriverBidi/][37]
+*   `bidiProtocol` **[boolean][34]?** WebDriver Bidi Protocol. Default: false. More info: [https://webdriver.io/docs/api/webdriverBidi/][38]
 *   `basicAuth` **[string][18]?** (optional) the basic authentication to pass to base url. Example: {username: 'username', password: 'password'}
 *   `host` **[string][18]?** WebDriver host to connect.
-*   `port` **[number][22]?** WebDriver port to connect.
+*   `port` **[number][23]?** WebDriver port to connect.
 *   `protocol` **[string][18]?** protocol for WebDriver server.
 *   `path` **[string][18]?** path to WebDriver server.
-*   `restart` **[boolean][33]?** restart browser between tests.
-*   `smartWait` **([boolean][33] | [number][22])?** **enables [SmartWait][38]**; wait for additional milliseconds for element to appear. Enable for 5 secs: "smartWait": 5000.
-*   `disableScreenshots` **[boolean][33]?** don't save screenshots on failure.
-*   `fullPageScreenshots` **[boolean][33]?** (optional - make full page screenshots on failure.
-*   `uniqueScreenshotNames` **[boolean][33]?** option to prevent screenshot override if you have scenarios with the same name in different suites.
-*   `keepBrowserState` **[boolean][33]?** keep browser state between tests when `restart` is set to false.
-*   `keepCookies` **[boolean][33]?** keep cookies between tests when `restart` set to false.
+*   `restart` **[boolean][34]?** restart browser between tests.
+*   `smartWait` **([boolean][34] | [number][23])?** **enables [SmartWait][39]**; wait for additional milliseconds for element to appear. Enable for 5 secs: "smartWait": 5000.
+*   `disableScreenshots` **[boolean][34]?** don't save screenshots on failure.
+*   `fullPageScreenshots` **[boolean][34]?** (optional - make full page screenshots on failure.
+*   `uniqueScreenshotNames` **[boolean][34]?** option to prevent screenshot override if you have scenarios with the same name in different suites.
+*   `keepBrowserState` **[boolean][34]?** keep browser state between tests when `restart` is set to false.
+*   `keepCookies` **[boolean][34]?** keep cookies between tests when `restart` set to false.
 *   `windowSize` **[string][18]?** default window size. Set to `maximize` or a dimension in the format `640x480`.
-*   `waitForTimeout` **[number][22]?** sets default wait time in *ms* for all `wait*` functions.
+*   `waitForTimeout` **[number][23]?** sets default wait time in *ms* for all `wait*` functions.
 *   `desiredCapabilities` **[object][17]?** Selenium's [desired capabilities][7].
-*   `manualStart` **[boolean][33]?** do not start browser before a test, start it manually inside a helper with `this.helpers["WebDriver"]._startBrowser()`.
-*   `timeouts` **[object][17]?** [WebDriver timeouts][39] defined as hash.
-*   `highlightElement` **[boolean][33]?** highlight the interacting elements. Default: false. Note: only activate under verbose mode (--verbose).
-*   `logLevel` **[string][18]?** level of logging verbosity. Default: silent. Options: trace | debug | info | warn | error | silent. More info: [https://webdriver.io/docs/configuration/#loglevel][40]
+*   `manualStart` **[boolean][34]?** do not start browser before a test, start it manually inside a helper with `this.helpers["WebDriver"]._startBrowser()`.
+*   `timeouts` **[object][17]?** [WebDriver timeouts][40] defined as hash.
+*   `highlightElement` **[boolean][34]?** highlight the interacting elements. Default: false. Note: only activate under verbose mode (--verbose).
+*   `logLevel` **[string][18]?** level of logging verbosity. Default: silent. Options: trace | debug | info | warn | error | silent. More info: [https://webdriver.io/docs/configuration/#loglevel][41]
 
 ## wrapError
 
@@ -537,10 +537,6 @@ I.appendField('name', 'John', '.form-container');
 
 Returns **void** automatically synchronized promise through #recorder
 
-
-This action supports [React locators](https://codecept.io/react#locators)
-
-
 ### attachFile
 
 Appium: not tested
@@ -685,7 +681,11 @@ I.click('//form/*[@type=submit]');
 I.click('Logout', '#nav');
 // using strict locator
 I.click({css: 'nav a.login'});
+// using ARIA role locator
+I.click({role: 'button', name: 'Submit'});
 ```
+
+> ℹ️ ARIA role locators (`{role, name}`) match elements the way assistive technology does and survive markup refactors. See [Locators][22].
 
 #### Parameters
 
@@ -693,10 +693,6 @@ I.click({css: 'nav a.login'});
 *   `context` **([string][18]? | [object][17] | null)** (optional, `null` by default) element to search in CSS|XPath|Strict locator. 
 
 Returns **void** automatically synchronized promise through #recorder
-
-
-This action supports [React locators](https://codecept.io/react#locators)
-
 
 ### clickXY
 
@@ -714,11 +710,11 @@ I.clickXY('#someElement', 50, 30);
 
 #### Parameters
 
-*   `locator` **([string][18] | [object][17] | [number][22])** Element to click on or X coordinate if no element.
-*   `x` **[number][22]?** X coordinate relative to element's top-left, or Y coordinate if locator is a number.
-*   `y` **[number][22]?** Y coordinate relative to element's top-left.
+*   `locator` **([string][18] | [object][17] | [number][23])** Element to click on or X coordinate if no element.
+*   `x` **[number][23]?** X coordinate relative to element's top-left, or Y coordinate if locator is a number.
+*   `y` **[number][23]?** Y coordinate relative to element's top-left.
 
-Returns **[Promise][23]<void>**&#x20;
+Returns **[Promise][24]<void>**&#x20;
 
 ### closeCurrentTab
 
@@ -742,7 +738,7 @@ Returns **void** automatically synchronized promise through #recorder
 
 ### defineTimeout
 
-Set [WebDriver timeouts][24] in realtime.
+Set [WebDriver timeouts][25] in realtime.
 
 Timeouts are expected to be passed as object:
 
@@ -771,10 +767,6 @@ I.dontSee('Login', '.nav'); // no login inside .nav element
 *   `context` **([string][18] | [object][17])?** (optional) element located by CSS|XPath|strict locator in which to perfrom search. 
 
 Returns **void** automatically synchronized promise through #recorder
-
-
-This action supports [React locators](https://codecept.io/react#locators)
-
 
 ### dontSeeCheckboxIsChecked
 
@@ -856,10 +848,6 @@ I.dontSeeElement('.modal', '#container');
 *   `context` **([string][18]? | [object][17])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 
 Returns **void** automatically synchronized promise through #recorder
-
-
-This action supports [React locators](https://codecept.io/react#locators)
-
 
 ### dontSeeElementInDOM
 
@@ -955,10 +943,6 @@ I.doubleClick('.btn.edit');
 
 Returns **void** automatically synchronized promise through #recorder
 
-
-This action supports [React locators](https://codecept.io/react#locators)
-
-
 ### dragAndDrop
 
 Appium: not tested
@@ -988,7 +972,7 @@ I.dragSlider('#slider', -70);
 #### Parameters
 
 *   `locator` **([string][18] | [object][17])** located by label|name|CSS|XPath|strict locator.
-*   `offsetX` **[number][22]** position to drag. 
+*   `offsetX` **[number][23]** position to drag. 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -997,7 +981,7 @@ Returns **void** automatically synchronized promise through #recorder
 Executes async script on page.
 Provided function should execute a passed callback (as first argument) to signal it is finished.
 
-Example: In Vue.js to make components completely rendered we are waiting for [nextTick][25].
+Example: In Vue.js to make components completely rendered we are waiting for [nextTick][26].
 
 ```js
 I.executeAsyncScript(function(done) {
@@ -1018,13 +1002,13 @@ let val = await I.executeAsyncScript(function(url, done) {
 #### Parameters
 
 *   `args` **...any** to be passed to function.
-*   `fn` **([string][18] | [function][26])** function to be executed in browser context.
+*   `fn` **([string][18] | [function][27])** function to be executed in browser context.
 
-Returns **[Promise][23]<any>** script return value
+Returns **[Promise][24]<any>** script return value
 
 ### executeScript
 
-Wraps [execute][27] command.
+Wraps [execute][28] command.
 
 Executes sync script on a page.
 Pass arguments to function as additional parameters.
@@ -1053,9 +1037,9 @@ let date = await I.executeScript(function(el) {
 #### Parameters
 
 *   `args` **...any** to be passed to function.
-*   `fn` **([string][18] | [function][26])** function to be executed in browser context.
+*   `fn` **([string][18] | [function][27])** function to be executed in browser context.
 
-Returns **[Promise][23]<any>** script return value
+Returns **[Promise][24]<any>** script return value
 
 ### fillField
 
@@ -1073,9 +1057,13 @@ I.fillField('password', secret('123456'));
 I.fillField('form#login input[name=username]', 'John');
 // or by strict locator
 I.fillField({css: 'form#login input[name=username]'}, 'John');
+// by ARIA role locator
+I.fillField({role: 'textbox', name: 'Email'}, 'hello@world.com');
 // within a context
 I.fillField('Name', 'John', '#section2');
 ```
+
+> ℹ️ ARIA role locators (`{role, name}`) match fields by their accessible name and survive markup refactors. See [Locators][22].
 
 #### Parameters
 
@@ -1083,12 +1071,7 @@ I.fillField('Name', 'John', '#section2');
 *   `value` **([string][18] | [object][17])** text value to fill.
 *   `context` **([string][18]? | [object][17])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 
-Returns **void** automatically synchronized promise through #recorder
-
-
-This action supports [React locators](https://codecept.io/react#locators)
-
-{{ custom }}
+Returns **void** automatically synchronized promise through #recorder{{ custom }}
 
 ### focus
 
@@ -1105,7 +1088,7 @@ I.see('#add-to-cart-bnt');
 #### Parameters
 
 *   `locator` **([string][18] | [object][17])** field located by label|name|CSS|XPath|strict locator.
-*   `options` **any?** Playwright only: [Additional options][28] for available options object as 2nd argument.
+*   `options` **any?** Playwright only: [Additional options][29] for available options object as 2nd argument.
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -1143,10 +1126,6 @@ I.forceClick({css: 'nav a.login'});
 
 Returns **void** automatically synchronized promise through #recorder
 
-
-This action supports [React locators](https://codecept.io/react#locators)
-
-
 ### forceRightClick
 
 Emulates right click on an element.
@@ -1171,10 +1150,6 @@ I.forceRightClick('Menu');
 
 Returns **void** automatically synchronized promise through #recorder
 
-
-This action supports [React locators](https://codecept.io/react#locators)
-
-
 ### grabAllWindowHandles
 
 Get all Window Handles.
@@ -1184,7 +1159,7 @@ Useful for referencing a specific handle when calling `I.switchToWindow(handle)`
 const windows = await I.grabAllWindowHandles();
 ```
 
-Returns **[Promise][23]<[Array][29]<[string][18]>>**&#x20;
+Returns **[Promise][24]<[Array][30]<[string][18]>>**&#x20;
 
 ### grabAttributeFrom
 
@@ -1201,7 +1176,7 @@ let hint = await I.grabAttributeFrom('#tooltip', 'title');
 *   `locator` **([string][18] | [object][17])** element located by CSS|XPath|strict locator.
 *   `attr` **[string][18]** attribute name.
 
-Returns **[Promise][23]<[string][18]>** attribute value
+Returns **[Promise][24]<[string][18]>** attribute value
 
 ### grabAttributeFromAll
 
@@ -1217,7 +1192,7 @@ let hints = await I.grabAttributeFromAll('.tooltip', 'title');
 *   `locator` **([string][18] | [object][17])** element located by CSS|XPath|strict locator.
 *   `attr` **[string][18]** attribute name.
 
-Returns **[Promise][23]<[Array][29]<[string][18]>>** attribute value
+Returns **[Promise][24]<[Array][30]<[string][18]>>** attribute value
 
 ### grabBrowserLogs
 
@@ -1229,7 +1204,7 @@ let logs = await I.grabBrowserLogs();
 console.log(JSON.stringify(logs))
 ```
 
-Returns **([Promise][23]<[Array][29]<[object][17]>> | [undefined][30])** all browser logs
+Returns **([Promise][24]<[Array][30]<[object][17]>> | [undefined][31])** all browser logs
 
 ### grabCookie
 
@@ -1263,7 +1238,7 @@ const value = await I.grabCssPropertyFrom('h3', 'font-weight');
 *   `locator` **([string][18] | [object][17])** element located by CSS|XPath|strict locator.
 *   `cssProperty` **[string][18]** CSS property name.
 
-Returns **[Promise][23]<[string][18]>** CSS value
+Returns **[Promise][24]<[string][18]>** CSS value
 
 ### grabCssPropertyFromAll
 
@@ -1279,7 +1254,7 @@ const values = await I.grabCssPropertyFromAll('h3', 'font-weight');
 *   `locator` **([string][18] | [object][17])** element located by CSS|XPath|strict locator.
 *   `cssProperty` **[string][18]** CSS property name.
 
-Returns **[Promise][23]<[Array][29]<[string][18]>>** CSS value
+Returns **[Promise][24]<[Array][30]<[string][18]>>** CSS value
 
 ### grabCurrentUrl
 
@@ -1291,7 +1266,7 @@ let url = await I.grabCurrentUrl();
 console.log(`Current URL is [${url}]`);
 ```
 
-Returns **[Promise][23]<[string][18]>** current URL
+Returns **[Promise][24]<[string][18]>** current URL
 
 ### grabCurrentWindowHandle
 
@@ -1302,7 +1277,7 @@ Useful for referencing it when calling `I.switchToWindow(handle)`
 const window = await I.grabCurrentWindowHandle();
 ```
 
-Returns **[Promise][23]<[string][18]>**&#x20;
+Returns **[Promise][24]<[string][18]>**&#x20;
 
 ### grabElementBoundingRect
 
@@ -1330,7 +1305,7 @@ const width = await I.grabElementBoundingRect('h3', 'width');
 *   `prop` &#x20;
 *   `elementSize` **[string][18]?** x, y, width or height of the given element.
 
-Returns **([Promise][23]<DOMRect> | [Promise][23]<[number][22]>)** Element bounding rectangle
+Returns **([Promise][24]<DOMRect> | [Promise][24]<[number][23]>)** Element bounding rectangle
 
 ### grabHTMLFrom
 
@@ -1347,7 +1322,7 @@ let postHTML = await I.grabHTMLFrom('#post');
 *   `locator` &#x20;
 *   `element` **([string][18] | [object][17])** located by CSS|XPath|strict locator.
 
-Returns **[Promise][23]<[string][18]>** HTML code for an element
+Returns **[Promise][24]<[string][18]>** HTML code for an element
 
 ### grabHTMLFromAll
 
@@ -1363,7 +1338,7 @@ let postHTMLs = await I.grabHTMLFromAll('.post');
 *   `locator` &#x20;
 *   `element` **([string][18] | [object][17])** located by CSS|XPath|strict locator.
 
-Returns **[Promise][23]<[Array][29]<[string][18]>>** HTML code for an element
+Returns **[Promise][24]<[Array][30]<[string][18]>>** HTML code for an element
 
 ### grabNumberOfOpenTabs
 
@@ -1374,7 +1349,7 @@ Resumes test execution, so **should be used inside async function with `await`**
 let tabs = await I.grabNumberOfOpenTabs();
 ```
 
-Returns **[Promise][23]<[number][22]>** number of open tabs
+Returns **[Promise][24]<[number][23]>** number of open tabs
 
 ### grabNumberOfVisibleElements
 
@@ -1389,7 +1364,7 @@ let numOfElements = await I.grabNumberOfVisibleElements('p');
 
 *   `locator` **([string][18] | [object][17])** located by CSS|XPath|strict locator.
 
-Returns **[Promise][23]<[number][22]>** number of visible elements
+Returns **[Promise][24]<[number][23]>** number of visible elements
 
 ### grabPageScrollPosition
 
@@ -1400,7 +1375,7 @@ Resumes test execution, so **should be used inside an async function with `await
 let { x, y } = await I.grabPageScrollPosition();
 ```
 
-Returns **[Promise][23]<PageScrollPosition>** scroll position
+Returns **[Promise][24]<PageScrollPosition>** scroll position
 
 ### grabPopupText
 
@@ -1410,7 +1385,7 @@ Grab the text within the popup. If no popup is visible then it will return null.
 await I.grabPopupText();
 ```
 
-Returns **[Promise][23]<[string][18]>**&#x20;
+Returns **[Promise][24]<[string][18]>**&#x20;
 
 ### grabSource
 
@@ -1421,7 +1396,7 @@ Resumes test execution, so **should be used inside async function with `await`**
 let pageSource = await I.grabSource();
 ```
 
-Returns **[Promise][23]<[string][18]>** source code
+Returns **[Promise][24]<[string][18]>** source code
 
 ### grabTextFrom
 
@@ -1438,7 +1413,7 @@ If multiple elements found returns first element.
 
 *   `locator` **([string][18] | [object][17])** element located by CSS|XPath|strict locator.
 
-Returns **[Promise][23]<[string][18]>** attribute value
+Returns **[Promise][24]<[string][18]>** attribute value
 
 ### grabTextFromAll
 
@@ -1453,7 +1428,7 @@ let pins = await I.grabTextFromAll('#pin li');
 
 *   `locator` **([string][18] | [object][17])** element located by CSS|XPath|strict locator.
 
-Returns **[Promise][23]<[Array][29]<[string][18]>>** attribute value
+Returns **[Promise][24]<[Array][30]<[string][18]>>** attribute value
 
 ### grabTitle
 
@@ -1464,7 +1439,7 @@ Resumes test execution, so **should be used inside async with `await`** operator
 let title = await I.grabTitle();
 ```
 
-Returns **[Promise][23]<[string][18]>** title
+Returns **[Promise][24]<[string][18]>** title
 
 ### grabValueFrom
 
@@ -1480,7 +1455,7 @@ let email = await I.grabValueFrom('input[name=email]');
 
 *   `locator` **([string][18] | [object][17])** field located by label|name|CSS|XPath|strict locator.
 
-Returns **[Promise][23]<[string][18]>** attribute value
+Returns **[Promise][24]<[string][18]>** attribute value
 
 ### grabValueFromAll
 
@@ -1495,7 +1470,7 @@ let inputs = await I.grabValueFromAll('//form/input');
 
 *   `locator` **([string][18] | [object][17])** field located by label|name|CSS|XPath|strict locator.
 
-Returns **[Promise][23]<[Array][29]<[string][18]>>** attribute value
+Returns **[Promise][24]<[Array][30]<[string][18]>>** attribute value
 
 ### grabWebElement
 
@@ -1510,7 +1485,7 @@ const webElement = await I.grabWebElement('#button');
 
 *   `locator` **([string][18] | [object][17])** element located by CSS|XPath|strict locator.
 
-Returns **[Promise][23]<any>** WebElement of being used Web helper
+Returns **[Promise][24]<any>** WebElement of being used Web helper
 
 ### grabWebElements
 
@@ -1525,7 +1500,7 @@ const webElements = await I.grabWebElements('#button');
 
 *   `locator` **([string][18] | [object][17])** element located by CSS|XPath|strict locator.
 
-Returns **[Promise][23]<any>** WebElement of being used Web helper
+Returns **[Promise][24]<any>** WebElement of being used Web helper
 
 ### moveCursorTo
 
@@ -1546,8 +1521,8 @@ I.moveCursorTo('#submit', '.container');
 *   `locator` **([string][18] | [object][17])** located by CSS|XPath|strict locator.
 *   `xOffset` &#x20;
 *   `yOffset` &#x20;
-*   `offsetX` **([number][22] | [string][18] | [object][17])** (optional, `0` by default) X-axis offset or context locator. 
-*   `offsetY` **[number][22]** (optional, `0` by default) Y-axis offset. 
+*   `offsetX` **([number][23] | [string][18] | [object][17])** (optional, `0` by default) X-axis offset or context locator. 
+*   `offsetY` **[number][23]** (optional, `0` by default) Y-axis offset. 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -1572,7 +1547,7 @@ Returns **void** automatically synchronized promise through #recorder
 
 Presses a key in the browser (on a focused element).
 
-*Hint:* For populating text field or textarea, it is recommended to use [`fillField`][31].
+*Hint:* For populating text field or textarea, it is recommended to use [`fillField`][32].
 
 ```js
 I.pressKey('Backspace');
@@ -1631,7 +1606,7 @@ Some of the supported key names are:
 
 #### Parameters
 
-*   `key` **([string][18] | [Array][29]<[string][18]>)** key or array of keys to press.
+*   `key` **([string][18] | [Array][30]<[string][18]>)** key or array of keys to press.
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -1639,7 +1614,7 @@ Returns **void** automatically synchronized promise through #recorder
 
 Presses a key in the browser and leaves it in a down state.
 
-To make combinations with modifier key and user operation (e.g. `'Control'` + [`click`][32]).
+To make combinations with modifier key and user operation (e.g. `'Control'` + [`click`][33]).
 
 ```js
 I.pressKeyDown('Control');
@@ -1657,7 +1632,7 @@ Returns **void** automatically synchronized promise through #recorder
 
 Releases a key in the browser which was previously set to a down state.
 
-To make combinations with modifier key and user operation (e.g. `'Control'` + [`click`][32]).
+To make combinations with modifier key and user operation (e.g. `'Control'` + [`click`][33]).
 
 ```js
 I.pressKeyDown('Control');
@@ -1690,8 +1665,8 @@ First parameter can be set to `maximize`.
 
 #### Parameters
 
-*   `width` **[number][22]** width in pixels or `maximize`.
-*   `height` **[number][22]** height in pixels.
+*   `width` **[number][23]** width in pixels or `maximize`.
+*   `height` **[number][23]** height in pixels.
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -1714,10 +1689,6 @@ I.rightClick('Click me', '.context');
 *   `context` **([string][18]? | [object][17])** (optional, `null` by default) element located by CSS|XPath|strict locator. 
 
 Returns **void** automatically synchronized promise through #recorder
-
-
-This action supports [React locators](https://codecept.io/react#locators)
-
 
 ### runInWeb
 
@@ -1775,7 +1746,7 @@ I.saveScreenshot('debug.png', true) //resizes to available scrollHeight and scro
 #### Parameters
 
 *   `fileName` **[string][18]** file name to save.
-*   `fullPage` **[boolean][33]** (optional, `false` by default) flag to enable fullscreen screenshot mode. 
+*   `fullPage` **[boolean][34]** (optional, `false` by default) flag to enable fullscreen screenshot mode. 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -1792,7 +1763,7 @@ I.scrollIntoView('#submit', { behavior: "smooth", block: "center", inline: "cent
 #### Parameters
 
 *   `locator` **([string][18] | [object][17])** located by CSS|XPath|strict locator.
-*   `scrollIntoViewOptions` **(ScrollIntoViewOptions | [boolean][33])** either alignToTop=true|false or scrollIntoViewOptions. See [https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView][34].
+*   `scrollIntoViewOptions` **(ScrollIntoViewOptions | [boolean][34])** either alignToTop=true|false or scrollIntoViewOptions. See [https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView][35].
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -1829,8 +1800,8 @@ I.scrollTo('#submit', 5, 5);
 #### Parameters
 
 *   `locator` **([string][18] | [object][17])** located by CSS|XPath|strict locator.
-*   `offsetX` **[number][22]** (optional, `0` by default) X-axis offset. 
-*   `offsetY` **[number][22]** (optional, `0` by default) Y-axis offset. 
+*   `offsetX` **[number][23]** (optional, `0` by default) X-axis offset. 
+*   `offsetY` **[number][23]** (optional, `0` by default) Y-axis offset. 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -1851,10 +1822,6 @@ I.see('Register', {css: 'form.register'}); // use strict locator
 *   `context` **([string][18]? | [object][17])** (optional, `null` by default) element located by CSS|Xpath|strict locator in which to search for text. 
 
 Returns **void** automatically synchronized promise through #recorder
-
-
-This action supports [React locators](https://codecept.io/react#locators)
-
 
 ### seeAttributesOnElements
 
@@ -1960,7 +1927,11 @@ The second parameter is a context (CSS or XPath locator) to narrow the search.
 ```js
 I.seeElement('#modal');
 I.seeElement('#modal', '#container');
+// using ARIA role locator
+I.seeElement({role: 'dialog'});
 ```
+
+> ℹ️ ARIA role locators (`{role, name}`) match elements the way assistive technology does and survive markup refactors. See [Locators][22].
 
 #### Parameters
 
@@ -1968,10 +1939,6 @@ I.seeElement('#modal', '#container');
 *   `context` **([string][18]? | [object][17])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 
 Returns **void** automatically synchronized promise through #recorder
-
-
-This action supports [React locators](https://codecept.io/react#locators)
-
 
 ### seeElementInDOM
 
@@ -2075,13 +2042,9 @@ I.seeNumberOfElements('#submitBtn', 1);
 #### Parameters
 
 *   `locator` **([string][18] | [object][17])** element located by CSS|XPath|strict locator.
-*   `num` **[number][22]** number of elements.
+*   `num` **[number][23]** number of elements.
 
 Returns **void** automatically synchronized promise through #recorder
-
-
-This action supports [React locators](https://codecept.io/react#locators)
-
 
 ### seeNumberOfVisibleElements
 
@@ -2095,13 +2058,9 @@ I.seeNumberOfVisibleElements('.buttons', 3);
 #### Parameters
 
 *   `locator` **([string][18] | [object][17])** element located by CSS|XPath|strict locator.
-*   `num` **[number][22]** number of elements.
+*   `num` **[number][23]** number of elements.
 
 Returns **void** automatically synchronized promise through #recorder
-
-
-This action supports [React locators](https://codecept.io/react#locators)
-
 
 ### seeTextEquals
 
@@ -2160,14 +2119,14 @@ I.selectOption('Which OS do you use?', ['Android', 'iOS']);
 #### Parameters
 
 *   `select` **([string][18] | [object][17])** field located by label|name|CSS|XPath|strict locator.
-*   `option` **([string][18] | [Array][29]<any>)** visible text or value of option.
+*   `option` **([string][18] | [Array][30]<any>)** visible text or value of option.
 *   `context` **([string][18]? | [object][17])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 
 Returns **void** automatically synchronized promise through #recorder
 
 ### setCookie
 
-Uses Selenium's JSON [cookie format][35].
+Uses Selenium's JSON [cookie format][36].
 Sets cookie(s).
 
 Can be a single cookie object or an array of cookies:
@@ -2184,7 +2143,7 @@ I.setCookie([
 
 #### Parameters
 
-*   `cookie` **(Cookie | [Array][29]<Cookie>)** a cookie object or array of cookie objects.
+*   `cookie` **(Cookie | [Array][30]<Cookie>)** a cookie object or array of cookie objects.
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2214,8 +2173,8 @@ I.switchToNextTab(2);
 
 #### Parameters
 
-*   `num` **[number][22]?** (optional) number of tabs to switch forward, default: 1. 
-*   `sec` **([number][22] | null)?** (optional) time in seconds to wait. 
+*   `num` **[number][23]?** (optional) number of tabs to switch forward, default: 1. 
+*   `sec` **([number][23] | null)?** (optional) time in seconds to wait. 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2230,8 +2189,8 @@ I.switchToPreviousTab(2);
 
 #### Parameters
 
-*   `num` **[number][22]?** (optional) number of tabs to switch backward, default: 1. 
-*   `sec` **[number][22]??** (optional) time in seconds to wait. 
+*   `num` **[number][23]?** (optional) number of tabs to switch backward, default: 1. 
+*   `sec` **[number][23]??** (optional) time in seconds to wait. 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2257,7 +2216,7 @@ await I.switchToWindow( window );
 
 Types out the given text into an active field.
 To slow down typing use a second parameter, to set interval between key presses.
-*Note:* Should be used when [`fillField`][31] is not an option.
+*Note:* Should be used when [`fillField`][32] is not an option.
 
 ```js
 // passing in a string
@@ -2276,8 +2235,8 @@ I.type(secret('123456'));
 #### Parameters
 
 *   `keys` &#x20;
-*   `delay` **[number][22]?** (optional) delay in ms between key presses 
-*   `key` **([string][18] | [Array][29]<[string][18]>)** or array of keys to type.
+*   `delay` **[number][23]?** (optional) delay in ms between key presses 
+*   `key` **([string][18] | [Array][30]<[string][18]>)** or array of keys to type.
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2304,12 +2263,12 @@ Returns **void** automatically synchronized promise through #recorder
 
 ### useWebDriverTo
 
-Use [webdriverio][36] API inside a test.
+Use [webdriverio][37] API inside a test.
 
 First argument is a description of an action.
 Second argument is async function that gets this helper as parameter.
 
-{ [`browser`][36]) } object from WebDriver API is available.
+{ [`browser`][37]) } object from WebDriver API is available.
 
 ```js
 I.useWebDriverTo('open multiple windows', async ({ browser }) {
@@ -2321,7 +2280,7 @@ I.useWebDriverTo('open multiple windows', async ({ browser }) {
 #### Parameters
 
 *   `description` **[string][18]** used to show in logs.
-*   `fn` **[function][26]** async functuion that executed with WebDriver helper as argument
+*   `fn` **[function][27]** async functuion that executed with WebDriver helper as argument
 
 ### wait
 
@@ -2333,7 +2292,7 @@ I.wait(2); // wait 2 secs
 
 #### Parameters
 
-*   `sec` **[number][22]** number of second to wait.
+*   `sec` **[number][23]** number of second to wait.
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2360,7 +2319,7 @@ I.waitForClickable('.btn.continue', 5); // wait for 5 secs
 
 *   `locator` **([string][18] | [object][17])** element located by CSS|XPath|strict locator.
 *   `waitTimeout` &#x20;
-*   `sec` **[number][22]?** (optional, `1` by default) time in seconds to wait
+*   `sec` **[number][23]?** (optional, `1` by default) time in seconds to wait
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2375,7 +2334,7 @@ I.waitForCookie("token");
 #### Parameters
 
 *   `name` **[string][18]** expected cookie name.
-*   `sec` **[number][22]** (optional, `3` by default) time in seconds to wait 
+*   `sec` **[number][23]** (optional, `3` by default) time in seconds to wait 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2391,7 +2350,7 @@ I.waitForDetached('#popup');
 #### Parameters
 
 *   `locator` **([string][18] | [object][17])** element located by CSS|XPath|strict locator.
-*   `sec` **[number][22]** (optional, `1` by default) time in seconds to wait 
+*   `sec` **[number][23]** (optional, `1` by default) time in seconds to wait 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2408,7 +2367,7 @@ I.waitForElement('.btn.continue', 5); // wait for 5 secs
 #### Parameters
 
 *   `locator` **([string][18] | [object][17])** element located by CSS|XPath|strict locator.
-*   `sec` **[number][22]?** (optional, `1` by default) time in seconds to wait 
+*   `sec` **[number][23]?** (optional, `1` by default) time in seconds to wait 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2420,7 +2379,7 @@ Element can be located by CSS or XPath.
 #### Parameters
 
 *   `locator` **([string][18] | [object][17])** element located by CSS|XPath|strict locator.
-*   `sec` **[number][22]** (optional) time in seconds to wait, 1 by default. 
+*   `sec` **[number][23]** (optional) time in seconds to wait, 1 by default. 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2441,9 +2400,9 @@ I.waitForFunction((count) => window.requests == count, [3], 5) // pass args and 
 
 #### Parameters
 
-*   `fn` **([string][18] | [function][26])** to be executed in browser context.
-*   `argsOrSec` **([Array][29]<any> | [number][22])?** (optional, `1` by default) arguments for function or seconds. 
-*   `sec` **[number][22]?** (optional, `1` by default) time in seconds to wait 
+*   `fn` **([string][18] | [function][27])** to be executed in browser context.
+*   `argsOrSec` **([Array][30]<any> | [number][23])?** (optional, `1` by default) arguments for function or seconds. 
+*   `sec` **[number][23]?** (optional, `1` by default) time in seconds to wait 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2459,7 +2418,7 @@ I.waitForInvisible('#popup');
 #### Parameters
 
 *   `locator` **([string][18] | [object][17])** element located by CSS|XPath|strict locator.
-*   `sec` **[number][22]** (optional, `1` by default) time in seconds to wait 
+*   `sec` **[number][23]** (optional, `1` by default) time in seconds to wait 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2473,8 +2432,8 @@ I.waitForNumberOfTabs(2);
 
 #### Parameters
 
-*   `expectedTabs` **[number][22]** expecting the number of tabs.
-*   `sec` **[number][22]** number of secs to wait.
+*   `expectedTabs` **[number][23]** expecting the number of tabs.
+*   `sec` **[number][23]** number of secs to wait.
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2492,7 +2451,7 @@ I.waitForText('Thank you, form has been submitted', 5, '#modal');
 #### Parameters
 
 *   `text` **[string][18]** to wait for.
-*   `sec` **[number][22]** (optional, `1` by default) time in seconds to wait 
+*   `sec` **[number][23]** (optional, `1` by default) time in seconds to wait 
 *   `context` **([string][18] | [object][17])?** (optional) element located by CSS|XPath|strict locator. 
 
 Returns **void** automatically synchronized promise through #recorder
@@ -2509,7 +2468,7 @@ I.waitForValue('//input', "GoodValue");
 
 *   `field` **([string][18] | [object][17])** input field.
 *   `value` **[string][18]** expected value.
-*   `sec` **[number][22]** (optional, `1` by default) time in seconds to wait 
+*   `sec` **[number][23]** (optional, `1` by default) time in seconds to wait 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2525,7 +2484,7 @@ I.waitForVisible('#popup');
 #### Parameters
 
 *   `locator` **([string][18] | [object][17])** element located by CSS|XPath|strict locator.
-*   `sec` **[number][22]** (optional, `1` by default) time in seconds to wait 
+*   `sec` **[number][23]** (optional, `1` by default) time in seconds to wait 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2540,7 +2499,7 @@ I.waitInUrl('/info', 2);
 #### Parameters
 
 *   `urlPart` **[string][18]** value to check.
-*   `sec` **[number][22]** (optional, `1` by default) time in seconds to wait 
+*   `sec` **[number][23]** (optional, `1` by default) time in seconds to wait 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2555,8 +2514,8 @@ I.waitNumberOfVisibleElements('a', 3);
 #### Parameters
 
 *   `locator` **([string][18] | [object][17])** element located by CSS|XPath|strict locator.
-*   `num` **[number][22]** number of elements.
-*   `sec` **[number][22]** (optional, `1` by default) time in seconds to wait 
+*   `num` **[number][23]** number of elements.
+*   `sec` **[number][23]** (optional, `1` by default) time in seconds to wait 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2572,7 +2531,7 @@ I.waitToHide('#popup');
 #### Parameters
 
 *   `locator` **([string][18] | [object][17])** element located by CSS|XPath|strict locator.
-*   `sec` **[number][22]** (optional, `1` by default) time in seconds to wait 
+*   `sec` **[number][23]** (optional, `1` by default) time in seconds to wait 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2588,7 +2547,7 @@ I.waitUrlEquals('http://127.0.0.1:8000/info');
 #### Parameters
 
 *   `urlPart` **[string][18]** value to check.
-*   `sec` **[number][22]** (optional, `1` by default) time in seconds to wait 
+*   `sec` **[number][23]** (optional, `1` by default) time in seconds to wait 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2634,40 +2593,42 @@ Returns **void** automatically synchronized promise through #recorder
 
 [21]: https://playwright.dev/docs/api/class-locator#locator-blur
 
-[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[22]: /locators#aria-locators
 
-[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[24]: https://webdriver.io/docs/timeouts.html
+[24]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
-[25]: https://vuejs.org/v2/api/#Vue-nextTick
+[25]: https://webdriver.io/docs/timeouts.html
 
-[26]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[26]: https://vuejs.org/v2/api/#Vue-nextTick
 
-[27]: http://webdriver.io/api/protocol/execute.html
+[27]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[28]: https://playwright.dev/docs/api/class-locator#locator-focus
+[28]: http://webdriver.io/api/protocol/execute.html
 
-[29]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[29]: https://playwright.dev/docs/api/class-locator#locator-focus
 
-[30]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
+[30]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[31]: #fillfield
+[31]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
 
-[32]: #click
+[32]: #fillfield
 
-[33]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[33]: #click
 
-[34]: https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
+[34]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[35]: https://code.google.com/p/selenium/wiki/JsonWireProtocol#Cookie_JSON_Object
+[35]: https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
 
-[36]: https://webdriver.io/docs/api.html
+[36]: https://code.google.com/p/selenium/wiki/JsonWireProtocol#Cookie_JSON_Object
 
-[37]: https://webdriver.io/docs/api/webdriverBidi/
+[37]: https://webdriver.io/docs/api.html
 
-[38]: http://codecept.io/acceptance/#smartwait
+[38]: https://webdriver.io/docs/api/webdriverBidi/
 
-[39]: http://webdriver.io/docs/timeouts.html
+[39]: http://codecept.io/acceptance/#smartwait
 
-[40]: https://webdriver.io/docs/configuration/#loglevel
+[40]: http://webdriver.io/docs/timeouts.html
+
+[41]: https://webdriver.io/docs/configuration/#loglevel

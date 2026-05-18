@@ -23,10 +23,9 @@ Run tests with plugin enabled:
 #### Configuration:
 
 *   `retries` - number of retries (by default 3),
-*   `when` - function, when to perform a retry (accepts error as parameter)
 *   `factor` - The exponential factor to use. Default is 1.5.
-*   `minTimeout` - The number of milliseconds before starting the first retry. Default is 1000.
-*   `maxTimeout` - The maximum number of milliseconds between two retries. Default is Infinity.
+*   `minTimeout` - The number of milliseconds before starting the first retry. Default is 150.
+*   `maxTimeout` - The maximum number of milliseconds between two retries. Default is 10000.
 *   `randomize` - Randomizes the timeouts by multiplying with a factor from 1 to 2. Default is false.
 *   `defaultIgnoredSteps` - an array of steps to be ignored for retry. Includes:
     *   `amOnPage`
@@ -56,7 +55,7 @@ plugins: {
 
 #### Disable Per Test
 
-This plugin can be disabled per test. In this case you will need to stet `I.retry()` to all flaky steps:
+This plugin can be disabled per test. In this case you will need to add `step.retry()` to all flaky steps:
 
 Use scenario configuration to disable plugin for a test
 

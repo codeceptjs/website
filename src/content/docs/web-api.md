@@ -60,16 +60,6 @@ I.appendField('name', 'John', '.form-container');
 
 - `void` - automatically synchronized promise through #recorder
 
-Helper-Specific Differences
-
-**WebDriver**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
 ### `I.attachFile()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -298,7 +288,7 @@ In WebDriver, click can only happen on an actionable element. Use specific locat
 
 <table style="border-collapse: collapse; width: 100%;">
   <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 Performs a click on a link and waits for navigation before moving on.
@@ -315,16 +305,6 @@ I.clickLink('Logout', '#nav');
 **Returns**
 
 - `void` - automatically synchronized promise through #recorder
-
-Helper-Specific Differences
-
-**Playwright**
-
-Clicks link and waits for navigation (deprecated)
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.closeCurrentTab()`
 
@@ -402,16 +382,6 @@ I.dontSee('Login', '.nav'); // no login inside .nav element
 **Returns**
 
 - `void` - automatically synchronized promise through #recorder
-
-Helper-Specific Differences
-
-**WebDriver**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.dontSeeCheckboxIsChecked()`
 
@@ -510,16 +480,6 @@ I.dontSeeElement('.modal', '#container');
 **Returns**
 
 - `void` - automatically synchronized promise through #recorder
-
-Helper-Specific Differences
-
-**WebDriver**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.dontSeeElementInDOM()`
 
@@ -682,16 +642,6 @@ I.doubleClick('.btn.edit');
 
 - `void` - automatically synchronized promise through #recorder
 
-Helper-Specific Differences
-
-**WebDriver**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
 ### `I.downloadFile()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -785,12 +735,6 @@ I.dragSlider('#slider', -70);
 **Returns**
 
 - `void` - automatically synchronized promise through #recorder
-
-Helper-Specific Differences
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.executeAsyncScript()`
 
@@ -944,15 +888,77 @@ I.fillField('Name', 'John', '#section2');
 
 Helper-Specific Differences
 
+**Playwright**
+
+Fills a text field or textarea, after clearing its value, with the given string.
+Field is located by name, label, CSS, or XPath.
+
+The third parameter is an optional context (CSS or XPath locator) to narrow the search.
+
+```js
+// by label
+I.fillField('Email', 'hello@world.com');
+// by name
+I.fillField('password', secret('123456'));
+// by CSS
+I.fillField('form#login input[name=username]', 'John');
+// or by strict locator
+I.fillField({css: 'form#login input[name=username]'}, 'John');
+// by ARIA role locator
+I.fillField({role: 'textbox', name: 'Email'}, 'hello@world.com');
+// within a context
+I.fillField('Name', 'John', '#section2');
+```
+
+> ℹ️ ARIA role locators (`{role, name}`) match fields by their accessible name and survive markup refactors. See [Locators][16].
+
 **WebDriver**
 
-This action supports [React locators](https://codecept.io/react#locators)
+Fills a text field or textarea, after clearing its value, with the given string.
+Field is located by name, label, CSS, or XPath.
 
-{{ custom }}
+The third parameter is an optional context (CSS or XPath locator) to narrow the search.
+
+```js
+// by label
+I.fillField('Email', 'hello@world.com');
+// by name
+I.fillField('password', secret('123456'));
+// by CSS
+I.fillField('form#login input[name=username]', 'John');
+// or by strict locator
+I.fillField({css: 'form#login input[name=username]'}, 'John');
+// by ARIA role locator
+I.fillField({role: 'textbox', name: 'Email'}, 'hello@world.com');
+// within a context
+I.fillField('Name', 'John', '#section2');
+```
+
+> ℹ️ ARIA role locators (`{role, name}`) match fields by their accessible name and survive markup refactors. See [Locators][22].
 
 **Puppeteer**
 
-This action supports [React locators](https://codecept.io/react#locators)
+Fills a text field or textarea, after clearing its value, with the given string.
+Field is located by name, label, CSS, or XPath.
+
+The third parameter is an optional context (CSS or XPath locator) to narrow the search.
+
+```js
+// by label
+I.fillField('Email', 'hello@world.com');
+// by name
+I.fillField('password', secret('123456'));
+// by CSS
+I.fillField('form#login input[name=username]', 'John');
+// or by strict locator
+I.fillField({css: 'form#login input[name=username]'}, 'John');
+// by ARIA role locator
+I.fillField({role: 'textbox', name: 'Email'}, 'hello@world.com');
+// within a context
+I.fillField('Name', 'John', '#section2');
+```
+
+> ℹ️ ARIA role locators (`{role, name}`) match fields by their accessible name and survive markup refactors. See [Locators][10].
 
 ### `I.flushNetworkTraffics()`
 
@@ -1034,16 +1040,6 @@ I.forceClick({css: 'nav a.login'});
 
 - `void` - automatically synchronized promise through #recorder
 
-Helper-Specific Differences
-
-**WebDriver**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
 ### `I.forceRightClick()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -1074,12 +1070,6 @@ I.forceRightClick('Menu');
 **Returns**
 
 - `void` - automatically synchronized promise through #recorder
-
-Helper-Specific Differences
-
-**WebDriver**
-
-This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.grabAllWindowHandles()`
 
@@ -1123,12 +1113,6 @@ let hint = await I.grabAttributeFrom('#tooltip', 'title');
 
 - `Promise<string>` - attribute value
 
-Helper-Specific Differences
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
 ### `I.grabAttributeFromAll()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -1151,12 +1135,6 @@ let hints = await I.grabAttributeFromAll('.tooltip', 'title');
 **Returns**
 
 - `Promise<string[]>` - attribute value
-
-Helper-Specific Differences
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.grabBrowserLogs()`
 
@@ -1189,7 +1167,7 @@ const errors = logs.map(l => ({ type: l.type(), text: l.text() })).filter(l => l
 console.log(JSON.stringify(errors));
 ```
 
-[Learn more about console messages][24]
+[Learn more about console messages][25]
 
 **Puppeteer**
 
@@ -1248,12 +1226,6 @@ const value = await I.grabCssPropertyFrom('h3', 'font-weight');
 
 - `Promise<string>` - CSS value
 
-Helper-Specific Differences
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
 ### `I.grabCssPropertyFromAll()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -1276,12 +1248,6 @@ const values = await I.grabCssPropertyFromAll('h3', 'font-weight');
 **Returns**
 
 - `Promise<string[]>` - CSS value
-
-Helper-Specific Differences
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.grabCurrentUrl()`
 
@@ -1517,12 +1483,6 @@ let numOfElements = await I.grabNumberOfVisibleElements('p');
 
 - `Promise<number>` - number of visible elements
 
-Helper-Specific Differences
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
 ### `I.grabPageScrollPosition()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -1636,12 +1596,6 @@ If multiple elements found returns first element.
 
 - `Promise<string>` - attribute value
 
-Helper-Specific Differences
-
-**Puppeteer**
-
-This action supports React locators
-
 ### `I.grabTextFromAll()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -1663,12 +1617,6 @@ let pins = await I.grabTextFromAll('#pin li');
 **Returns**
 
 - `Promise<string[]>` - attribute value
-
-Helper-Specific Differences
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.grabTitle()`
 
@@ -1806,12 +1754,6 @@ I.moveCursorTo('#submit', '.container');
 
 - `void` - automatically synchronized promise through #recorder
 
-Helper-Specific Differences
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
 ### `I.openNewTab()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -1839,7 +1781,7 @@ Open new tab and automatically switched to new tab
 I.openNewTab();
 ```
 
-You can pass in [page options][32] to emulate device on this page
+You can pass in [page options][33] to emulate device on this page
 
 ```js
 // enable mobile
@@ -1883,11 +1825,11 @@ Helper-Specific Differences
 
 **Playwright**
 
-*Note:* Shortcuts like `'Meta'` + `'A'` do not work on macOS ([puppeteer/puppeteer#1313][33]).
+*Note:* Shortcuts like `'Meta'` + `'A'` do not work on macOS ([puppeteer/puppeteer#1313][34]).
 
 Presses a key in the browser (on a focused element).
 
-*Hint:* For populating text field or textarea, it is recommended to use [`fillField`][34].
+*Hint:* For populating text field or textarea, it is recommended to use [`fillField`][35].
 
 ```js
 I.pressKey('Backspace');
@@ -1950,7 +1892,7 @@ Some of the supported key names are:
 
 Presses a key in the browser (on a focused element).
 
-*Hint:* For populating text field or textarea, it is recommended to use [`fillField`][31].
+*Hint:* For populating text field or textarea, it is recommended to use [`fillField`][32].
 
 ```js
 I.pressKey('Backspace');
@@ -2009,11 +1951,11 @@ Some of the supported key names are:
 
 **Puppeteer**
 
-*Note:* Shortcuts like `'Meta'` + `'A'` do not work on macOS ([puppeteer/puppeteer#1313][20]).
+*Note:* Shortcuts like `'Meta'` + `'A'` do not work on macOS ([puppeteer/puppeteer#1313][21]).
 
 Presses a key in the browser (on a focused element).
 
-*Hint:* For populating text field or textarea, it is recommended to use [`fillField`][21].
+*Hint:* For populating text field or textarea, it is recommended to use [`fillField`][22].
 
 ```js
 I.pressKey('Backspace');
@@ -2209,16 +2151,6 @@ I.rightClick('Click me', '.context');
 
 - `void` - automatically synchronized promise through #recorder
 
-Helper-Specific Differences
-
-**WebDriver**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
 ### `I.saveElementScreenshot()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -2375,16 +2307,6 @@ I.see('Register', {css: 'form.register'}); // use strict locator
 
 - `void` - automatically synchronized promise through #recorder
 
-Helper-Specific Differences
-
-**WebDriver**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
 ### `I.seeAttributesOnElements()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -2406,12 +2328,6 @@ I.seeAttributesOnElements('//form', { method: "post"});
 **Returns**
 
 - `void` - automatically synchronized promise through #recorder
-
-Helper-Specific Differences
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.seeCheckboxIsChecked()`
 
@@ -2485,12 +2401,6 @@ I.seeCssPropertiesOnElements('h3', { 'font-weight': "bold"});
 
 - `void` - automatically synchronized promise through #recorder
 
-Helper-Specific Differences
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
 ### `I.seeCurrentUrlEquals()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -2543,13 +2453,53 @@ I.seeElement('#modal', '#container');
 
 Helper-Specific Differences
 
+**Playwright**
+
+Checks that a given Element is visible
+Element is located by CSS or XPath.
+
+The second parameter is a context (CSS or XPath locator) to narrow the search.
+
+```js
+I.seeElement('#modal');
+I.seeElement('#modal', '#container');
+// using ARIA role locator
+I.seeElement({role: 'dialog'});
+```
+
+> ℹ️ ARIA role locators (`{role, name}`) match elements the way assistive technology does and survive markup refactors. See [Locators][16].
+
 **WebDriver**
 
-This action supports [React locators](https://codecept.io/react#locators)
+Checks that a given Element is visible
+Element is located by CSS or XPath.
+
+The second parameter is a context (CSS or XPath locator) to narrow the search.
+
+```js
+I.seeElement('#modal');
+I.seeElement('#modal', '#container');
+// using ARIA role locator
+I.seeElement({role: 'dialog'});
+```
+
+> ℹ️ ARIA role locators (`{role, name}`) match elements the way assistive technology does and survive markup refactors. See [Locators][22].
 
 **Puppeteer**
 
-This action supports [React locators](https://codecept.io/react#locators)
+Checks that a given Element is visible
+Element is located by CSS or XPath.
+
+The second parameter is a context (CSS or XPath locator) to narrow the search.
+
+```js
+I.seeElement('#modal');
+I.seeElement('#modal', '#container');
+// using ARIA role locator
+I.seeElement({role: 'dialog'});
+```
+
+> ℹ️ ARIA role locators (`{role, name}`) match elements the way assistive technology does and survive markup refactors. See [Locators][10].
 
 ### `I.seeElementInDOM()`
 
@@ -2720,16 +2670,6 @@ I.seeNumberOfElements('#submitBtn', 1);
 
 - `void` - automatically synchronized promise through #recorder
 
-Helper-Specific Differences
-
-**WebDriver**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
 ### `I.seeNumberOfVisibleElements()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -2752,16 +2692,6 @@ I.seeNumberOfVisibleElements('.buttons', 3);
 **Returns**
 
 - `void` - automatically synchronized promise through #recorder
-
-Helper-Specific Differences
-
-**WebDriver**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.seeTextEquals()`
 
@@ -2928,7 +2858,7 @@ Helper-Specific Differences
 
 **WebDriver**
 
-Uses Selenium's JSON [cookie format][35].
+Uses Selenium's JSON [cookie format][36].
 
 ### `I.startRecordingTraffic()`
 
@@ -3169,7 +3099,7 @@ Helper-Specific Differences
 
 **Playwright**
 
-[Additional options][37] for uncheck available as 3rd argument.
+[Additional options][38] for uncheck available as 3rd argument.
 
 Examples:
 
@@ -3316,12 +3246,6 @@ I.waitForElement('.btn.continue', 5); // wait for 5 secs
 **Returns**
 
 - `void` - automatically synchronized promise through #recorder
-
-Helper-Specific Differences
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.waitForEnabled()`
 
@@ -3491,16 +3415,6 @@ I.waitForVisible('#popup');
 
 - `void` - automatically synchronized promise through #recorder
 
-Helper-Specific Differences
-
-**Playwright**
-
-This method accepts [React selectors][43].
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
-
 ### `I.waitInUrl()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -3545,12 +3459,6 @@ I.waitNumberOfVisibleElements('a', 3);
 **Returns**
 
 - `void` - automatically synchronized promise through #recorder
-
-Helper-Specific Differences
-
-**Puppeteer**
-
-This action supports [React locators](https://codecept.io/react#locators)
 
 ### `I.waitToHide()`
 
@@ -3632,61 +3540,61 @@ Helper-Specific Differences
 
 [15]: https://playwright.dev/docs/api/class-elementhandle#element-handle-check
 
-[16]: https://playwright.dev/docs/api/class-page#page-click
+[16]: /locators#aria-locators
 
-[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[17]: https://playwright.dev/docs/api/class-page#page-click
 
-[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[19]: https://playwright.dev/docs/api/class-page#page-drag-and-drop
+[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
-[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[20]: https://playwright.dev/docs/api/class-page#page-drag-and-drop
 
-[21]: https://playwright.dev/docs/api/class-locator#locator-focus
+[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[22]: https://playwright.dev/docs/api/class-locator#locator-aria-snapshot
+[22]: https://playwright.dev/docs/api/class-locator#locator-focus
 
-[23]: https://playwright.dev/docs/aria-snapshots
+[23]: https://playwright.dev/docs/api/class-locator#locator-aria-snapshot
 
-[24]: https://playwright.dev/docs/api/class-consolemessage
+[24]: https://playwright.dev/docs/aria-snapshots
 
-[25]: https://playwright.dev/docs/api/class-locator#locator-is-checked
+[25]: https://playwright.dev/docs/api/class-consolemessage
 
-[26]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[26]: https://playwright.dev/docs/api/class-locator#locator-is-checked
 
-[27]: https://playwright.dev/docs/api/class-locator#locator-is-disabled
+[27]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[28]: https://codecept.io/helpers/FileSystem
+[28]: https://playwright.dev/docs/api/class-locator#locator-is-disabled
 
-[29]: https://playwright.dev/docs/api/class-apirequestcontext#api-request-context-get
+[29]: https://codecept.io/helpers/FileSystem
 
-[30]: https://playwright.dev/docs/api/class-browsercontext#browser-context-route
+[30]: https://playwright.dev/docs/api/class-apirequestcontext#api-request-context-get
 
-[31]: https://playwright.dev/docs/network#handle-requests
+[31]: https://playwright.dev/docs/api/class-browsercontext#browser-context-route
 
-[32]: https://github.com/microsoft/playwright/blob/main/docs/api.md#browsernewpageoptions
+[32]: https://playwright.dev/docs/network#handle-requests
 
-[33]: https://github.com/puppeteer/puppeteer/issues/1313
+[33]: https://github.com/microsoft/playwright/blob/main/docs/api.md#browsernewpageoptions
 
-[34]: #ifillfield
+[34]: https://github.com/puppeteer/puppeteer/issues/1313
 
-[35]: #iclick
+[35]: #ifillfield
 
-[36]: https://playwright.dev/docs/api/class-page#page-route-from-har
+[36]: #iclick
 
-[37]: https://playwright.dev/docs/api/class-elementhandle#element-handle-uncheck
+[37]: https://playwright.dev/docs/api/class-page#page-route-from-har
 
-[38]: https://github.com/microsoft/playwright/blob/main/docs/src/api/class-page.md
+[38]: https://playwright.dev/docs/api/class-elementhandle#element-handle-uncheck
 
-[39]: https://github.com/microsoft/playwright/blob/main/docs/src/api/class-browsercontext.md
+[39]: https://github.com/microsoft/playwright/blob/main/docs/src/api/class-page.md
 
-[40]: https://github.com/microsoft/playwright/blob/main/docs/src/api/class-browser.md
+[40]: https://github.com/microsoft/playwright/blob/main/docs/src/api/class-browsercontext.md
 
-[41]: https://playwright.dev/docs/api/class-page#page-wait-for-navigation
+[41]: https://github.com/microsoft/playwright/blob/main/docs/src/api/class-browser.md
 
-[42]: https://playwright.dev/docs/api/class-page#page-wait-for-url
+[42]: https://playwright.dev/docs/api/class-page#page-wait-for-navigation
 
-[43]: https://codecept.io/react
+[43]: https://playwright.dev/docs/api/class-page#page-wait-for-url
 
 [44]: https://playwright.dev/docs/api/class-browsercontext
 
@@ -3744,43 +3652,45 @@ Helper-Specific Differences
 
 [21]: https://playwright.dev/docs/api/class-locator#locator-blur
 
-[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[22]: /locators#aria-locators
 
-[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[24]: https://webdriver.io/docs/timeouts.html
+[24]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
-[25]: https://vuejs.org/v2/api/#Vue-nextTick
+[25]: https://webdriver.io/docs/timeouts.html
 
-[26]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[26]: https://vuejs.org/v2/api/#Vue-nextTick
 
-[27]: http://webdriver.io/api/protocol/execute.html
+[27]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[28]: https://playwright.dev/docs/api/class-locator#locator-focus
+[28]: http://webdriver.io/api/protocol/execute.html
 
-[29]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[29]: https://playwright.dev/docs/api/class-locator#locator-focus
 
-[30]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
+[30]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[31]: #ifillfield
+[31]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
 
-[32]: #iclick
+[32]: #ifillfield
 
-[33]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[33]: #iclick
 
-[34]: https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
+[34]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[35]: https://code.google.com/p/selenium/wiki/JsonWireProtocol#Cookie_JSON_Object
+[35]: https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
 
-[36]: https://webdriver.io/docs/api.html
+[36]: https://code.google.com/p/selenium/wiki/JsonWireProtocol#Cookie_JSON_Object
 
-[37]: https://webdriver.io/docs/api/webdriverBidi/
+[37]: https://webdriver.io/docs/api.html
 
-[38]: http://codecept.io/acceptance/#smartwait
+[38]: https://webdriver.io/docs/api/webdriverBidi/
 
-[39]: http://webdriver.io/docs/timeouts.html
+[39]: http://codecept.io/acceptance/#smartwait
 
-[40]: https://webdriver.io/docs/configuration/#loglevel
+[40]: http://webdriver.io/docs/timeouts.html
+
+[41]: https://webdriver.io/docs/configuration/#loglevel
 
 **Puppeteer**
 
@@ -3802,42 +3712,44 @@ Helper-Specific Differences
 
 [9]: https://playwright.dev/docs/api/class-locator#locator-blur
 
-[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[10]: /locators#aria-locators
 
-[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp
+[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
-[13]: https://vuejs.org/v2/api/#Vue-nextTick
+[13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp
 
-[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[14]: https://vuejs.org/v2/api/#Vue-nextTick
 
-[15]: https://playwright.dev/docs/api/class-locator#locator-focus
+[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[16]: https://playwright.dev/docs/api/class-locator#locator-focus
 
-[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
+[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[18]: https://codecept.io/helpers/FileSystem
+[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
 
-[19]: https://pptr.dev/guides/network-interception
+[19]: https://codecept.io/helpers/FileSystem
 
-[20]: https://github.com/puppeteer/puppeteer/issues/1313
+[20]: https://pptr.dev/guides/network-interception
 
-[21]: #ifillfield
+[21]: https://github.com/puppeteer/puppeteer/issues/1313
 
-[22]: #iclick
+[22]: #ifillfield
 
-[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[23]: #iclick
 
-[24]: https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-page
+[24]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[25]: https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-browser
+[25]: https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-page
 
-[26]: https://github.com/puppeteer/puppeteer/blob/main/docs/api/puppeteer.page.waitfornavigation.md
+[26]: https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-browser
 
-[27]: https://pptr.dev/api/puppeteer.tracing
+[27]: https://github.com/puppeteer/puppeteer/blob/main/docs/api/puppeteer.page.waitfornavigation.md
 
-[28]: https://github.com/puppeteer/puppeteer/blob/main/docs/api/puppeteer.waitforoptions.md
+[28]: https://pptr.dev/api/puppeteer.tracing
 
-[29]: https://github.com/puppeteer/puppeteer/blob/main/docs/api/puppeteer.launchoptions.md
+[29]: https://github.com/puppeteer/puppeteer/blob/main/docs/api/puppeteer.waitforoptions.md
+
+[30]: https://github.com/puppeteer/puppeteer/blob/main/docs/api/puppeteer.launchoptions.md
