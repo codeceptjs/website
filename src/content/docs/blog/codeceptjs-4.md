@@ -188,17 +188,22 @@ Java was the leader in test automation on the QA market. Even though JS has a ri
 
 We bundled skills for migration to CodeceptJS. During the POC run agent rewrote [Selenium Java project](https://github.com/testomatio/examples/tree/master/java-reporter-testng-selenide) into CodeceptJS 4 keeping its structure. Asking no input questions agent rewrote tests and page objects into JS code, executing them one by one, and fixing failing tests, until all 44 tests passed.
 
-So test automation is not about writing code anymore. It is about maintaining it. 
+**So test automation is not about writing code anymore. It is about maintaining it.**
+
 Keeping code simple and concise means that you won't be left with AI slop. 
 Small code is more readable. And CodeceptJS keeps things small and easy to understand. This is why we believe you should choose CodeceptJS for your next test automation project. As we stayed longer than Playwright, Cypress or Puppeteer, this proves that CodeceptJS is your stable choice.
 
 ## Behind Monitor
 
-Most of CodeceptJS 4 changes were done by Michael Bodnarchuk, who started CodeceptJS back in 2015. This project started while I was in hospital with my grandmother after her stroke. I had a lot of free time and no distraction (and also bad internet) so I could focus on buiding first feature. 
+Most of CodeceptJS 4 changes were done by Michael Bodnarchuk, who started CodeceptJS back in 2015. The first goal of CodeceptJS was to bring a short I. syntax to JS world dominated by callbacks and promises. The second goal was to create a unified API between two competing WebDriver implementations: webdriverio and Protractor.
 
-While CodeceptJS faced competition from companies like Microsoft, Google, and Cypress.io, I found it almost impossible to keep pace with them. Building features and writing docs would take all my time, still making product behind. But things changed.
+Since then CodeceptJS got more engines supported: Nightmare, TestCafe, Appium Detox, Puppeteer, and finally Playwright.
 
-Today Claude Code with Opus model helped me to build a framework I wanted to. Now almost anyone can code. The price of code has dropped. However, the good framework and stable foundation reduces the maintenance cost. 
+A testing landsace changed. Testing tools which were maintained by opensource enthuisasts as in Selenium were built by companies like Microsoft, Google, and Cypress.io. Keeping developing a testing framework as free time opensource initiative in such saturated market became harder and harder. Cypress.io had amazing UI, and Playwright created VSCode Extensions, Trace or Codegen and many other tools. Creating compatable software would cost thousands of dollars, engineers, and time.
+
+But things changed.
+
+Today Claude Code with Opus 4.6 can bring CodeceptJS back to competition. Even more, now almost anyone can code! The price of code has dropped. Can anyone build their own testing framework? Yes, and no. Framework must be stable and battle tested so AI model knows how to interact with it. That's why the plan is:
 
 **CodeceptJS 4 is to become a stable foundation for agentic testing**:
 
@@ -208,8 +213,9 @@ Today Claude Code with Opus model helped me to build a framework I wanted to. No
 - reduce flakiness with healers and other declarative approaches
 - keep framework, mcp, and skills as one bundle
 
-I'm ok if you won't write CodeceptJS code, even though I like I.* syntax. But I'm sure you will read it. You will read it a lot inspecting reports. You still can read this and understand. The power for I.
+Even if you won't write CodeceptJS code by hands, you will need to read it. You will read it a lot inspecting reports, understanding changes, and updating requirements. With CodeceptJS you read the code you can understand. The cost of writing code is reduced by AI, the cost of reading code is minimal if you choose CodeceptJS. 
 
+This is the power for I.
 
 ## Update
 
@@ -220,7 +226,7 @@ npm install codeceptjs@4
 Not ready to move? 3.x still works, and nothing breaks until you flip the flags, so take your time. But this is where CodeceptJS is going. Thanks to everyone who reported issues and helped shape this release; it is much better for it.
 
 
-## Contribution Notices
+## Contribution Notes
 
 With the power that coding agents unleash comes responsibility.
 
@@ -228,5 +234,3 @@ CodeceptJS stays opensource but we will limit the AI-driven contributions we acc
 Before sending us a pull request think: is this a feature or bug. If it is a feature needed for you, can this be a plugin or extended class?
 
 We are still eager to get your pull requests for features that can be useful for everyone. However, make them compact, aim-focused, well-tested, put away from core. We can close the Pull Request even if it looks and works good, just because it doesn't align with our current code principles.
-
-
