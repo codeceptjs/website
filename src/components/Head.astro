@@ -10,6 +10,10 @@ import type {
 
 const { title, description } = Astro.locals.starlightRoute.entry.data;
 
+// Absolute URLs for social cards and structured data.
+const ogImage = new URL('/og-image.png', Astro.site).href;
+const brandLogo = new URL('/favicon-512.png', Astro.site).href;
+
 const website: WithContext<WebSite> = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
@@ -17,7 +21,7 @@ const website: WithContext<WebSite> = {
     description,
     image: {
         '@type': 'ImageObject',
-        url: 'https://codecept.io/logo.svg'
+        url: ogImage
     },
     inLanguage: Astro.locals.starlightRoute.lang,
     name: Astro.locals.starlightRoute.siteTitle,
@@ -38,7 +42,7 @@ const organization: WithContext<Organization> = {
     '@type': 'Organization',
     image: {
         '@type': 'ImageObject',
-        url: 'https://codecept.io/logo.svg'
+        url: ogImage
     },
     url: Astro.url.href,
     "sameAs": [
@@ -52,7 +56,7 @@ const organization: WithContext<Organization> = {
     ],
     logo: {
         '@type': 'ImageObject',
-        url: 'https://codecept.io/logo.svg'
+        url: brandLogo
     },
     name: Astro.locals.starlightRoute.siteTitle,
     description,
@@ -67,7 +71,7 @@ const article: WithContext<Article> = {
     url: Astro.url,
     image: {
         '@type': 'ImageObject',
-        url: 'https://codecept.io/logo.svg'
+        url: ogImage
     },
     inLanguage: Astro.locals.starlightRoute.lang,
 }
@@ -77,6 +81,20 @@ const article: WithContext<Article> = {
 <VtbotStarlight>
     <StarlightHead><slot /></StarlightHead>
 </VtbotStarlight>
+
+{/* Favicons & PWA — Starlight emits the SVG favicon; these add the fallbacks. */}
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#1a1d28" media="(prefers-color-scheme: dark)" />
+
+{/* Social preview image (Open Graph / Twitter card) */}
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="CodeceptJS — Supercharged End 2 End Testing" />
+<meta name="twitter:image" content={ogImage} />
 
 {
     [website, organization, article].map((data) =>

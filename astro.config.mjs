@@ -162,6 +162,12 @@ export default defineConfig({
             disable404Route: true,
             title: '',
             favicon: '/favicon.svg',
+            logo: {
+                light: './src/assets/logo-light.svg',
+                dark: './src/assets/logo-dark.svg',
+                replacesTitle: true,
+                alt: 'CodeceptJS',
+            },
             social: [
                 {icon: 'github', label: 'GitHub', href: 'https://github.com/codeceptjs/CodeceptJS'},
             ],
@@ -260,6 +266,7 @@ export default defineConfig({
                                 items: [
                                     {label: 'Tutorial', link: 'tutorial'},
                                     {label: 'Cheatsheet', link: 'cheatsheet'},
+                                    {label: 'Media Kit', link: 'media-kit'},
                                     {label: 'Release Notes', link: 'release'},
                                 ],
                             },
@@ -341,6 +348,7 @@ export default defineConfig({
                         link: '/blog/codeceptjs-4/',
                         items: [
                             {label: 'Blog', autogenerate: {directory: 'blog/'}},
+                            {label: 'Releases', link: 'release'},
                         ],
                     },
                 ], {

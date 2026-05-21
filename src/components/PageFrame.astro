@@ -1,5 +1,6 @@
 ---
 import MobileMenuToggle from 'virtual:starlight/components/MobileMenuToggle';
+import SiteFooter from './SiteFooter.astro';
 
 const { hasSidebar, entry } = Astro.locals.starlightRoute;
 const is404Page = entry.slug === '404' || entry.slug.endsWith('/404');
@@ -23,6 +24,7 @@ const shouldRenderSidebar = hasSidebar && !is404Page;
     )
     }
     <div class:list={['main-frame', { 'is-404': is404Page }]}><slot /></div>
+    {!is404Page && <SiteFooter />}
 </div>
 
 <style>
@@ -84,6 +86,9 @@ const shouldRenderSidebar = hasSidebar && !is404Page;
         .main-frame {
             padding-top: calc(var(--sl-nav-height) + var(--sl-mobile-toc-height));
             padding-inline-start: var(--sl-content-inline-start);
+            /* Grow so the full-width SiteFooter stays pinned to the bottom on
+               short pages. */
+            flex-grow: 1;
         }
 
         .main-frame.is-404 {

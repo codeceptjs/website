@@ -1,38 +1,38 @@
 {
   "start_urls": [
     {
-      "url": "https://codeceptjs4.vercel.app/web-api",
+      "url": "https://codecept.io/web-api",
       "page_rank": 5
     },
     {
-      "url": "https://codeceptjs4.vercel.app/mobile-api",
+      "url": "https://codecept.io/mobile-api",
       "page_rank": 4
     },
     {
-      "url": "https://codeceptjs4.vercel.app/helpers/playwright",
+      "url": "https://codecept.io/helpers/playwright",
       "page_rank": 1
     },
     {
-      "url": "https://codeceptjs4.vercel.app/helpers/web-driver",
+      "url": "https://codecept.io/helpers/web-driver",
       "page_rank": 1
     },
     {
-      "url": "https://codeceptjs4.vercel.app/helpers/appium",
+      "url": "https://codecept.io/helpers/appium",
       "page_rank": 1
     },
     {
-      "url": "https://codeceptjs4.vercel.app/helpers/puppeteer",
+      "url": "https://codecept.io/helpers/puppeteer",
       "page_rank": 1
     },
     {
-      "url": "https://codeceptjs4.vercel.app/helpers/detox",
+      "url": "https://codecept.io/helpers/detox",
       "page_rank": 1
     },
-    "https://codeceptjs4.vercel.app"
+    "https://codecept.io"
   ],
   "index_uid": "codeceptjs",
   "stop_urls": [
-    "https://codeceptjs4\\.vercel\\.app/.+/$"
+    "https://codecept\\.io/.+/$"
   ],
   "selectors_exclude": [
     ".search-strip"
