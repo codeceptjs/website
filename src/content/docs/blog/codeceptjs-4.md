@@ -4,17 +4,17 @@ date: 2026-05-16
 description: "CodeceptJS 4 is out: native ESM, an agentic-first redesign with an MCP server and skills, smarter actions, a helper-agnostic element API, and reworked plugins."
 ---
 
-CodeceptJS 4 is out, and this is the big one. We sat on the 3.x line for a long time, and in that time the way tests get written changed under our feet. The short version: more and more test-automation code is written by agents now, not typed by hand, and we rebuilt CodeceptJS around that. An agent can write and fix tests by driving a live browser, not by guessing from a screenshot after the fact.
+CodeceptJS 4 is out, and this is the big one. We sat on the 3.x line for a long time. In those years the way tests get written changed under our feet. More and more test-automation code is written by agents now. Fewer people type it by hand. We rebuilt CodeceptJS around that. An agent can write and fix tests by driving a live browser. It does not guess from a screenshot after the fact.
 
 ![CodeceptJS 4 at a glance: Native ESM, Agent-first, Smarter actions, Plugins reworked](/codeceptjs-4-highlights.svg)
 
-There is more in the box: native ESM, smarter basic actions, a helper-agnostic element API, and a reworked plugin. Let's go through the big things first, then the long tail of breaking changes you should know about before you upgrade.
+There is more in the box: native ESM, smarter basic actions, a helper-agnostic element API, and a reworked plugin. Let's go through the big things first. Then the breaking changes you should know about before you upgrade.
 
-## ESM, not CommonJS
+## Native ESM
 
-CodeceptJS 4 ships as native ESM. Your project needs `"type": "module"`, NodeJS 20 or Bun. If you use TypeScript `tsx` replaces `ts-node/esm`(the old loader still runs but warns).
+CodeceptJS 4 ships as native ESM. Your project needs `"type": "module"` and NodeJS 20 or Bun. If you use TypeScript, `tsx` replaces `ts-node/esm`. The old loader still runs but warns.
 
-This was a long-todo task that would take weeks of absolutely boring work to be done. Luckily migration started in August 2025 with agent that was already capable to do such complex task. Transforming everything to modern ESM syntax opened the door to more innovation.
+This was a long-overdue task. Doing it by hand would have taken weeks of boring work. Luckily the migration started in August 2025 with an agent already capable of the job. Moving everything to modern ESM syntax opened the door to more innovation.
 
 Helpers, page objects, and config go from `require`/`module.exports` to `import`/`export`:
 
@@ -38,13 +38,20 @@ import { tryTo, retryTo, hopeThat } from 'codeceptjs/effects'
 import Helper from '@codeceptjs/helper'
 ```
 
-Existing 3.x test files keep working until you flip the flag, but every run without it prints a deprecation warning. This is table stakes for the rest of the release, so we kept the migration mechanical.
+Existing 3.x test files keep working until you flip the flag. Every run without it prints a deprecation warning. This is table stakes for the rest of the release, so we kept the migration mechanical.
 
 ## Built for agents
 
-We think the coding part of test automation now belongs to the agent, and our job is to hand that agent the most effective tool we can, so it writes a working test without stopping to ask you halfway through. Everything in this section exists to make that loop tight.
+We think the coding part of test automation now belongs to the agent. Our job is to hand that agent the most effective tool we can. With it, the agent writes a working test without stopping to ask you halfway through. Everything in this section exists to make that loop tight.
 
-`npx codeceptjs-mcp` starts an in-process Model Context Protocol server. In-process matters: the agent, the test runner, and the browser share one container and one browser session, with no subprocess and no IPC. Through it an agent can `list_tests` and `list_actions`, `run_code` (arbitrary JS with the full `I.*` scope), `run_test` with a programmatic `pauseAt` breakpoint, `run_step_by_step`, `snapshot` the page at any moment, then `continue` or `cancel` a paused run without closing the browser.
+`npx codeceptjs-mcp` starts an in-process Model Context Protocol server. In-process matters. The agent, the test runner, and the browser share one container and one browser session, with no subprocess and no IPC. Through it an agent can:
+
+- `list_tests` and `list_actions`
+- `run_code`, arbitrary JS with the full `I.*` scope
+- `run_test` with a programmatic `pauseAt` breakpoint
+- `run_step_by_step`
+- `snapshot` the page at any moment
+- `continue` or `cancel` a paused run without closing the browser
 
 The working loop starts from a stub the agent can stop inside:
 
@@ -55,27 +62,23 @@ Scenario('checkout', async ({ I }) => {
 })
 ```
 
-It opens the page, reads it, runs `I.*` commands live against the real DOM, verifies each one worked, and commits the verified sequence back into the test file in place of the stub. The agent is not predicting selectors. It is trying them on the page and keeping the ones that hit.
+It opens the page, reads it, runs `I.*` commands live against the real DOM, verifies each one worked, and commits the verified sequence back into the test file in place of the stub. The agent tries each selector on the real page and keeps the ones that hit.
 
-That loop stays cheap because of how data moves. CodeceptJS writes HTML, ARIA trees, console logs, and HTTP records to files on disk; the agent reads them with its own shell tools, `grep` through a large `page.html`, `jq` into `console.json`, open a screenshot as an image. Nothing gets streamed back through MCP as context on every step. Unlike accessibility-tree-only browser MCPs, the agent sees the full HTML, including icon-only buttons and elements with empty labels that an ARIA snapshot drops.
+That loop stays cheap because of how data moves. CodeceptJS writes HTML, ARIA trees, console logs, and HTTP records to files on disk. The agent reads them with its own shell tools. It can `grep` through a large `page.html`, `jq` into `console.json`, or open a screenshot as an image. Nothing gets streamed back through MCP as context on every step. Unlike accessibility-tree-only browser MCPs, the agent sees the full HTML. That includes icon-only buttons and elements with empty labels that an ARIA snapshot drops.
 
-The `aiTrace` plugin is the data set behind debugging. For each step it writes a screenshot, a cleaned and beautified `page.html` (minified, trash classes and inline styles stripped), an `aria.txt`, a `console.json`, and a `trace.md` index that links them, all under `output/trace_*/`. An agent reading a failure does not need the browser at all for most fixes; the trace already holds what it needs.
+The `aiTrace` plugin is the data set behind debugging. For each step it writes a set of files under `output/trace_*/`: a screenshot, a cleaned-up `page.html` (minified, with trash classes and inline styles stripped), an `aria.txt`, a `console.json`, and a `trace.md` index that links them. For most fixes an agent reading a failure does not need the browser at all. The trace already holds what it needs.
 
-We also ship a skills bundle so agents do not have to relearn CodeceptJS conventions every session. 
-
-Install it with 
+We also ship a skills bundle so agents do not have to relearn CodeceptJS conventions every session. Install it with:
 
 ```bash
 npx skills add codeceptjs/skills
 ```
 
-(or the `/plugin` install for Claude Code). 
-
-Skills will help you write tests from scratch, debug existing tests, refactor code, or migrate from other frameworks.
+It works the same in Claude Code or any other agent. Skills help an agent write tests from scratch, debug existing tests, refactor code, or migrate from other frameworks.
 
 ## Rethinking the basic actions
 
-If you ever fought a custom dropdown, a CKEditor field, or a fancy upload widget, this one is for you. We changed the basic actions to do what you mean, not what the DOM literally is. Same calls, they just reach the elements that used to push you into raw browser code:
+If you ever fought a custom dropdown, a CKEditor field, or a fancy upload widget, this one is for you. We changed the basic actions to do what you mean. They stopped caring about the literal shape of the DOM. The calls are the same. They now reach the elements that used to push you into raw browser code:
 
 ```js
 // selectOption: no longer bound to a native <select>; comboboxes and listboxes work too!
@@ -165,28 +168,19 @@ There are more removals worth knowing before you start:
 - `npx create-codeceptjs` is gone
 - A pile of smaller things changed names or imports
 
-CodeceptUI is not a part of CodeceptJS 4. Actually, CodeceptUI can be easily rebuild from scratch with agents if you need to. However, the agentic testing is less dependent on UI so we are not investing in this sub-project.
+CodeceptUI is not part of CodeceptJS 4. If you need it, an agent can rebuild it from scratch. Agentic testing depends less on a UI, so we are not investing in this sub-project.
 
-Listing all of breaking changes here would just be a worse copy of the guide, so the full before-and-after checklist lives on the [Migrating from 3.x to 4.x](/migration-4) page. That page is the source of truth; this post is the tour.
-
-You do not have to walk it by hand. Point an agent at the project and let it do the migration:
-
-```bash
-claude "/migrate-codeceptjs-4"
-```
-
-It reads your config and tests, applies the mechanical changes, runs the suite, and fixes what breaks. This whole release is mechanical enough that this actually works, which is the point.
+Listing every breaking change here would just be a worse copy of the guide. The full before-and-after checklist lives on the [Migrating from 3.x to 4.x](/migration-4) page. That page is the source of truth. This post is the tour.
 
 ## CodeceptJS in Agentic Era
 
-The way we work with code has dramatically changed during this year. We foresee a **complete QA transformation**, and CodeceptJS aims to lead it. We believe the agents are already smart enough to navigate pages, pick correct locators, and refactor tests. Agent needs a mentor, not hands to write tests. So CodeceptJS will expand its ai native features, skills. 
+The way we work with code has changed dramatically this year. We foresee a **complete QA transformation**, and CodeceptJS aims to lead it. Agents are already smart enough to navigate pages, pick correct locators, and refactor tests. An agent can already do the typing. What it needs is a mentor to guide it. So CodeceptJS will keep expanding its AI-native features and skills.
 
-What makes CodeceptJS different compared to Playwright (which pioneered MCP) is the code of the test.
-CodeceptJS code when written by our guides is self-explaining. Agent is not guessing what it does, it understands intentions! Agent consumes much less tokens reading codeceptjs code. By applying that with official skills agents can effectively solve tasks needing less user inputs.
+What makes CodeceptJS different from Playwright, which pioneered MCP, is the test code itself. CodeceptJS code written to our guides is self-explaining. An agent reads it and understands the intent behind it. It also spends fewer tokens on CodeceptJS code than on raw browser code. With the official skills, an agent solves tasks with less input from you.
 
 Java was the leader in test automation on the QA market. Even though JS has a richer ecosystem, there are still many projects working on the legacy Selenium-Java stack. But why keep things as they are if today we can easily swap languages and technologies? 
 
-We bundled skills for migration to CodeceptJS. During the POC run agent rewrote [Selenium Java project](https://github.com/testomatio/examples/tree/master/java-reporter-testng-selenide) into CodeceptJS 4 keeping its structure. Asking no input questions agent rewrote tests and page objects into JS code, executing them one by one, and fixing failing tests, until all 44 tests passed.
+We bundled skills for migration to CodeceptJS. In a proof-of-concept run, an agent rewrote a [Selenium Java project](https://github.com/testomatio/examples/tree/master/java-reporter-testng-selenide) into CodeceptJS 4 and kept its structure. It asked no questions. It rewrote the tests and page objects into JS, ran them one by one, and fixed the failures until all 44 tests passed.
 
 **So test automation is not about writing code anymore. It is about maintaining it.**
 
@@ -199,11 +193,11 @@ Most of CodeceptJS 4 changes were done by Michael Bodnarchuk, who started Codece
 
 Since then CodeceptJS got more engines supported: Nightmare, TestCafe, Appium Detox, Puppeteer, and finally Playwright.
 
-A testing landsace changed. Testing tools which were maintained by opensource enthuisasts as in Selenium were built by companies like Microsoft, Google, and Cypress.io. Keeping developing a testing framework as free time opensource initiative in such saturated market became harder and harder. Cypress.io had amazing UI, and Playwright created VSCode Extensions, Trace or Codegen and many other tools. Creating compatable software would cost thousands of dollars, engineers, and time.
+The testing landscape changed. Tools once maintained by open-source enthusiasts, like Selenium, gave way to tools built by companies like Microsoft, Google, and Cypress.io. Keeping a testing framework alive as a free-time open-source project got harder and harder in such a saturated market. Cypress.io had an amazing UI. Playwright built a VSCode extension, Trace, Codegen, and many other tools. Matching all of that would cost thousands of dollars, engineers, and time.
 
 But things changed.
 
-Today Claude Code with Opus 4.6 can bring CodeceptJS back to competition. Even more, now almost anyone can code! The price of code has dropped. Can anyone build their own testing framework? Yes, and no. Framework must be stable and battle tested so AI model knows how to interact with it. That's why the plan is:
+Today Claude Code with Opus 4.6 can bring CodeceptJS back to competition. Even more, now almost anyone can code! The price of code has dropped. Can anyone build their own testing framework? Yes, and no. A framework must be stable and battle-tested so an AI model knows how to interact with it. That's why the plan is:
 
 **CodeceptJS 4 is to become a stable foundation for agentic testing**:
 
@@ -213,17 +207,33 @@ Today Claude Code with Opus 4.6 can bring CodeceptJS back to competition. Even m
 - reduce flakiness with healers and other declarative approaches
 - keep framework, mcp, and skills as one bundle
 
-Even if you won't write CodeceptJS code by hands, you will need to read it. You will read it a lot inspecting reports, understanding changes, and updating requirements. With CodeceptJS you read the code you can understand. The cost of writing code is reduced by AI, the cost of reading code is minimal if you choose CodeceptJS. 
+Even if you won't write CodeceptJS code by hand, you will need to read it. You will read it a lot: inspecting reports, understanding changes, updating requirements. With CodeceptJS, the code you read is code you can understand. AI has reduced the cost of writing code. With CodeceptJS the cost of reading it stays minimal.
 
 This is the power for I.
 
 ## Update
 
+Install CodeceptJS 4:
+
 ```bash
 npm install codeceptjs@4
 ```
 
-Not ready to move? 3.x still works, and nothing breaks until you flip the flags, so take your time. But this is where CodeceptJS is going. Thanks to everyone who reported issues and helped shape this release; it is much better for it.
+Then install the skills bundle. It works the same in Claude Code or any other agent:
+
+```bash
+npx skills add codeceptjs/skills
+```
+
+The bundle ships a migration skill. You do not have to walk the upgrade by hand. Point an agent at the project and run the migration:
+
+```bash
+claude "/migrate-codeceptjs-4"
+```
+
+It reads your config and tests, applies the mechanical changes, runs the suite, and fixes what breaks. This whole release is mechanical enough that this actually works, which is the point.
+
+Not ready to move? 3.x still works. Nothing breaks until you flip the flags, so take your time. But this is where CodeceptJS is going. Thanks to everyone who reported issues and helped shape this release. It is much better for it.
 
 
 ## Contribution Notes
