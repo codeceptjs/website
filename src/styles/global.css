@@ -308,6 +308,20 @@ html {
     height: 120px !important;
     padding: 1rem;
 }
+/* Smaller logo tiles on phones so 2-per-view stays comfortable. */
+@media (max-width: 640px) {
+    .swiper-slide {
+        height: 96px !important;
+        padding: 0.75rem;
+    }
+    .swiper img {
+        max-width: 120px !important;
+        max-height: 64px !important;
+    }
+    .swiper-wrapper {
+        padding-bottom: 3rem;
+    }
+}
 .swiper-pagination {
     position: relative;
 }

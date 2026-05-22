@@ -69,7 +69,7 @@
                     CodeceptJS
                 </div>
 
-                <h1 class="hero-headline text-5xl sm:text-6xl lg:text-[5rem] font-bold leading-[1.02] tracking-tight mb-6 text-gray-900 dark:text-white">
+                <h1 class="hero-headline text-4xl sm:text-5xl md:text-6xl lg:text-[5rem] font-bold leading-[1.02] tracking-tight mb-6 text-gray-900 dark:text-white">
                     <span class="block">End-to-end</span>
                     <span class="block">testing,</span>
                     <span class="block">written like</span>
@@ -405,6 +405,13 @@
         .hero-code-col {
             padding: 20px 22px 22px;
             min-height: 230px;
+            /* Let long code lines scroll inside the column instead of widening
+               the panel (and the page) on narrow screens. */
+            min-width: 0;
+            overflow-x: auto;
+        }
+        @media (max-width: 768px) {
+            .hero-code-col { padding: 16px 16px 18px; }
         }
         .hero-code {
             margin: 0;

@@ -180,9 +180,25 @@ const shouldRenderSidebar = hasSidebar && !is404Page;
         });
     }
 
+    function wrapTablesForScroll() {
+        // Wrap each docs table in a horizontal-scroll container so wide tables
+        // scroll inside their own box instead of overflowing the viewport on
+        // mobile. Idempotent — skips tables already wrapped (re-runs on nav).
+        const tables = document.querySelectorAll('.sl-markdown-content table');
+        tables.forEach((table) => {
+            const parent = table.parentElement;
+            if (parent && parent.classList.contains('cc-table-scroll')) return;
+            const wrapper = document.createElement('div');
+            wrapper.className = 'cc-table-scroll';
+            table.replaceWith(wrapper);
+            wrapper.appendChild(table);
+        });
+    }
+
     function setup() {
         header = document.querySelector('#site-header');
 
+        wrapTablesForScroll();
         tagHeaderlessTables();
 
         if (!header) return;

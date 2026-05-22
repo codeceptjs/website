@@ -49,8 +49,8 @@ import "swiper/css/pagination";
   document.addEventListener("astro:page-load", () => {
     const swiper = new Swiper(".swiper-trusted", {
       modules: [Pagination, Autoplay],
-      slidesPerView: 5,
-      spaceBetween: 30,
+      slidesPerView: 2,
+      spaceBetween: 16,
       loop: true,
       grabCursor: true,
       pagination: {
@@ -59,6 +59,10 @@ import "swiper/css/pagination";
       },
       autoplay: {
         delay: 10000
+      },
+      breakpoints: {
+        640: { slidesPerView: 3, spaceBetween: 24 },
+        1024: { slidesPerView: 5, spaceBetween: 30 }
       }
     });
   });

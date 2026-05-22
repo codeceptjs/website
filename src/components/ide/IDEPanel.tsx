@@ -86,9 +86,10 @@ export default function IDEPanel({ files, tree, defaultFile }: IDEPanelProps) {
 
   return (
     <div className="ide-panel overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 shadow-2xl bg-white dark:bg-gray-900">
-      <div className="flex" style={{ minHeight: "420px" }}>
-        {/* File tree sidebar */}
-        <div className="w-56 shrink-0 border-r border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 overflow-y-auto">
+      <div className="flex min-h-[320px] md:min-h-[420px]">
+        {/* File tree sidebar — hidden on mobile, where the panel shows the
+            selected file's code full-width instead. */}
+        <div className="hidden w-56 shrink-0 border-r border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 overflow-y-auto md:block">
           <FileTree
             selectedPath={selectedPath}
             onSelect={setSelectedPath}

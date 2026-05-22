@@ -1,71 +1,392 @@
 ---
-
+import ThemeSelect from './ThemeSelect.astro';
+// Primary navigation. Starlight renders this component (its `SocialIcons`
+// slot) and the CSS below adapts it to three contexts:
+//   1. Desktop header (>= 50rem)         — horizontal link row.
+//   2. Mobile docs pages — inside Starlight's `.mobile-preferences` menu
+//                                        — stacked link list.
+//   3. Mobile splash pages (the home page) which have NO Starlight menu
+//                                        — a hamburger at the right of the
+//                                          header that opens a full-width
+//                                          menu (links + theme toggle).
+// Splash pages are detected by the absence of the docs sidebar
+// (`body:not(:has(#starlight__sidebar))`).
 ---
 
-{/* Navigation */}
-<nav>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-        <div class="flex justify-between items-center h-16">
-            <div class="flex items-center">
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-center space-x-8">
-                        <a href="/quickstart/" class="no-underline text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-gray-200 text-sm font-medium transition-colors">
-                            Guides
-                        </a>
+<nav class="cc-header-nav" aria-label="Main navigation">
+    <button type="button" class="cc-nav-burger" aria-expanded="false" aria-label="Open navigation menu">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cc-nav-burger-icon cc-nav-burger-open"><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cc-nav-burger-icon cc-nav-burger-close"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg>
+    </button>
 
-                        <a href="/web-api/" class="no-underline text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-gray-200 text-sm font-medium transition-colors">
-                            API
-                        </a>
+    <div class="cc-nav-links">
+        <a href="/quickstart/" class="cc-nav-link no-underline text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-gray-200 transition-colors">
+            Guides
+        </a>
+        <a href="/web-api/" class="cc-nav-link no-underline text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-gray-200 transition-colors">
+            API
+        </a>
+        <a href="/blog/codeceptjs-4/" class="cc-nav-link no-underline text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-gray-200 transition-colors">
+            Blog
+        </a>
 
-                        <a href="/blog/codeceptjs-4/" class="no-underline text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-gray-200 text-sm font-medium transition-colors">
-                            Blog
-                        </a>
-
-                        {/* Community Dropdown */}
-                        <div class="relative group">
-                            <button class="flex items-center text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 hover:text-black dark:hover:text-gray-200 text-sm font-medium transition-colors">
-                                Community
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down ml-1 h-4 w-4"><path d="m6 9 6 6 6-6"></path></svg>
-                            </button>
-                            <div class="max-h-[calc(100vh-2.7rem)] overflow-y-auto absolute top-full left-0 mt-2 w-52 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                                <div class="py-2">
-                                    <a href="https://github.com/codeceptjs/CodeceptJS" class="no-underline flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-black dark:hover:text-gray-200">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github mr-3 h-4 w-4"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
-                                        GitHub
-                                    </a>
-                                    <a href="https://github.com/codeceptjs/CodeceptJS/discussions" class="no-underline flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-black dark:hover:text-gray-200">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle mr-3 h-4 w-4"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>
-                                        Discussions
-                                    </a>
-                                    <a href="https://github.com/codeceptjs/CodeceptJS/issues" class="no-underline flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-black dark:hover:text-gray-200">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-dot mr-3 h-4 w-4"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="1"></circle></svg>
-                                        Issues
-                                    </a>
-                                    <a href="https://bit.ly/chat-codeceptjs" class="no-underline flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-black dark:hover:text-gray-200">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle mr-3 h-4 w-4"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>
-                                        Slack
-                                    </a>
-                                    <div class="border-t border-gray-200 dark:border-gray-600 my-2"></div>
-                                    <a href="/release" class="no-underline flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-black dark:hover:text-gray-200">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag mr-3 h-4 w-4"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"></path><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"></circle></svg>
-                                        Releases
-                                    </a>
-                                    <a href="/media-kit" class="no-underline flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-black dark:hover:text-gray-200">
-                                        <img src="/logo/icon.svg" alt="" width="16" height="16" class="mr-3 h-4 w-4" />
-                                        Media Kit
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        {/* Community Dropdown — tap-toggle (works on touch) + hover on desktop */}
+        <div class="cc-nav-dropdown">
+            <button type="button" class="cc-nav-link cc-nav-dropdown-btn text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-gray-200 transition-colors" aria-expanded="false">
+                Community
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cc-nav-chevron lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
+            </button>
+            <div class="cc-nav-dropdown-panel bg-white dark:bg-gray-800">
+                <a href="https://github.com/codeceptjs/CodeceptJS" class="cc-nav-dropdown-item no-underline text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+                    GitHub
+                </a>
+                <a href="https://github.com/codeceptjs/CodeceptJS/discussions" class="cc-nav-dropdown-item no-underline text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>
+                    Discussions
+                </a>
+                <a href="https://github.com/codeceptjs/CodeceptJS/issues" class="cc-nav-dropdown-item no-underline text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-dot"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="1"></circle></svg>
+                    Issues
+                </a>
+                <a href="https://bit.ly/chat-codeceptjs" class="cc-nav-dropdown-item no-underline text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>
+                    Slack
+                </a>
+                <div class="cc-nav-dropdown-divider"></div>
+                <a href="/release" class="cc-nav-dropdown-item no-underline text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"></path><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"></circle></svg>
+                    Releases
+                </a>
+                <a href="/media-kit" class="cc-nav-dropdown-item no-underline text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-gray-200">
+                    <img src="/logo/icon.svg" alt="" width="16" height="16" />
+                    Media Kit
+                </a>
             </div>
+        </div>
+
+        {/* Theme toggle — shown only inside the mobile splash-page menu.
+            A second instance of ThemeSelect; its script is idempotent and
+            keeps every toggle in sync via the `data-theme` attribute. */}
+        <div class="cc-nav-theme">
+            <span class="cc-nav-theme-label">Theme</span>
+            <ThemeSelect />
         </div>
     </div>
 </nav>
 
-<style>
-    button {
+<style is:global>
+    /* ===== Primary navigation (Links.astro / SocialIcons slot) ===== */
+
+    .cc-header-nav { display: none; }
+    .cc-nav-burger { display: none; }
+    .cc-nav-theme { display: none; }
+
+    /* Stacked is the default for .cc-nav-links (mobile contexts 2 & 3). */
+    .cc-nav-links {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .cc-nav-link {
+        display: inline-flex;
+        align-items: center;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.2;
         background-color: transparent !important;
+        border: 0;
+        cursor: pointer;
+    }
+
+    /* Hamburger button (shown only on mobile splash pages). */
+    .cc-nav-burger {
+        align-items: center;
+        justify-content: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        padding: 0;
+        border: 0;
+        border-radius: 0.5rem;
+        background-color: transparent !important;
+        color: var(--sl-color-text);
+        cursor: pointer;
+    }
+    .cc-nav-burger:hover { color: var(--sl-color-white); }
+    .cc-nav-burger-icon { width: 1.5rem; height: 1.5rem; }
+    .cc-nav-burger-close { display: none; }
+    .cc-nav-burger[aria-expanded='true'] .cc-nav-burger-open { display: none; }
+    .cc-nav-burger[aria-expanded='true'] .cc-nav-burger-close { display: block; }
+
+    /* --- Context 1: desktop header — horizontal link row --- */
+    @media (min-width: 50rem) {
+        .cc-header-nav {
+            display: flex;
+            align-items: center;
+        }
+        .cc-nav-links {
+            flex-direction: row;
+            align-items: center;
+            gap: 2rem;
+        }
+    }
+
+    /* --- Context 2: mobile docs menu (Starlight's .mobile-preferences) --- */
+    .mobile-preferences.sl-flex {
+        flex-wrap: wrap;
+        gap: 0.75rem 1rem;
+    }
+    .mobile-preferences .social-icons {
+        flex-basis: 100%;
+        margin: 0;
+    }
+    .mobile-preferences .cc-header-nav {
+        display: block;
+        width: 100%;
+    }
+    .mobile-preferences .cc-nav-links { width: 100%; }
+    .mobile-preferences .cc-nav-link {
+        width: 100%;
+        padding: 0.65rem 0;
+        font-size: 1rem;
+    }
+
+    /* --- Context 3: mobile splash header (home page — no docs menu) --- */
+    @media (max-width: 49.99rem) {
+        /* Starlight hides the header's right group on mobile (docs pages move
+           it into the mobile menu). Splash pages have no mobile menu, so
+           reveal it here to host the hamburger... */
+        body:not(:has(#starlight__sidebar)) .right-group,
+        body:not(:has(#starlight__sidebar)) .social-icons {
+            display: flex;
+            align-items: center;
+        }
+        /* ...but hide the standalone header theme toggle — it moves into the
+           menu below, leaving the hamburger as the rightmost header control. */
+        body:not(:has(#starlight__sidebar)) .right-group > starlight-theme-toggle {
+            display: none;
+        }
+        body:not(:has(#starlight__sidebar)) .cc-header-nav {
+            display: flex;
+            align-items: center;
+        }
+        body:not(:has(#starlight__sidebar)) .cc-nav-burger {
+            display: inline-flex;
+        }
+        /* Full-width menu panel dropping from just below the header. */
+        body:not(:has(#starlight__sidebar)) .cc-nav-links {
+            position: fixed;
+            inset: var(--sl-nav-height) 0 auto 0;
+            width: 100%;
+            flex-direction: column;
+            align-items: stretch;
+            padding: 0.5rem 1rem 1rem;
+            background: var(--sl-color-bg);
+            border-bottom: 1px solid var(--sl-color-hairline, #e5e7eb);
+            box-shadow: 0 16px 30px -14px rgba(0, 0, 0, 0.4);
+            max-height: calc(100vh - var(--sl-nav-height));
+            overflow-y: auto;
+            z-index: var(--sl-z-index-navbar, 10);
+            display: none;
+        }
+        body:not(:has(#starlight__sidebar)) .cc-nav-burger[aria-expanded='true'] + .cc-nav-links {
+            display: flex;
+        }
+        body:not(:has(#starlight__sidebar)) .cc-nav-link {
+            width: 100%;
+            padding: 0.75rem 0.6rem;
+            font-size: 1rem;
+            border-radius: 0.4rem;
+        }
+        body:not(:has(#starlight__sidebar)) .cc-nav-link:hover {
+            background: var(--sl-color-gray-6, #f3f4f6);
+        }
+        /* Theme toggle row inside the menu. */
+        body:not(:has(#starlight__sidebar)) .cc-nav-theme {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            padding: 0.85rem 0.6rem 0.25rem;
+            border-top: 1px solid var(--sl-color-hairline, #e5e7eb);
+        }
+    }
+
+    .cc-nav-theme-label {
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--sl-color-text);
+    }
+
+    /* ----- Community sub-dropdown ----- */
+    .cc-nav-dropdown { position: relative; }
+    .mobile-preferences .cc-nav-dropdown { width: 100%; }
+
+    .cc-nav-dropdown-btn { gap: 0.25rem; }
+    .mobile-preferences .cc-nav-dropdown-btn { justify-content: space-between; }
+    @media (max-width: 49.99rem) {
+        body:not(:has(#starlight__sidebar)) .cc-nav-dropdown-btn {
+            justify-content: space-between;
+        }
+    }
+    .cc-nav-chevron {
+        width: 1rem;
+        height: 1rem;
+        transition: transform 0.2s ease;
+    }
+    .cc-nav-dropdown-btn[aria-expanded='true'] .cc-nav-chevron {
+        transform: rotate(180deg);
+    }
+
+    /* Desktop: floating community panel, hidden until opened. */
+    .cc-nav-dropdown-panel {
+        position: absolute;
+        top: 100%;
+        inset-inline-start: 0;
+        margin-top: 0.5rem;
+        width: 13rem;
+        max-height: calc(100vh - 2.7rem);
+        overflow-y: auto;
+        padding: 0.5rem 0;
+        border: 1px solid var(--sl-color-hairline, #e5e7eb);
+        border-radius: 0.5rem;
+        box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.18);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-4px);
+        transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+        z-index: 50;
+    }
+    .cc-nav-dropdown-btn[aria-expanded='true'] + .cc-nav-dropdown-panel {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    /* Hover reveal — pointer devices, desktop only. */
+    @media (hover: hover) and (min-width: 50rem) {
+        .cc-nav-dropdown:hover .cc-nav-dropdown-panel {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    }
+
+    /* Mobile docs menu: community panel is inline and collapses with display. */
+    .mobile-preferences .cc-nav-dropdown-panel {
+        position: static;
+        width: 100%;
+        max-height: none;
+        margin: 0;
+        padding: 0 0 0.25rem 0.75rem;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        background: transparent !important;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        display: none;
+    }
+    .mobile-preferences .cc-nav-dropdown-btn[aria-expanded='true'] + .cc-nav-dropdown-panel {
+        display: block;
+    }
+
+    /* Mobile splash menu: community panel is inline too. */
+    @media (max-width: 49.99rem) {
+        body:not(:has(#starlight__sidebar)) .cc-nav-dropdown-panel {
+            position: static;
+            width: 100%;
+            max-height: none;
+            margin: 0;
+            padding: 0 0 0.25rem 0.75rem;
+            border: 0;
+            border-radius: 0;
+            box-shadow: none;
+            background: transparent !important;
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+            display: none;
+        }
+        body:not(:has(#starlight__sidebar)) .cc-nav-dropdown-btn[aria-expanded='true'] + .cc-nav-dropdown-panel {
+            display: block;
+        }
+    }
+
+    .cc-nav-dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+    .mobile-preferences .cc-nav-dropdown-item { padding: 0.5rem 0; }
+    @media (max-width: 49.99rem) {
+        body:not(:has(#starlight__sidebar)) .cc-nav-dropdown-item {
+            padding: 0.55rem 0.4rem;
+            font-size: 1rem;
+        }
+    }
+    .cc-nav-dropdown-item:hover {
+        background: var(--sl-color-gray-6, #f3f4f6);
+    }
+    .mobile-preferences .cc-nav-dropdown-item:hover { background: transparent; }
+    .cc-nav-dropdown-item svg,
+    .cc-nav-dropdown-item img {
+        width: 1rem;
+        height: 1rem;
+        flex-shrink: 0;
+    }
+    .cc-nav-dropdown-divider {
+        height: 1px;
+        margin: 0.5rem 0;
+        background: var(--sl-color-hairline, #e5e7eb);
     }
 </style>
+
+<script>
+    // Tap-toggle for the hamburger (splash pages) and the Community dropdown.
+    // Delegated on `document` so it survives Astro view transitions and covers
+    // every rendered copy of the nav.
+    function closeNav(keep?: Element) {
+        document
+            .querySelectorAll('.cc-nav-burger[aria-expanded="true"], .cc-nav-dropdown-btn[aria-expanded="true"]')
+            .forEach((toggle) => {
+                if (toggle === keep) return;
+                // Keep an ancestor toggle open when a nested one is the target.
+                const panel = toggle.nextElementSibling;
+                if (keep && panel && panel.contains(keep)) return;
+                toggle.setAttribute('aria-expanded', 'false');
+            });
+    }
+
+    document.addEventListener('click', (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+
+        const toggle = target.closest('.cc-nav-burger, .cc-nav-dropdown-btn');
+        if (toggle) {
+            const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+            closeNav(toggle);
+            toggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+            return;
+        }
+
+        // A nav link was tapped — let it navigate, but collapse the menus.
+        if (target.closest('.cc-nav-links a, .cc-nav-dropdown-panel a')) {
+            closeNav();
+            return;
+        }
+
+        // Click anywhere outside the menu — close everything. The theme
+        // toggle lives inside .cc-nav-links, so toggling it keeps the menu open.
+        if (!target.closest('.cc-nav-links, .cc-nav-dropdown-panel, .cc-nav-burger')) {
+            closeNav();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeNav();
+    });
+</script>

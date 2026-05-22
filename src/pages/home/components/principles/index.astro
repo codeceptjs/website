@@ -313,6 +313,19 @@ const principles: Principle[] = [
             transform: scale(1.06) rotate(-3deg);
         }
 
+        /* Mobile: the icon's negative left offset pushes it off-screen and the
+           card padding squeezes content. Pull the icon inside the card and
+           tighten padding so nothing clips at the viewport edge. */
+        @media (max-width: 640px) {
+            .feature-card {
+                padding: 22px 18px 22px 22px;
+            }
+            .feature-card-icon {
+                top: -18px;
+                left: 14px;
+            }
+        }
+
         /* Number — top-right, neutral honey gold */
         .feature-card-num {
             position: absolute;

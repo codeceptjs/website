@@ -35,6 +35,14 @@ html[data-theme="dark"] .expressive-code [style*="--0:#db2777"][style*="fw:bold"
 .sl-markdown-content .expressive-code .frame .copy {
     font-size: 13px;
 }
+/* On phones the copy button floats over the code — shrink it and pin it to
+   the top-right corner so it stops covering the code text. */
+@media (max-width: 640px) {
+    .sl-markdown-content .expressive-code .frame .copy {
+        transform: scale(0.7);
+        transform-origin: top right;
+    }
+}
 .sl-markdown-content .expressive-code pre {
     padding: 1rem 1rem !important;
     /* No frame border at all */
@@ -174,6 +182,30 @@ html[data-theme="dark"] .sl-markdown-content table tbody tr:nth-child(even) td {
     white-space: nowrap;
 }
 
+/* Wrap docs tables in a horizontal-scroll container (the wrapper is added by
+   the table walker in PageFrame.astro) so a wide table scrolls inside its own
+   box instead of widening the whole page on mobile. */
+.cc-table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 1.5em 0;
+}
+/* Once wrapped, the wrapper owns the vertical rhythm. */
+.cc-table-scroll > table {
+    margin: 0;
+}
+
+/* Tighter tables on phones — reclaim horizontal space, keep text legible. */
+@media (max-width: 640px) {
+    .sl-markdown-content table {
+        font-size: 13.5px;
+    }
+    .sl-markdown-content table th,
+    .sl-markdown-content table td {
+        padding: 8px 10px;
+    }
+}
+
 /* Inline code in markdown content — honey-tinted bg + border, JetBrains Mono.
    Scoped to actual prose containers so Tailwind-styled <code> on the
    landing page (which is also wrapped in .sl-markdown-content) is
@@ -195,6 +227,17 @@ html[data-theme="dark"] .sl-markdown-content :is(p, li, td, th, dt, dd, blockquo
 html[data-theme="dark"] .sl-markdown-content :is(p, li, td, th, dt, dd, blockquote, summary, figcaption) :is(strong, em, a, span) > code {
     background: rgba(242, 169, 0, 0.08);
     border-color: rgba(242, 169, 0, 0.20);
+}
+
+/* On phones a long inline code snippet with `white-space: nowrap` can't wrap
+   and forces the whole page wider than the viewport (which also shoves the
+   fixed mobile-menu button off-screen). Let prose inline code wrap there. */
+@media (max-width: 767px) {
+    .sl-markdown-content :is(p, li, td, th, dt, dd, blockquote, summary, figcaption) > code,
+    .sl-markdown-content :is(p, li, td, th, dt, dd, blockquote, summary, figcaption) :is(strong, em, a, span) > code {
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
 }
 
 /* Inline code inside headings inherits heading color and SIZE so the heading
@@ -233,6 +276,8 @@ html[data-theme="dark"] .sl-markdown-content :is(p, li, td, th, dt, dd, blockquo
     display: block !important;
     max-width: 100% !important;
     width: 100% !important;
+    /* Diagrams shrink small on phones — signal they can be tapped to zoom. */
+    cursor: zoom-in;
 }
 .sl-markdown-content .injected-figure img {
     max-width: 100% !important;
@@ -579,8 +624,16 @@ html[data-theme=dark] .starlight-sidebar-topics .starlight-sidebar-topics-curren
     color: #FFB938 !important;
 }
 
+/* `.sidebar-pane` is the in-flow docs sidebar on desktop (transparent so it
+   blends into the page background) but a fixed full-screen overlay menu on
+   mobile — there it MUST stay opaque or the page shows through it. */
 html[data-theme=dark] .sidebar-pane {
-    background-color: transparent;
+    background-color: var(--sl-color-bg);
+}
+@media (min-width: 50rem) {
+    html[data-theme=dark] .sidebar-pane {
+        background-color: transparent;
+    }
 }
 
 header.header {
