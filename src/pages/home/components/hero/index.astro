@@ -1,5 +1,5 @@
 ---
-
+import Announcement from '../../../../components/Announcement.astro';
 ---
 
 {/* Hero Section */}
@@ -52,6 +52,9 @@
 
     {/* Content */}
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+
+        {/* Site announcement — toggled in src/config/announcement.ts */}
+        <Announcement />
 
         {/* Quiet install row — centered at the top */}
         <div class="flex justify-center mb-12 hero-stagger">
