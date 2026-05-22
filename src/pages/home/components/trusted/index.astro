@@ -46,8 +46,15 @@ import "swiper/css/pagination";
   import Swiper from "swiper";
   import { Pagination, Autoplay } from "swiper/modules";
 
-  document.addEventListener("astro:page-load", () => {
-    const swiper = new Swiper(".swiper-trusted", {
+  // Initialize the logo carousel. `swiper/css` ships `.swiper-slide{width:100%}`
+  // as the pre-JS default, so if this never runs the section collapses to a
+  // single full-width logo. Run it both immediately (covers the case where this
+  // module loads *after* `astro:page-load` has already fired) and on every SPA
+  // navigation, guarding against double-init via the element's `.swiper` prop.
+  function initTrustedSwiper() {
+    const el = document.querySelector(".swiper-trusted");
+    if (!el || (el as any).swiper) return;
+    new Swiper(el as HTMLElement, {
       modules: [Pagination, Autoplay],
       slidesPerView: 2,
       spaceBetween: 16,
@@ -65,6 +72,8 @@ import "swiper/css/pagination";
         1024: { slidesPerView: 5, spaceBetween: 30 }
       }
     });
-  });
+  }
 
+  initTrustedSwiper();
+  document.addEventListener("astro:page-load", initTrustedSwiper);
 </script>

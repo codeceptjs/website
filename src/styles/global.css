@@ -298,6 +298,19 @@ html {
     align-items: center !important;
     padding-bottom: 4rem;
 }
+/* Safety net: `swiper/css` sets `.swiper-slide{width:100%}` as its pre-JS
+   default, which collapses the carousel to a single logo if Swiper never
+   initializes. Until the `.swiper-initialized` class lands, lay the slides
+   out in a flexible row so all logos stay visible regardless. */
+.swiper:not(.swiper-initialized) .swiper-wrapper {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+.swiper:not(.swiper-initialized) .swiper-slide {
+    width: auto;
+    flex: 0 1 180px;
+}
 .swiper-slide {
     display: flex !important;
     align-items: center;

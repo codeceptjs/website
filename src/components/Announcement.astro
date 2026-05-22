@@ -18,18 +18,19 @@ import { announcement } from '../config/announcement';
 
 <style>
     .cc-announce-row {
-        display: flex;
-        justify-content: center;
         margin-bottom: 1.75rem;
         animation: cc-announce-in 0.6s ease-out both;
     }
     .cc-announce {
-        display: inline-flex;
+        position: relative;
+        display: flex;
+        width: 100%;
+        box-sizing: border-box;
         align-items: center;
+        justify-content: flex-start;
         gap: 0.5rem;
-        max-width: 100%;
-        padding: 0.375rem 0.875rem;
-        border-radius: 999px;
+        padding: 0.625rem 1.25rem;
+        border-radius: 0.75rem;
         border: 1px solid color-mix(in srgb, var(--codecept-accent, #F2A900) 35%, transparent);
         background: color-mix(in srgb, var(--codecept-accent, #F2A900) 9%, transparent);
         font-size: 0.875rem;
@@ -55,12 +56,15 @@ import { announcement } from '../config/announcement';
         letter-spacing: 0.06em;
     }
     .cc-announce-text {
-        overflow: hidden;
-        text-overflow: ellipsis;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
         white-space: nowrap;
     }
     .cc-announce-arrow {
         flex-shrink: 0;
+        margin-left: auto;
         color: var(--codecept-accent, #F2A900);
         transition: transform 0.15s ease;
     }
