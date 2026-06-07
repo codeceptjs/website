@@ -8,8 +8,8 @@ export const announcement = {
   /** Show the announcement banner on the landing page. */
   enabled: true,
 
-  /** Small highlighted label before the message. Set to '' to hide it. */
-  tag: 'New',
+  /** Small highlighted label before the message, shown as [TAG]. Set to '' to hide it. */
+  tag: 'NEW',
 
   /** The message — keep it short, it shows on a single line. */
   text: 'CodeceptJS 4.0 is here',
