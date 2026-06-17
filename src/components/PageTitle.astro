@@ -1,25 +1,29 @@
 ---
 import Default from "@astrojs/starlight/components/PageTitle.astro";
 
-const hideTitle = Astro.locals.starlightRoute.hideTitle;
-const slug = Astro.locals.starlightRoute.entry.slug;
+const route = Astro.locals.starlightRoute ?? {};
+const entry = route.entry;
+
+const hideTitle = route.hideTitle ?? false;
+const slug = entry?.slug ?? '';
+
 const is404Page = slug === '404' || slug.endsWith('/404');
 ---
 
 {!is404Page && (
 <div></div>
-)}
+    )}
 
-{!hideTitle && !is404Page && <Default/>}
+{!hideTitle && !is404Page && <Default />}
 
 <style>
-	h1 {
-		margin-top: 1rem;
-		font-size: var(--sl-text-h1);
-		line-height: var(--sl-line-height-headings);
-		font-weight: 600;
-		color: var(--sl-color-white);
-	}
+    h1 {
+        margin-top: 1rem;
+        font-size: var(--sl-text-h1);
+        line-height: var(--sl-line-height-headings);
+        font-weight: 600;
+        color: var(--sl-color-white);
+    }
 
     :root {
         --color-link-breadcrumbs: var(--sl-color-text-accent);

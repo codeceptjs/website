@@ -1,6 +1,8 @@
 import { loadEnvFile } from 'node:process';
 import {defineConfig} from 'astro/config';
 import starlight from '@astrojs/starlight';
+import { unified } from '@astrojs/markdown-remark';
+import remarkToc from 'remark-toc';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 import starlightSidebarTopics from 'starlight-sidebar-topics';
@@ -347,7 +349,10 @@ export default defineConfig({
                         label: 'Blog',
                         link: '/blog/codeceptjs-4/',
                         items: [
-                            {label: 'Blog', autogenerate: {directory: 'blog/'}},
+                            {
+                                label: 'Blog',
+                                items: [{ autogenerate: { "directory": "blog" } }]
+                            },
                             {label: 'Releases', link: 'release'},
                         ],
                     },
@@ -388,7 +393,7 @@ export default defineConfig({
     vite: {
         resolve: {
             alias: {
-                zod: 'zod/v3',
+                // zod: 'zod/v4',
             },
         },
         plugins: [
@@ -413,10 +418,13 @@ export default defineConfig({
         },
     },
     markdown: {
-        rehypePlugins: [
-            [rehypeAstroRelativeMarkdownLinks, options],
-            [rehypeInjectFigure, { injections: figureInjections }],
-            rehypeSearchStrip,
-        ],
+        processor: unified({
+            remarkPlugins: [remarkToc],
+            rehypePlugins: [
+                [rehypeAstroRelativeMarkdownLinks, options],
+                [rehypeInjectFigure, { injections: figureInjections }],
+                rehypeSearchStrip,
+            ],
+        }),
     },
 });

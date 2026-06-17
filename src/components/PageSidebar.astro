@@ -1,7 +1,9 @@
 ---
 import Default from '@astrojs/starlight/components/PageSidebar.astro';
 
-const slug = Astro.locals.starlightRoute.entry.slug;
+const route = Astro.locals.starlightRoute ?? {};
+const slug = route.entry?.slug ?? '';
+
 const is404Page = slug === '404' || slug.endsWith('/404');
 ---
 

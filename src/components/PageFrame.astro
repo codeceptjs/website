@@ -2,8 +2,13 @@
 import MobileMenuToggle from 'virtual:starlight/components/MobileMenuToggle';
 import SiteFooter from './SiteFooter.astro';
 
-const { hasSidebar, entry } = Astro.locals.starlightRoute;
-const is404Page = entry.slug === '404' || entry.slug.endsWith('/404');
+const route = Astro.locals.starlightRoute ?? {};
+const entry = route.entry;
+
+const slug = entry?.slug ?? '';
+const hasSidebar = route.hasSidebar ?? false;
+
+const is404Page = slug === '404' || slug.endsWith('/404');
 const shouldRenderSidebar = hasSidebar && !is404Page;
 ---
 

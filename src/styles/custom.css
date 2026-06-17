@@ -679,3 +679,7 @@ html[data-theme=dark] .fill-primary {
 .bg-background-light {
     background-color: #f7f7f7;
 }
+
+.cc-announce {
+    padding: 1rem !important;
+}
