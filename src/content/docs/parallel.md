@@ -19,6 +19,8 @@ npx codeceptjs run-workers 4
 
 Steps are not streamed to the console in this mode — output from separate threads can't be interleaved cleanly. While workers run, CodeceptJS sets `process.env.RUNS_WITH_WORKERS=true`, so plugins and helpers can branch on it. All `run` options work here too: `--grep "@smoke"`, `-c codecept.conf.js`, `--debug`, and the rest.
 
+By default, workers are created with a staggered delay of 200ms to prevent CPU spikes and stagger browser initializations. You can adjust this via `workerInitializationDelay` in your configuration.
+
 ### Distribution strategies
 
 `--by` controls how tests spread across workers:
@@ -95,7 +97,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
       - run: npm ci
       - run: npx codeceptjs run --shard ${{ matrix.shard }}
 ```
@@ -182,3 +184,11 @@ Shared data is a Proxy. Don't reassign the injected object itself (`let d = inje
 ```js
 share({ tmpFile: '/tmp/run-1' }, { local: true })
 ```
+
+## Scaling beyond one machine
+
+Worker threads split the suite, but every Playwright worker still runs a full local browser.
+With the [Kitesurf helper](/helpers/Kitesurf) each worker drives a cloud browser on Cloudflare
+instead — `run-workers 16` means sixteen browsers spawned in about a second, none of them
+competing for your runner's CPU. See [Alternative Browser Engines](/alternative-browsers) for
+the full setup.

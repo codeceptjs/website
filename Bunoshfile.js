@@ -544,7 +544,19 @@ function transformMarkdown(srcText, outRel) {
     }
   }
   out.push('---', SYNC_MARKER, '');
-  return out.join('\n') + stripLeadingTitleHeading(body.replace(/^\n+/, ''), title);
+  return out.join('\n') + convertContainers(stripLeadingTitleHeading(body.replace(/^\n+/, ''), title));
+}
+
+// Upstream uses VuePress containers (`::: warning Title`); Starlight asides
+// only know note/tip/caution/danger and take the title in brackets.
+const CONTAINER_TYPES = { info: 'note', note: 'note', tip: 'tip', warning: 'caution', caution: 'caution', danger: 'danger' };
+
+function convertContainers(markdown) {
+  return markdown.replace(/^:::[ \t]*(\w+)[ \t]*(.*)$/gm, (line, type, label) => {
+    const aside = CONTAINER_TYPES[type.toLowerCase()];
+    if (!aside) return line;
+    return label.trim() ? `:::${aside}[${label.trim()}]` : `:::${aside}`;
+  });
 }
 
 function buildStaging() {

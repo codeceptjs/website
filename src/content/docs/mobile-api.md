@@ -129,6 +129,28 @@ Returns **void** automatically synchronized promise through #recorder
 
 _Not available in this helper._
 
+### `I.clearClipboard()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Clears the system clipboard.
+
+```js
+I.clearClipboard();
+I.seeClipboardEquals('');
+```
+
+Returns **void** automatically synchronized promise through #recorderAppium: support both Android and iOS
+
+**Detox**
+
+_Not available in this helper._
+
 ### `I.clearField()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -608,6 +630,32 @@ let activity = await I.grabCurrentActivity();
 ```
 
 Returns **[Promise][6]<[string][5]>** Appium: support only Android
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.grabFromClipboard()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Grabs the text content of the system clipboard and returns it to test.
+Resumes test execution, so **should be used inside async function with `await`** operator.
+
+```js
+I.click('Copy to clipboard');
+let url = await I.grabFromClipboard();
+```
+
+Reading the clipboard requires a secure context (`https` or `localhost`) and is supported
+in Chromium-based browsers, where read access is granted automatically.
+
+Returns **[Promise][6]<[string][5]>** the system clipboard contents.Appium: support both Android and iOS
 
 **Detox**
 

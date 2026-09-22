@@ -73,8 +73,9 @@ Type: [object][6]
 *   `ignoreHTTPSErrors` **[boolean][27]?** Allows access to untrustworthy pages, e.g. to a page with an expired certificate. Default value is `false`
 *   `bypassCSP` **[boolean][27]?** bypass Content Security Policy or CSP
 *   `highlightElement` **[boolean][27]?** highlight the interacting elements. Default: false. Note: only activate under verbose mode (--verbose).
+*   `visibleLocator` **[boolean][27]?** append [`visible()`][49] to locators, so only visible elements are matched. Requires Playwright 1.63 or newer. Switch it off for a single step with `stepOpts({ visibleLocator: false })`. Not applied to `dragAndDrop`, which passes selectors to Playwright directly, nor to steps that must reach hidden elements: `grab*` methods, `scrollTo`, `seeElementInDOM`, `dontSeeElementInDOM` and `seeNumberOfElements`. When enabled, a locator matching only hidden elements fails as "element not found" instead of timing out on actionability, `strict` mode ignores hidden duplicates, and elements hidden by CSS (like a custom checkbox built on a visually hidden `input`) are no longer found.
 *   `recordHar` **[object][6]?** record HAR and will be saved to `output/har`. See more of [HAR options][3].
-*   `testIdAttribute` **[string][9]?** locate elements based on the testIdAttribute. See more of [locate by test id][49].
+*   `testIdAttribute` **[string][9]?** locate elements based on the testIdAttribute. See more of [locate by test id][50].
 *   `storageState` **([string][9] | [object][6])?** Playwright storage state (path to JSON file or object)
     passed directly to `browser.newContext`.
     If a Scenario is declared with a `cookies` option (e.g. `Scenario('name', { cookies: [...] }, fn)`),
@@ -564,6 +565,17 @@ I.checkOption('agree', '//form');
 *   `field` **([string][9] | [object][6])** checkbox located by label | name | CSS | XPath | strict locator.
 *   `context` **([string][9]? | [object][6])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 *   `options`   
+
+Returns **void** automatically synchronized promise through #recorder
+
+### clearClipboard
+
+Clears the system clipboard.
+
+```js
+I.clearClipboard();
+I.seeClipboardEquals('');
+```
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -1279,6 +1291,21 @@ const width = await I.grabElementBoundingRect('h3', 'width');
 *   `elementSize` **[string][9]?** x, y, width or height of the given element.
 
 Returns **([Promise][19]<DOMRect> | [Promise][19]<[number][18]>)** Element bounding rectangle
+
+### grabFromClipboard
+
+Grabs the text content of the system clipboard and returns it to test.
+Resumes test execution, so **should be used inside async function with `await`** operator.
+
+```js
+I.click('Copy to clipboard');
+let url = await I.grabFromClipboard();
+```
+
+Reading the clipboard requires a secure context (`https` or `localhost`) and is supported
+in Chromium-based browsers, where read access is granted automatically.
+
+Returns **[Promise][19]<[string][9]>** the system clipboard contents.
 
 ### grabHTMLFrom
 
@@ -2005,6 +2032,24 @@ I.seeCheckboxIsChecked({css: '#signup_form input[type=checkbox]'});
 
 Returns **void** automatically synchronized promise through #recorder
 
+### seeClipboardEquals
+
+Checks that the system clipboard is equal to the given text.
+
+```js
+I.click('Copy to clipboard');
+I.seeClipboardEquals('https://codecept.io');
+```
+
+Reading the clipboard requires a secure context (`https` or `localhost`) and is supported
+in Chromium-based browsers, where read access is granted automatically.
+
+#### Parameters
+
+*   `text` **[string][9]** value to check.
+
+Returns **void** automatically synchronized promise through #recorder
+
 ### seeCookie
 
 Checks that cookie with given name exists.
@@ -2102,6 +2147,24 @@ I.seeElementInDOM('#modal');
 #### Parameters
 
 *   `locator` **([string][9] | [object][6])** element located by CSS|XPath|strict locator.
+
+Returns **void** automatically synchronized promise through #recorder
+
+### seeInClipboard
+
+Checks that the system clipboard contains the given text.
+
+```js
+I.click('Copy to clipboard');
+I.seeInClipboard('https://codecept.io');
+```
+
+Reading the clipboard requires a secure context (`https` or `localhost`) and is supported
+in Chromium-based browsers, where read access is granted automatically.
+
+#### Parameters
+
+*   `text` **[string][9]** value to check.
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2962,4 +3025,6 @@ Returns **void** automatically synchronized promise through #recorder
 
 [48]: https://playwright.dev/docs/api/class-consolemessage#console-message-type
 
-[49]: https://playwright.dev/docs/locators#locate-by-test-id
+[49]: https://playwright.dev/docs/api/class-locator#locator-visible
+
+[50]: https://playwright.dev/docs/locators#locate-by-test-id

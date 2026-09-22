@@ -1,5 +1,5 @@
 ---
-import Announcement from '../../../../components/Announcement.astro';
+import { announcement } from '../../../../config/announcement';
 ---
 
 {/* Hero Section */}
@@ -53,16 +53,12 @@ import Announcement from '../../../../components/Announcement.astro';
     {/* Content */}
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
 
-        {/* Site announcement — toggled in src/config/announcement.ts */}
-        <Announcement />
-
-        {/* Quiet install row — centered at the top */}
-        <div class="flex justify-center mb-12 hero-stagger">
-            <div class="hero-install" id="install-widget">
-                <div id="install-tabs"></div>
-                <div id="install-body"></div>
+        {/* Release announcement — src/config/announcement.ts */}
+        {announcement.enabled && (
+            <div class="flex justify-center mb-12 hero-stagger">
+                <a href={announcement.link} class="hero-announce no-underline">{announcement.text}</a>
             </div>
-        </div>
+        )}
 
         <div class="grid md:grid-cols-12 gap-10 md:gap-10 lg:gap-12 items-center">
 
@@ -495,8 +491,20 @@ import Announcement from '../../../../components/Announcement.astro';
         }
         .hero-runner-summary.show { opacity: 1; }
 
-        /* Install row sits darker in dark mode */
-        html[data-theme="dark"] #install-body { background: rgba(255, 255, 255, 0.06) !important; }
+        /* Release announcement pill */
+        .hero-announce {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.45rem 1rem;
+            border: 1px solid #9810fa;
+            border-radius: 999px;
+            background: var(--sl-color-gray-6, #f3f4f6);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--sl-color-white);
+            transition: background 0.15s ease;
+        }
+        .hero-announce:hover { background: var(--sl-color-gray-5, #e5e7eb); }
 
         /* Reduced motion */
         @media (prefers-reduced-motion: reduce) {
@@ -709,83 +717,5 @@ import Announcement from '../../../../components/Announcement.astro';
 
             setTimeout(typeNext, 700);
         }
-
-        // ---- Quiet install row ----
-        const widget = document.getElementById('install-widget');
-        if (!widget || widget.dataset.init) return;
-        widget.dataset.init = '1';
-
-        const pms = ['npm', 'yarn', 'pnpm', 'bun', 'deno'];
-        const commands: Record<string, string> = {
-            npm: 'npm i codeceptjs',
-            yarn: 'yarn add codeceptjs',
-            pnpm: 'pnpm add codeceptjs',
-            bun: 'bun add codeceptjs',
-            deno: 'deno add npm:codeceptjs',
-        };
-
-        widget.style.cssText = 'border:none; background:transparent; max-width:420px;';
-
-        const tabsRow = document.getElementById('install-tabs')!;
-        tabsRow.style.cssText = 'display:flex; border:none; margin:0 0 6px 0; padding:0;';
-
-        const tabEls: HTMLElement[] = [];
-        pms.forEach(pm => {
-            const btn = document.createElement('span');
-            btn.textContent = pm;
-            btn.dataset.pm = pm;
-            btn.style.cssText = `flex:1; display:inline-flex; align-items:center; justify-content:center; padding:6px 8px; margin:0; font-size:10px; font-weight:600; color:#9ca3af; background:transparent; border:none; border-bottom:2px solid transparent; cursor:pointer; transition:color 0.15s, border-color 0.15s; user-select:none; line-height:1; letter-spacing:0.1em; text-transform:uppercase; font-family:'JetBrains Mono', ui-monospace, monospace;`;
-            tabEls.push(btn);
-            tabsRow.appendChild(btn);
-        });
-
-        function setActive(pm: string) {
-            tabEls.forEach(el => {
-                const isActive = el.dataset.pm === pm;
-                el.style.color = isActive ? 'var(--sl-color-text)' : '#9ca3af';
-                el.style.borderBottomColor = isActive ? '#7c3aed' : 'transparent';
-            });
-            cmdEl.textContent = commands[pm];
-        }
-
-        tabEls.forEach(el => {
-            el.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setActive(el.dataset.pm || 'npm');
-            });
-        });
-
-        const body = document.getElementById('install-body')!;
-        body.style.cssText = 'display:flex; align-items:center; padding:10px 14px; gap:10px; margin:0; background:#eee; border-radius:8px;';
-
-        const prompt = document.createElement('span');
-        prompt.textContent = '$';
-        prompt.style.cssText = "color:#7c3aed; font-size:13px; user-select:none; flex-shrink:0; font-weight:700; line-height:1; margin:0; font-family:'JetBrains Mono', ui-monospace, monospace;";
-        body.appendChild(prompt);
-
-        const cmdEl = document.createElement('code');
-        cmdEl.textContent = commands.npm;
-        cmdEl.style.cssText = `font-size:13px; font-family:'JetBrains Mono', ui-monospace, monospace; color:var(--sl-color-text); white-space:nowrap; flex:1; background:none; line-height:1; margin:0; padding:0; text-align:left;`;
-        body.appendChild(cmdEl);
-
-        const copyBtn = document.createElement('span');
-        copyBtn.title = 'Copy to clipboard';
-        copyBtn.style.cssText = 'flex-shrink:0; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; border-radius:5px; cursor:pointer; color:#9ca3af; transition:all 0.15s; margin:0; padding:0;';
-        const copySvg = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>`;
-        const checkSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-        copyBtn.innerHTML = copySvg;
-
-        copyBtn.addEventListener('click', async (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            await navigator.clipboard.writeText(cmdEl.textContent || '');
-            copyBtn.innerHTML = checkSvg;
-            setTimeout(() => { copyBtn.innerHTML = copySvg; }, 2000);
-        });
-
-        body.appendChild(copyBtn);
-
-        setActive('npm');
     });
 </script>

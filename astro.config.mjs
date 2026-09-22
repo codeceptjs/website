@@ -11,12 +11,16 @@ import {codeceptDark, codeceptLight} from './src/lib/shiki-themes.ts';
 import {codeceptShikiTransformer} from './src/lib/shiki-codecept-transformer.ts';
 import rehypeInjectFigure from './src/lib/rehype-inject-figure.mjs';
 import rehypeSearchStrip from './src/lib/rehype-search-strip.mjs';
+import {getBlogPosts} from './src/lib/blog-posts.ts';
 
 try {
     loadEnvFile(); // Loads default .env file when present (local dev)
 } catch {
     // No .env on CI/Vercel — env vars are injected directly into process.env
 }
+
+// Newest first by frontmatter `date` — the Blog topic opens the latest post.
+const blogPosts = getBlogPosts().map(({label, link}) => ({label, link}));
 
 const options = {
     collectionBase: false,
@@ -224,6 +228,7 @@ export default defineConfig({
                                     {label: 'Testing with Playwright', link: 'playwright'},
                                     {label: 'Testing with WebDriver', link: 'webdriver'},
                                     { label: 'Testing with Puppeteer', link: 'puppeteer' },
+                                    {label: 'Alternative Browsers', link: 'alternative-browsers'},
                                     {label: 'Mobile Testing with Appium', link: 'mobile'},
                                     {label: 'Testing React Native with Detox', link: 'detox'},
                                 ],
@@ -291,6 +296,9 @@ export default defineConfig({
                                     {label: 'Playwright', link: 'helpers/playwright'},
                                     {label: 'WebDriver', link: 'helpers/web-driver'},
                                     {label: 'Puppeteer', link: 'helpers/puppeteer'},
+                                    {label: 'CDPBrowser', link: 'helpers/cdp-browser'},
+                                    {label: 'Obscura', link: 'helpers/obscura'},
+                                    {label: 'Kitesurf', link: 'helpers/kitesurf'},
                                     {label: 'Appium', link: 'helpers/appium'},
                                     {label: 'Detox', link: 'helpers/detox'},
                                     {label: 'REST', link: 'helpers/rest'},
@@ -345,9 +353,9 @@ export default defineConfig({
                     {
                         id: 'blog',
                         label: 'Blog',
-                        link: '/blog/codeceptjs-4/',
+                        link: blogPosts[0].link,
                         items: [
-                            {label: 'Blog', autogenerate: {directory: 'blog/'}},
+                            {label: 'Blog', items: blogPosts},
                             {label: 'Releases', link: 'release'},
                         ],
                     },

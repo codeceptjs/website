@@ -3606,7 +3606,9 @@ Helper-Specific Differences
 
 [48]: https://playwright.dev/docs/api/class-consolemessage#console-message-type
 
-[49]: https://playwright.dev/docs/locators#locate-by-test-id
+[49]: https://playwright.dev/docs/api/class-locator#locator-visible
+
+[50]: https://playwright.dev/docs/locators#locate-by-test-id
 
 **WebDriver**
 
