@@ -13,16 +13,16 @@ REST helper allows to send additional requests to the REST API during acceptance
 
 ## Configuration
 
-Type: [object][4]
+Type: [object][3]
 
 ### Properties
 
-*   `endpoint` **[string][3]?** API base URL
+*   `endpoint` **[string][2]?** API base URL
 *   `prettyPrintJson` **[boolean][6]?** pretty print json for response/request on console logs.
 *   `printCurl` **[boolean][6]?** print cURL request on console logs. False by default.
 *   `timeout` **[number][5]?** timeout for requests in milliseconds. 10000ms by default.
-*   `defaultHeaders` **[object][4]?** a list of default headers.
-*   `httpAgent` **[object][4]?** create an agent with SSL certificate
+*   `defaultHeaders` **[object][3]?** a list of default headers.
+*   `httpAgent` **[object][3]?** create an agent with SSL certificate
 *   `onRequest` **[function][7]?** an async function which can update request object.
 *   `onResponse` **[function][7]?** an async function which can update response object.
 *   `maxUploadFileSize` **[number][5]?** set the max content file size in MB when performing api calls.
@@ -97,24 +97,6 @@ this.helpers['REST']._executeRequest({
 
 *   `config` &#x20;
 
-### _executeRequest
-
-Executes axios request
-
-#### Parameters
-
-*   `request` **any**&#x20;
-
-Returns **[Promise][2]<any>** response
-
-### _url
-
-Generates url based on format sent (takes endpoint + url if latter lacks 'http')
-
-#### Parameters
-
-*   `url` **any**&#x20;
-
 ### amBearerAuthenticated
 
 Adds a header for Bearer authentication
@@ -126,7 +108,7 @@ I.amBearerAuthenticated(secret('heregoestoken'))
 
 #### Parameters
 
-*   `accessToken` **([string][3] | CodeceptJS.Secret)** Bearer access token
+*   `accessToken` **([string][2] | CodeceptJS.Secret)** Bearer access token
 
 ### haveRequestHeaders
 
@@ -134,7 +116,7 @@ Sets request headers for all requests of this test
 
 #### Parameters
 
-*   `headers` **[object][4]** headers list
+*   `headers` **[object][3]** headers list
 
 ### sendDeleteRequest
 
@@ -147,9 +129,9 @@ I.sendDeleteRequest('/api/users/1');
 #### Parameters
 
 *   `url` **any**&#x20;
-*   `headers` **[object][4]** the headers object to be sent. By default, it is sent as an empty object 
+*   `headers` **[object][3]** the headers object to be sent. By default, it is sent as an empty object 
 
-Returns **[Promise][2]<any>** response
+Returns **[Promise][4]<any>** response
 
 ### sendDeleteRequestWithPayload
 
@@ -163,9 +145,9 @@ I.sendDeleteRequestWithPayload('/api/users/1', { author: 'john' });
 
 *   `url` **any**&#x20;
 *   `payload` **any** the payload to be sent. By default it is sent as an empty object 
-*   `headers` **[object][4]** the headers object to be sent. By default, it is sent as an empty object 
+*   `headers` **[object][3]** the headers object to be sent. By default, it is sent as an empty object 
 
-Returns **[Promise][2]<any>** response
+Returns **[Promise][4]<any>** response
 
 ### sendGetRequest
 
@@ -178,9 +160,9 @@ I.sendGetRequest('/api/users.json');
 #### Parameters
 
 *   `url` **any**&#x20;
-*   `headers` **[object][4]** the headers object to be sent. By default, it is sent as an empty object 
+*   `headers` **[object][3]** the headers object to be sent. By default, it is sent as an empty object 
 
-Returns **[Promise][2]<any>** response
+Returns **[Promise][4]<any>** response
 
 ### sendHeadRequest
 
@@ -193,9 +175,9 @@ I.sendHeadRequest('/api/users.json');
 #### Parameters
 
 *   `url` **any**&#x20;
-*   `headers` **[object][4]** the headers object to be sent. By default, it is sent as an empty object 
+*   `headers` **[object][3]** the headers object to be sent. By default, it is sent as an empty object 
 
-Returns **[Promise][2]<any>** response
+Returns **[Promise][4]<any>** response
 
 ### sendPatchRequest
 
@@ -211,11 +193,11 @@ I.sendPatchRequest('/api/users.json', secret({ "email": "user@user.com" }));
 
 #### Parameters
 
-*   `url` **[string][3]**&#x20;
+*   `url` **[string][2]**&#x20;
 *   `payload` **any** the payload to be sent. By default it is sent as an empty object 
-*   `headers` **[object][4]** the headers object to be sent. By default it is sent as an empty object 
+*   `headers` **[object][3]** the headers object to be sent. By default it is sent as an empty object 
 
-Returns **[Promise][2]<any>** response
+Returns **[Promise][4]<any>** response
 
 ### sendPostRequest
 
@@ -233,9 +215,9 @@ I.sendPostRequest('/api/users.json', secret({ "email": "user@user.com" }));
 
 *   `url` **any**&#x20;
 *   `payload` **any** the payload to be sent. By default, it is sent as an empty object 
-*   `headers` **[object][4]** the headers object to be sent. By default, it is sent as an empty object 
+*   `headers` **[object][3]** the headers object to be sent. By default, it is sent as an empty object 
 
-Returns **[Promise][2]<any>** response
+Returns **[Promise][4]<any>** response
 
 ### sendPutRequest
 
@@ -251,11 +233,11 @@ I.sendPutRequest('/api/users.json', secret({ "email": "user@user.com" }));
 
 #### Parameters
 
-*   `url` **[string][3]**&#x20;
+*   `url` **[string][2]**&#x20;
 *   `payload` **any** the payload to be sent. By default it is sent as an empty object 
-*   `headers` **[object][4]** the headers object to be sent. By default it is sent as an empty object 
+*   `headers` **[object][3]** the headers object to be sent. By default it is sent as an empty object 
 
-Returns **[Promise][2]<any>** response
+Returns **[Promise][4]<any>** response
 
 ### setRequestTimeout
 
@@ -269,13 +251,31 @@ I.setRequestTimeout(10000); // In milliseconds
 
 *   `newTimeout` **[number][5]** timeout in milliseconds
 
+### _executeRequest
+
+Executes axios request
+
+#### Parameters
+
+*   `request` **any**&#x20;
+
+Returns **[Promise][4]<any>** response
+
+### _url
+
+Generates url based on format sent (takes endpoint + url if latter lacks 'http')
+
+#### Parameters
+
+*   `url` **any**&#x20;
+
 [1]: https://github.com/axios/axios
 
-[2]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[2]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
 [5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 

@@ -215,6 +215,7 @@ export default defineConfig({
                                 items: [
                                   { label: 'Web Basics', link: 'basics' },
                                   {label: 'Agentic Testing', link: 'agents'},
+                                  {label: 'Self-Driving Tests', link: 'explorbot'},
                                   {label: 'Test Structure', link: 'test-structure'},
                                   { label: 'Locators', link: 'locators' },
                                   { label: 'Assertions', link: 'assertions' },

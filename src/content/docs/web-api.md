@@ -169,7 +169,7 @@ Helper-Specific Differences
 
 **Playwright**
 
-[Additional options][15] for check available as 3rd argument.
+[Additional options][14] for check available as 3rd argument.
 
 Examples:
 
@@ -910,7 +910,7 @@ I.fillField({role: 'textbox', name: 'Email'}, 'hello@world.com');
 I.fillField('Name', 'John', '#section2');
 ```
 
-> ℹ️ ARIA role locators (`{role, name}`) match fields by their accessible name and survive markup refactors. See [Locators][16].
+> ℹ️ ARIA role locators (`{role, name}`) match fields by their accessible name and survive markup refactors. See [Locators][15].
 
 **WebDriver**
 
@@ -1167,7 +1167,7 @@ const errors = logs.map(l => ({ type: l.type(), text: l.text() })).filter(l => l
 console.log(JSON.stringify(errors));
 ```
 
-[Learn more about console messages][25]
+[Learn more about console messages][24]
 
 **Puppeteer**
 
@@ -1781,7 +1781,7 @@ Open new tab and automatically switched to new tab
 I.openNewTab();
 ```
 
-You can pass in [page options][33] to emulate device on this page
+You can pass in [page options][32] to emulate device on this page
 
 ```js
 // enable mobile
@@ -1825,11 +1825,11 @@ Helper-Specific Differences
 
 **Playwright**
 
-*Note:* Shortcuts like `'Meta'` + `'A'` do not work on macOS ([puppeteer/puppeteer#1313][34]).
+*Note:* Shortcuts like `'Meta'` + `'A'` do not work on macOS ([puppeteer/puppeteer#1313][33]).
 
 Presses a key in the browser (on a focused element).
 
-*Hint:* For populating text field or textarea, it is recommended to use [`fillField`][35].
+*Hint:* For populating text field or textarea, it is recommended to use [`fillField`][34].
 
 ```js
 I.pressKey('Backspace');
@@ -2467,7 +2467,7 @@ I.seeElement('#modal', '#container');
 I.seeElement({role: 'dialog'});
 ```
 
-> ℹ️ ARIA role locators (`{role, name}`) match elements the way assistive technology does and survive markup refactors. See [Locators][16].
+> ℹ️ ARIA role locators (`{role, name}`) match elements the way assistive technology does and survive markup refactors. See [Locators][15].
 
 **WebDriver**
 
@@ -3099,7 +3099,7 @@ Helper-Specific Differences
 
 **Playwright**
 
-[Additional options][38] for uncheck available as 3rd argument.
+[Additional options][37] for uncheck available as 3rd argument.
 
 Examples:
 
@@ -3505,253 +3505,3 @@ I.waitUrlEquals('http://127.0.0.1:8000/info');
 **Returns**
 
 - `void` - automatically synchronized promise through #recorder
-
-Helper-Specific Differences
-
-**Playwright**
-
-[1]: https://github.com/microsoft/playwright
-
-[2]: https://playwright.dev/docs/next/api/class-browser#browser-new-context
-
-[3]: https://playwright.dev/docs/api/class-browser#browser-new-context-option-record-har
-
-[4]: https://playwright.dev/docs/api/class-browsertype#browsertypeconnectparams
-
-[5]: https://github.com/microsoft/playwright/blob/v0.11.0/docs/api.md#working-with-chrome-extensions
-
-[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
-[7]: https://playwright.dev/docs/api/class-browser#browser-new-context
-
-[8]: http://jster.net/category/windows-modals-popups
-
-[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
-[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
-[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp
-
-[12]: https://www.example.com
-
-[13]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus
-
-[14]: https://playwright.dev/docs/api/class-locator#locator-blur
-
-[15]: https://playwright.dev/docs/api/class-elementhandle#element-handle-check
-
-[16]: /locators#aria-locators
-
-[17]: https://playwright.dev/docs/api/class-page#page-click
-
-[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
-
-[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
-
-[20]: https://playwright.dev/docs/api/class-page#page-drag-and-drop
-
-[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
-
-[22]: https://playwright.dev/docs/api/class-locator#locator-focus
-
-[23]: https://playwright.dev/docs/api/class-locator#locator-aria-snapshot
-
-[24]: https://playwright.dev/docs/aria-snapshots
-
-[25]: https://playwright.dev/docs/api/class-consolemessage
-
-[26]: https://playwright.dev/docs/api/class-locator#locator-is-checked
-
-[27]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-
-[28]: https://playwright.dev/docs/api/class-locator#locator-is-disabled
-
-[29]: https://codecept.io/helpers/FileSystem
-
-[30]: https://playwright.dev/docs/api/class-apirequestcontext#api-request-context-get
-
-[31]: https://playwright.dev/docs/api/class-browsercontext#browser-context-route
-
-[32]: https://playwright.dev/docs/network#handle-requests
-
-[33]: https://github.com/microsoft/playwright/blob/main/docs/api.md#browsernewpageoptions
-
-[34]: https://github.com/puppeteer/puppeteer/issues/1313
-
-[35]: #ifillfield
-
-[36]: #iclick
-
-[37]: https://playwright.dev/docs/api/class-page#page-route-from-har
-
-[38]: https://playwright.dev/docs/api/class-elementhandle#element-handle-uncheck
-
-[39]: https://github.com/microsoft/playwright/blob/main/docs/src/api/class-page.md
-
-[40]: https://github.com/microsoft/playwright/blob/main/docs/src/api/class-browsercontext.md
-
-[41]: https://github.com/microsoft/playwright/blob/main/docs/src/api/class-browser.md
-
-[42]: https://playwright.dev/docs/api/class-page#page-wait-for-navigation
-
-[43]: https://playwright.dev/docs/api/class-page#page-wait-for-url
-
-[44]: https://playwright.dev/docs/api/class-browsercontext
-
-[45]: https://playwright.dev/docs/api/class-page#page-set-default-timeout
-
-[46]: https://playwright.dev/docs/trace-viewer
-
-[47]: https://playwright.dev/docs/browsers/#google-chrome--microsoft-edge
-
-[48]: https://playwright.dev/docs/api/class-consolemessage#console-message-type
-
-[49]: https://playwright.dev/docs/api/class-locator#locator-visible
-
-[50]: https://playwright.dev/docs/locators#locate-by-test-id
-
-**WebDriver**
-
-[1]: http://webdriver.io/
-
-[2]: https://webdriver.io/blog/2023/07/31/driver-management/
-
-[3]: https://codecept.io/webdriver/#testing-with-webdriver
-
-[4]: http://webdriver.io/guide/getstarted/configuration.html
-
-[5]: https://seleniumhq.github.io/selenium/docs/api/rb/Selenium/WebDriver/IE/Options.html
-
-[6]: https://aerokube.com/selenoid/latest/
-
-[7]: https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities
-
-[8]: http://webdriver.io/guide/usage/cloudservices.html
-
-[9]: https://webdriver.io/docs/sauce-service.html
-
-[10]: https://github.com/puneet0191/codeceptjs-saucehelper/
-
-[11]: https://webdriver.io/docs/browserstack-service.html
-
-[12]: https://github.com/PeterNgTr/codeceptjs-bshelper
-
-[13]: https://github.com/testingbot/codeceptjs-tbhelper
-
-[14]: https://webdriver.io/docs/testingbot-service.html
-
-[15]: https://github.com/PeterNgTr/codeceptjs-applitoolshelper
-
-[16]: http://webdriver.io/guide/usage/multiremote.html
-
-[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
-[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
-[19]: http://jster.net/category/windows-modals-popups
-
-[20]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus
-
-[21]: https://playwright.dev/docs/api/class-locator#locator-blur
-
-[22]: /locators#aria-locators
-
-[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
-
-[24]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
-
-[25]: https://webdriver.io/docs/timeouts.html
-
-[26]: https://vuejs.org/v2/api/#Vue-nextTick
-
-[27]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
-
-[28]: http://webdriver.io/api/protocol/execute.html
-
-[29]: https://playwright.dev/docs/api/class-locator#locator-focus
-
-[30]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
-[31]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
-
-[32]: #ifillfield
-
-[33]: #iclick
-
-[34]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-
-[35]: https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
-
-[36]: https://code.google.com/p/selenium/wiki/JsonWireProtocol#Cookie_JSON_Object
-
-[37]: https://webdriver.io/docs/api.html
-
-[38]: https://webdriver.io/docs/api/webdriverBidi/
-
-[39]: http://codecept.io/acceptance/#smartwait
-
-[40]: http://webdriver.io/docs/timeouts.html
-
-[41]: https://webdriver.io/docs/configuration/#loglevel
-
-**Puppeteer**
-
-[1]: https://github.com/puppeteer/puppeteer
-
-[2]: https://codecept.io/helpers/Puppeteer-firefox
-
-[3]: https://chromedevtools.github.io/devtools-protocol/#how-do-i-access-the-browser-target
-
-[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
-[5]: http://jster.net/category/windows-modals-popups
-
-[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
-[7]: https://github.com/puppeteer/puppeteer/issues/5420
-
-[8]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus
-
-[9]: https://playwright.dev/docs/api/class-locator#locator-blur
-
-[10]: /locators#aria-locators
-
-[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
-
-[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
-
-[13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp
-
-[14]: https://vuejs.org/v2/api/#Vue-nextTick
-
-[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
-
-[16]: https://playwright.dev/docs/api/class-locator#locator-focus
-
-[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
-[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
-
-[19]: https://codecept.io/helpers/FileSystem
-
-[20]: https://pptr.dev/guides/network-interception
-
-[21]: https://github.com/puppeteer/puppeteer/issues/1313
-
-[22]: #ifillfield
-
-[23]: #iclick
-
-[24]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-
-[25]: https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-page
-
-[26]: https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-browser
-
-[27]: https://github.com/puppeteer/puppeteer/blob/main/docs/api/puppeteer.page.waitfornavigation.md
-
-[28]: https://pptr.dev/api/puppeteer.tracing
-
-[29]: https://github.com/puppeteer/puppeteer/blob/main/docs/api/puppeteer.waitforoptions.md
-
-[30]: https://github.com/puppeteer/puppeteer/blob/main/docs/api/puppeteer.launchoptions.md

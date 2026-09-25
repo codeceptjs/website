@@ -9,6 +9,33 @@ For hybrid/mobile webview flows, ARIA locators such as `{ aria: "Sign in" }` are
 
 ## Methods
 
+### `I.amOnPage()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Opens a web page in a browser. Requires relative or absolute url.
+If url starts with `/`, opens a web page of a site defined in `url` config parameter.
+
+```js
+I.amOnPage('/'); // opens main page of website
+I.amOnPage('https://github.com'); // opens github
+I.amOnPage('/login'); // opens a login page
+```
+
+**Parameters**
+*   `url` **[string][5]** url path or global url.
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
 ### `I.appendField()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -32,9 +59,9 @@ I.appendField('name', 'John', '.form-container');
 ```
 
 **Parameters**
-*   `field` **([string][5] | [object][11])** located by label|name|CSS|XPath|strict locator
+*   `field` **([string][5] | [object][6])** located by label|name|CSS|XPath|strict locator
 *   `value` **[string][5]** text value to append.
-*   `context` **([string][5]? | [object][11])** (optional, `null` by default) element located by CSS | XPath | strict locator. (optional, default `null`)
+*   `context` **([string][5]? | [object][6])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -50,6 +77,83 @@ I.appendField('name', 'davert');
 **Parameters**
 *   `field` **([string][5] | [object][6])**&#x20;
 *   `value` **[string][5]**&#x20;
+
+### `I.attachFile()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Appium: not tested
+
+Attaches a file to element located by label, name, CSS or XPath
+Path to file is relative current codecept directory (where codecept.conf.ts or codecept.conf.js is located).
+File will be uploaded to remote system (if tests are running remotely).
+
+The third parameter is an optional context (CSS or XPath locator) to narrow the search.
+
+```js
+I.attachFile('Avatar', 'data/avatar.jpg');
+I.attachFile('form input[name=avatar]', 'data/avatar.jpg');
+// within a context
+I.attachFile('Avatar', 'data/avatar.jpg', '.form-container');
+```
+
+If the locator points to a non-file-input element (e.g., a dropzone area),
+the file will be dropped onto that element using drag-and-drop events.
+
+```js
+I.attachFile('#dropzone', 'data/avatar.jpg');
+```
+
+**Parameters**
+*   `locator` **([string][5] | [object][6])** field located by label|name|CSS|XPath|strict locator.
+*   `pathToFile` **[string][5]** local file path relative to codecept.conf.ts or codecept.conf.js config file.
+*   `context` **([string][5]? | [object][6])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.blur()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Remove focus from a text input, button, etc.
+Calls [blur][7] on the element.
+
+Examples:
+
+```js
+I.blur('.text-area')
+```
+
+```js
+//element `#product-tile` is focused
+I.see('#add-to-cart-btn');
+I.blur('#product-tile')
+I.dontSee('#add-to-cart-btn');
+```
+
+**Parameters**
+*   `locator` **([string][5] | [object][6])** field located by label|name|CSS|XPath|strict locator.
+*   `options` **any?** Playwright only: [Additional options][8] for available options object as 2nd argument.
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
 
 ### `I.checkIfAppIsInstalled()`
 
@@ -69,7 +173,7 @@ I.checkIfAppIsInstalled("com.example.android.apis");
 **Parameters**
 *   `bundleId` **[string][5]** String  ID of bundled app
 
-Returns **[Promise][6]<[boolean][7]>** Appium: support only Android
+Returns **[Promise][9]<[boolean][10]>** Appium: support only Android
 
 **Detox**
 
@@ -120,8 +224,8 @@ I.checkOption('agree', '//form');
 ```
 
 **Parameters**
-*   `field` **([string][5] | [object][11])** checkbox located by label | name | CSS | XPath | strict locator.
-*   `context` **([string][5]? | [object][11])** (optional, `null` by default) element located by CSS | XPath | strict locator. (optional, default `null`)
+*   `field` **([string][5] | [object][6])** checkbox located by label | name | CSS | XPath | strict locator.
+*   `context` **([string][5]? | [object][6])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -155,12 +259,29 @@ _Not available in this helper._
 
 <table style="border-collapse: collapse; width: 100%;">
   <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
 **Appium**
 
-_Not available in this helper._
+Clears a `<textarea>` or text `<input>` element's value.
+
+The second parameter is an optional context (CSS or XPath locator) to narrow the search.
+
+```js
+I.clearField('Email');
+I.clearField('user[email]');
+I.clearField('#email');
+// within a context
+I.clearField('Email', '.form-container');
+```
+
+**Parameters**
+*   `field` &#x20;
+*   `context` **([string][5]? | [object][6])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
+*   `editable` **([string][5] | [object][6])** field located by label|name|CSS|XPath|strict locator.
+
+Returns **void** automatically synchronized promise through #recorder.
 
 **Detox**
 
@@ -211,11 +332,11 @@ I.click({css: 'nav a.login'});
 I.click({role: 'button', name: 'Submit'});
 ```
 
-> ℹ️ ARIA role locators (`{role, name}`) match elements the way assistive technology does and survive markup refactors. See [Locators][17].
+> ℹ️ ARIA role locators (`{role, name}`) match elements the way assistive technology does and survive markup refactors. See [Locators][11].
 
 **Parameters**
-*   `locator` **([string][5] | [object][11])** (optional, `'//body'` by default) clickable link or button located by text, or any element located by CSS|XPath|strict locator. (optional, default `'//body'`)
-*   `context` **([string][5]? | [object][11] | null)** (optional, `null` by default) element to search in CSS|XPath|Strict locator. (optional, default `null`)
+*   `locator` **([string][5] | [object][6])** (optional, `'//body'` by default) clickable link or button located by text, or any element located by CSS|XPath|strict locator. 
+*   `context` **([string][5]? | [object][6] | null)** (optional, `null` by default) element to search in CSS|XPath|Strict locator. 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -266,6 +387,38 @@ I.clickAtPoint('~save', 10, 10); // locate by accessibility id
 *   `x` **[number][8]** horizontal offset (optional, default `0`)
 *   `y` **[number][8]** vertical offset (optional, default `0`)
 
+### `I.clickXY()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Performs click at specific coordinates.
+If locator is provided, the coordinates are relative to the element's top-left corner.
+If locator is not provided, the coordinates are relative to the body element.
+
+```js
+// Click at coordinates (100, 200) relative to body
+I.clickXY(100, 200);
+
+// Click at coordinates (50, 30) relative to element's top-left corner
+I.clickXY('#someElement', 50, 30);
+```
+
+**Parameters**
+*   `locator` **([string][5] | [object][6] | [number][12])** Element to click on or X coordinate if no element.
+*   `x` **[number][12]?** X coordinate relative to element's top-left, or Y coordinate if locator is a number.
+*   `y` **[number][12]?** Y coordinate relative to element's top-left.
+
+Returns **[Promise][9]<void>**&#x20;
+
+**Detox**
+
+_Not available in this helper._
+
 ### `I.closeApp()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -281,7 +434,53 @@ Close the given application.
 I.closeApp();
 ```
 
-Returns **[Promise][6]\<void>** Appium: support both Android and iOS
+Returns **[Promise][9]<void>** Appium: support both Android and iOS
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.closeOtherTabs()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Close all tabs except for the current one.
+
+```js
+I.closeOtherTabs();
+```
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.defineTimeout()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Set [WebDriver timeouts][13] in realtime.
+
+Timeouts are expected to be passed as object:
+
+```js
+I.defineTimeout({ script: 5000 });
+I.defineTimeout({ implicit: 10000, pageLoad: 10000, script: 5000 });
+```
+
+**Parameters**
+*   `timeouts` **any** WebDriver timeouts object.
 
 **Detox**
 
@@ -306,7 +505,7 @@ I.dontSee('Login', '.nav'); // no login inside .nav element
 
 **Parameters**
 *   `text` **[string][5]** which is not present.
-*   `context` **([string][5] | [object][11])?** (optional) element located by CSS|XPath|strict locator in which to perfrom search. (optional, default `null`)
+*   `context` **([string][5] | [object][6])?** (optional) element located by CSS|XPath|strict locator in which to perfrom search. 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -343,7 +542,33 @@ I.dontSeeCheckboxIsChecked('agree'); // located by name
 ```
 
 **Parameters**
-*   `field` **([string][5] | [object][11])** located by label|name|CSS|XPath|strict locator.
+*   `field` **([string][5] | [object][6])** located by label|name|CSS|XPath|strict locator.
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.dontSeeCurrentPathEquals()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Checks that current URL path does NOT match the expected path.
+Query strings and URL fragments are ignored.
+
+```js
+I.dontSeeCurrentPathEquals('/form'); // fails for '/form', '/form?user=1', '/form#section'
+I.dontSeeCurrentPathEquals('/'); // fails for '/', '/?user=ok', '/#top'
+```
+
+**Parameters**
+*   `path` **[string][5]** value to check.
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -370,8 +595,8 @@ I.dontSeeElement('.modal', '#container');
 ```
 
 **Parameters**
-*   `locator` **([string][5] | [object][11])** located by CSS|XPath|Strict locator.
-*   `context` **([string][5]? | [object][11])** (optional, `null` by default) element located by CSS | XPath | strict locator. (optional, default `null`)
+*   `locator` **([string][5] | [object][6])** located by CSS|XPath|Strict locator.
+*   `context` **([string][5]? | [object][6])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -414,6 +639,30 @@ I.dontSeeElementExist('~edit', '#menu'); // element inside #menu
 *   `locator` **([string][5] | [object][6])** element to locate
 *   `context` **([string][5] | [object][6])** context element (optional, default `null`)
 
+### `I.dontSeeElementInDOM()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Opposite to `seeElementInDOM`. Checks that element is not on page.
+
+```js
+I.dontSeeElementInDOM('.nav'); // checks that element is not on page visible or not
+```
+
+**Parameters**
+*   `locator` **([string][5] | [object][6])** located by CSS|XPath|Strict locator.
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
 ### `I.dontSeeInField()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -436,9 +685,116 @@ I.dontSeeInField('Name', 'old_value', '.form-container');
 ```
 
 **Parameters**
-*   `field` **([string][5] | [object][11])** located by label|name|CSS|XPath|strict locator.
-*   `value` **([string][5] | [object][11])** value to check.
-*   `context` **([string][5]? | [object][11])** (optional, `null` by default) element located by CSS | XPath | strict locator. (optional, default `null`)
+*   `field` **([string][5] | [object][6])** located by label|name|CSS|XPath|strict locator.
+*   `value` **([string][5] | [object][6])** value to check.
+*   `context` **([string][5]? | [object][6])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.dontSeeInSource()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Checks that the current page does not contains the given string in its raw source code.
+
+```js
+I.dontSeeInSource('<!--'); // no comments in source
+```
+
+**Parameters**
+*   `text` &#x20;
+*   `value` **[string][5]** to check.
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.doubleClick()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Performs a double-click on an element matched by link|button|label|CSS or XPath.
+Context can be specified as second parameter to narrow search.
+
+```js
+I.doubleClick('Edit');
+I.doubleClick('Edit', '.actions');
+I.doubleClick({css: 'button.accept'});
+I.doubleClick('.btn.edit');
+```
+
+**Parameters**
+*   `locator` **([string][5] | [object][6])** clickable link or button located by text, or any element located by CSS|XPath|strict locator.
+*   `context` **([string][5]? | [object][6])** (optional, `null` by default) element to search in CSS|XPath|Strict locator. 
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.dragAndDrop()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Appium: not tested
+Drag an item to a destination element.
+
+```js
+I.dragAndDrop('#dragHandle', '#container');
+```
+
+**Parameters**
+*   `srcElement` **([string][5] | [object][6])** located by CSS|XPath|strict locator.
+*   `destElement` **([string][5] | [object][6])** located by CSS|XPath|strict locator.
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.dragSlider()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Drag the scrubber of a slider to a given position
+For fuzzy locators, fields are matched by label text, the "name" attribute, CSS, and XPath.
+
+```js
+I.dragSlider('#slider', 30);
+I.dragSlider('#slider', -70);
+```
+
+**Parameters**
+*   `locator` **([string][5] | [object][6])** located by label|name|CSS|XPath|strict locator.
+*   `offsetX` **[number][12]** position to drag. 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -475,12 +831,12 @@ I.fillField({role: 'textbox', name: 'Email'}, 'hello@world.com');
 I.fillField('Name', 'John', '#section2');
 ```
 
-> ℹ️ ARIA role locators (`{role, name}`) match fields by their accessible name and survive markup refactors. See [Locators][17].
+> ℹ️ ARIA role locators (`{role, name}`) match fields by their accessible name and survive markup refactors. See [Locators][11].
 
 **Parameters**
-*   `field` **([string][5] | [object][11])** located by label|name|CSS|XPath|strict locator.
-*   `value` **([string][5] | [object][11])** text value to fill.
-*   `context` **([string][5]? | [object][11])** (optional, `null` by default) element located by CSS | XPath | strict locator. (optional, default `null`)
+*   `field` **([string][5] | [object][6])** located by label|name|CSS|XPath|strict locator.
+*   `value` **([string][5] | [object][6])** text value to fill.
+*   `context` **([string][5]? | [object][6])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -498,6 +854,113 @@ I.fillField({ android: 'NAME', ios: 'name' }, 'davert');
 **Parameters**
 *   `field` **([string][5] | [object][6])** an input element to fill in
 *   `value` **[string][5]** value to fill
+
+### `I.focus()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Calls [focus][7] on the matching element.
+
+Examples:
+
+```js
+I.dontSee('#add-to-cart-btn');
+I.focus('#product-tile')
+I.see('#add-to-cart-bnt');
+```
+
+**Parameters**
+*   `locator` **([string][5] | [object][6])** field located by label|name|CSS|XPath|strict locator.
+*   `options` **any?** Playwright only: [Additional options][14] for available options object as 2nd argument.
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.forceClick()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Perform an emulated click on a link or a button, given by a locator.
+Unlike normal click instead of sending native event, emulates a click with JavaScript.
+This works on hidden, animated or inactive elements as well.
+
+If a fuzzy locator is given, the page will be searched for a button, link, or image matching the locator string.
+For buttons, the "value" attribute, "name" attribute, and inner text are searched. For links, the link text is searched.
+For images, the "alt" attribute and inner text of any parent links are searched.
+
+The second parameter is a context (CSS or XPath locator) to narrow the search.
+
+```js
+// simple link
+I.forceClick('Logout');
+// button of form
+I.forceClick('Submit');
+// CSS button
+I.forceClick('#form input[type=submit]');
+// XPath
+I.forceClick('//form/*[@type=submit]');
+// link in context
+I.forceClick('Logout', '#nav');
+// using strict locator
+I.forceClick({css: 'nav a.login'});
+```
+
+**Parameters**
+*   `locator` **([string][5] | [object][6])** clickable link or button located by text, or any element located by CSS|XPath|strict locator.
+*   `context` **([string][5]? | [object][6])** (optional, `null` by default) element to search in CSS|XPath|Strict locator. 
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.forceRightClick()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Emulates right click on an element.
+Unlike normal click instead of sending native event, emulates a click with JavaScript.
+This works on hidden, animated or inactive elements as well.
+
+If a fuzzy locator is given, the page will be searched for a button, link, or image matching the locator string.
+For buttons, the "value" attribute, "name" attribute, and inner text are searched. For links, the link text is searched.
+For images, the "alt" attribute and inner text of any parent links are searched.
+
+The second parameter is a context (CSS or XPath locator) to narrow the search.
+
+```js
+// simple link
+I.forceRightClick('Menu');
+```
+
+**Parameters**
+*   `locator` **([string][5] | [object][6])** clickable link or button located by text, or any element located by CSS|XPath|strict locator.
+*   `context` **([string][5]? | [object][6])** (optional, `null` by default) element to search in CSS|XPath|Strict locator. 
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
 
 ### `I.goBack()`
 
@@ -531,7 +994,29 @@ Get list of all available contexts
 
     let contexts = await I.grabAllContexts();
 
-Returns **[Promise][6]<[Array][8]<[string][5]>>** Appium: support Android and iOS
+Returns **[Promise][9]<[Array][15]<[string][5]>>** Appium: support Android and iOS
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.grabAllWindowHandles()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Get all Window Handles.
+Useful for referencing a specific handle when calling `I.switchToWindow(handle)`
+
+```js
+const windows = await I.grabAllWindowHandles();
+```
+
+Returns **[Promise][9]<[Array][15]<[string][5]>>**&#x20;
 
 **Detox**
 
@@ -557,10 +1042,10 @@ let hint = await I.grabAttributeFrom('#tooltip', 'title');
 ```
 
 **Parameters**
-*   `locator` **([string][5] | [object][11])** element located by CSS|XPath|strict locator.
+*   `locator` **([string][5] | [object][6])** element located by CSS|XPath|strict locator.
 *   `attr` **[string][5]** attribute name.
 
-Returns **[Promise][6]<[string][5]>** attribute value
+Returns **[Promise][9]<[string][5]>** attribute value
 
 **Detox**
 
@@ -584,10 +1069,33 @@ let hints = await I.grabAttributeFromAll('.tooltip', 'title');
 ```
 
 **Parameters**
-*   `locator` **([string][5] | [object][11])** element located by CSS|XPath|strict locator.
+*   `locator` **([string][5] | [object][6])** element located by CSS|XPath|strict locator.
 *   `attr` **[string][5]** attribute name.
 
-Returns **[Promise][6]<[Array][8]<[string][5]>>** attribute value
+Returns **[Promise][9]<[Array][15]<[string][5]>>** attribute value
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.grabBrowserLogs()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Get JS log from browser. Log buffer is reset after each request.
+Resumes test execution, so **should be used inside an async function with `await`** operator.
+
+```js
+let logs = await I.grabBrowserLogs();
+console.log(JSON.stringify(logs))
+```
+
+Returns **([Promise][9]<[Array][15]<[object][6]>> | [undefined][16])** all browser logs
 
 **Detox**
 
@@ -608,7 +1116,7 @@ Retrieve current context
 let context = await I.grabContext();
 ```
 
-Returns **[Promise][6]<([string][5] | null)>** Appium: support Android and iOS
+Returns **[Promise][9]<([string][5] | null)>** Appium: support Android and iOS
 
 **Detox**
 
@@ -629,7 +1137,67 @@ Get current device activity.
 let activity = await I.grabCurrentActivity();
 ```
 
-Returns **[Promise][6]<[string][5]>** Appium: support only Android
+Returns **[Promise][9]<[string][5]>** Appium: support only Android
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.grabCurrentWindowHandle()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Get the current Window Handle.
+Useful for referencing it when calling `I.switchToWindow(handle)`
+
+```js
+const window = await I.grabCurrentWindowHandle();
+```
+
+Returns **[Promise][9]<[string][5]>**&#x20;
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.grabElementBoundingRect()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Grab the width, height, location of given locator.
+Provide `width` or `height`as second param to get your desired prop.
+Resumes test execution, so **should be used inside an async function with `await`** operator.
+
+Returns an object with `x`, `y`, `width`, `height` keys.
+
+```js
+const value = await I.grabElementBoundingRect('h3');
+// value is like { x: 226.5, y: 89, width: 527, height: 220 }
+```
+
+To get only one metric use second parameter:
+
+```js
+const width = await I.grabElementBoundingRect('h3', 'width');
+// width == 527
+```
+
+**Parameters**
+*   `locator` **([string][5] | [object][6])** element located by CSS|XPath|strict locator.
+*   `prop` &#x20;
+*   `elementSize` **[string][5]?** x, y, width or height of the given element.
+
+Returns **([Promise][9]<DOMRect> | [Promise][9]<[number][12]>)** Element bounding rectangle
 
 **Detox**
 
@@ -655,7 +1223,60 @@ let url = await I.grabFromClipboard();
 Reading the clipboard requires a secure context (`https` or `localhost`) and is supported
 in Chromium-based browsers, where read access is granted automatically.
 
-Returns **[Promise][6]<[string][5]>** the system clipboard contents.Appium: support both Android and iOS
+Returns **[Promise][9]<[string][5]>** the system clipboard contents.Appium: support both Android and iOS
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.grabHTMLFrom()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Retrieves the innerHTML from an element located by CSS or XPath and returns it to test.
+Resumes test execution, so **should be used inside async function with `await`** operator.
+If more than one element is found - HTML of first element is returned.
+
+```js
+let postHTML = await I.grabHTMLFrom('#post');
+```
+
+**Parameters**
+*   `locator` &#x20;
+*   `element` **([string][5] | [object][6])** located by CSS|XPath|strict locator.
+
+Returns **[Promise][9]<[string][5]>** HTML code for an element
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.grabHTMLFromAll()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Retrieves all the innerHTML from elements located by CSS or XPath and returns it to test.
+Resumes test execution, so **should be used inside async function with `await`** operator.
+
+```js
+let postHTMLs = await I.grabHTMLFromAll('.post');
+```
+
+**Parameters**
+*   `locator` &#x20;
+*   `element` **([string][5] | [object][6])** located by CSS|XPath|strict locator.
+
+Returns **[Promise][9]<[Array][15]<[string][5]>>** HTML code for an element
 
 **Detox**
 
@@ -678,7 +1299,29 @@ properties to the response object to allow easier assertions.
 let con = await I.grabNetworkConnection();
 ```
 
-Returns **[Promise][6]<{}>** Appium: support only Android
+Returns **[Promise][9]<{}>** Appium: support only Android
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.grabNumberOfOpenTabs()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Grab number of open tabs.
+Resumes test execution, so **should be used inside async function with `await`** operator.
+
+```js
+let tabs = await I.grabNumberOfOpenTabs();
+```
+
+Returns **[Promise][9]<[number][12]>** number of open tabs
 
 **Detox**
 
@@ -701,9 +1344,9 @@ let numOfElements = await I.grabNumberOfVisibleElements('p');
 ```
 
 **Parameters**
-*   `locator` **([string][5] | [object][11])** located by CSS|XPath|strict locator.
+*   `locator` **([string][5] | [object][6])** located by CSS|XPath|strict locator.
 
-Returns **[Promise][6]<[number][10]>** number of visible elements
+Returns **[Promise][9]<[number][12]>** number of visible elements
 
 **Detox**
 
@@ -724,7 +1367,29 @@ Get current orientation.
 let orientation = await I.grabOrientation();
 ```
 
-Returns **[Promise][6]<[string][5]>** Appium: support Android and iOS
+Returns **[Promise][9]<[string][5]>** Appium: support Android and iOS
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.grabPageScrollPosition()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Retrieves a page scroll position and returns it to test.
+Resumes test execution, so **should be used inside an async function with `await`** operator.
+
+```js
+let { x, y } = await I.grabPageScrollPosition();
+```
+
+Returns **[Promise][9]<PageScrollPosition>** scroll position
 
 **Detox**
 
@@ -764,7 +1429,29 @@ Get all the currently specified settings.
 let settings = await I.grabSettings();
 ```
 
-Returns **[Promise][6]<[string][5]>** Appium: support Android and iOS
+Returns **[Promise][9]<[string][5]>** Appium: support Android and iOS
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.grabSource()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Retrieves page source and returns it to test.
+Resumes test execution, so **should be used inside async function with `await`** operator.
+
+```js
+let pageSource = await I.grabSource();
+```
+
+Returns **[Promise][9]<[string][5]>** source code
 
 **Detox**
 
@@ -789,9 +1476,9 @@ let pin = await I.grabTextFrom('#pin');
 If multiple elements found returns first element.
 
 **Parameters**
-*   `locator` **([string][5] | [object][11])** element located by CSS|XPath|strict locator.
+*   `locator` **([string][5] | [object][6])** element located by CSS|XPath|strict locator.
 
-Returns **[Promise][6]<[string][5]>** attribute value
+Returns **[Promise][9]<[string][5]>** attribute value
 
 **Detox**
 
@@ -814,9 +1501,9 @@ let pins = await I.grabTextFromAll('#pin li');
 ```
 
 **Parameters**
-*   `locator` **([string][5] | [object][11])** element located by CSS|XPath|strict locator.
+*   `locator` **([string][5] | [object][6])** element located by CSS|XPath|strict locator.
 
-Returns **[Promise][6]<[Array][8]<[string][5]>>** attribute value
+Returns **[Promise][9]<[Array][15]<[string][5]>>** attribute value
 
 **Detox**
 
@@ -840,9 +1527,9 @@ let email = await I.grabValueFrom('input[name=email]');
 ```
 
 **Parameters**
-*   `locator` **([string][5] | [object][11])** field located by label|name|CSS|XPath|strict locator.
+*   `locator` **([string][5] | [object][6])** field located by label|name|CSS|XPath|strict locator.
 
-Returns **[Promise][6]<[string][5]>** attribute value
+Returns **[Promise][9]<[string][5]>** attribute value
 
 **Detox**
 
@@ -865,9 +1552,59 @@ let inputs = await I.grabValueFromAll('//form/input');
 ```
 
 **Parameters**
-*   `locator` **([string][5] | [object][11])** field located by label|name|CSS|XPath|strict locator.
+*   `locator` **([string][5] | [object][6])** field located by label|name|CSS|XPath|strict locator.
 
-Returns **[Promise][6]<[Array][8]<[string][5]>>** attribute value
+Returns **[Promise][9]<[Array][15]<[string][5]>>** attribute value
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.grabWebElement()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Grab WebElement for given locator
+Resumes test execution, so **should be used inside an async function with `await`** operator.
+
+```js
+const webElement = await I.grabWebElement('#button');
+```
+
+**Parameters**
+*   `locator` **([string][5] | [object][6])** element located by CSS|XPath|strict locator.
+
+Returns **[Promise][9]<any>** WebElement of being used Web helper
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.grabWebElements()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Grab WebElements for given locator
+Resumes test execution, so **should be used inside an async function with `await`** operator.
+
+```js
+const webElements = await I.grabWebElements('#button');
+```
+
+**Parameters**
+*   `locator` **([string][5] | [object][6])** element located by CSS|XPath|strict locator.
+
+Returns **[Promise][9]<any>** WebElement of being used Web helper
 
 **Detox**
 
@@ -913,7 +1650,7 @@ I.installApp('/path/to/file.apk');
 **Parameters**
 *   `path` **[string][5]** path to apk file
 
-Returns **[Promise][6]\<void>** Appium: support only Android
+Returns **[Promise][9]<void>** Appium: support only Android
 
 **Detox**
 
@@ -982,7 +1719,7 @@ The Touch Action API provides the basis of all gestures that can be
 automated in Appium. At its core is the ability to chain together ad hoc
 individual actions, which will then be applied to an element in the
 application on the device.
-[See complete documentation][13]
+[See complete documentation][17]
 
 ```js
 I.makeTouchAction("~buttonStartWebviewCD", 'tap');
@@ -992,7 +1729,41 @@ I.makeTouchAction("~buttonStartWebviewCD", 'tap');
 *   `locator` &#x20;
 *   `action` &#x20;
 
-Returns **[Promise][6]\<void>** Appium: support Android and iOS
+Returns **[Promise][9]<void>** Appium: support Android and iOS
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.moveCursorTo()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Moves cursor to element matched by locator.
+Extra shift can be set with offsetX and offsetY options.
+
+An optional `context` (as a second parameter) can be specified to narrow the search to an element within a parent.
+When the second argument is a non-number (string or locator object), it is treated as context.
+
+```js
+I.moveCursorTo('.tooltip');
+I.moveCursorTo('#submit', 5,5);
+I.moveCursorTo('#submit', '.container');
+```
+
+**Parameters**
+*   `locator` **([string][5] | [object][6])** located by CSS|XPath|strict locator.
+*   `xOffset` &#x20;
+*   `yOffset` &#x20;
+*   `offsetX` **([number][12] | [string][5] | [object][6])** (optional, `0` by default) X-axis offset or context locator. 
+*   `offsetY` **[number][12]** (optional, `0` by default) Y-axis offset. 
+
+Returns **void** automatically synchronized promise through #recorder
 
 **Detox**
 
@@ -1044,7 +1815,7 @@ Open the notifications panel on the device.
 I.openNotifications();
 ```
 
-Returns **[Promise][6]\<void>** Appium: support only Android
+Returns **[Promise][9]<void>** Appium: support only Android
 
 **Detox**
 
@@ -1066,8 +1837,8 @@ I.performSwipe({ x: 300, y: 100 }, { x: 200, y: 100 });
 ```
 
 **Parameters**
-*   `from` **[object][11]**&#x20;
-*   `to` **[object][11]** Appium: support Android and iOS
+*   `from` **[object][6]**&#x20;
+*   `to` **[object][6]** Appium: support Android and iOS
 
 **Detox**
 
@@ -1094,7 +1865,7 @@ I.pullFile('/storage/emulated/0/DCIM/logo.png', output_dir);
 *   `path` **[string][5]**&#x20;
 *   `dest` **[string][5]**&#x20;
 
-Returns **[Promise][6]<[string][5]>** Appium: support Android and iOS
+Returns **[Promise][9]<[string][5]>** Appium: support Android and iOS
 
 **Detox**
 
@@ -1163,6 +1934,36 @@ I.resetApp();
 
 _Not available in this helper._
 
+### `I.rightClick()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Performs right click on a clickable element matched by semantic locator, CSS or XPath.
+
+```js
+// right click element with id el
+I.rightClick('#el');
+// right click link or button with text "Click me"
+I.rightClick('Click me');
+// right click button with text "Click me" inside .context
+I.rightClick('Click me', '.context');
+```
+
+**Parameters**
+*   `locator` **([string][5] | [object][6])** clickable element located by CSS|XPath|strict locator.
+*   `context` **([string][5]? | [object][6])** (optional, `null` by default) element located by CSS|XPath|strict locator. 
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
 ### `I.rotate()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -1178,7 +1979,7 @@ Perform a rotation gesture centered on the specified element.
 I.rotate(120, 120)
 ```
 
-See corresponding [webdriverio reference][15].
+See corresponding [webdriverio reference][18].
 
 **Parameters**
 *   `x` &#x20;
@@ -1188,7 +1989,7 @@ See corresponding [webdriverio reference][15].
 *   `rotation` &#x20;
 *   `touchCount` &#x20;
 
-Returns **[Promise][6]\<void>** Appium: support only iOS
+Returns **[Promise][9]<void>** Appium: support only iOS
 
 **Detox**
 
@@ -1328,6 +2129,32 @@ I.runOnIOS(() => {
 **Parameters**
 *   `fn` **[Function][10]** a function which will be executed on iOS
 
+### `I.saveElementScreenshot()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Saves screenshot of the specified locator to ouput folder (set in codecept.conf.ts or codecept.conf.js).
+Filename is relative to output folder.
+
+```js
+I.saveElementScreenshot(`#submit`,'debug.png');
+```
+
+**Parameters**
+*   `locator` **([string][5] | [object][6])** element located by CSS|XPath|strict locator.
+*   `fileName` **[string][5]** file name to save.
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
 ### `I.saveScreenshot()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -1347,7 +2174,7 @@ I.saveScreenshot('debug.png');
 **Parameters**
 *   `fileName` **[string][5]** file name to save.
 
-Returns **[Promise][6]\<void>**&#x20;
+Returns **[Promise][9]<void>**&#x20;
 
 **Detox**
 
@@ -1400,8 +2227,8 @@ I.scrollIntoView('#submit', { behavior: "smooth", block: "center", inline: "cent
 ```
 
 **Parameters**
-*   `locator` **([string][5] | [object][11])** located by CSS|XPath|strict locator.
-*   `scrollIntoViewOptions` **(ScrollIntoViewOptions | [boolean][7])** either alignToTop=true|false or scrollIntoViewOptions. See [https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView][18].
+*   `locator` **([string][5] | [object][6])** located by CSS|XPath|strict locator.
+*   `scrollIntoViewOptions` **(ScrollIntoViewOptions | [boolean][10])** either alignToTop=true|false or scrollIntoViewOptions. See [https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView][19].
 
 Returns **void** automatically synchronized promise through #recorderSupported only for web testing
 
@@ -1431,6 +2258,48 @@ I.scrollLeft('#container');
 **Parameters**
 *   `locator` **([string][5] | [object][6])**&#x20;
 
+### `I.scrollPageToBottom()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Scroll page to the bottom.
+
+```js
+I.scrollPageToBottom();
+```
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.scrollPageToTop()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Scroll page to the top.
+
+```js
+I.scrollPageToTop();
+```
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
 ### `I.scrollRight()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -1452,6 +2321,34 @@ I.scrollRight('#container');
 
 **Parameters**
 *   `locator` **([string][5] | [object][6])**&#x20;
+
+### `I.scrollTo()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Scrolls to element matched by locator.
+Extra shift can be set with offsetX and offsetY options.
+
+```js
+I.scrollTo('footer');
+I.scrollTo('#submit', 5, 5);
+```
+
+**Parameters**
+*   `locator` **([string][5] | [object][6])** located by CSS|XPath|strict locator.
+*   `offsetX` **[number][12]** (optional, `0` by default) X-axis offset. 
+*   `offsetY` **[number][12]** (optional, `0` by default) Y-axis offset. 
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
 
 ### `I.scrollToElement()`
 
@@ -1516,7 +2413,7 @@ I.see('Register', {css: 'form.register'}); // use strict locator
 
 **Parameters**
 *   `text` **[string][5]** expected on page.
-*   `context` **([string][5]? | [object][11])** (optional, `null` by default) element located by CSS|Xpath|strict locator in which to search for text. (optional, default `null`)
+*   `context` **([string][5]? | [object][6])** (optional, `null` by default) element located by CSS|Xpath|strict locator in which to search for text. 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -1553,7 +2450,7 @@ I.seeAppIsInstalled("com.example.android.apis");
 **Parameters**
 *   `bundleId` **[string][5]** String  ID of bundled app
 
-Returns **[Promise][6]\<void>** Appium: support only Android
+Returns **[Promise][9]<void>** Appium: support only Android
 
 **Detox**
 
@@ -1577,7 +2474,32 @@ I.seeAppIsNotInstalled("com.example.android.apis");
 **Parameters**
 *   `bundleId` **[string][5]** String  ID of bundled app
 
-Returns **[Promise][6]\<void>** Appium: support only Android
+Returns **[Promise][9]<void>** Appium: support only Android
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.seeAttributesOnElements()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Checks that all elements with given locator have given attributes.
+
+```js
+I.seeAttributesOnElements('//form', { method: "post"});
+```
+
+**Parameters**
+*   `locator` **([string][5] | [object][6])** located by CSS|XPath|strict locator.
+*   `attributes` **[object][6]** attributes and their values to check.
+
+Returns **void** automatically synchronized promise through #recorder
 
 **Detox**
 
@@ -1601,7 +2523,35 @@ I.seeCheckboxIsChecked({css: '#signup_form input[type=checkbox]'});
 ```
 
 **Parameters**
-*   `field` **([string][5] | [object][11])** located by label|name|CSS|XPath|strict locator.
+*   `field` **([string][5] | [object][6])** located by label|name|CSS|XPath|strict locator.
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.seeClipboardEquals()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Checks that the system clipboard is equal to the given text.
+
+```js
+I.click('Copy to clipboard');
+I.seeClipboardEquals('https://codecept.io');
+```
+
+Reading the clipboard requires a secure context (`https` or `localhost`) and is supported
+in Chromium-based browsers, where read access is granted automatically.
+
+**Parameters**
+*   `text` **[string][5]** value to check.
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -1627,7 +2577,33 @@ I.seeCurrentActivityIs(".HomeScreenActivity")
 **Parameters**
 *   `currentActivity` **[string][5]**&#x20;
 
-Returns **[Promise][6]\<void>** Appium: support only Android
+Returns **[Promise][9]<void>** Appium: support only Android
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.seeCurrentPathEquals()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Checks that current URL path matches the expected path.
+Query strings and URL fragments are ignored.
+
+```js
+I.seeCurrentPathEquals('/info'); // passes for '/info', '/info?user=1', '/info#section'
+I.seeCurrentPathEquals('/'); // passes for '/', '/?user=ok', '/#top'
+```
+
+**Parameters**
+*   `path` **[string][5]** value to check.
+
+Returns **void** automatically synchronized promise through #recorder
 
 **Detox**
 
@@ -1648,7 +2624,7 @@ Check whether the device is locked.
 I.seeDeviceIsLocked();
 ```
 
-Returns **[Promise][6]\<void>** Appium: support only Android
+Returns **[Promise][9]<void>** Appium: support only Android
 
 **Detox**
 
@@ -1669,7 +2645,7 @@ Check whether the device is not locked.
 I.seeDeviceIsUnlocked();
 ```
 
-Returns **[Promise][6]\<void>** Appium: support only Android
+Returns **[Promise][9]<void>** Appium: support only Android
 
 **Detox**
 
@@ -1696,11 +2672,11 @@ I.seeElement('#modal', '#container');
 I.seeElement({role: 'dialog'});
 ```
 
-> ℹ️ ARIA role locators (`{role, name}`) match elements the way assistive technology does and survive markup refactors. See [Locators][17].
+> ℹ️ ARIA role locators (`{role, name}`) match elements the way assistive technology does and survive markup refactors. See [Locators][11].
 
 **Parameters**
-*   `locator` **([string][5] | [object][11])** located by CSS|XPath|strict locator.
-*   `context` **([string][5]? | [object][11])** (optional, `null` by default) element located by CSS | XPath | strict locator. (optional, default `null`)
+*   `locator` **([string][5] | [object][6])** located by CSS|XPath|strict locator.
+*   `context` **([string][5]? | [object][6])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -1743,6 +2719,59 @@ I.seeElementExists('~edit', '#menu'); // element inside #menu
 *   `locator` **([string][5] | [object][6])** element to locate
 *   `context` **([string][5] | [object][6])** context element (optional, default `null`)
 
+### `I.seeElementInDOM()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Checks that a given Element is present in the DOM
+Element is located by CSS or XPath.
+
+```js
+I.seeElementInDOM('#modal');
+```
+
+**Parameters**
+*   `locator` **([string][5] | [object][6])** element located by CSS|XPath|strict locator.
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.seeInClipboard()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Checks that the system clipboard contains the given text.
+
+```js
+I.click('Copy to clipboard');
+I.seeInClipboard('https://codecept.io');
+```
+
+Reading the clipboard requires a secure context (`https` or `localhost`) and is supported
+in Chromium-based browsers, where read access is granted automatically.
+
+**Parameters**
+*   `text` **[string][5]** value to check.
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
 ### `I.seeInField()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -1767,9 +2796,85 @@ I.seeInField('Name', 'John', '.form-container');
 ```
 
 **Parameters**
-*   `field` **([string][5] | [object][11])** located by label|name|CSS|XPath|strict locator.
-*   `value` **([string][5] | [object][11])** value to check.
-*   `context` **([string][5]? | [object][11])** (optional, `null` by default) element located by CSS | XPath | strict locator. (optional, default `null`)
+*   `field` **([string][5] | [object][6])** located by label|name|CSS|XPath|strict locator.
+*   `value` **([string][5] | [object][6])** value to check.
+*   `context` **([string][5]? | [object][6])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.seeInSource()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Checks that the current page contains the given string in its raw source code.
+
+```js
+I.seeInSource('<h1>Green eggs &amp; ham</h1>');
+```
+
+**Parameters**
+*   `text` **[string][5]** value to check.
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.seeNumberOfElements()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Asserts that an element appears a given number of times in the DOM.
+Element is located by label or name or CSS or XPath.
+
+```js
+I.seeNumberOfElements('#submitBtn', 1);
+```
+
+**Parameters**
+*   `locator` **([string][5] | [object][6])** element located by CSS|XPath|strict locator.
+*   `num` **[number][12]** number of elements.
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.seeNumberOfVisibleElements()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Asserts that an element is visible a given number of times.
+Element is located by CSS or XPath.
+
+```js
+I.seeNumberOfVisibleElements('.buttons', 3);
+```
+
+**Parameters**
+*   `locator` **([string][5] | [object][6])** element located by CSS|XPath|strict locator.
+*   `num` **[number][12]** number of elements.
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -1796,7 +2901,32 @@ I.seeOrientationIs('LANDSCAPE')
 **Parameters**
 *   `orientation` **(`"LANDSCAPE"` | `"PORTRAIT"`)** LANDSCAPE or PORTRAITAppium: support Android and iOS
 
-Returns **[Promise][6]\<void>**&#x20;
+Returns **[Promise][9]<void>**&#x20;
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.seeTextEquals()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Checks that text is equal to provided one.
+
+```js
+I.seeTextEquals('text', 'h1');
+```
+
+**Parameters**
+*   `text` **[string][5]** element value to check.
+*   `context` **([string][5] | [object][6])?** element located by CSS|XPath|strict locator. 
+
+Returns **void** automatically synchronized promise through #recorder
 
 **Detox**
 
@@ -1835,9 +2965,9 @@ I.selectOption('Which OS do you use?', ['Android', 'iOS']);
 ```
 
 **Parameters**
-*   `select` **([string][5] | [object][11])** field located by label|name|CSS|XPath|strict locator.
-*   `option` **([string][5] | [Array][8]\<any>)** visible text or value of option.
-*   `context` **([string][5]? | [object][11])** (optional, `null` by default) element located by CSS | XPath | strict locator. (optional, default `null`)
+*   `select` **([string][5] | [object][6])** field located by label|name|CSS|XPath|strict locator.
+*   `option` **([string][5] | [Array][15]<any>)** visible text or value of option.
+*   `context` **([string][5]? | [object][6])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 
 Returns **void** automatically synchronized promise through #recorderSupported only for web testing
 
@@ -1855,16 +2985,16 @@ _Not available in this helper._
 **Appium**
 
 Send a key event to the device.
-List of keys: [https://developer.android.com/reference/android/view/KeyEvent.html][12]
+List of keys: [https://developer.android.com/reference/android/view/KeyEvent.html][20]
 
 ```js
 I.sendDeviceKeyEvent(3);
 ```
 
 **Parameters**
-*   `keyValue` **[number][10]** Device specific key value
+*   `keyValue` **[number][12]** Device specific key value
 
-Returns **[Promise][6]\<void>** Appium: support only Android
+Returns **[Promise][9]<void>** Appium: support only Android
 
 **Detox**
 
@@ -1881,13 +3011,13 @@ _Not available in this helper._
 
 Set immediate value in app.
 
-See corresponding [webdriverio reference][16].
+See corresponding [webdriverio reference][21].
 
 **Parameters**
 *   `id` &#x20;
 *   `value` &#x20;
 
-Returns **[Promise][6]\<void>** Appium: support only iOS
+Returns **[Promise][9]<void>** Appium: support only iOS
 
 **Detox**
 
@@ -1935,14 +3065,14 @@ I.setNetworkConnection(4) // airplane mode off, wifi off, data on
 I.setNetworkConnection(6) // airplane mode off, wifi on, data on
 ```
 
-See corresponding [webdriverio reference][9].
+See corresponding [webdriverio reference][22].
 
 Appium: support only Android
 
 **Parameters**
-*   `value` **[number][10]** The network connection mode bitmask
+*   `value` **[number][12]** The network connection mode bitmask
 
-Returns **[Promise][6]<[number][10]>**&#x20;
+Returns **[Promise][9]<[number][12]>**&#x20;
 
 **Detox**
 
@@ -2006,7 +3136,7 @@ I.setSettings({cyberdelia: 'open'});
 ```
 
 **Parameters**
-*   `settings` **[object][11]** objectAppium: support Android and iOS
+*   `settings` **[object][6]** objectAppium: support Android and iOS
 
 **Detox**
 
@@ -2027,7 +3157,7 @@ Perform a shake action on the device.
 I.shakeDevice();
 ```
 
-Returns **[Promise][6]\<void>** Appium: support only iOS
+Returns **[Promise][9]<void>** Appium: support only iOS
 
 **Detox**
 
@@ -2057,7 +3187,7 @@ I.touchId(false); // simulates invalid fingerprint
 **Parameters**
 *   `match` &#x20;
 
-Returns **[Promise][6]\<void>** Appium: support only iOS
+Returns **[Promise][9]<void>** Appium: support only iOS
 TODO: not tested
 
 **Detox**
@@ -2085,7 +3215,7 @@ Appium: support only Android
 *   `appPackage` **[string][5]**&#x20;
 *   `appActivity` **[string][5]**&#x20;
 
-Returns **[Promise][6]\<void>**&#x20;
+Returns **[Promise][9]<void>**&#x20;
 
 **Detox**
 
@@ -2107,15 +3237,15 @@ let locator = "#io.selendroid.testapp:id/LinearLayout1";
 I.swipe(locator, 800, 1200, 1000);
 ```
 
-[See complete reference][14]
+[See complete reference][23]
 
 **Parameters**
-*   `locator` **([string][5] | [object][11])**&#x20;
-*   `xoffset` **[number][10]**&#x20;
-*   `yoffset` **[number][10]**&#x20;
-*   `speed` **[number][10]** (optional), 1000 by default (optional, default `1000`)
+*   `locator` **([string][5] | [object][6])**&#x20;
+*   `xoffset` **[number][12]**&#x20;
+*   `yoffset` **[number][12]**&#x20;
+*   `speed` **[number][12]** (optional), 1000 by default 
 
-Returns **[Promise][6]\<void>** Appium: support Android and iOS
+Returns **[Promise][9]<void>** Appium: support Android and iOS
 
 **Detox**
 
@@ -2140,11 +3270,11 @@ I.swipeDown(locator, 1200, 1000); // set offset and speed
 ```
 
 **Parameters**
-*   `locator` **([string][5] | [object][11])**&#x20;
-*   `yoffset` **[number][10]?** (optional) (optional, default `1000`)
-*   `speed` **[number][10]** (optional), 1000 by default (optional, default `1000`)
+*   `locator` **([string][5] | [object][6])**&#x20;
+*   `yoffset` **[number][12]?** (optional) 
+*   `speed` **[number][12]** (optional), 1000 by default 
 
-Returns **[Promise][6]\<void>** Appium: support Android and iOS
+Returns **[Promise][9]<void>** Appium: support Android and iOS
 
 **Detox**
 
@@ -2178,11 +3308,11 @@ I.swipeLeft(locator, 1200, 1000); // set offset and speed
 ```
 
 **Parameters**
-*   `locator` **([string][5] | [object][11])**&#x20;
-*   `xoffset` **[number][10]?** (optional) (optional, default `1000`)
-*   `speed` **[number][10]** (optional), 1000 by default (optional, default `1000`)
+*   `locator` **([string][5] | [object][6])**&#x20;
+*   `xoffset` **[number][12]?** (optional) 
+*   `speed` **[number][12]** (optional), 1000 by default 
 
-Returns **[Promise][6]\<void>** Appium: support Android and iOS
+Returns **[Promise][9]<void>** Appium: support Android and iOS
 
 **Detox**
 
@@ -2216,11 +3346,11 @@ I.swipeRight(locator, 1200, 1000); // set offset and speed
 ```
 
 **Parameters**
-*   `locator` **([string][5] | [object][11])**&#x20;
-*   `xoffset` **[number][10]?** (optional) (optional, default `1000`)
-*   `speed` **[number][10]** (optional), 1000 by default (optional, default `1000`)
+*   `locator` **([string][5] | [object][6])**&#x20;
+*   `xoffset` **[number][12]?** (optional) 
+*   `speed` **[number][12]** (optional), 1000 by default 
 
-Returns **[Promise][6]\<void>** Appium: support Android and iOS
+Returns **[Promise][9]<void>** Appium: support Android and iOS
 
 **Detox**
 
@@ -2260,11 +3390,11 @@ I.swipeTo(
 *   `searchableLocator` **[string][5]**&#x20;
 *   `scrollLocator` **[string][5]**&#x20;
 *   `direction` **[string][5]**&#x20;
-*   `timeout` **[number][10]**&#x20;
-*   `offset` **[number][10]**&#x20;
-*   `speed` **[number][10]**&#x20;
+*   `timeout` **[number][12]**&#x20;
+*   `offset` **[number][12]**&#x20;
+*   `speed` **[number][12]**&#x20;
 
-Returns **[Promise][6]\<void>** Appium: support Android and iOS
+Returns **[Promise][9]<void>** Appium: support Android and iOS
 
 **Detox**
 
@@ -2289,11 +3419,11 @@ I.swipeUp(locator, 1200, 1000); // set offset and speed
 ```
 
 **Parameters**
-*   `locator` **([string][5] | [object][11])**&#x20;
-*   `yoffset` **[number][10]?** (optional) (optional, default `1000`)
-*   `speed` **[number][10]** (optional), 1000 by default (optional, default `1000`)
+*   `locator` **([string][5] | [object][6])**&#x20;
+*   `yoffset` **[number][12]?** (optional) 
+*   `speed` **[number][12]** (optional), 1000 by default 
 
-Returns **[Promise][6]\<void>** Appium: support Android and iOS
+Returns **[Promise][9]<void>** Appium: support Android and iOS
 
 **Detox**
 
@@ -2307,6 +3437,31 @@ I.swipeUp('#container');
 **Parameters**
 *   `locator` **([string][5] | [object][6])** an element on which to perform swipe
 *   `speed` **[string][5]** a speed to perform: `slow` or `fast`. (optional, default `'slow'`)
+
+### `I.switchTo()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Switches frame or in case of null locator reverts to parent.
+
+```js
+I.switchTo('iframe'); // switch to first iframe
+I.switchTo(); // switch back to main page
+```
+
+**Parameters**
+*   `locator` **([string][5]? | [object][6])** (optional, `null` by default) element located by CSS|XPath|strict locator. 
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
 
 ### `I.switchToContext()`
 
@@ -2336,7 +3491,7 @@ _Not available in this helper._
 **Appium**
 
 Switches to native context.
-By default switches to NATIVE\_APP context unless other specified.
+By default switches to NATIVE_APP context unless other specified.
 
 ```js
 I.switchToNative();
@@ -2346,9 +3501,9 @@ I.switchToNative('SOME_OTHER_CONTEXT');
 ```
 
 **Parameters**
-*   `context` **any?**  (optional, default `null`)
+*   `context` **any?**  
 
-Returns **[Promise][6]\<void>**&#x20;
+Returns **[Promise][9]<void>**&#x20;
 
 **Detox**
 
@@ -2377,7 +3532,35 @@ I.switchToWeb('WEBVIEW_io.selendroid.testapp');
 **Parameters**
 *   `context` **[string][5]?**&#x20;
 
-Returns **[Promise][6]\<void>**&#x20;
+Returns **[Promise][9]<void>**&#x20;
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.switchToWindow()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Switch to the window with a specified handle.
+
+```js
+const windows = await I.grabAllWindowHandles();
+// ... do something
+await I.switchToWindow( windows[0] );
+
+const window = await I.grabCurrentWindowHandle();
+// ... do something
+await I.switchToWindow( window );
+```
+
+**Parameters**
+*   `window` **[string][5]** name of window handle.
 
 **Detox**
 
@@ -2403,7 +3586,7 @@ Shortcut for `makeTouchAction`
 **Parameters**
 *   `locator` **any**&#x20;
 
-Returns **[Promise][6]\<void>**&#x20;
+Returns **[Promise][9]<void>**&#x20;
 
 **Detox**
 
@@ -2513,7 +3696,107 @@ I.touchPerform([{
 Appium: support Android and iOS
 
 **Parameters**
-*   `actions` **[Array][8]** Array of touch actions
+*   `actions` **[Array][15]** Array of touch actions
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.type()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Types out the given text into an active field.
+To slow down typing use a second parameter, to set interval between key presses.
+*Note:* Should be used when [`fillField`][24] is not an option.
+
+```js
+// passing in a string
+I.type('Type this out.');
+
+// typing values with a 100ms interval
+I.type('4141555311111111', 100);
+
+// passing in an array
+I.type(['T', 'E', 'X', 'T']);
+
+// passing a secret
+I.type(secret('123456'));
+```
+
+**Parameters**
+*   `keys` &#x20;
+*   `delay` **[number][12]?** (optional) delay in ms between key presses 
+*   `key` **([string][5] | [Array][15]<[string][5]>)** or array of keys to type.
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.uncheckOption()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Appium: not tested
+Unselects a checkbox or radio button.
+Element is located by label or name or CSS or XPath.
+
+The second parameter is an optional context (CSS or XPath locator) to narrow the search.
+
+```js
+I.uncheckOption('#agree');
+I.uncheckOption('I Agree to Terms and Conditions');
+I.uncheckOption('agree', '//form');
+```
+
+**Parameters**
+*   `field` **([string][5] | [object][6])** checkbox located by label | name | CSS | XPath | strict locator.
+*   `context` **([string][5]? | [object][6])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
+
+Returns **void** automatically synchronized promise through #recorder
+
+**Detox**
+
+_Not available in this helper._
+
+### `I.useWebDriverTo()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Use [webdriverio][25] API inside a test.
+
+First argument is a description of an action.
+Second argument is async function that gets this helper as parameter.
+
+{ [`browser`][25]) } object from WebDriver API is available.
+
+```js
+I.useWebDriverTo('open multiple windows', async ({ browser }) {
+   // create new window
+   await browser.newWindow('https://webdriver.io');
+});
+```
+
+**Parameters**
+*   `description` **[string][5]** used to show in logs.
+*   `fn` **[function][26]** async functuion that executed with WebDriver helper as argument
 
 **Detox**
 
@@ -2559,8 +3842,8 @@ I.waitForElement('.btn.continue', 5); // wait for 5 secs
 ```
 
 **Parameters**
-*   `locator` **([string][5] | [object][11])** element located by CSS|XPath|strict locator.
-*   `sec` **[number][10]?** (optional, `1` by default) time in seconds to wait (optional, default `null`)
+*   `locator` **([string][5] | [object][6])** element located by CSS|XPath|strict locator.
+*   `sec` **[number][12]?** (optional, `1` by default) time in seconds to wait 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2616,8 +3899,8 @@ I.waitForInvisible('#popup');
 ```
 
 **Parameters**
-*   `locator` **([string][5] | [object][11])** element located by CSS|XPath|strict locator.
-*   `sec` **[number][10]** (optional, `1` by default) time in seconds to wait (optional, default `1`)
+*   `locator` **([string][5] | [object][6])** element located by CSS|XPath|strict locator.
+*   `sec` **[number][12]** (optional, `1` by default) time in seconds to wait 
 
 Returns **void** automatically synchronized promise through #recorder
 
@@ -2645,46 +3928,10 @@ I.waitForText('Thank you, form has been submitted', 5, '#modal');
 
 **Parameters**
 *   `text` **[string][5]** to wait for.
-*   `sec` **[number][10]** (optional, `1` by default) time in seconds to wait (optional, default `1`)
-*   `context` **([string][5] | [object][11])?** (optional) element located by CSS|XPath|strict locator. (optional, default `null`)
+*   `sec` **[number][12]** (optional, `1` by default) time in seconds to wait 
+*   `context` **([string][5] | [object][6])?** (optional) element located by CSS|XPath|strict locator. 
 
 Returns **void** automatically synchronized promise through #recorder
-
-[1]: http://codecept.io/helpers/WebDriver/
-
-[2]: https://appium.io/docs/en/2.1/
-
-[3]: https://codecept.io/mobile/#setting-up
-
-[4]: https://github.com/appium/appium/blob/master/packages/appium/docs/en/guides/caps.md
-
-[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
-[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
-
-[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-
-[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
-[9]: https://webdriver.io/docs/api/chromium/#setnetworkconnection
-
-[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
-
-[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
-[12]: https://developer.android.com/reference/android/view/KeyEvent.html
-
-[13]: http://webdriver.io/api/mobile/touchAction.html
-
-[14]: http://webdriver.io/api/mobile/swipe.html
-
-[15]: http://webdriver.io/api/mobile/rotate.html
-
-[16]: http://webdriver.io/api/mobile/setImmediateValue.html
-
-[17]: /locators#aria-locators
-
-[18]: https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
 
 **Detox**
 
@@ -2707,8 +3954,8 @@ I.waitForVisible('#popup');
 ```
 
 **Parameters**
-*   `locator` **([string][5] | [object][11])** element located by CSS|XPath|strict locator.
-*   `sec` **[number][10]** (optional, `1` by default) time in seconds to wait (optional, default `1`)
+*   `locator` **([string][5] | [object][6])** element located by CSS|XPath|strict locator.
+*   `sec` **[number][12]** (optional, `1` by default) time in seconds to wait 
 
 Returns **void** automatically synchronized promise through #recorder
 
