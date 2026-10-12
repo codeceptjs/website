@@ -1951,11 +1951,11 @@ Some of the supported key names are:
 
 **Puppeteer**
 
-*Note:* Shortcuts like `'Meta'` + `'A'` do not work on macOS ([puppeteer/puppeteer#1313][21]).
+*Note:* Shortcuts like `'Meta'` + `'A'` do not work on macOS ([puppeteer/puppeteer#1313][22]).
 
 Presses a key in the browser (on a focused element).
 
-*Hint:* For populating text field or textarea, it is recommended to use [`fillField`][22].
+*Hint:* For populating text field or textarea, it is recommended to use [`fillField`][23].
 
 ```js
 I.pressKey('Backspace');

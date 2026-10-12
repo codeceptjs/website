@@ -155,6 +155,21 @@ Returns **void** automatically synchronized promise through #recorder
 
 _Not available in this helper._
 
+### `I.capabilities()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Appium</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Detox</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td></tr></tbody>
+</table>
+
+**Appium**
+
+Type: CodeceptJS.HelperCapabilities
+
+**Detox**
+
+_Not available in this helper._
+
 ### `I.checkIfAppIsInstalled()`
 
 <table style="border-collapse: collapse; width: 100%;">
