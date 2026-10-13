@@ -27,18 +27,18 @@ const principles: Principle[] = [
             "<code>I.click('Login')</code> finds the button — by text, by label, by ARIA role, by CSS — and clicks it. You describe the action. The framework picks the strategy. The test reads like the spec it came from.",
     },
     {
-        title: 'The smallest API in browser testing',
+        title: 'The tiniest API in browser testing',
         icon: 'code-min',
         tone: 'emerald',
         body:
             'A <strong>dozen commands</strong> cover most of what you\'ll write. Less to learn on day one, a test file a junior can read on the first morning. Simplicity is the feature.',
     },
     {
-        title: 'Healing, end to end',
+        title: 'AI Powered',
         icon: 'heart-pulse',
         tone: 'rose',
         body:
-            'React to instability. When a selector breaks, AI can rewrite it on the fly. When the network blips, API calls restart. Tests adapt to environment changes instead of failing on them.',
+            'When a selector breaks, AI <strong>heals it</strong> on the fly. When a check is hard to express with locators, write it in plain words as <code>I.decide(\'save button is enabled\')</code> and a decision model like Jev will <strong>decide</strong> if the page meets it.',
     },
     {
         title: 'Designed for agentic testing',
@@ -48,21 +48,21 @@ const principles: Principle[] = [
             'Claude or Cursor run a test and can control it live via <strong>MCP server</strong>. No guessing, running, and retrying loop. Agent can set a breakpoint and debug test in realtime in a browser. ',
     },
     {
-        title: 'Mobile, native, web — one framework',
+        title: 'Mobile and web in one framework',
         icon: 'monitor-phone',
         tone: 'honey',
         body:
             'Appium for iOS and Android. The same <code>I.click</code> or <code>I.tap()</code>, <code>I.see</code>, <code>I.swipeLeft</code> you use on the web. Mobile testing works on same princinples.',
     },
     {
-        title: 'Page Objects you compose, never import',
+        title: 'Composable Page Objects',
         icon: 'layers',
         tone: 'purple',
         body:
             'A page object can use any other page object, custom step, or helper <strong>by name</strong>. The DI container resolves them at runtime. One page object can reference other and vise versa with no more circular import failure.',
     },
     {
-        title: 'Data declared, not scripted',
+        title: 'Data Management',
         icon: 'database',
         tone: 'emerald',
         body:
@@ -73,7 +73,7 @@ const principles: Principle[] = [
         icon: 'terminal-square',
         tone: 'sky',
         body:
-            'Steps by step output, useful debug introspections by default. You see how test goes, you see when it goes wrong, screenshots are generated automatically.',
+            'Output is an actual scenario written as steps. See how test went in terminal or in produced report.'
     },
 ];
 ---
