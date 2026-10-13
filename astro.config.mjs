@@ -138,6 +138,9 @@ const figureInjections = [
 
 export default defineConfig({
     site: 'https://codecept.io',
+    redirects: {
+        '/blog/decision-helper': '/blog/jev-based-testing/',
+    },
     integrations: [
         react(),
         starlight({
@@ -307,6 +310,7 @@ export default defineConfig({
                                     {label: 'GraphQL', link: 'helpers/graph-ql'},
                                     {label: 'GraphQLDataFactory', link: 'helpers/graph-ql-data-factory'},
                                     {label: 'JSONResponse', link: 'helpers/json-response'},
+                                    {label: 'Decision', link: 'helpers/decision'},
                                     {label: 'FileSystem', link: 'helpers/file-system'},
                                     {label: 'Expect', link: 'helpers/expect'},
                                 ],

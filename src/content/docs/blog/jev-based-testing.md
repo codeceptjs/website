@@ -43,6 +43,8 @@ I.decide([
 
 > The array **stacks assertions into one model request**. Each statement gets its own probability. Every statement must meet the confidence threshold for the step to pass.
 
+![I.decide sends statements to Jev; high confidence passes the step, low confidence fails it](/decision-flow.svg)
+
 We explain in a simple language the expected outcome important to us and let AI to take a decision. AI is quite good in taking simple decisions. If it won't so, we would not let it write the code that goes to production. But can we rely on it? 
 
 Well, good question!
@@ -209,4 +211,4 @@ The decision checks describe the UI we expect. Exact assertions verify that the 
 
 **Try the CodeceptJS with Decision helper enabled** 
 
-Start with a few checks that are awkward to express through locators. Evaluate them in report mode, inspect their judgments. The [Decision helper reference](/helpers/Decision) covers the complete configuration.
+Start with a few checks that are awkward to express through locators. Evaluate them in report mode, inspect their judgments. The [Decision helper reference](/helpers/decision/) covers the complete configuration.

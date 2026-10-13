@@ -1,11 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const { shell, fetch, task, stopOnFailures } = global.bunosh;
+const { shell, task, stopOnFailures } = global.bunosh;
 const { say } = global.bunosh;
 
 const ROOT = process.cwd();
-const DIST_DIR = path.join(ROOT, 'dist');
 const DOCS_DIR = path.join(ROOT, 'src', 'content', 'docs');
 
 const REPO_URL = process.env.CODECEPTJS_DOCS_REPO || 'https://github.com/codeceptjs/CodeceptJS.git';
@@ -102,21 +101,15 @@ export async function searchScrape() {
 }
 
 /**
- * Build and publish the site to the codeceptjs.github.io deploy branch.
+ * Build the site to verify it compiles, then push `main` — Vercel deploys every push to main.
  */
 export async function publish() {
   stopOnFailures();
 
-  await task('Install dependencies', () => shell`npm i`);
-  say('dependencies installed');
-
   await build();
 
-  await task('Write CNAME', () => Bun.write(path.join(DIST_DIR, 'CNAME'), 'codecept.io\n'));
-  say(`wrote CNAME to ${DIST_DIR}`);
-
-  await pushDeployBranch();
-  say('pushed dist/ to codeceptjs.github.io@master');
+  await task('Push main', () => shell`git push origin main`);
+  say('pushed main — Vercel is deploying');
 }
 
 /**
@@ -207,18 +200,6 @@ async function prepareContent() {
   await docsSync();
   await docsUnifiedApi();
   await pullReleases(5, { soft: true }); // tolerate offline / rate-limited GitHub
-}
-
-async function pushDeployBranch() {
-  await task('Push deploy branch', () => shell`
-    git init
-    git remote add origin git@github.com:codeceptjs/codeceptjs.github.io.git
-    git checkout -b deploy
-    git reset --soft HEAD~$(git rev-list --count HEAD ^master)
-    git add -A
-    git commit -m "deploy"
-    git push -f origin deploy:master
-  `.cwd(DIST_DIR));
 }
 
 /**
@@ -408,17 +389,15 @@ async function fetchReleases(pages, soft) {
   const all = [];
   for (let page = 1; page <= pages; page += 1) {
     const url = `https://api.github.com/repos/${RELEASES_REPO}/releases?per_page=${RELEASES_PER_PAGE}&page=${page}`;
-    const res = await fetch(url, { headers });
-    if (res.hasFailed) {
-      if (soft) return all;
-      throw new Error(`GitHub API request failed for ${url}: ${res.output}`);
-    }
+    // Native fetch: bunosh's fetch task fails on CI (Bun) with "Body is disturbed or locked".
     let batch;
     try {
-      batch = JSON.parse(res.output);
-    } catch {
+      const res = await fetch(url, { headers });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      batch = await res.json();
+    } catch (err) {
       if (soft) return all;
-      throw new Error(`GitHub API returned non-JSON for ${url}`);
+      throw new Error(`GitHub API request failed for ${url}: ${err.message}`);
     }
     if (!Array.isArray(batch) || batch.length === 0) break;
     all.push(...batch.filter((r) => !r.draft));
