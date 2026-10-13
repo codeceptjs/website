@@ -8,6 +8,8 @@ CodeceptJS lets us write E2E tests as readable scenarios. We open pages, fill fo
 
 With CodeceptJS 4.2.1, we are introducing the **Decision helper**. It lets us describe an expected page state in plain language. A decision model evaluates that statement. CodeceptJS applies the pass-or-fail rule.
 
+![I.decide sends statements to Jev; high confidence passes the step, low confidence fails it](/decision-flow.svg)
+
 ## What are we actually asserting?
 
 Consider a login scenario. The user submits valid credentials. What should we assert afterward?
@@ -42,8 +44,6 @@ I.decide([
 ```
 
 > The array **stacks assertions into one model request**. Each statement gets its own probability. Every statement must meet the confidence threshold for the step to pass.
-
-![I.decide sends statements to Jev; high confidence passes the step, low confidence fails it](/decision-flow.svg)
 
 We explain in a simple language the expected outcome important to us and let AI to take a decision. AI is quite good in taking simple decisions. If it won't so, we would not let it write the code that goes to production. But can we rely on it? 
 
