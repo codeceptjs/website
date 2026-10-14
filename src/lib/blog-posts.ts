@@ -1,7 +1,7 @@
 /**
  * Blog posts under src/content/docs/blog, newest first (by frontmatter `date`).
- * Read from disk so astro.config.mjs can build the Blog sidebar and every
- * "Blog" link points at the latest post without manual edits.
+ * Read from disk so astro.config.mjs can build the Blog sidebar without
+ * manual edits. The index page (blog/index.mdx) is not a post.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -22,7 +22,7 @@ function frontmatterField(frontmatter: string, field: string): string | undefine
 export function getBlogPosts(): BlogPost[] {
   return fs
     .readdirSync(BLOG_DIR)
-    .filter((file) => /\.mdx?$/.test(file))
+    .filter((file) => /\.mdx?$/.test(file) && !/^index\.mdx?$/.test(file))
     .map((file) => {
       const text = fs.readFileSync(path.join(BLOG_DIR, file), 'utf8');
       const frontmatter = text.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? '';
@@ -34,10 +34,4 @@ export function getBlogPosts(): BlogPost[] {
       };
     })
     .sort((a, b) => b.date.localeCompare(a.date));
-}
-
-/** Absolute URL of the newest post, e.g. `/blog/codeceptjs-4-2/`. */
-export function latestBlogPostUrl(): string {
-  const [latest] = getBlogPosts();
-  return latest ? `/${latest.link}/` : '/release/';
 }

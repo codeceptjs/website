@@ -45,6 +45,9 @@ html[data-theme="dark"] .expressive-code [style*="--0:#db2777"][style*="fw:bold"
 }
 .sl-markdown-content .expressive-code pre {
     padding: 1rem 1rem !important;
+}
+.sl-markdown-content .expressive-code pre,
+.blog-about .expressive-code pre {
     /* No frame border at all */
     border: 0 !important;
     box-shadow: none !important;
@@ -55,7 +58,9 @@ html[data-theme="dark"] .expressive-code [style*="--0:#db2777"][style*="fw:bold"
 /* The expressive-code wrapper paints its own background; clear it so our
    translucent <pre> background shows through. */
 .sl-markdown-content .expressive-code,
-.sl-markdown-content .expressive-code .frame {
+.sl-markdown-content .expressive-code .frame,
+.blog-about .expressive-code,
+.blog-about .expressive-code .frame {
     background: transparent !important;
     border: 0 !important;
     box-shadow: none !important;

@@ -1,0 +1,40 @@
+---
+// Post list for the /blog/ index: title, date and the post's frontmatter description.
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('docs', ({ id }) => id.startsWith('blog/')))
+	.sort((a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0));
+
+const formatDate = (date: Date) =>
+	date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+---
+
+<div class="blog-list">
+	{posts.map((post) => (
+		<article>
+			{post.data.date && <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>}
+			<h2><a href={`/${post.id}/`}>{post.data.title}</a></h2>
+			{post.data.description && <p>{post.data.description}</p>}
+		</article>
+	))}
+</div>
+
+<style>
+	.blog-list article + article {
+		margin-top: 2.5rem;
+	}
+	.blog-list time {
+		font-size: var(--sl-text-sm);
+		color: var(--sl-color-gray-3);
+	}
+	.blog-list h2 {
+		margin-top: 0.25rem;
+	}
+	.blog-list h2 a {
+		text-decoration: none;
+		color: var(--sl-color-white);
+	}
+	.blog-list h2 a:hover {
+		color: var(--sl-color-text-accent);
+	}
+</style>

@@ -1,7 +1,6 @@
 ---
 import ThemeSelect from './ThemeSelect.astro';
 import { getGithubStars, formatStars } from '../lib/github-stars';
-import { latestBlogPostUrl } from '../lib/blog-posts';
 
 const stars = await getGithubStars();
 // Primary navigation. Starlight renders this component (its `SocialIcons`
@@ -30,7 +29,7 @@ const stars = await getGithubStars();
         <a href="/web-api/" class="cc-nav-link no-underline text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-gray-200 transition-colors">
             API
         </a>
-        <a href={latestBlogPostUrl()} class="cc-nav-link no-underline text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-gray-200 transition-colors">
+        <a href="/blog/" class="cc-nav-link no-underline text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-gray-200 transition-colors">
             Blog
         </a>
 

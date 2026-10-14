@@ -7,8 +7,6 @@ import starlightSidebarTopics from 'starlight-sidebar-topics';
 import starlightImageZoom from 'starlight-image-zoom';
 import rehypeAstroRelativeMarkdownLinks from "astro-rehype-relative-markdown-links";
 import starlightScrollToTop from 'starlight-scroll-to-top';
-import {codeceptDark, codeceptLight} from './src/lib/shiki-themes.ts';
-import {codeceptShikiTransformer} from './src/lib/shiki-codecept-transformer.ts';
 import rehypeInjectFigure from './src/lib/rehype-inject-figure.mjs';
 import rehypeSearchStrip from './src/lib/rehype-search-strip.mjs';
 import {getBlogPosts} from './src/lib/blog-posts.ts';
@@ -140,32 +138,15 @@ export default defineConfig({
     site: 'https://codecept.io',
     redirects: {
         '/blog/decision-helper': '/blog/jev-based-testing/',
+        '/plugins/pause-on-fail': '/plugins/pause/',
+        '/plugins/screenshot-on-fail': '/plugins/screenshot/',
+        '/plugins/retry-failed-step': '/retry/',
     },
     integrations: [
         react(),
         starlight({
-            expressiveCode: {
-                themes: [codeceptDark, codeceptLight],
-                themeCssSelector: (theme) =>
-                    theme.name === 'codecept-dark'
-                        ? '[data-theme="dark"]'
-                        : '[data-theme="light"]',
-                styleOverrides: {
-                    codeFontFamily:
-                        "'JetBrains Mono', ui-monospace, SFMono-Regular, monospace",
-                    codeFontSize: '15px',
-                    codeLineHeight: '2',
-                    codePaddingBlock: '1.1rem',
-                    codePaddingInline: '1.1rem',
-                    borderRadius: '0.5rem',
-                    frames: {
-                        shadowColor: 'rgba(0, 0, 0, 0.08)',
-                    },
-                },
-                shiki: {
-                    transformers: [codeceptShikiTransformer],
-                },
-            },
+            // Expressive Code options live in ec.config.mjs so the <Code> component can use them.
+            expressiveCode: true,
             disable404Route: true,
             title: '',
             favicon: '/favicon.svg',
@@ -183,6 +164,7 @@ export default defineConfig({
                 PageFrame: "./src/components/PageFrame.astro",
                 PageTitle: './src/components/PageTitle.astro',
                 PageSidebar: './src/components/PageSidebar.astro',
+                Sidebar: './src/components/Sidebar.astro',
                 Footer: './src/components/Footer.astro',
                 SiteTitle: './src/components/SiteTitle.astro',
                 Search: './src/components/Search.astro',
@@ -330,12 +312,10 @@ export default defineConfig({
                                   {label: 'heal', link: 'plugins/heal'},
                                   {label: 'pageInfo', link: 'plugins/page-info'},
                                   {label: 'pause', link: 'plugins/pause'},
-                                  {label: 'pauseOnFail', link: 'plugins/pause-on-fail'},
-                                  {label: 'retryFailedStep', link: 'plugins/retry-failed-step'},
                                   {label: 'screencast', link: 'plugins/screencast'},
                                   {label: 'screenshot', link: 'plugins/screenshot'},
-                                  {label: 'screenshotOnFail', link: 'plugins/screenshot-on-fail'},
-                                  {label: 'stepTimeout', link: 'plugins/step-timeout'},
+                                  { label: 'stepTimeout', link: 'plugins/step-timeout' },
+                                  {label: 'sitemap', link: 'plugins/sitemap'},
                                 ],
                           },
                           { label: 'Miscellaneous', items: [
@@ -358,7 +338,7 @@ export default defineConfig({
                     {
                         id: 'blog',
                         label: 'Blog',
-                        link: blogPosts[0].link,
+                        link: 'blog',
                         items: [
                             {label: 'Blog', items: blogPosts},
                             {label: 'Releases', link: 'release'},

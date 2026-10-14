@@ -1,0 +1,101 @@
+---
+// Blog-only sidebar card that introduces CodeceptJS to readers arriving from a post.
+import { Code, LinkButton } from '@astrojs/starlight/components';
+
+const example = `I.amOnPage('/checkout')
+I.fillField('Email', email)
+I.fillField('Card', card)
+I.selectOption('Country', 'UK')
+I.checkOption('Accept terms')
+I.click('Place order')
+I.see('Order confirmed')
+I.seeInCurrentUrl('/orders')`;
+
+const engines = [
+	{ name: 'Playwright', logo: '/engines/playwright.svg', about: 'Microsoft browser automation for Chromium, Firefox and WebKit. Fast and reliable, the default choice.' },
+	{ name: 'Puppeteer', logo: '/engines/puppeteer.svg', about: 'Google Chrome automation over the DevTools Protocol. Lightweight, direct control of Chrome.' },
+	{ name: 'WebDriver', logo: '/engines/webdriverio.svg', about: 'W3C standard protocol, via WebdriverIO. Runs on Selenium Grid and cloud browser farms.' },
+	{ name: 'Lightpanda', logo: '/engines/lightpanda.png', about: 'Headless browser built for automation, never paints. Starts in milliseconds and uses a fraction of Chromium memory.' },
+	{ name: 'Obscura', logo: '/engines/obscura.png', about: 'Lightweight open-source browser in Rust with V8 and its own renderer. Single binary, screenshots work.' },
+	{ name: 'Appium', logo: '/engines/appium.svg', about: 'Mobile automation for iOS and Android apps. Same I.* steps as web tests.' },
+];
+---
+
+<div class="blog-about not-content">
+	<p><strong>CodeceptJS</strong> is an <strong>open-source end-to-end testing framework</strong> for Node.js, built for <strong>humans and AI agents</strong>.</p>
+	<ul class="blog-about-engines">
+		{engines.map((e) => (
+			<li><img src={e.logo} alt={e.name} title={`${e.name}: ${e.about}`} width="22" height="22" loading="lazy" /></li>
+		))}
+	</ul>
+	<p>Tests written like <strong>prose</strong> and executed in <strong>different engines</strong></p>
+	<Code code={example} lang="js" />
+	<LinkButton href="/quickstart" variant="primary" icon="right-arrow">Quickstart</LinkButton>
+</div>
+
+<style>
+	.blog-about {
+		--ba-bg: #fffbf0;
+		--ba-border: #f5e5b0;
+		box-sizing: border-box;
+		max-width: 100%;
+		margin-top: 1.5rem;
+		padding: 1rem;
+		border: 1px solid var(--ba-border);
+		border-radius: 0.75rem;
+		background: var(--ba-bg);
+		font-size: var(--sl-text-xs);
+		line-height: 1.5;
+		color: var(--sl-color-gray-2);
+	}
+	:global(html[data-theme='dark']) .blog-about {
+		--ba-bg: rgba(242, 169, 0, 0.07);
+		--ba-border: rgba(242, 169, 0, 0.25);
+	}
+	.blog-about > * + * {
+		margin-top: 0.75rem;
+	}
+	.blog-about strong {
+		color: var(--sl-color-white);
+	}
+	.blog-about-engines {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		padding: 0;
+		list-style: none;
+	}
+	.blog-about-engines li {
+		margin: 0;
+	}
+	.blog-about-engines img {
+		display: block;
+		width: 22px;
+		height: 22px;
+		object-fit: contain;
+		cursor: help;
+	}
+	/* Compact the site's Expressive Code blocks for the narrow sidebar; wrap instead of scrolling. */
+	.blog-about :global(.expressive-code) {
+		--ec-codeFontSize: 0.66rem;
+		--ec-codeLineHt: 1.6;
+		--ec-codePadBlk: 0.6rem;
+		--ec-codePadInl: 0.6rem;
+	}
+	.blog-about :global(.expressive-code pre) {
+		overflow-x: hidden;
+		white-space: pre-wrap;
+	}
+	.blog-about :global(.expressive-code .ec-line) {
+		white-space: pre-wrap;
+	}
+	.blog-about :global(.sl-link-button) {
+		display: flex;
+		justify-content: center;
+		box-sizing: border-box;
+		width: 100%;
+		margin-top: 1rem;
+		padding: 0.5rem 1rem;
+		font-size: var(--sl-text-sm);
+	}
+</style>
