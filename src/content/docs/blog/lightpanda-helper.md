@@ -67,17 +67,15 @@ These are **coverage definitions from source inspection**, not a fresh passing-s
 
 This distinction is useful when trying a new engine. A shared test API gives us a compatibility target. It does not erase the capability differences.
 
-## Synthetic clicks change the contract
+## How synthetic events affect testing
 
-Lightpanda's helper defaults to synthetic input. Instead of asking a graphical browser to hit-test a screen position, it acts on the selected DOM element.
+Lightpanda's helper uses synthetic input by default. A real mouse click goes through the browser's input system, which determines the target from its position on screen. Synthetic input dispatches JavaScript events directly to a selected DOM element. Your application's event handlers still run, so ordinary forms, buttons, and validation flows are usually good candidates.
 
-The TodoMVC migration exposed a concrete difference. Double-clicking a todo's `<li>` reached its child `<label>` in Playwright through coordinate targeting. A synthetic double-click on the parent did not reach the child's event listener. Events bubble toward ancestors, not toward descendants.
+This is an established approach to browser testing. Cypress.io has long used synthetic events for its standard interactions. Its [action commands](https://docs.cypress.io/app/core-concepts/interacting-with-elements#Actionability) also check whether elements are ready for interaction, including whether another element covers them. Synthetic events themselves do not provide those checks. Lightpanda runs without a full rendering pipeline, so it cannot offer the same layout guarantees.
 
-The fix was to target the label itself. The filter controls needed a similar correction: target the link rather than its surrounding list item.
+The differences become relevant when a test depends on how an interaction happens. A synthetic click may reach a button that an overlapping panel would block for a person. Custom controls can depend on precise event sequences, focus behavior, or trusted browser-generated events. Those scenarios deserve a check in a full browser.
 
-These adjustments made the final suite portable. They also show why “change the helper and everything works” would be too strong. Custom helpers tied to Playwright objects need review too.
-
-The testing consequence is larger than locator syntax. A synthetic action can exercise application logic without proving that a person can reach the control. An overlapping panel or broken positioning may still block the real interaction.
+For most routine functional checks, synthetic events are a practical choice. You can still verify that submitting a form saves a record or that invalid input produces an error. Use Lightpanda for that fast feedback, with Playwright covering interactions where positioning or native input behavior is part of the requirement.
 
 ## Where Playwright stays ahead
 
