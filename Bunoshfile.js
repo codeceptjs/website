@@ -20,6 +20,8 @@ const SKIP_LINKS = new Set([
   'web-api',
   'mobile-api',
   'cheatsheet',
+  'index', // upstream VuePress homepage; the site has its own (src/pages/index.astro)
+  'community-helpers', // curated locally as helpers/community-helpers
 ]);
 
 const RELEASES_REPO = process.env.CODECEPTJS_RELEASES_REPO || 'codeceptjs/CodeceptJS';
@@ -220,11 +222,11 @@ async function stageUpstreamDocs() {
   let diff;
   let considered = 0;
   await task('Scan curated docs', () => {
-    links = collectSidebarLinks();
+    links = new Set([...collectSidebarLinks(), ...collectStagedDocs()]);
     diff = diffCuratedDocs(links);
     considered = links.size - [...SKIP_LINKS].filter((l) => links.has(l)).length;
   });
-  say(`scanned ${considered} sidebar-listed docs`);
+  say(`scanned ${considered} docs (sidebar-listed + upstream)`);
 
   return { links, diff, considered };
 }
@@ -323,7 +325,7 @@ function assertNoDocsDrift(diff) {
 }
 
 function reportSyncResult(diff, considered) {
-  say(`copied ${diff.changes.length} (${diff.unchanged} unchanged) of ${considered} sidebar-listed docs`);
+  say(`copied ${diff.changes.length} (${diff.unchanged} unchanged) of ${considered} docs`);
   if (diff.missing.length === 0) return;
   say(`note: ${diff.missing.length} sidebar links have no upstream source (kept local-only or generated):`);
   for (const m of diff.missing.slice(0, 30)) say(`  ${m}`);
@@ -567,10 +569,22 @@ function collectSidebarLinks() {
   const topicsMatch = config.match(/topics\s*:\s*{([\s\S]*?)\n\s*}/);
   if (topicsMatch) {
     for (const m of topicsMatch[1].matchAll(/['"]([^'"]+)['"]/g)) {
+      if (m[1].includes('*')) continue; // globs route unlinked pages, they aren't pages
       links.add(m[1].replace(/^\/+|\/+$/g, ''));
     }
   }
   return links;
+}
+
+// Every upstream doc is synced, linked in the sidebar or not; unlinked pages
+// get a sidebar topic via the `topics` option in astro.config.mjs. Docs whose
+// route is redirected (deprecated upstream pages) are skipped.
+function collectStagedDocs() {
+  const config = fs.readFileSync(ASTRO_CONFIG, 'utf8');
+  return walk(STAGING_DIR)
+    .filter(({ rel }) => rel.endsWith('.md'))
+    .map(({ rel }) => rel.slice(0, -'.md'.length))
+    .filter((link) => !new RegExp(`['"]/${escRegExp(link)}/?['"]\\s*:`).test(config));
 }
 
 function stripStagedSlug(text) {
