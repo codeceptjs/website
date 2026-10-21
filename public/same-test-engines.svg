@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 672" width="1100" height="672">
+  <!-- H = 80 + 500 + 80 + 12 = 672 -->
+  <defs>
+    <filter id="ambient" x="-12%" y="-12%" width="124%" height="124%">
+      <feDropShadow dx="0" dy="4" stdDeviation="9" flood-color="#1a1d28" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrowGold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,1 L9,5 L0,9 z" fill="#C88800"/>
+    </marker>
+  </defs>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400..700&amp;display=swap');
+    .kicker  { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; }
+    .title   { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: -0.02em; font-feature-settings: 'ss01','ss02'; }
+    .backend { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 12px; }
+    .body    { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 14px; letter-spacing: -0.005em; }
+    .mono    { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 13px; font-variant-ligatures: none; }
+  </style>
+  <g transform="translate(40, 80)">
+  <!-- Hub: one test (honey container) -->
+  <g transform="translate(0, 120)">
+    <path d="M0,0 L380,0 L394,-8 L14,-8 Z" fill="#FFF1D6"/>
+    <path d="M380,0 L394,-8 L394,252 L380,260 Z" fill="#F5E5B0"/>
+    <rect width="380" height="260" fill="#FFFBF0" filter="url(#ambient)"/>
+    <text x="24" y="36" class="kicker" fill="#C88800">One test · any engine</text>
+    <rect x="24" y="56" width="332" height="116" rx="8" fill="#FAFAF7" stroke="#F0EDE5" stroke-width="1"/>
+    <text x="40" y="82" class="mono"><tspan fill="#C88800">Scenario</tspan><tspan fill="#1F2937">('sign in', () =&gt; {</tspan></text>
+    <text x="56" y="104" class="mono"><tspan fill="#1F2937">I.</tspan><tspan fill="#C88800">amOnPage</tspan><tspan fill="#1F2937">('/')</tspan></text>
+    <text x="56" y="126" class="mono"><tspan fill="#1F2937">I.</tspan><tspan fill="#C88800">click</tspan><tspan fill="#1F2937">('Sign in')</tspan></text>
+    <text x="56" y="148" class="mono"><tspan fill="#1F2937">I.</tspan><tspan fill="#C88800">see</tspan><tspan fill="#1F2937">('Welcome')</tspan></text>
+    <text x="24" y="206" class="body" fill="#4B5563">Swap the helper in the config.</text>
+    <text x="24" y="230" class="body" fill="#4B5563">The test code stays the same.</text>
+  </g>
+  <!-- Connectors: trunk + bus + branches -->
+  <g stroke="#C88800" stroke-width="2.4" fill="none" stroke-linecap="round">
+    <line x1="398" y1="250" x2="440" y2="250"/>
+    <line x1="440" y1="42" x2="440" y2="458"/>
+  </g>
+  <g stroke="#C88800" stroke-width="2.4" fill="none" stroke-linecap="round" marker-end="url(#arrowGold)">
+    <line x1="440" y1="42" x2="496" y2="42"/>
+    <line x1="440" y1="146" x2="496" y2="146"/>
+    <line x1="440" y1="250" x2="496" y2="250"/>
+    <line x1="440" y1="354" x2="496" y2="354"/>
+    <line x1="440" y1="458" x2="496" y2="458"/>
+  </g>
+  <g transform="translate(500, 0)">
+    <path d="M0,0 L506,0 L520,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M506,0 L520,-8 L520,76 L506,84 Z" fill="#E2E8F0"/>
+    <rect width="506" height="84" fill="#FFFFFF" filter="url(#ambient)"/>
+    <text x="24" y="36" class="title" fill="#111827">Playwright</text>
+    <text x="482" y="34" class="backend" text-anchor="end" fill="#64748B">Chromium · Firefox · WebKit</text>
+    <text x="24" y="62" class="body" fill="#4B5563">Full browsers, the accuracy baseline.</text>
+  </g>
+  <g transform="translate(500, 104)">
+    <path d="M0,0 L506,0 L520,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M506,0 L520,-8 L520,76 L506,84 Z" fill="#E2E8F0"/>
+    <rect width="506" height="84" fill="#FFFFFF" filter="url(#ambient)"/>
+    <text x="24" y="36" class="title" fill="#111827">WebDriverIO</text>
+    <text x="482" y="34" class="backend" text-anchor="end" fill="#64748B">W3C WebDriver · BiDi</text>
+    <text x="24" y="62" class="body" fill="#4B5563">Runs on Selenium Grid and cloud vendors.</text>
+  </g>
+  <g transform="translate(500, 208)">
+    <path d="M0,0 L506,0 L520,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M506,0 L520,-8 L520,76 L506,84 Z" fill="#E2E8F0"/>
+    <rect width="506" height="84" fill="#FFFFFF" filter="url(#ambient)"/>
+    <text x="24" y="36" class="title" fill="#111827">Lightpanda</text>
+    <text x="482" y="34" class="backend" text-anchor="end" fill="#64748B">V8 · no painting</text>
+    <text x="24" y="62" class="body" fill="#4B5563">Starts in milliseconds, tiny memory footprint.</text>
+  </g>
+  <g transform="translate(500, 312)">
+    <path d="M0,0 L506,0 L520,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M506,0 L520,-8 L520,76 L506,84 Z" fill="#E2E8F0"/>
+    <rect width="506" height="84" fill="#FFFFFF" filter="url(#ambient)"/>
+    <text x="24" y="36" class="title" fill="#111827">Moli</text>
+    <text x="482" y="34" class="backend" text-anchor="end" fill="#64748B">Rust · V8 · real CSS</text>
+    <text x="24" y="62" class="body" fill="#4B5563">Skips layout and paint, starts fast.</text>
+  </g>
+  <g transform="translate(500, 416)">
+    <path d="M0,0 L506,0 L520,-8 L14,-8 Z" fill="#F1F5F9"/>
+    <path d="M506,0 L520,-8 L520,76 L506,84 Z" fill="#E2E8F0"/>
+    <rect width="506" height="84" fill="#FFFFFF" filter="url(#ambient)"/>
+    <text x="24" y="36" class="title" fill="#111827">Obscura</text>
+    <text x="482" y="34" class="backend" text-anchor="end" fill="#64748B">V8 · own renderer</text>
+    <text x="24" y="62" class="body" fill="#4B5563">Single binary, screenshots work.</text>
+  </g>
+  </g>
+</svg>

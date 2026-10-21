@@ -109,6 +109,15 @@ const figureInjections = [
         height: 1184,
     },
     {
+        slug: 'alternative-browsers',
+        afterHeading: 'Obscura',
+        before: true,
+        src: '/same-test-engines.svg',
+        alt: 'CodeceptJS runs the same test across different browser engines: one Scenario (I.amOnPage, I.click, I.see) runs on Playwright (Chromium, Firefox, WebKit), WebDriverIO (W3C WebDriver and BiDi), Lightpanda (V8, no painting), Moli (Rust, V8, real CSS) or Obscura (V8, own renderer). Swap the helper in the config; the test code stays the same.',
+        width: 1100,
+        height: 672,
+    },
+    {
         slug: 'timeouts',
         afterHeading: 'Step Timeout',
         before: true,
