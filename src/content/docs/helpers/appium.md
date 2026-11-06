@@ -2310,7 +2310,7 @@ Smart Wait to locate an element
 
 *   `locator` **[object][6]**&#x20;
 
-[1]: http://codecept.io/helpers/WebDriver/
+[1]: http://codecept.io/helpers/web-driver/
 
 [2]: https://appium.io/docs/en/2.1/
 

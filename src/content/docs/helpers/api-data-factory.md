@@ -255,7 +255,7 @@ Can be replaced from a custom helper.
 
 [2]: https://www.npmjs.com/package/faker
 
-[3]: http://codecept.io/helpers/REST/
+[3]: http://codecept.io/helpers/rest/
 
 [4]: https://github.com/axios/axios#request-config
 
