@@ -44,6 +44,15 @@ const MOBILE_HELPERS = {
   Detox: path.join(HELPERS_DIR, 'detox.md'),
 };
 
+// Appium docs inherit WebDriver methods upstream; these are browser-only and
+// must not appear on the unified mobile page.
+const MOBILE_EXCLUDE = [/Clipboard/];
+
+// Helper methods whose docblock pulls a differently named webapi template.
+const WEB_TEMPLATE_ALIASES = {
+  pressKey: 'pressKeyWithKeyNormalization',
+};
+
 const WEB_OUTPUT = path.join(DOCS_DIR, 'web-api.md');
 const MOBILE_OUTPUT = path.join(DOCS_DIR, 'mobile-api.md');
 
@@ -127,6 +136,10 @@ export async function docsSync() {
     }
   });
 
+  let templates = 0;
+  await task('Sync webapi templates', () => { templates = applyWebApiTemplates(diffWebApiTemplates()); });
+  say(`synced ${templates} webapi template change(s)`);
+
   let images = 0;
   await task('Copy referenced images', () => { images = syncReferencedImages(links); });
   say(`copied ${images} referenced image(s)`);
@@ -140,6 +153,10 @@ export async function docsSync() {
 export async function docsSyncCheck() {
   const { diff, considered } = await stageUpstreamDocs();
   assertNoDocsDrift(diff);
+  const templates = diffWebApiTemplates();
+  if (templates.length) {
+    throw new Error(`docs:sync-check failed — webapi templates out of date:\n${templates.map((t) => `  ${t.name}`).join('\n')}`);
+  }
   say(`docs:sync-check ok — ${considered} curated docs in sync`);
 }
 
@@ -266,6 +283,35 @@ function diffCuratedDocs(links) {
     changes.push({ link, target, content });
   }
   return { changes, unchanged, missing };
+}
+
+// Mirror upstream docs/webapi/*.mustache (from the clone: staging kebab-cases names) — the shared method docs the unified
+// Web API page is built from. Returns writes and deletions to apply.
+function diffWebApiTemplates() {
+  const srcDir = path.join(REPO_DIR, 'docs', 'webapi');
+  if (!fs.existsSync(srcDir)) throw new Error(`Upstream webapi templates not found in ${srcDir}`);
+  const list = (dir) => (fs.existsSync(dir) ? fs.readdirSync(dir).filter((n) => n.endsWith('.mustache')) : []);
+  const upstream = new Set(list(srcDir));
+  const changes = [];
+  for (const name of upstream) {
+    const content = fs.readFileSync(path.join(srcDir, name));
+    const target = path.join(WEBAPI_DIR, name);
+    if (fs.existsSync(target) && fs.readFileSync(target).equals(content)) continue;
+    changes.push({ name, target, content });
+  }
+  for (const name of list(WEBAPI_DIR)) {
+    if (!upstream.has(name)) changes.push({ name, target: path.join(WEBAPI_DIR, name), content: null });
+  }
+  return changes;
+}
+
+function applyWebApiTemplates(changes) {
+  fs.mkdirSync(WEBAPI_DIR, { recursive: true });
+  for (const { target, content } of changes) {
+    if (content === null) fs.rmSync(target);
+    else fs.writeFileSync(target, content);
+  }
+  return changes.length;
 }
 
 function collectImagePaths(markdown) {
@@ -867,8 +913,15 @@ function generateWebApiContent() {
     '',
   ];
 
-  for (const fileName of webapiFiles) {
-    const method = path.basename(fileName, '.mustache');
+  const templateNames = new Set(webapiFiles);
+  const methodTemplates = [
+    ...webapiFiles.map((fileName) => [path.basename(fileName, '.mustache'), fileName]),
+    ...Object.entries(WEB_TEMPLATE_ALIASES)
+      .filter(([method, template]) => !templateNames.has(`${method}.mustache`) && templateNames.has(`${template}.mustache`))
+      .map(([method, template]) => [method, `${template}.mustache`]),
+  ].sort(([a], [b]) => a.localeCompare(b));
+
+  for (const [method, fileName] of methodTemplates) {
     const supportedAnywhere = WEB_HELPER_NAMES.some((name) => helperMethods[name].has(method));
     if (!supportedAnywhere) continue;
     const methodCall = `I.${method}()`;
@@ -965,8 +1018,9 @@ function generateMobileApiContent() {
     Object.entries(MOBILE_HELPERS).map(([name, file]) => [name, readFile(file)]),
   );
 
-  const appiumMethods = extractMethods(helperDocs.Appium);
-  const detoxMethods = extractMethods(helperDocs.Detox);
+  const isMobile = (m) => !MOBILE_EXCLUDE.some((re) => re.test(m));
+  const appiumMethods = extractMethods(helperDocs.Appium).filter(isMobile);
+  const detoxMethods = extractMethods(helperDocs.Detox).filter(isMobile);
   const allMethods = Array.from(new Set([...appiumMethods, ...detoxMethods])).sort((a, b) =>
     a.localeCompare(b),
   );

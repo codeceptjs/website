@@ -330,7 +330,7 @@ I.amOnPage('/login'); // opens a login page
 
 *   `url` **[string][7]** url path or global url.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### appendField
 
@@ -353,7 +353,7 @@ I.appendField('name', 'John', '.form-container');
 *   `value` **[string][7]** text value to append.
 *   `context` **([string][7]? | [object][8])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.ElementStepPromise** automatically synchronized promise through #recorder
 
 ### attachFile
 
@@ -383,7 +383,7 @@ I.attachFile('#dropzone', 'data/avatar.jpg');
 *   `pathToFile` **[string][7]** local file path relative to codecept.conf.ts or codecept.conf.js config file.
 *   `context` **([string][7]? | [object][8])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.ElementStepPromise** automatically synchronized promise through #recorder
 
 ### blockTraffic
 
@@ -429,7 +429,7 @@ I.dontSee('#add-to-cart-btn');
 *   `locator` **([string][7] | [object][8])** field located by label|name|CSS|XPath|strict locator.
 *   `options` **any?** Playwright only: [Additional options][13] for available options object as 2nd argument. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.ElementStepPromise** automatically synchronized promise through #recorder
 
 ### cancelPopup
 
@@ -469,7 +469,7 @@ I.checkOption('agree', '//form');
 *   `context` **([string][7]? | [object][8])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 *   `options`   
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.ElementStepPromise** automatically synchronized promise through #recorder
 
 ### clearClipboard
 
@@ -480,7 +480,7 @@ I.clearClipboard();
 I.seeClipboardEquals('');
 ```
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### clearCookie
 
@@ -517,7 +517,7 @@ I.clearField('Email', '.form-container');
 *   `context` **([string][7]? | [object][8])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 *   `editable` **([string][7] | [object][8])** field located by label|name|CSS|XPath|strict locator.
 
-Returns **void** automatically synchronized promise through #recorder.
+Returns **CodeceptJS.ElementStepPromise** automatically synchronized promise through #recorder.
 
 ### click
 
@@ -569,7 +569,7 @@ I.click('.edit', null, { modifiers: ['Ctrl'] } )
 ```
 ````
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.ElementStepPromise** automatically synchronized promise through #recorder
 
 ### clickXY
 
@@ -591,7 +591,7 @@ I.clickXY('#someElement', 50, 30);
 *   `x` **[number][17]?** X coordinate relative to element, or Y coordinate if locator is a number.
 *   `y` **[number][17]?** Y coordinate relative to element.
 
-Returns **[Promise][18]<void>**&#x20;
+Returns **CodeceptJS.ElementStepPromise**&#x20;
 
 ### closeCurrentTab
 
@@ -624,7 +624,7 @@ I.dontSee('Login', '.nav'); // no login inside .nav element
 *   `text` **[string][7]** which is not present.
 *   `context` **([string][7] | [object][8])?** (optional) element located by CSS|XPath|strict locator in which to perfrom search. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### dontSeeCheckboxIsChecked
 
@@ -640,7 +640,7 @@ I.dontSeeCheckboxIsChecked('agree'); // located by name
 
 *   `field` **([string][7] | [object][8])** located by label|name|CSS|XPath|strict locator.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### dontSeeCookie
 
@@ -654,7 +654,7 @@ I.dontSeeCookie('auth'); // no auth cookie
 
 *   `name` **[string][7]** cookie name.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### dontSeeCurrentPathEquals
 
@@ -670,7 +670,7 @@ I.dontSeeCurrentPathEquals('/'); // fails for '/', '/?user=ok', '/#top'
 
 *   `path` **[string][7]** value to check.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### dontSeeCurrentUrlEquals
 
@@ -686,7 +686,7 @@ I.dontSeeCurrentUrlEquals('http://mysite.com/login'); // absolute urls are also 
 
 *   `url` **[string][7]** value to check.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### dontSeeElement
 
@@ -704,7 +704,7 @@ I.dontSeeElement('.modal', '#container');
 *   `locator` **([string][7] | [object][8])** located by CSS|XPath|Strict locator.
 *   `context` **([string][7]? | [object][8])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### dontSeeElementInDOM
 
@@ -718,7 +718,7 @@ I.dontSeeElementInDOM('.nav'); // checks that element is not on page visible or 
 
 *   `locator` **([string][7] | [object][8])** located by CSS|XPath|Strict locator.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### dontSeeInCurrentUrl
 
@@ -728,7 +728,7 @@ Checks that current url does not contain a provided fragment.
 
 *   `url` **[string][7]** value to check.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### dontSeeInField
 
@@ -750,7 +750,7 @@ I.dontSeeInField('Name', 'old_value', '.form-container');
 *   `value` **([string][7] | [object][8])** value to check.
 *   `context` **([string][7]? | [object][8])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### dontSeeInSource
 
@@ -765,7 +765,7 @@ I.dontSeeInSource('<!--'); // no comments in source
 *   `text` &#x20;
 *   `value` **[string][7]** to check.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### dontSeeInTitle
 
@@ -779,7 +779,7 @@ I.dontSeeInTitle('Error');
 
 *   `text` **[string][7]** value to check.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### dontSeeTraffic
 
@@ -818,7 +818,7 @@ I.doubleClick('.btn.edit');
 *   `locator` **([string][7] | [object][8])** clickable link or button located by text, or any element located by CSS|XPath|strict locator.
 *   `context` **([string][7]? | [object][8])** (optional, `null` by default) element to search in CSS|XPath|Strict locator. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.ElementStepPromise** automatically synchronized promise through #recorder
 
 ### dragAndDrop
 
@@ -839,9 +839,9 @@ I.dragAndDrop('#dragHandle', '#container');
 
 *   `srcElement` **([string][7] | [object][8])** located by CSS|XPath|strict locator.
 *   `destElement` **([string][7] | [object][8])** located by CSS|XPath|strict locator.
-*   `options` **any?** [Additional options][19] can be passed as 3rd argument.
+*   `options` **any?** [Additional options][18] can be passed as 3rd argument.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.ElementStepPromise** automatically synchronized promise through #recorder
 
 ### dragSlider
 
@@ -858,7 +858,7 @@ I.dragSlider('#slider', -70);
 *   `locator` **([string][7] | [object][8])** located by label|name|CSS|XPath|strict locator.
 *   `offsetX` **[number][17]** position to drag. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.ElementStepPromise** automatically synchronized promise through #recorder
 
 ### executeScript
 
@@ -885,10 +885,10 @@ If a function returns a Promise it will wait for its resolution.
 
 #### Parameters
 
-*   `fn` **([string][7] | [function][20])** function to be executed in browser context.
+*   `fn` **([string][7] | [function][19])** function to be executed in browser context.
 *   `arg` **any?** optional argument to pass to the function
 
-Returns **[Promise][18]<any>**&#x20;
+Returns **[Promise][20]<any>**&#x20;
 
 ### fillField
 
@@ -920,7 +920,7 @@ I.fillField('Name', 'John', '#section2');
 *   `value` **([string][7] | [object][8])** text value to fill.
 *   `context` **([string][7]? | [object][8])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.ElementStepPromise** automatically synchronized promise through #recorder
 
 ### flushNetworkTraffics
 
@@ -951,7 +951,7 @@ I.see('#add-to-cart-bnt');
 *   `locator` **([string][7] | [object][8])** field located by label|name|CSS|XPath|strict locator.
 *   `options` **any?** Playwright only: [Additional options][21] for available options object as 2nd argument. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.ElementStepPromise** automatically synchronized promise through #recorder
 
 ### forceClick
 
@@ -985,7 +985,7 @@ I.forceClick({css: 'nav a.login'});
 *   `locator` **([string][7] | [object][8])** clickable link or button located by text, or any element located by CSS|XPath|strict locator.
 *   `context` **([string][7]? | [object][8])** (optional, `null` by default) element to search in CSS|XPath|Strict locator. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.ElementStepPromise** automatically synchronized promise through #recorder
 
 ### grabAriaSnapshot
 
@@ -1007,7 +1007,7 @@ expect(formSnapshot).toContain('textbox "Email"');
 
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator. Defaults to body element. 
 
-Returns **[Promise][18]<[string][7]>** YAML representation of the accessibility tree
+Returns **[Promise][20]<[string][7]>** YAML representation of the accessibility tree
 
 ### grabAttributeFrom
 
@@ -1024,7 +1024,7 @@ let hint = await I.grabAttributeFrom('#tooltip', 'title');
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 *   `attr` **[string][7]** attribute name.
 
-Returns **[Promise][18]<[string][7]>** attribute value
+Returns **[Promise][20]<[string][7]>** attribute value
 
 ### grabAttributeFromAll
 
@@ -1040,7 +1040,7 @@ let hints = await I.grabAttributeFromAll('.tooltip', 'title');
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 *   `attr` **[string][7]** attribute name.
 
-Returns **[Promise][18]<[Array][9]<[string][7]>>** attribute value
+Returns **[Promise][20]<[Array][9]<[string][7]>>** attribute value
 
 ### grabBrowserLogs
 
@@ -1054,7 +1054,7 @@ console.log(JSON.stringify(errors));
 
 [Learn more about console messages][24]
 
-Returns **[Promise][18]<[Array][9]<any>>**&#x20;
+Returns **[Promise][20]<[Array][9]<any>>**&#x20;
 
 ### grabCheckedElementStatus
 
@@ -1065,7 +1065,7 @@ Return the checked status of given element.
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 *   `options` **[object][8]?** See [https://playwright.dev/docs/api/class-locator#locator-is-checked][25] 
 
-Returns **[Promise][18]<[boolean][26]>**&#x20;
+Returns **[Promise][20]<[boolean][26]>**&#x20;
 
 ### grabCookie
 
@@ -1101,7 +1101,7 @@ const value = await I.grabCssPropertyFrom('h3', 'font-weight');
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 *   `cssProperty` **[string][7]** CSS property name.
 
-Returns **[Promise][18]<[string][7]>** CSS value
+Returns **[Promise][20]<[string][7]>** CSS value
 
 ### grabCssPropertyFromAll
 
@@ -1117,7 +1117,7 @@ const values = await I.grabCssPropertyFromAll('h3', 'font-weight');
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 *   `cssProperty` **[string][7]** CSS property name.
 
-Returns **[Promise][18]<[Array][9]<[string][7]>>** CSS value
+Returns **[Promise][20]<[Array][9]<[string][7]>>** CSS value
 
 ### grabCurrentUrl
 
@@ -1129,7 +1129,7 @@ let url = await I.grabCurrentUrl();
 console.log(`Current URL is [${url}]`);
 ```
 
-Returns **[Promise][18]<[string][7]>** current URL
+Returns **[Promise][20]<[string][7]>** current URL
 
 ### grabDataFromPerformanceTiming
 
@@ -1154,7 +1154,7 @@ let data = await I.grabDataFromPerformanceTiming();
 }
 ```
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### grabDisabledElementStatus
 
@@ -1165,7 +1165,7 @@ Return the disabled status of given element.
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 *   `options` **[object][8]?** See [https://playwright.dev/docs/api/class-locator#locator-is-disabled][27] 
 
-Returns **[Promise][18]<[boolean][26]>**&#x20;
+Returns **[Promise][20]<[boolean][26]>**&#x20;
 
 ### grabElementBoundingRect
 
@@ -1193,7 +1193,7 @@ const width = await I.grabElementBoundingRect('h3', 'width');
 *   `prop` &#x20;
 *   `elementSize` **[string][7]?** x, y, width or height of the given element.
 
-Returns **([Promise][18]<DOMRect> | [Promise][18]<[number][17]>)** Element bounding rectangle
+Returns **([Promise][20]<DOMRect> | [Promise][20]<[number][17]>)** Element bounding rectangle
 
 ### grabFromClipboard
 
@@ -1208,7 +1208,7 @@ let url = await I.grabFromClipboard();
 Reading the clipboard requires a secure context (`https` or `localhost`) and is supported
 in Chromium-based browsers, where read access is granted automatically.
 
-Returns **[Promise][18]<[string][7]>** the system clipboard contents.
+Returns **[Promise][20]<[string][7]>** the system clipboard contents.
 
 ### grabHTMLFrom
 
@@ -1225,7 +1225,7 @@ let postHTML = await I.grabHTMLFrom('#post');
 *   `locator` &#x20;
 *   `element` **([string][7] | [object][8])** located by CSS|XPath|strict locator.
 
-Returns **[Promise][18]<[string][7]>** HTML code for an element
+Returns **[Promise][20]<[string][7]>** HTML code for an element
 
 ### grabHTMLFromAll
 
@@ -1241,7 +1241,7 @@ let postHTMLs = await I.grabHTMLFromAll('.post');
 *   `locator` &#x20;
 *   `element` **([string][7] | [object][8])** located by CSS|XPath|strict locator.
 
-Returns **[Promise][18]<[Array][9]<[string][7]>>** HTML code for an element
+Returns **[Promise][20]<[Array][9]<[string][7]>>** HTML code for an element
 
 ### grabMetrics
 
@@ -1296,7 +1296,7 @@ const metrics = await I.grabMetrics();
 
 ```
 
-Returns **[Promise][18]<[Array][9]<[Object][8]>>**&#x20;
+Returns **[Promise][20]<[Array][9]<[Object][8]>>**&#x20;
 
 ### grabNumberOfOpenTabs
 
@@ -1307,7 +1307,7 @@ Resumes test execution, so **should be used inside async function with `await`**
 let tabs = await I.grabNumberOfOpenTabs();
 ```
 
-Returns **[Promise][18]<[number][17]>** number of open tabs
+Returns **[Promise][20]<[number][17]>** number of open tabs
 
 ### grabNumberOfVisibleElements
 
@@ -1322,7 +1322,7 @@ let numOfElements = await I.grabNumberOfVisibleElements('p');
 
 *   `locator` **([string][7] | [object][8])** located by CSS|XPath|strict locator.
 
-Returns **[Promise][18]<[number][17]>** number of visible elements
+Returns **[Promise][20]<[number][17]>** number of visible elements
 
 ### grabPageScrollPosition
 
@@ -1333,7 +1333,7 @@ Resumes test execution, so **should be used inside an async function with `await
 let { x, y } = await I.grabPageScrollPosition();
 ```
 
-Returns **[Promise][18]<PageScrollPosition>** scroll position
+Returns **[Promise][20]<PageScrollPosition>** scroll position
 
 ### grabPopupText
 
@@ -1343,7 +1343,7 @@ Grab the text within the popup. If no popup is visible then it will return null
 await I.grabPopupText();
 ```
 
-Returns **[Promise][18]<([string][7] | null)>**&#x20;
+Returns **[Promise][20]<([string][7] | null)>**&#x20;
 
 ### grabRecordedNetworkTraffics
 
@@ -1367,7 +1367,7 @@ Resumes test execution, so **should be used inside async function with `await`**
 let pageSource = await I.grabSource();
 ```
 
-Returns **[Promise][18]<[string][7]>** source code
+Returns **[Promise][20]<[string][7]>** source code
 
 ### grabStorageState
 
@@ -1406,7 +1406,7 @@ If multiple elements found returns first element.
 
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 
-Returns **[Promise][18]<[string][7]>** attribute value
+Returns **[Promise][20]<[string][7]>** attribute value
 
 ### grabTextFromAll
 
@@ -1421,7 +1421,7 @@ let pins = await I.grabTextFromAll('#pin li');
 
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 
-Returns **[Promise][18]<[Array][9]<[string][7]>>** attribute value
+Returns **[Promise][20]<[Array][9]<[string][7]>>** attribute value
 
 ### grabTitle
 
@@ -1432,7 +1432,7 @@ Resumes test execution, so **should be used inside async with `await`** operator
 let title = await I.grabTitle();
 ```
 
-Returns **[Promise][18]<[string][7]>** title
+Returns **[Promise][20]<[string][7]>** title
 
 ### grabTrafficUrl
 
@@ -1449,7 +1449,7 @@ I.grabTrafficUrl(/session.*start/);
 
 *   `urlMatch` **([string][7] | [RegExp][10])** Expected URL of request in network traffic. Can be a string or a regular expression.
 
-Returns **[Promise][18]<any>**&#x20;
+Returns **[Promise][20]<any>**&#x20;
 
 ### grabValueFrom
 
@@ -1465,7 +1465,7 @@ let email = await I.grabValueFrom('input[name=email]');
 
 *   `locator` **([string][7] | [object][8])** field located by label|name|CSS|XPath|strict locator.
 
-Returns **[Promise][18]<[string][7]>** attribute value
+Returns **[Promise][20]<[string][7]>** attribute value
 
 ### grabValueFromAll
 
@@ -1480,7 +1480,7 @@ let inputs = await I.grabValueFromAll('//form/input');
 
 *   `locator` **([string][7] | [object][8])** field located by label|name|CSS|XPath|strict locator.
 
-Returns **[Promise][18]<[Array][9]<[string][7]>>** attribute value
+Returns **[Promise][20]<[Array][9]<[string][7]>>** attribute value
 
 ### grabWebElement
 
@@ -1495,7 +1495,7 @@ const webElement = await I.grabWebElement('#button');
 
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 
-Returns **[Promise][18]<any>** WebElement of being used Web helper
+Returns **[Promise][20]<CodeceptJS.WebElement>** WebElement of being used Web helper
 
 ### grabWebElements
 
@@ -1510,7 +1510,7 @@ const webElements = await I.grabWebElements('#button');
 
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 
-Returns **[Promise][18]<any>** WebElement of being used Web helper
+Returns **[Promise][20]<[Array][9]<CodeceptJS.WebElement>>** WebElements of being used Web helper
 
 ### grabWebSocketMessages
 
@@ -1537,7 +1537,7 @@ I.waitForFile('avatar.jpg', 5);
 
 *   `fileName` **[string][7]** set filename for downloaded file
 
-Returns **[Promise][18]<void>**&#x20;
+Returns **[Promise][20]<void>**&#x20;
 
 ### makeApiRequest
 
@@ -1558,7 +1558,7 @@ I.makeApiRequest('PATCH', )
 *   `url` **[string][7]** endpoint
 *   `options` **[object][8]** request options depending on method used
 
-Returns **[Promise][18]<[object][8]>** response
+Returns **[Promise][20]<[object][8]>** response
 
 ### mockRoute
 
@@ -1573,7 +1573,7 @@ This method allows intercepting and mocking requests & responses. [Learn more ab
 #### Parameters
 
 *   `url` **([string][7] | [RegExp][10])?** URL, regex or pattern for to match URL
-*   `handler` **[function][20]?** a function to process request
+*   `handler` **[function][19]?** a function to process request
 
 ### mockTraffic
 
@@ -1614,7 +1614,7 @@ I.moveCursorTo('#submit', '.container');
 *   `offsetX` **([number][17] | [string][7] | [object][8])** (optional, `0` by default) X-axis offset or context locator. 
 *   `offsetY` **[number][17]** (optional, `0` by default) Y-axis offset. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.ElementStepPromise** automatically synchronized promise through #recorder
 
 ### openNewTab
 
@@ -1702,7 +1702,7 @@ Some of the supported key names are:
 
 *   `key` **([string][7] | [Array][9]<[string][7]>)** key or array of keys to press.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### pressKeyDown
 
@@ -1720,7 +1720,7 @@ I.pressKeyUp('Control');
 
 *   `key` **[string][7]** name of key to press down.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### pressKeyUp
 
@@ -1738,7 +1738,7 @@ I.pressKeyUp('Control');
 
 *   `key` **[string][7]** name of key to release.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### refreshPage
 
@@ -1748,7 +1748,7 @@ Reload the current page.
 I.refreshPage();
 ```
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### replayFromHar
 
@@ -1792,7 +1792,7 @@ First parameter can be set to `maximize`.
 *   `width` **[number][17]** width in pixels or `maximize`.
 *   `height` **[number][17]** height in pixels.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### rightClick
 
@@ -1812,7 +1812,7 @@ I.rightClick('Click me', '.context');
 *   `locator` **([string][7] | [object][8])** clickable element located by CSS|XPath|strict locator.
 *   `context` **([string][7]? | [object][8])** (optional, `null` by default) element located by CSS|XPath|strict locator. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.ElementStepPromise** automatically synchronized promise through #recorder
 
 ### saveElementScreenshot
 
@@ -1828,7 +1828,7 @@ I.saveElementScreenshot(`#submit`,'debug.png');
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 *   `fileName` **[string][7]** file name to save.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.ElementStepPromise** automatically synchronized promise through #recorder
 
 ### saveScreenshot
 
@@ -1846,7 +1846,7 @@ I.saveScreenshot('debug.png', true) //resizes to available scrollHeight and scro
 *   `fileName` **[string][7]** file name to save.
 *   `fullPage` **[boolean][26]** (optional, `false` by default) flag to enable fullscreen screenshot mode. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### scrollPageToBottom
 
@@ -1856,7 +1856,7 @@ Scroll page to the bottom.
 I.scrollPageToBottom();
 ```
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### scrollPageToTop
 
@@ -1866,7 +1866,7 @@ Scroll page to the top.
 I.scrollPageToTop();
 ```
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### scrollTo
 
@@ -1884,7 +1884,7 @@ I.scrollTo('#submit', 5, 5);
 *   `offsetX` **[number][17]** (optional, `0` by default) X-axis offset. 
 *   `offsetY` **[number][17]** (optional, `0` by default) Y-axis offset. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.ElementStepPromise** automatically synchronized promise through #recorder
 
 ### see
 
@@ -1902,7 +1902,7 @@ I.see('Register', {css: 'form.register'}); // use strict locator
 *   `text` **[string][7]** expected on page.
 *   `context` **([string][7]? | [object][8])** (optional, `null` by default) element located by CSS|Xpath|strict locator in which to search for text. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### seeAttributesOnElements
 
@@ -1917,7 +1917,7 @@ I.seeAttributesOnElements('//form', { method: "post"});
 *   `locator` **([string][7] | [object][8])** located by CSS|XPath|strict locator.
 *   `attributes` **[object][8]** attributes and their values to check.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### seeCheckboxIsChecked
 
@@ -1933,7 +1933,7 @@ I.seeCheckboxIsChecked({css: '#signup_form input[type=checkbox]'});
 
 *   `field` **([string][7] | [object][8])** located by label|name|CSS|XPath|strict locator.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### seeClipboardEquals
 
@@ -1951,7 +1951,7 @@ in Chromium-based browsers, where read access is granted automatically.
 
 *   `text` **[string][7]** value to check.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### seeCookie
 
@@ -1965,7 +1965,7 @@ I.seeCookie('Auth');
 
 *   `name` **[string][7]** cookie name.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### seeCssPropertiesOnElements
 
@@ -1980,7 +1980,7 @@ I.seeCssPropertiesOnElements('h3', { 'font-weight': "bold"});
 *   `locator` **([string][7] | [object][8])** located by CSS|XPath|strict locator.
 *   `cssProperties` **[object][8]** object with CSS properties and their values to check.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### seeCurrentPathEquals
 
@@ -1996,7 +1996,7 @@ I.seeCurrentPathEquals('/'); // passes for '/', '/?user=ok', '/#top'
 
 *   `path` **[string][7]** value to check.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### seeCurrentUrlEquals
 
@@ -2013,7 +2013,7 @@ I.seeCurrentUrlEquals('http://my.site.com/register');
 
 *   `url` **[string][7]** value to check.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### seeElement
 
@@ -2036,7 +2036,7 @@ I.seeElement({role: 'dialog'});
 *   `locator` **([string][7] | [object][8])** located by CSS|XPath|strict locator.
 *   `context` **([string][7]? | [object][8])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### seeElementInDOM
 
@@ -2051,7 +2051,7 @@ I.seeElementInDOM('#modal');
 
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### seeInClipboard
 
@@ -2069,7 +2069,7 @@ in Chromium-based browsers, where read access is granted automatically.
 
 *   `text` **[string][7]** value to check.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### seeInCurrentUrl
 
@@ -2083,7 +2083,7 @@ I.seeInCurrentUrl('/register'); // we are on registration page
 
 *   `url` **[string][7]** a fragment to check
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### seeInField
 
@@ -2107,7 +2107,7 @@ I.seeInField('Name', 'John', '.form-container');
 *   `value` **([string][7] | [object][8])** value to check.
 *   `context` **([string][7]? | [object][8])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### seeInPopup
 
@@ -2122,7 +2122,7 @@ I.seeInPopup('Popup text');
 
 *   `text` **[string][7]** value to check.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### seeInSource
 
@@ -2136,7 +2136,7 @@ I.seeInSource('<h1>Green eggs &amp; ham</h1>');
 
 *   `text` **[string][7]** value to check.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### seeInTitle
 
@@ -2150,7 +2150,7 @@ I.seeInTitle('Home Page');
 
 *   `text` **[string][7]** text value to check.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### seeNumberOfElements
 
@@ -2166,7 +2166,7 @@ I.seeNumberOfElements('#submitBtn', 1);
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 *   `num` **[number][17]** number of elements.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### seeNumberOfVisibleElements
 
@@ -2182,7 +2182,7 @@ I.seeNumberOfVisibleElements('.buttons', 3);
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 *   `num` **[number][17]** number of elements.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### seeTextEquals
 
@@ -2197,7 +2197,7 @@ I.seeTextEquals('text', 'h1');
 *   `text` **[string][7]** element value to check.
 *   `context` **([string][7] | [object][8])?** element located by CSS|XPath|strict locator. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### seeTitleEquals
 
@@ -2211,7 +2211,7 @@ I.seeTitleEquals('Test title.');
 
 *   `text` **[string][7]** value to check.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### seeTraffic
 
@@ -2287,7 +2287,7 @@ I.selectOption('Which OS do you use?', ['Android', 'iOS']);
 *   `option` **([string][7] | [Array][9]<any>)** visible text or value of option.
 *   `context` **([string][7]? | [object][8])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.ElementStepPromise** automatically synchronized promise through #recorder
 
 ### setCookie
 
@@ -2309,7 +2309,7 @@ I.setCookie([
 
 *   `cookie` **(Cookie | [Array][9]<Cookie>)** a cookie object or array of cookie objects.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### setPlaywrightRequestHeaders
 
@@ -2334,7 +2334,7 @@ This also resets recorded network requests.
 I.startRecordingTraffic();
 ```
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### startRecordingWebSocketMessages
 
@@ -2345,7 +2345,7 @@ This also resets recorded websocket messages.
 await I.startRecordingWebSocketMessages();
 ```
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### stopMockingRoute
 
@@ -2361,7 +2361,7 @@ If no handler is passed, all mock requests for the rote are disabled.
 #### Parameters
 
 *   `url` **([string][7] | [RegExp][10])?** URL, regex or pattern for to match URL
-*   `handler` **[function][20]?** a function to process request
+*   `handler` **[function][19]?** a function to process request
 
 ### stopRecordingTraffic
 
@@ -2379,7 +2379,7 @@ Stops recording WS messages. Recorded WS messages is not flashed.
 await I.stopRecordingWebSocketMessages();
 ```
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### switchTo
 
@@ -2394,7 +2394,7 @@ I.switchTo(); // switch back to main page
 
 *   `locator` **([string][7]? | [object][8])** (optional, `null` by default) element located by CSS|XPath|strict locator. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### switchToNextTab
 
@@ -2448,7 +2448,7 @@ I.type(secret('123456'));
 *   `delay` **[number][17]?** (optional) delay in ms between key presses 
 *   `key` **([string][7] | [Array][9]<[string][7]>)** or array of keys to type.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### uncheckOption
 
@@ -2480,7 +2480,7 @@ I.uncheckOption('agree', '//form');
 *   `context` **([string][7]? | [object][8])** (optional, `null` by default) element located by CSS | XPath | strict locator. 
 *   `options`   
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.ElementStepPromise** automatically synchronized promise through #recorder
 
 ### usePlaywrightTo
 
@@ -2500,7 +2500,7 @@ I.usePlaywrightTo('emulate offline mode', async ({ browserContext }) => {
 #### Parameters
 
 *   `description` **[string][7]** used to show in logs.
-*   `fn` **[function][20]** async function that executed with Playwright helper as arguments
+*   `fn` **[function][19]** async function that executed with Playwright helper as arguments
 
 ### wait
 
@@ -2514,7 +2514,7 @@ I.wait(2); // wait 2 secs
 
 *   `sec` **[number][17]** number of second to wait.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### waitCurrentPathEquals
 
@@ -2541,7 +2541,7 @@ I.waitForClickable('.btn.continue', 5); // wait for 5 secs
 *   `waitTimeout` &#x20;
 *   `sec` **[number][17]?** (optional, `1` by default) time in seconds to wait
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### waitForCookie
 
@@ -2556,7 +2556,7 @@ I.waitForCookie("token");
 *   `name` **[string][7]** expected cookie name.
 *   `sec` **[number][17]** (optional, `3` by default) time in seconds to wait 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### waitForDetached
 
@@ -2572,7 +2572,7 @@ I.waitForDetached('#popup');
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 *   `sec` **[number][17]** (optional, `1` by default) time in seconds to wait 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### waitForDisabled
 
@@ -2584,7 +2584,7 @@ Element can be located by CSS or XPath.
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 *   `sec` **[number][17]** (optional) time in seconds to wait, 1 by default. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### waitForElement
 
@@ -2601,7 +2601,7 @@ I.waitForElement('.btn.continue', 5); // wait for 5 secs
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 *   `sec` **[number][17]?** (optional, `1` by default) time in seconds to wait
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### waitForEnabled
 
@@ -2613,7 +2613,7 @@ Element can be located by CSS or XPath.
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 *   `sec` **[number][17]** (optional) time in seconds to wait, 1 by default. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### waitForFunction
 
@@ -2632,11 +2632,11 @@ I.waitForFunction((count) => window.requests == count, [3], 5) // pass args and 
 
 #### Parameters
 
-*   `fn` **([string][7] | [function][20])** to be executed in browser context.
+*   `fn` **([string][7] | [function][19])** to be executed in browser context.
 *   `argsOrSec` **([Array][9]<any> | [number][17])?** (optional, `1` by default) arguments for function or seconds. 
 *   `sec` **[number][17]?** (optional, `1` by default) time in seconds to wait 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### waitForInvisible
 
@@ -2652,7 +2652,7 @@ I.waitForInvisible('#popup');
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 *   `sec` **[number][17]** (optional, `1` by default) time in seconds to wait 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### waitForNavigation
 
@@ -2677,7 +2677,7 @@ I.waitForNumberOfTabs(2);
 *   `expectedTabs` **[number][17]** expecting the number of tabs.
 *   `sec` **[number][17]** number of secs to wait.
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### waitForRequest
 
@@ -2690,7 +2690,7 @@ I.waitForRequest(request => request.url() === 'http://example.com' && request.me
 
 #### Parameters
 
-*   `urlOrPredicate` **([string][7] | [function][20])**&#x20;
+*   `urlOrPredicate` **([string][7] | [function][19])**&#x20;
 *   `sec` **[number][17]?** seconds to wait 
 
 ### waitForResponse
@@ -2704,7 +2704,7 @@ I.waitForResponse(response => response.url() === 'https://example.com' && respon
 
 #### Parameters
 
-*   `urlOrPredicate` **([string][7] | [function][20])**&#x20;
+*   `urlOrPredicate` **([string][7] | [function][19])**&#x20;
 *   `sec` **[number][17]?** number of seconds to wait 
 
 ### waitForText
@@ -2724,7 +2724,7 @@ I.waitForText('Thank you, form has been submitted', 5, '#modal');
 *   `sec` **[number][17]** (optional, `1` by default) time in seconds to wait 
 *   `context` **([string][7] | [object][8])?** (optional) element located by CSS|XPath|strict locator. 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder. **Note:** Text matching is case-sensitive. For case-insensitive matching, use XPath or CSS locators with normalized text.
 
 ### waitForURL
 
@@ -2751,7 +2751,7 @@ I.waitForValue('//input', "GoodValue");
 *   `value` **[string][7]** expected value.
 *   `sec` **[number][17]** (optional, `1` by default) time in seconds to wait 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### waitForVisible
 
@@ -2767,7 +2767,7 @@ I.waitForVisible('#popup');
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 *   `sec` **[number][17]** (optional, `1` by default) time in seconds to wait 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### waitInUrl
 
@@ -2782,7 +2782,7 @@ I.waitInUrl('/info', 2);
 *   `urlPart` **[string][7]** value to check.
 *   `sec` **[number][17]** (optional, `1` by default) time in seconds to wait 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### waitNumberOfVisibleElements
 
@@ -2798,7 +2798,7 @@ I.waitNumberOfVisibleElements('a', 3);
 *   `num` **[number][17]** number of elements.
 *   `sec` **[number][17]** (optional, `1` by default) time in seconds to wait 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### waitToHide
 
@@ -2814,7 +2814,7 @@ I.waitToHide('#popup');
 *   `locator` **([string][7] | [object][8])** element located by CSS|XPath|strict locator.
 *   `sec` **[number][17]** (optional, `1` by default) time in seconds to wait 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### waitUrlEquals
 
@@ -2830,7 +2830,7 @@ I.waitUrlEquals('http://127.0.0.1:8000/info');
 *   `urlPart` **[string][7]** value to check.
 *   `sec` **[number][17]** (optional, `1` by default) time in seconds to wait 
 
-Returns **void** automatically synchronized promise through #recorder
+Returns **CodeceptJS.StepPromise** automatically synchronized promise through #recorder
 
 ### _addPopupListener
 
@@ -2967,11 +2967,11 @@ Set current page
 
 [17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[18]: https://playwright.dev/docs/api/class-page#page-drag-and-drop
 
-[19]: https://playwright.dev/docs/api/class-page#page-drag-and-drop
+[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
 [21]: https://playwright.dev/docs/api/class-locator#locator-focus
 

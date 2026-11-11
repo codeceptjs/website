@@ -28,7 +28,7 @@ I.amOnPage('/login'); // opens a login page
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.appendField()`
 
@@ -58,7 +58,7 @@ I.appendField('name', 'John', '.form-container');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.ElementStepPromise` - automatically synchronized promise through #recorder
 
 ### `I.attachFile()`
 
@@ -95,7 +95,7 @@ I.attachFile('#dropzone', 'data/avatar.jpg');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.ElementStepPromise` - automatically synchronized promise through #recorder
 
 Helper-Specific Differences
 
@@ -136,7 +136,7 @@ I.dontSee('#add-to-cart-btn');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.ElementStepPromise` - automatically synchronized promise through #recorder
 
 ### `I.checkOption()`
 
@@ -163,7 +163,7 @@ I.checkOption('agree', '//form');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.ElementStepPromise` - automatically synchronized promise through #recorder
 
 Helper-Specific Differences
 
@@ -183,6 +183,24 @@ I.checkOption('Agree', '.signup', { position: { x: 5, y: 5 } })
 **WebDriver**
 
 Appium: not tested
+
+### `I.clearClipboard()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+</table>
+
+Clears the system clipboard.
+
+```js
+I.clearClipboard();
+I.seeClipboardEquals('');
+```
+
+**Returns**
+
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.clearCookie()`
 
@@ -229,7 +247,7 @@ I.clearField('Email', '.form-container');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder.
+- `CodeceptJS.ElementStepPromise` - automatically synchronized promise through #recorder.
 
 ### `I.click()`
 
@@ -262,7 +280,11 @@ I.click('//form/*[@type=submit]');
 I.click('Logout', '#nav');
 // using strict locator
 I.click({css: 'nav a.login'});
+// using ARIA role locator
+I.click({role: 'button', name: 'Submit'});
 ```
+
+> ℹ️ ARIA role locators (`{role, name}`) match elements the way assistive technology does and survive markup refactors. See [Locators](/locators#aria-locators).
 
 **Parameters**
 
@@ -271,7 +293,7 @@ I.click({css: 'nav a.login'});
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.ElementStepPromise` - automatically synchronized promise through #recorder
 
 
 - ARIA locators are supported. Update examples to include the new locator type where relevant.
@@ -304,7 +326,7 @@ I.clickLink('Logout', '#nav');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.ElementStepPromise` - automatically synchronized promise through #recorder
 
 ### `I.closeCurrentTab()`
 
@@ -321,7 +343,7 @@ I.closeCurrentTab();
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 Helper-Specific Differences
 
@@ -357,7 +379,7 @@ I.closeOtherTabs();
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.dontSee()`
 
@@ -381,7 +403,7 @@ I.dontSee('Login', '.nav'); // no login inside .nav element
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.dontSeeCheckboxIsChecked()`
 
@@ -404,7 +426,7 @@ I.dontSeeCheckboxIsChecked('agree'); // located by name
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 Helper-Specific Differences
 
@@ -431,7 +453,30 @@ I.dontSeeCookie('auth'); // no auth cookie
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
+
+### `I.dontSeeCurrentPathEquals()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+</table>
+
+Checks that current URL path does NOT match the expected path.
+Query strings and URL fragments are ignored.
+
+```js
+I.dontSeeCurrentPathEquals('/form'); // fails for '/form', '/form?user=1', '/form#section'
+I.dontSeeCurrentPathEquals('/'); // fails for '/', '/?user=ok', '/#top'
+```
+
+**Parameters**
+
+- `path` `string` - value to check.
+
+**Returns**
+
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.dontSeeCurrentUrlEquals()`
 
@@ -454,7 +499,7 @@ I.dontSeeCurrentUrlEquals('http://mysite.com/login'); // absolute urls are also 
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.dontSeeElement()`
 
@@ -479,7 +524,7 @@ I.dontSeeElement('.modal', '#container');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.dontSeeElementInDOM()`
 
@@ -500,7 +545,7 @@ I.dontSeeElementInDOM('.nav'); // checks that element is not on page visible or 
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.dontSeeInCurrentUrl()`
 
@@ -517,7 +562,7 @@ Checks that current url does not contain a provided fragment.
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.dontSeeInField()`
 
@@ -546,7 +591,7 @@ I.dontSeeInField('Name', 'old_value', '.form-container');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.dontSeeInSource()`
 
@@ -567,7 +612,7 @@ I.dontSeeInSource('<!--'); // no comments in source
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.dontSeeInTitle()`
 
@@ -588,7 +633,7 @@ I.dontSeeInTitle('Error');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.dontSeeTraffic()`
 
@@ -640,40 +685,7 @@ I.doubleClick('.btn.edit');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
-
-### `I.downloadFile()`
-
-<table style="border-collapse: collapse; width: 100%;">
-  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
-  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Not supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
-</table>
-
-Performs a download file on an element matched by link|button|CSS or XPath.
-File is downloaded by default to output folder.
-If no custom file name is provided, the default name will be used
-
-
-```js
-I.downloadFile('td[class="text-right file-link"] a', 'thisIsCustomName');
-```
-
-**Parameters**
-
-- `locator` `CodeceptJS.LocatorOrString` - clickable link or button located by CSS|XPath locator.
-- `file` `string` - custom file name.
-
-**Returns**
-
-- `void` - automatically synchronized promise through #recorder
-
-Helper-Specific Differences
-
-**Puppeteer**
-
-This method is **deprecated**.
-
-Please use `handleDownloads()` instead.
+- `CodeceptJS.ElementStepPromise` - automatically synchronized promise through #recorder
 
 ### `I.dragAndDrop()`
 
@@ -695,7 +707,7 @@ I.dragAndDrop('#dragHandle', '#container');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.ElementStepPromise` - automatically synchronized promise through #recorder
 
 Helper-Specific Differences
 
@@ -734,7 +746,7 @@ I.dragSlider('#slider', -70);
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.ElementStepPromise` - automatically synchronized promise through #recorder
 
 ### `I.executeAsyncScript()`
 
@@ -872,9 +884,13 @@ I.fillField('password', secret('123456'));
 I.fillField('form#login input[name=username]', 'John');
 // or by strict locator
 I.fillField({css: 'form#login input[name=username]'}, 'John');
+// by ARIA role locator
+I.fillField({role: 'textbox', name: 'Email'}, 'hello@world.com');
 // within a context
 I.fillField('Name', 'John', '#section2');
 ```
+
+> ℹ️ ARIA role locators (`{role, name}`) match fields by their accessible name and survive markup refactors. See [Locators](/locators#aria-locators).
 
 **Parameters**
 
@@ -884,81 +900,7 @@ I.fillField('Name', 'John', '#section2');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
-
-Helper-Specific Differences
-
-**Playwright**
-
-Fills a text field or textarea, after clearing its value, with the given string.
-Field is located by name, label, CSS, or XPath.
-
-The third parameter is an optional context (CSS or XPath locator) to narrow the search.
-
-```js
-// by label
-I.fillField('Email', 'hello@world.com');
-// by name
-I.fillField('password', secret('123456'));
-// by CSS
-I.fillField('form#login input[name=username]', 'John');
-// or by strict locator
-I.fillField({css: 'form#login input[name=username]'}, 'John');
-// by ARIA role locator
-I.fillField({role: 'textbox', name: 'Email'}, 'hello@world.com');
-// within a context
-I.fillField('Name', 'John', '#section2');
-```
-
-> ℹ️ ARIA role locators (`{role, name}`) match fields by their accessible name and survive markup refactors. See [Locators][15].
-
-**WebDriver**
-
-Fills a text field or textarea, after clearing its value, with the given string.
-Field is located by name, label, CSS, or XPath.
-
-The third parameter is an optional context (CSS or XPath locator) to narrow the search.
-
-```js
-// by label
-I.fillField('Email', 'hello@world.com');
-// by name
-I.fillField('password', secret('123456'));
-// by CSS
-I.fillField('form#login input[name=username]', 'John');
-// or by strict locator
-I.fillField({css: 'form#login input[name=username]'}, 'John');
-// by ARIA role locator
-I.fillField({role: 'textbox', name: 'Email'}, 'hello@world.com');
-// within a context
-I.fillField('Name', 'John', '#section2');
-```
-
-> ℹ️ ARIA role locators (`{role, name}`) match fields by their accessible name and survive markup refactors. See [Locators][22].
-
-**Puppeteer**
-
-Fills a text field or textarea, after clearing its value, with the given string.
-Field is located by name, label, CSS, or XPath.
-
-The third parameter is an optional context (CSS or XPath locator) to narrow the search.
-
-```js
-// by label
-I.fillField('Email', 'hello@world.com');
-// by name
-I.fillField('password', secret('123456'));
-// by CSS
-I.fillField('form#login input[name=username]', 'John');
-// or by strict locator
-I.fillField({css: 'form#login input[name=username]'}, 'John');
-// by ARIA role locator
-I.fillField({role: 'textbox', name: 'Email'}, 'hello@world.com');
-// within a context
-I.fillField('Name', 'John', '#section2');
-```
-
-> ℹ️ ARIA role locators (`{role, name}`) match fields by their accessible name and survive markup refactors. See [Locators][10].
+- `CodeceptJS.ElementStepPromise` - automatically synchronized promise through #recorder
 
 ### `I.flushNetworkTraffics()`
 
@@ -997,7 +939,7 @@ I.see('#add-to-cart-bnt');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.ElementStepPromise` - automatically synchronized promise through #recorder
 
 ### `I.forceClick()`
 
@@ -1038,7 +980,7 @@ I.forceClick({css: 'nav a.login'});
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.ElementStepPromise` - automatically synchronized promise through #recorder
 
 ### `I.forceRightClick()`
 
@@ -1069,7 +1011,7 @@ I.forceRightClick('Menu');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.grabAllWindowHandles()`
 
@@ -1314,7 +1256,7 @@ let data = await I.grabDataFromPerformanceTiming();
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 Helper-Specific Differences
 
@@ -1397,6 +1339,28 @@ const width = await I.grabElementBoundingRect('h3', 'width');
 **Returns**
 
 - `Promise<DOMRect>|Promise<number>` - Element bounding rectangle
+
+### `I.grabFromClipboard()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+</table>
+
+Grabs the text content of the system clipboard and returns it to test.
+Resumes test execution, so **should be used inside async function with `await`** operator.
+
+```js
+I.click('Copy to clipboard');
+let url = await I.grabFromClipboard();
+```
+
+Reading the clipboard requires a secure context (`https` or `localhost`) and is supported
+in Chromium-based browsers, where read access is granted automatically.
+
+**Returns**
+
+- `Promise<string>` - the system clipboard contents.
 
 ### `I.grabHTMLFrom()`
 
@@ -1701,7 +1665,7 @@ const webElement = await I.grabWebElement('#button');
 
 **Returns**
 
-- `Promise<*>` - WebElement of being used Web helper
+- `Promise<CodeceptJS.WebElement>` - WebElement of being used Web helper
 
 ### `I.grabWebElements()`
 
@@ -1723,7 +1687,7 @@ const webElements = await I.grabWebElements('#button');
 
 **Returns**
 
-- `Promise<*>` - WebElement of being used Web helper
+- `Promise<CodeceptJS.WebElement[]>` - WebElements of being used Web helper
 
 ### `I.moveCursorTo()`
 
@@ -1752,7 +1716,7 @@ I.moveCursorTo('#submit', '.container');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.ElementStepPromise` - automatically synchronized promise through #recorder
 
 ### `I.openNewTab()`
 
@@ -1769,7 +1733,7 @@ I.openNewTab();
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 Helper-Specific Differences
 
@@ -1803,15 +1767,63 @@ I.openNewTab();
   <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
 </table>
 
-Presses a key on a focused element.
-Special keys like 'Enter', 'Control', [etc](https://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element/:id/value)
-will be replaced with corresponding unicode.
-If modifier key is used (Control, Command, Alt, Shift) in array, it will be released afterwards.
+Presses a key in the browser (on a focused element).
+
+_Hint:_ For populating text field or textarea, it is recommended to use [`fillField`](#ifillfield).
 
 ```js
-I.pressKey('Enter');
-I.pressKey(['Control','a']);
+I.pressKey('Backspace');
 ```
+
+To press a key in combination with modifier keys, pass the sequence as an array. All modifier keys (`'Alt'`, `'Control'`, `'Meta'`, `'Shift'`) will be released afterwards.
+
+```js
+I.pressKey(['Control', 'Z']);
+```
+
+For specifying operation modifier key based on operating system it is suggested to use `'CommandOrControl'`.
+This will press `'Command'` (also known as `'Meta'`) on macOS machines and `'Control'` on non-macOS machines.
+
+```js
+I.pressKey(['CommandOrControl', 'Z']);
+```
+
+Some of the supported key names are:
+- `'AltLeft'` or `'Alt'`
+- `'AltRight'`
+- `'ArrowDown'`
+- `'ArrowLeft'`
+- `'ArrowRight'`
+- `'ArrowUp'`
+- `'Backspace'`
+- `'Clear'`
+- `'ControlLeft'` or `'Control'`
+- `'ControlRight'`
+- `'Command'`
+- `'CommandOrControl'`
+- `'Delete'`
+- `'End'`
+- `'Enter'`
+- `'Escape'`
+- `'F1'` to `'F12'`
+- `'Home'`
+- `'Insert'`
+- `'MetaLeft'` or `'Meta'`
+- `'MetaRight'`
+- `'Numpad0'` to `'Numpad9'`
+- `'NumpadAdd'`
+- `'NumpadDecimal'`
+- `'NumpadDivide'`
+- `'NumpadMultiply'`
+- `'NumpadSubtract'`
+- `'PageDown'`
+- `'PageUp'`
+- `'Pause'`
+- `'Return'`
+- `'ShiftLeft'` or `'Shift'`
+- `'ShiftRight'`
+- `'Space'`
+- `'Tab'`
 
 **Parameters**
 
@@ -1819,7 +1831,7 @@ I.pressKey(['Control','a']);
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 Helper-Specific Differences
 
@@ -2035,7 +2047,7 @@ I.pressKeyUp('Control');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.pressKeyUp()`
 
@@ -2060,7 +2072,7 @@ I.pressKeyUp('Control');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.refreshPage()`
 
@@ -2077,7 +2089,7 @@ I.refreshPage();
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.resizeWindow()`
 
@@ -2096,7 +2108,7 @@ First parameter can be set to `maximize`.
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 Helper-Specific Differences
 
@@ -2149,7 +2161,7 @@ I.rightClick('Click me', '.context');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.ElementStepPromise` - automatically synchronized promise through #recorder
 
 ### `I.saveElementScreenshot()`
 
@@ -2172,7 +2184,7 @@ I.saveElementScreenshot(`#submit`,'debug.png');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.ElementStepPromise` - automatically synchronized promise through #recorder
 
 ### `I.saveScreenshot()`
 
@@ -2197,7 +2209,7 @@ I.saveScreenshot('debug.png', true) //resizes to available scrollHeight and scro
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.scrollIntoView()`
 
@@ -2221,7 +2233,7 @@ I.scrollIntoView('#submit', { behavior: "smooth", block: "center", inline: "cent
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.scrollPageToBottom()`
 
@@ -2238,7 +2250,7 @@ I.scrollPageToBottom();
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.scrollPageToTop()`
 
@@ -2255,7 +2267,7 @@ I.scrollPageToTop();
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.scrollTo()`
 
@@ -2280,7 +2292,7 @@ I.scrollTo('#submit', 5, 5);
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.ElementStepPromise` - automatically synchronized promise through #recorder
 
 ### `I.see()`
 
@@ -2305,7 +2317,7 @@ I.see('Register', {css: 'form.register'}); // use strict locator
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.seeAttributesOnElements()`
 
@@ -2327,7 +2339,7 @@ I.seeAttributesOnElements('//form', { method: "post"});
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.seeCheckboxIsChecked()`
 
@@ -2350,13 +2362,38 @@ I.seeCheckboxIsChecked({css: '#signup_form input[type=checkbox]'});
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 Helper-Specific Differences
 
 **WebDriver**
 
 Appium: not tested
+
+### `I.seeClipboardEquals()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+</table>
+
+Checks that the system clipboard is equal to the given text.
+
+```js
+I.click('Copy to clipboard');
+I.seeClipboardEquals('https://codecept.io');
+```
+
+Reading the clipboard requires a secure context (`https` or `localhost`) and is supported
+in Chromium-based browsers, where read access is granted automatically.
+
+**Parameters**
+
+- `text` `string` - value to check.
+
+**Returns**
+
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.seeCookie()`
 
@@ -2377,7 +2414,7 @@ I.seeCookie('Auth');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.seeCssPropertiesOnElements()`
 
@@ -2399,7 +2436,30 @@ I.seeCssPropertiesOnElements('h3', { 'font-weight': "bold"});
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
+
+### `I.seeCurrentPathEquals()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+</table>
+
+Checks that current URL path matches the expected path.
+Query strings and URL fragments are ignored.
+
+```js
+I.seeCurrentPathEquals('/info'); // passes for '/info', '/info?user=1', '/info#section'
+I.seeCurrentPathEquals('/'); // passes for '/', '/?user=ok', '/#top'
+```
+
+**Parameters**
+
+- `path` `string` - value to check.
+
+**Returns**
+
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.seeCurrentUrlEquals()`
 
@@ -2423,7 +2483,7 @@ I.seeCurrentUrlEquals('http://my.site.com/register');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.seeElement()`
 
@@ -2440,7 +2500,11 @@ The second parameter is a context (CSS or XPath locator) to narrow the search.
 ```js
 I.seeElement('#modal');
 I.seeElement('#modal', '#container');
+// using ARIA role locator
+I.seeElement({role: 'dialog'});
 ```
+
+> ℹ️ ARIA role locators (`{role, name}`) match elements the way assistive technology does and survive markup refactors. See [Locators](/locators#aria-locators).
 
 **Parameters**
 
@@ -2449,57 +2513,7 @@ I.seeElement('#modal', '#container');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
-
-Helper-Specific Differences
-
-**Playwright**
-
-Checks that a given Element is visible
-Element is located by CSS or XPath.
-
-The second parameter is a context (CSS or XPath locator) to narrow the search.
-
-```js
-I.seeElement('#modal');
-I.seeElement('#modal', '#container');
-// using ARIA role locator
-I.seeElement({role: 'dialog'});
-```
-
-> ℹ️ ARIA role locators (`{role, name}`) match elements the way assistive technology does and survive markup refactors. See [Locators][15].
-
-**WebDriver**
-
-Checks that a given Element is visible
-Element is located by CSS or XPath.
-
-The second parameter is a context (CSS or XPath locator) to narrow the search.
-
-```js
-I.seeElement('#modal');
-I.seeElement('#modal', '#container');
-// using ARIA role locator
-I.seeElement({role: 'dialog'});
-```
-
-> ℹ️ ARIA role locators (`{role, name}`) match elements the way assistive technology does and survive markup refactors. See [Locators][22].
-
-**Puppeteer**
-
-Checks that a given Element is visible
-Element is located by CSS or XPath.
-
-The second parameter is a context (CSS or XPath locator) to narrow the search.
-
-```js
-I.seeElement('#modal');
-I.seeElement('#modal', '#container');
-// using ARIA role locator
-I.seeElement({role: 'dialog'});
-```
-
-> ℹ️ ARIA role locators (`{role, name}`) match elements the way assistive technology does and survive markup refactors. See [Locators][10].
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.seeElementInDOM()`
 
@@ -2521,7 +2535,32 @@ I.seeElementInDOM('#modal');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
+
+### `I.seeInClipboard()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+</table>
+
+Checks that the system clipboard contains the given text.
+
+```js
+I.click('Copy to clipboard');
+I.seeInClipboard('https://codecept.io');
+```
+
+Reading the clipboard requires a secure context (`https` or `localhost`) and is supported
+in Chromium-based browsers, where read access is granted automatically.
+
+**Parameters**
+
+- `text` `string` - value to check.
+
+**Returns**
+
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.seeInCurrentUrl()`
 
@@ -2542,7 +2581,7 @@ I.seeInCurrentUrl('/register'); // we are on registration page
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.seeInField()`
 
@@ -2573,7 +2612,7 @@ I.seeInField('Name', 'John', '.form-container');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.seeInPopup()`
 
@@ -2595,7 +2634,7 @@ I.seeInPopup('Popup text');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 Helper-Specific Differences
 
@@ -2623,7 +2662,7 @@ I.seeInSource('<h1>Green eggs &amp; ham</h1>');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.seeInTitle()`
 
@@ -2644,7 +2683,7 @@ I.seeInTitle('Home Page');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.seeNumberOfElements()`
 
@@ -2668,7 +2707,7 @@ I.seeNumberOfElements('#submitBtn', 1);
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.seeNumberOfVisibleElements()`
 
@@ -2691,7 +2730,7 @@ I.seeNumberOfVisibleElements('.buttons', 3);
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.seeTextEquals()`
 
@@ -2713,7 +2752,7 @@ I.seeTextEquals('text', 'h1');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.seeTitleEquals()`
 
@@ -2734,7 +2773,7 @@ I.seeTitleEquals('Test title.');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.seeTraffic()`
 
@@ -2823,7 +2862,7 @@ I.selectOption('Which OS do you use?', ['Android', 'iOS']);
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.ElementStepPromise` - automatically synchronized promise through #recorder
 
 ### `I.setCookie()`
 
@@ -2852,7 +2891,7 @@ I.setCookie([
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 Helper-Specific Differences
 
@@ -2876,7 +2915,7 @@ I.startRecordingTraffic();
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.startRecordingWebSocketMessages()`
 
@@ -2894,7 +2933,7 @@ await I.startRecordingWebSocketMessages();
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.stopRecordingTraffic()`
 
@@ -2924,7 +2963,7 @@ await I.stopRecordingWebSocketMessages();
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.switchTo()`
 
@@ -2946,7 +2985,7 @@ I.switchTo(); // switch back to main page
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.switchToNextTab()`
 
@@ -2969,7 +3008,7 @@ I.switchToNextTab(2);
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 Helper-Specific Differences
 
@@ -3012,7 +3051,7 @@ I.switchToPreviousTab(2);
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 Helper-Specific Differences
 
@@ -3066,7 +3105,7 @@ I.type(secret('123456'));
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.uncheckOption()`
 
@@ -3093,7 +3132,7 @@ I.uncheckOption('agree', '//form');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.ElementStepPromise` - automatically synchronized promise through #recorder
 
 Helper-Specific Differences
 
@@ -3133,7 +3172,7 @@ I.wait(2); // wait 2 secs
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.waitForClickable()`
 
@@ -3157,7 +3196,7 @@ I.waitForClickable('.btn.continue', 5); // wait for 5 secs
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.waitForCookie()`
 
@@ -3179,7 +3218,7 @@ I.waitForCookie("token");
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.waitForDetached()`
 
@@ -3202,7 +3241,7 @@ I.waitForDetached('#popup');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.waitForDisabled()`
 
@@ -3221,7 +3260,7 @@ Element can be located by CSS or XPath.
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.waitForElement()`
 
@@ -3245,7 +3284,7 @@ I.waitForElement('.btn.continue', 5); // wait for 5 secs
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.waitForEnabled()`
 
@@ -3264,7 +3303,7 @@ Element can be located by CSS or XPath.
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.waitForFunction()`
 
@@ -3294,7 +3333,7 @@ I.waitForFunction((count) => window.requests == count, [3], 5) // pass args and 
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.waitForInvisible()`
 
@@ -3317,7 +3356,7 @@ I.waitForInvisible('#popup');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.waitForNumberOfTabs()`
 
@@ -3339,7 +3378,7 @@ I.waitForNumberOfTabs(2);
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.waitForText()`
 
@@ -3366,7 +3405,7 @@ I.waitForText('Thank you, form has been submitted', 5, '#modal');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.waitForValue()`
 
@@ -3390,7 +3429,7 @@ I.waitForValue('//input', "GoodValue");
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.waitForVisible()`
 
@@ -3413,7 +3452,7 @@ I.waitForVisible('#popup');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.waitInUrl()`
 
@@ -3435,7 +3474,7 @@ I.waitInUrl('/info', 2);
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.waitNumberOfVisibleElements()`
 
@@ -3458,7 +3497,7 @@ I.waitNumberOfVisibleElements('a', 3);
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.waitToHide()`
 
@@ -3481,7 +3520,7 @@ I.waitToHide('#popup');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
 ### `I.waitUrlEquals()`
 
@@ -3504,4 +3543,4 @@ I.waitUrlEquals('http://127.0.0.1:8000/info');
 
 **Returns**
 
-- `void` - automatically synchronized promise through #recorder
+- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
