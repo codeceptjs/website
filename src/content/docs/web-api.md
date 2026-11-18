@@ -547,6 +547,29 @@ I.dontSeeElementInDOM('.nav'); // checks that element is not on page visible or 
 
 - `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
 
+### `I.dontSeeFileDownloaded()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+</table>
+
+Checks that no file matching the name was downloaded during the current test.
+
+```js
+I.click('Cancel');
+I.dontSeeFileDownloaded(); // no files at all
+I.dontSeeFileDownloaded('*.pdf');
+```
+
+**Parameters**
+
+- `[fileName]` `string|RegExp` - file name, glob pattern or regular expression. Matches any file when omitted.
+
+**Returns**
+
+- `void` - automatically synchronized promise through #recorder
+
 ### `I.dontSeeInCurrentUrl()`
 
 <table style="border-collapse: collapse; width: 100%;">
@@ -1095,7 +1118,7 @@ console.log(JSON.stringify(logs))
 
 **Returns**
 
-- `Promise<object[]>|undefined` - all browser logs
+- `Promise<any[]>` - all browser logs
 
 Helper-Specific Differences
 
@@ -1142,7 +1165,7 @@ assert(cookie.value, '123456');
 
 **Returns**
 
-- `any` - attribute value
+- `Promise<any>` - cookie object, or all cookies if no name is given
 
 ### `I.grabCssPropertyFrom()`
 
@@ -1256,7 +1279,7 @@ let data = await I.grabDataFromPerformanceTiming();
 
 **Returns**
 
-- `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
+- `Promise<{responseEnd: number, domInteractive: number, domContentLoadedEventEnd: number, loadEventEnd: number` - >} performance timing data in ms
 
 Helper-Specific Differences
 
@@ -1305,6 +1328,23 @@ let data = await I.grabDataFromPerformanceTiming();
   loadEventEnd: 241
 }
 ```
+
+### `I.grabDownloadedFileNames()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+</table>
+
+Returns names of files downloaded during the current test.
+
+```js
+const files = await I.grabDownloadedFileNames();
+```
+
+**Returns**
+
+- `Promise<string[]>` - file names
 
 ### `I.grabElementBoundingRect()`
 
@@ -1511,13 +1551,15 @@ Grab the recording network traffics
 ```js
 const traffics = await I.grabRecordedNetworkTraffics();
 expect(traffics[0].url).to.equal('https://reqres.in/api/comments/1');
+expect(traffics[0].request.method).to.equal('GET');
+expect(traffics[0].request.headers['user-agent']).to.contain('Mozilla');
 expect(traffics[0].response.status).to.equal(200);
 expect(traffics[0].response.body).to.contain({ name: 'this was mocked' });
 ```
 
 **Returns**
 
-- `Array` - recorded network traffics
+- `Promise<any[]>` - recorded network traffics
 
 ### `I.grabSource()`
 
@@ -2536,6 +2578,82 @@ I.seeElementInDOM('#modal');
 **Returns**
 
 - `CodeceptJS.StepPromise` - automatically synchronized promise through #recorder
+
+### `I.seeFileDownloaded()`
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead><tr><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Playwright</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">WebDriver</th><th style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; text-align: left;">Puppeteer</th></tr></thead>
+  <tbody><tr><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td><td style="border: 1px solid var(--sl-color-hairline); padding: 0.45rem 0.6rem; vertical-align: top;">Supported</td></tr></tbody>
+</table>
+
+Checks that a file download has started during the current test.
+Waits for the download to begin, so it can be called right after the action that triggers it.
+
+```js
+I.click('Export');
+I.seeFileDownloaded(); // any file
+I.seeFileDownloaded('export.pdf'); // exact file name
+I.seeFileDownloaded('*.pdf'); // glob
+I.seeFileDownloaded(/^report-\d+\.csv$/); // regular expression
+I.seeFileDownloaded('export.pdf', 10); // wait up to 10 seconds
+```
+
+**Parameters**
+
+- `[fileName]` `string|RegExp` - file name, glob pattern or regular expression. Matches any file when omitted.
+- `[sec]` `number` - seconds to wait for the download to start. Defaults to `waitForTimeout`.
+
+**Returns**
+
+- `void` - automatically synchronized promise through #recorder
+
+Helper-Specific Differences
+
+**Playwright**
+
+Checks that a file download has started during the current test.
+Waits for the download to begin, so it can be called right after the action that triggers it.
+
+```js
+I.click('Export');
+I.seeFileDownloaded(); // any file
+I.seeFileDownloaded('export.pdf'); // exact file name
+I.seeFileDownloaded('*.pdf'); // glob
+I.seeFileDownloaded(/^report-d+.csv$/); // regular expression
+I.seeFileDownloaded('export.pdf', 10); // wait up to 10 seconds
+```
+
+**WebDriver**
+
+Checks that a file download has started during the current test.
+Waits for the download to begin, so it can be called right after the action that triggers it.
+
+```js
+I.click('Export');
+I.seeFileDownloaded(); // any file
+I.seeFileDownloaded('export.pdf'); // exact file name
+I.seeFileDownloaded('*.pdf'); // glob
+I.seeFileDownloaded(/^report-d+.csv$/); // regular expression
+I.seeFileDownloaded('export.pdf', 10); // wait up to 10 seconds
+```
+
+Files are saved by the browser into its own download directory.
+
+**Puppeteer**
+
+Checks that a file download has started during the current test.
+Waits for the download to begin, so it can be called right after the action that triggers it.
+
+```js
+I.click('Export');
+I.seeFileDownloaded(); // any file
+I.seeFileDownloaded('export.pdf'); // exact file name
+I.seeFileDownloaded('*.pdf'); // glob
+I.seeFileDownloaded(/^report-d+.csv$/); // regular expression
+I.seeFileDownloaded('export.pdf', 10); // wait up to 10 seconds
+```
+
+A `downloadBehavior` set in `chrome` options is respected.
 
 ### `I.seeInClipboard()`
 
